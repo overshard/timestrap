@@ -1,0 +1,6 @@
+# python
+*.pyc
+.venv
+
+# database
+db.sqlite3
