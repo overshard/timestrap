@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import date, timedelta
+from datetime import timedelta
 
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -39,7 +39,7 @@ class EntryTestCase(TestCase):
         timesheet = Timesheet.objects.create(name='Timestrap')
         self.task = Task.objects.create(timesheet=timesheet, name='Testing')
         self.user = User.objects.create_user('testuser', 'test@example.com',
-            'testpassword')
+                'testpassword')
         Entry.objects.create(
             task=self.task,
             user=self.user,
