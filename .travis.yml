@@ -1,7 +1,18 @@
 language: python
+# will test with python 3.x once project is more mature
 python:
-    - "2.7"
-# command to install dependencies
-install: "pip install -r requirements.txt"
-# command to run tests
-script: "python manage.py test"
+    - 2.7
+# install dependencies
+install: 
+    - pip install -r requirements.txt
+    - pip install flake8
+    - pip install coveralls
+# style guide test
+before_script:
+    - flake8 --exclude=migrations,settings.py .
+# run main tests
+script:
+    - coverage run --source=python manage.py test
+# report code coverage to coveralls
+after_success:
+    - coveralls
