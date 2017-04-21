@@ -39,7 +39,7 @@ class EntryTestCase(TestCase):
         timesheet = Timesheet.objects.create(name='Timestrap')
         self.task = Task.objects.create(timesheet=timesheet, name='Testing')
         self.user = User.objects.create_user('testuser', 'test@example.com',
-                'testpassword')
+                                             'testpassword')
         Entry.objects.create(
             task=self.task,
             user=self.user,
