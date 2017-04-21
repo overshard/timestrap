@@ -7,9 +7,9 @@ install:
     - pip install -r requirements.txt
     - pip install flake8
     - pip install coveralls
-# style guide test
+# style guide test, temp ignore of some django generated code
 before_script:
-    - flake8 --exclude=migrations,settings.py .
+    - flake8 --exclude=migrations,settings.py,manage.py .
 # run main tests
 script:
     - coverage run --source=python manage.py test
