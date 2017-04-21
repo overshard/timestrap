@@ -35,13 +35,18 @@
                 <a class="navbar-brand" href="/">Timestrap</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'entry' %}">Entries</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
                             {% else %}
+                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'login' %}">Login</a>
-                            {% endif %}
-                        </li>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

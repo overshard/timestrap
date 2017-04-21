@@ -1,6 +1,9 @@
 # core
-Django>=1.11,<1.12
+Django<1.12,>=1.11
 
 # static files
-django_compressor>=2.1,<2.2
-django-libsass>=0.7,<0.8
+django_compressor<2.2,>=2.1
+django-libsass<0.8,>=0.7
+
+# testing
+Faker<0.8,>=0.7

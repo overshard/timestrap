@@ -105,12 +105,22 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Authentication
+# https://docs.djangoproject.com/en/1.11/topics/auth/default/
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -129,6 +139,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'timestrap/static')]
