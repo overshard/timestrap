@@ -33,7 +33,9 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'core',
+    'api',
 
+    'rest_framework',
     'compressor',
 
     'django.contrib.admin',
@@ -147,3 +149,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'timestrap/static')]
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+
+# Rest framework
+# http://www.django-rest-framework.org/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissions'
+    ]
+}

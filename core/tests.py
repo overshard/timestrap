@@ -5,6 +5,7 @@ from datetime import timedelta
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.management import call_command
 
 from .models import Timesheet, Task, Entry
 
@@ -19,8 +20,6 @@ class TimesheetTestCase(TestCase):
 
 
 class TaskTestCase(TestCase):
-    timesheet = None
-
     def setUp(self):
         self.timesheet = Timesheet.objects.create(name='Timestrap')
         Task.objects.create(timesheet=self.timesheet, name='Testing')
@@ -32,9 +31,6 @@ class TaskTestCase(TestCase):
 
 
 class EntryTestCase(TestCase):
-    task = None
-    user = None
-
     def setUp(self):
         timesheet = Timesheet.objects.create(name='Timestrap')
         self.task = Task.objects.create(timesheet=timesheet, name='Testing')
@@ -71,3 +67,12 @@ class EntryTestCase(TestCase):
         parsed_entry.parse_duration('3.25')
         parsed_entry.save()
         self.assertEqual(parsed_entry.duration, timedelta(hours=3, minutes=15))
+
+
+class FakeTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_fake(self):
+        # TODO: verbosity=0 doesn't seem to surpress the output
+        call_command('fake', verbosity=0)
