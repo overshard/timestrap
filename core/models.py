@@ -22,7 +22,7 @@ class Task(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['timesheet', '-id']
 
     def __str__(self):
         return 'Task: ' + self.name

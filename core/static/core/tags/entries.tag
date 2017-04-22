@@ -18,7 +18,7 @@
     <table class="entries-table table table-striped table-sm w-100 d-none">
         <thead class="thead-inverse">
             <tr>
-                <th class="hidden-sm-down">Date</th>
+                <th class="hidden-md-down">Date</th>
                 <th>User</th>
                 <th>Duration</th>
                 <th>Note</th>
@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <tr each={ entries }>
-                <td class="hidden-sm-down">{ date }</td>
+                <td class="hidden-md-down">{ date }</td>
                 <td>{ user.username }</td>
                 <td>{ duration }</td>
                 <td>{ note }</td>

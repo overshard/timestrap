@@ -1,0 +1,15 @@
+@mixin rotate($property) {
+    -webkit-transform: rotate($property);
+       -moz-transform: rotate($property);
+        -ms-transform: rotate($property);
+         -o-transform: rotate($property);
+            transform: rotate($property);
+}
+
+@mixin animation($property) {
+    -webkit-animation: $property;
+       -moz-animation: $property;
+        -ms-animation: $property;
+         -o-animation: $property;
+            animation: $property;
+}

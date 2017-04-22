@@ -1,0 +1,14 @@
+.login-form,
+.login-errors {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.fa-spinner {
+    font-size: 4em;
+    @include animation(rotating 1s linear infinite);
+}

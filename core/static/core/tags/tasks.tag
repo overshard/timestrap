@@ -18,12 +18,14 @@
     <table class="tasks-table table table-striped table-sm w-100 d-none">
         <thead class="thead-inverse">
             <tr>
+                <th>Timesheet</th>
                 <th>Name</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr each={ tasks }>
+                <td>{ timesheet.name }</td>
                 <td>{ name }</td>
                 <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
             </tr>
