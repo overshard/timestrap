@@ -15,16 +15,17 @@ class HomeView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_authenticated():
-            self.pattern_name = 'entry'
+            self.pattern_name = 'entries'
         return super(HomeView, self).get_redirect_url(*args, **kwargs)
 
 
-class EntryView(TemplateView):
-    template_name = 'core/entry.html'
+class TimesheetsView(TemplateView):
+    template_name = 'core/timesheets.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(EntryView, self).get_context_data(**kwargs)
-        context['timesheets'] = Timesheet.objects.all()
-        context['tasks'] = Task.objects.all()
-        context['entries'] = Entry.objects.all()
-        return context
+
+class TasksView(TemplateView):
+    template_name = 'core/tasks.html'
+
+
+class EntriesView(TemplateView):
+    template_name = 'core/entries.html'

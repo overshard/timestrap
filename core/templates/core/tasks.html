@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Tasks{% endblock %}
+{% block title %}Tasks{% endblock %}
+
+
+{% block content %}
+    <tasks></tasks>
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/tasks.tag' %}"></script>
+    <script>riot.mount('tasks')</script>
+{% endblock %}

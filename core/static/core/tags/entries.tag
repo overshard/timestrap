@@ -1,7 +1,8 @@
 <entries>
-    <table>
-        <thead>
+    <table class="entries-table table table-striped table-sm w-100 d-none">
+        <thead class="thead-inverse">
             <tr>
+                <th>Date</th>
                 <th>User</th>
                 <th>Duration</th>
                 <th>Note</th>
@@ -9,7 +10,8 @@
         </thead>
         <tbody>
             <tr each={ entries }>
-                <td>{ user }</td>
+                <td>{ date }</td>
+                <td>{ user.username }</td>
                 <td>{ duration }</td>
                 <td>{ note }</td>
             </tr>
@@ -18,25 +20,22 @@
 
     <p class="loading">Loading...</p>
 
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
-
     <script>
         var tag = this;
 
         fetch('/api/entries/?format=json', {
             credentials: 'include'
-        })
-        .then(function(response) {
+        }).then(function(response) {
             return response.json();
-        })
-        .then(function(data) {
+        }).then(function(data) {
             tag.entries = data;
-            var loading = document.querySelector('.loading');
-            loading.classList.toggle('hidden');
+
+            let loading = document.querySelector('.loading');
+            loading.classList.toggle('d-none');
+
+            let entriesTable = document.querySelector('.entries-table');
+            entriesTable.classList.toggle('d-none');
+
             tag.update();
         });
     </script>

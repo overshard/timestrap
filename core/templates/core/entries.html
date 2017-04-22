@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Entries{% endblock %}
+{% block title %}Entries{% endblock %}
+
+
+{% block content %}
+    <entries></entries>
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
+    <script>riot.mount('entries')</script>
+{% endblock %}

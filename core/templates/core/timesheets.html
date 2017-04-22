@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Timesheets{% endblock %}
+{% block title %}Timesheets{% endblock %}
+
+
+{% block content %}
+    <timesheets></timesheets>
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/timesheets.tag' %}"></script>
+    <script>riot.mount('timesheets')</script>
+{% endblock %}

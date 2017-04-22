@@ -21,12 +21,16 @@ class TimesheetSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
+    timesheet = TimesheetSerializer()
+
     class Meta:
         model = Task
         fields = '__all__'
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Entry
         fields = '__all__'
