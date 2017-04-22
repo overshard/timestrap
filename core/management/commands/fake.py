@@ -12,9 +12,20 @@ from core.models import Timesheet, Task, Entry
 class Command(BaseCommand):
     help = 'Generates a bunch of fake timesheets, tasks, and entries'
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--iterations',
+            dest='iterations',
+            default=5,
+            help='The amount of data we add do the database'
+        )
+
     def handle(self, *args, **kwargs):
         fake = Factory.create()
-        iterations = 5
+        verbosity = kwargs['verbosity']
+        iterations = kwargs['iterations']
+        if not iterations:
+            iterations = 5
 
         for i in range(iterations):
             Timesheet.objects.create(name=fake.company())
@@ -49,7 +60,7 @@ class Command(BaseCommand):
                     tzinfo=None
                 )
                 duration = timedelta(
-                    hours=randint(0, 15),
+                    hours=randint(0, 3),
                     minutes=randint(1, 60)
                 )
                 Entry.objects.create(
@@ -60,4 +71,5 @@ class Command(BaseCommand):
                     note=fake.sentence(nb_words=6, variable_nb_words=True)
                 )
 
-        self.stdout.write(self.style.SUCCESS('Successfully added fake data.'))
+        if verbosity > 0:
+            self.stdout.write(self.style.SUCCESS('Successfully added fake data.'))

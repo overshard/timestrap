@@ -74,5 +74,4 @@ class FakeTestCase(TestCase):
         pass
 
     def test_fake(self):
-        # TODO: verbosity=0 doesn't seem to surpress the output
         call_command('fake', verbosity=0)

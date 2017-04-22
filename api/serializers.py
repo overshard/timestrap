@@ -21,17 +21,17 @@ class TimesheetSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    timesheet = TimesheetSerializer(read_only=True)
+    timesheet_details = TimesheetSerializer(source='timesheet', read_only=True)
 
     class Meta:
         model = Task
-        fields = ('id', 'url', 'timesheet', 'name',)
+        fields = ('id', 'url', 'timesheet', 'timesheet_details', 'name',)
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer(read_only=True)
-    task = TaskSerializer(read_only=True)
+    task_details = TaskSerializer(source='task', read_only=True)
+    user_details = UserSerializer(source='user', read_only=True)
 
     class Meta:
         model = Entry
-        fields = ('id', 'url', 'task', 'user', 'date', 'duration', 'note',)
+        fields = ('id', 'url', 'task', 'task_details', 'user', 'user_details', 'date', 'duration', 'note',)

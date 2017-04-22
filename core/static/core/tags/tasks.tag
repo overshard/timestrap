@@ -26,7 +26,7 @@
         <tbody>
             <tr each={ tasks }>
                 <td>{ name }</td>
-                <td>{ timesheet.name }</td>
+                <td>{ timesheet_details.name }</td>
                 <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
             </tr>
         </tbody>

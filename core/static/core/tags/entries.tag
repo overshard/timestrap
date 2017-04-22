@@ -27,7 +27,7 @@
         <tbody>
             <tr each={ entries }>
                 <td class="hidden-md-down">{ date }</td>
-                <td>{ user.username }</td>
+                <td>{ user_details.username }</td>
                 <td>{ duration }</td>
                 <td>{ note }</td>
             </tr>
