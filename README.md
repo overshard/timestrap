@@ -17,6 +17,20 @@ Your system needs to have Python with virtualenv and pip installed.
     pip install -r requirements.txt
 
 
+Testing
+-------
+
+I'm trying to push for 100% code coverage on this project! If you want to add
+or change something and test that everything still works you can do so easily
+with:
+
+    python manage.py test
+
+If you push code to our primary repository we test for style adherance and code
+coverage. If you get a failed build to either of these we won't accept your
+code till it's fixed.
+
+
 Running Timestrap
 -----------------
 
