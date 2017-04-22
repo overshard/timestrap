@@ -3,8 +3,6 @@ from __future__ import unicode_literals
 
 from django.views.generic.base import RedirectView, TemplateView
 
-from .models import Timesheet, Task, Entry
-
 
 class HomeView(RedirectView):
     # TODO: We should have a landing page but for now we will redirect to the
