@@ -19,11 +19,13 @@
         <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr each={ tasks }>
                 <td>{ name }</td>
+                <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
             </tr>
         </tbody>
     </table>
@@ -34,14 +36,23 @@
 
     <script>
         var tag = this;
-        var url = '/api/tasks/?format=json';
+        var url = '/api/tasks/';
 
         var loading = null;
         var entriesTable = null;
 
         function getTasks(url) {
+            let location = window.location.href;
+            location = location.split('?');
+            if (location.length === 2) {
+                url = url + '?' + location[1];
+            }
+
             fetch(url, {
-                credentials: 'include'
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                })
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {
@@ -66,6 +77,11 @@
             loading.classList.remove('d-none');
             tasksTable.classList.add('d-none');
             getTasks(url);
+        }
+
+        goToEntries(e) {
+            task = e.target.dataset.id;
+            document.location.href = '/entries/?task=' + task;
         }
     </script>
 </tasks>

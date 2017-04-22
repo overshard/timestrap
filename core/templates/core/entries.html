@@ -7,7 +7,19 @@
 
 
 {% block content %}
-    <entries></entries>
+    <ol class="breadcrumb">
+        {% if task %}
+            <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ task.timesheet }}</a></li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'tasks' %}?timesheet={{ task.timesheet.id }}">{{ task }}</a>
+            </li>
+        {% elif timesheet %}
+            <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ timesheet }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">Entries</li>
+    </ol>
+
+    <entries />
 {% endblock %}
 
 

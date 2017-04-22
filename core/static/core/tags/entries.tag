@@ -40,14 +40,27 @@
 
     <script>
         var tag = this;
-        var url = '/api/entries/?format=json';
+        var url = '/api/entries/';
 
         var loading = null;
         var entriesTable = null;
 
         function getEntries(url) {
+            let location = window.location.href;
+            location = location.split('?');
+            if (location.length === 2) {
+                if (url.split('?').length === 2) {
+                    url = url + '&' + location[1];
+                } else {
+                    url = url + '?' + location[1];
+                }
+            }
+
             fetch(url, {
-                credentials: 'include'
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                })
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {

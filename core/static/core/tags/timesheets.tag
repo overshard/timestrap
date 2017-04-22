@@ -19,11 +19,14 @@
         <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr each={ timesheets }>
                 <td>{ name }</td>
+                <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</button>
+                    <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
             </tr>
         </tbody>
     </table>
@@ -34,14 +37,17 @@
 
     <script>
         var tag = this;
-        var url = '/api/timesheets/?format=json';
+        var url = '/api/timesheets/';
 
         var loading = null;
         var timesheetsTable = null;
 
         function getTimesheets(url) {
             fetch(url, {
-                credentials: 'include'
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                })
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {
@@ -66,6 +72,16 @@
             loading.classList.remove('d-none');
             timesheetsTable.classList.add('d-none');
             getTimesheets(url);
+        }
+
+        goToTasks(e) {
+            timesheet = e.target.dataset.id;
+            document.location.href = '/tasks/?timesheet=' + timesheet;
+        }
+
+        goToEntries(e) {
+            timesheet = e.target.dataset.id;
+            document.location.href = '/entries/?task__timesheet=' + timesheet;
         }
     </script>
 </timesheets>

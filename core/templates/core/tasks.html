@@ -7,7 +7,14 @@
 
 
 {% block content %}
-    <tasks></tasks>
+    <ol class="breadcrumb">
+        {% if timesheet %}
+            <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ timesheet }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">Tasks</li>
+    </ol>
+
+    <tasks />
 {% endblock %}
 
 
