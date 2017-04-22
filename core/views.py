@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.views.generic.base import RedirectView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.models import Timesheet, Task
 
@@ -11,19 +12,14 @@ class HomeView(RedirectView):
     # login page.
     permanent = False
     query_string = True
-    pattern_name = 'login'
-
-    def get_redirect_url(self, *args, **kwargs):
-        if self.request.user.is_authenticated():
-            self.pattern_name = 'timesheets'
-        return super(HomeView, self).get_redirect_url(*args, **kwargs)
+    pattern_name = 'timesheets'
 
 
-class TimesheetsView(TemplateView):
+class TimesheetsView(LoginRequiredMixin, TemplateView):
     template_name = 'core/timesheets.html'
 
 
-class TasksView(TemplateView):
+class TasksView(LoginRequiredMixin, TemplateView):
     template_name = 'core/tasks.html'
 
     def get_context_data(self, **kwargs):
@@ -36,7 +32,7 @@ class TasksView(TemplateView):
         return context
 
 
-class EntriesView(TemplateView):
+class EntriesView(LoginRequiredMixin, TemplateView):
     template_name = 'core/entries.html'
 
     def get_context_data(self, **kwargs):

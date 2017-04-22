@@ -18,7 +18,7 @@
     <table class="entries-table table table-striped table-sm w-100 d-none">
         <thead class="thead-inverse">
             <tr>
-                <th>Date</th>
+                <th class="hidden-sm-down">Date</th>
                 <th>User</th>
                 <th>Duration</th>
                 <th>Note</th>
@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <tr each={ entries }>
-                <td>{ date }</td>
+                <td class="hidden-sm-down">{ date }</td>
                 <td>{ user.username }</td>
                 <td>{ duration }</td>
                 <td>{ note }</td>
@@ -48,7 +48,7 @@
         function getEntries(url) {
             let location = window.location.href;
             location = location.split('?');
-            if (location.length === 2) {
+            if (location.length === 2 && !url.includes(location[1])) {
                 if (url.split('?').length === 2) {
                     url = url + '&' + location[1];
                 } else {

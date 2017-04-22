@@ -44,12 +44,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'entries' %}">Entries</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/api/">API</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin/">Admin</a>
-                            </li>
+                            {% if user.is_staff %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/api/">API</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/">Admin</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                             </li>
