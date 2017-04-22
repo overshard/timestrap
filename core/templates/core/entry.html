@@ -1,6 +1,15 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block content %}
-    <h1>Timesheet Entries</h1>
+    <h1>Entries</h1>
+
+    <entries></entries>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/entry.tag' %}"></script>
+
+    <script>riot.mount('entries')</script>
 {% endblock %}

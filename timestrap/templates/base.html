@@ -20,11 +20,9 @@
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}">
         {% endcompress %}
 
-        {% compress css inline %}
-            {% block extra_css %}
-                {# Override this in templates to add extra stylesheets #}
-            {% endblock %}
-        {% endcompress %}
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
     </head>
     <body>
         <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
@@ -36,6 +34,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/api/">API</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'entry' %}">Entries</a>
                             </li>
@@ -58,22 +59,23 @@
 
         {# Global javascript #}
         <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/webfontloader@1.6.27/webfontloader.js"
-            integrity="sha384-WFPtzbUU8fm8NOp3/qLAaq3b0j6e1XFM7kUBhjtzkmwVG+GEOYrhCctcs3pgvUTp"></script>
-        <script type="text/javascript" crossorigin="anonymous"
             src="https://unpkg.com/jquery@3.2.1/dist/jquery.min.js"
             integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
         <script type="text/javascript" crossorigin="anonymous"
+            src="https://unpkg.com/webfontloader@1.6.27/webfontloader.js"
+            integrity="sha384-WFPtzbUU8fm8NOp3/qLAaq3b0j6e1XFM7kUBhjtzkmwVG+GEOYrhCctcs3pgvUTp"></script>
+        <script type="text/javascript" crossorigin="anonymous"
             src="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"</script>
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"></script>
+        <script type="text/javascript" crossorigin="anonymous"
+            src="https://unpkg.com/riot@3.4.2/riot+compiler.min.js"
+            integrity="sha384-uTFABZJTGxdQCuAGYhk8PBeBnuera25ceofBYR7LoHeaw6UMY30nUPaFVWKlBxYE"></script>
         {% compress js %}
             <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
         {% endcompress %}
 
-        {% compress js inline %}
-            {% block extra_js %}
-                {# Override this in templates to add extra javascript #}
-            {% endblock %}
-        {% endcompress %}
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
     </body>
 </html>
