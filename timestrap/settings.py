@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'api',
 
     'rest_framework',
+    'widget_tweaks',
     'compressor',
 
     'django.contrib.admin',

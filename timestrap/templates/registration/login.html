@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 
 {% block meta_title %}Login{% endblock %}
@@ -6,38 +7,44 @@
 
 
 {% block content %}
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    {% if next %}
-        {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
-        {% else %}
-            <p>Please login to see this page.</p>
+    <div class="login-errors">
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
         {% endif %}
-    {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+            {% else %}
+                <p>If you don't have a user yet create one via the CLI. If you
+                need more users add them via the admin panel.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <form class="login-form" method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td>{{ form.username.label_tag }}</td>
-                    <td>{{ form.username }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.password.label_tag }}</td>
-                    <td>{{ form.password }}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <button class="btn btn-primary d-inline" type="submit">Login</button>
-        <a class="btn btn-secondary" href="{% url 'password_reset' %}">Lost password?</a>
         <input type="hidden" name="next" value="{{ next }}">
-    </form>
 
-    {# Assumes you setup the password_reset view in your URLconf #}
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">{{ form.username.label }}</label>
+            <div class="col-sm-9">
+                {% render_field form.username class+='form-control' placeholder=form.username.label %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">{{ form.password.label }}</label>
+            <div class="col-sm-9">
+                {% render_field form.password class+='form-control' placeholder=form.password.label %}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
+                <button class="btn btn-primary" type="submit">Login</button>
+                <a class="btn btn-secondary" href="{% url 'password_reset' %}">Lost password?</a>
+            </div>
+        </div>
+    </form>
 {% endblock %}
