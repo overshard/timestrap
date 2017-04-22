@@ -12,7 +12,7 @@ before_script:
     - flake8 --exclude=migrations,settings.py,manage.py .
 # run main tests
 script:
-    - coverage run --source=core, api manage.py test
+    - coverage run --source=core,api manage.py test
 # report code coverage to coveralls
 after_success:
     - coveralls
