@@ -35,9 +35,10 @@ INSTALLED_APPS = [
     'core',
     'api',
 
-    'rest_framework',
-    'widget_tweaks',
     'compressor',
+    'django_filters',
+    'widget_tweaks',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -161,4 +162,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
 }

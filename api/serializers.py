@@ -11,26 +11,27 @@ from core.models import Timesheet, Task, Entry
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff',)
+        fields = ('id', 'url', 'username',)
 
 
 class TimesheetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Timesheet
-        fields = '__all__'
+        fields = ('id', 'url', 'name',)
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    timesheet = TimesheetSerializer()
+    timesheet = TimesheetSerializer(read_only=True)
 
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ('id', 'url', 'timesheet', 'name',)
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
+    task = TaskSerializer(read_only=True)
 
     class Meta:
         model = Entry
-        fields = '__all__'
+        fields = ('id', 'url', 'task', 'user', 'date', 'duration', 'note',)

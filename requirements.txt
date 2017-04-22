@@ -10,6 +10,7 @@ django-libsass<0.8,>=0.7
 
 # api
 djangorestframework<3.7,>=3.6
+django-filter<1.1,>=1.0
 
 # testing
 # should have flake8 and coveralls too but will split into another file
