@@ -10,6 +10,9 @@ from django.contrib.auth.models import User
 class Timesheet(models.Model):
     name = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return 'Timesheet: ' + self.name
 
@@ -17,6 +20,9 @@ class Timesheet(models.Model):
 class Task(models.Model):
     timesheet = models.ForeignKey(Timesheet, related_name='tasks')
     name = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return 'Task: ' + self.name
@@ -30,6 +36,7 @@ class Entry(models.Model):
     note = models.TextField(blank=True, null=True)
 
     class Meta:
+        ordering = ['-date', '-id']
         verbose_name_plural = 'Entries'
 
     def save(self, *args, **kwargs):
