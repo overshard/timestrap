@@ -72,4 +72,6 @@ class Command(BaseCommand):
                 )
 
         if verbosity > 0:
-            self.stdout.write(self.style.SUCCESS('Successfully added fake data.'))
+            self.stdout.write(
+                self.style.SUCCESS('Successfully added fake data.')
+            )
