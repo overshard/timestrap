@@ -12,7 +12,7 @@ Quickstart
 
 Want to get up and running quickly?
 
-[![Heroku][heroku-shield]][heroku-link]
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/overshard/timestrap)
 
 We create a default username and password with superuser access to get you
 started, please change it via the admin panel:
