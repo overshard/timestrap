@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Home{% endblock %}
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+    <h2 class="h3 text-center">Total Time Per Day</h2>
+    <canvas class="mb-5" id="totalTimePerDay" height="100"></canvas>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <h2 class="h3 text-center">Tasks Per Timesheet</h2>
+            <canvas id="tasksPerTimesheet"></canvas>
+        </div>
+
+        <div class="col-sm-4">
+            <h2 class="h3 text-center">Entries Per Timesheet</h2>
+            <canvas id="entriesPerTimesheet"></canvas>
+        </div>
+
+        <div class="col-sm-4">
+            <h2 class="h3 text-center">Hours Per Timesheet</h2>
+            <canvas id="timePerTimesheet"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+	<script>
+		var totalTimePerDay = document.getElementById("totalTimePerDay");
+		var totalTimePerDayChart = new Chart(totalTimePerDay, {
+			type: 'bar',
+			data: {
+                labels: ["Red", "Blue", "Yellow"],
+				datasets: [{
+                    label: "Time",
+					data: [12, 19, 3],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+				}]
+			}
+		});
+
+		var tasksPerTimesheet = document.getElementById("tasksPerTimesheet");
+		var tasksPerTimesheetChart = new Chart(tasksPerTimesheet, {
+			type: 'doughnut',
+			data: {
+				labels: [
+                    {% for timesheet in timesheets %}
+                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ],
+				datasets: [{
+					data: [
+                        {% for timesheet in timesheets %}
+                            "{{ timesheet.tasks.count }}"{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+				}]
+			},
+            options: {
+                legend: {
+                    display: false
+                }
+            }
+		});
+
+		var entriesPerTimesheet = document.getElementById("entriesPerTimesheet");
+		var entriesPerTimesheetChart = new Chart(entriesPerTimesheet, {
+			type: 'doughnut',
+			data: {
+				labels: [
+                    {% for timesheet in timesheets %}
+                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ],
+				datasets: [{
+					data: [
+                        {% for entries in entries_per_timesheet %}
+                            "{{ entries }}"{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+				}]
+			},
+            options: {
+                legend: {
+                    display: false
+                }
+            }
+		});
+
+		var timePerTimesheet = document.getElementById("timePerTimesheet");
+		var timePerTimesheetChart = new Chart(timePerTimesheet, {
+			type: 'doughnut',
+			data: {
+				labels: [
+                    {% for timesheet in timesheets %}
+                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ],
+				datasets: [{
+					data: [
+                        {% for total_time in time_per_timesheet %}
+                            "{{ total_time }}"{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+				}]
+			},
+            options: {
+                legend: {
+                    display: false
+                }
+            }
+		});
+	</script>
+{% endblock %}

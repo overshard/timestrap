@@ -46,6 +46,9 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'timesheets' %}">Timesheets</a>
                             </li>
                             <li class="nav-item">
@@ -112,6 +115,9 @@
         <script type="text/javascript" crossorigin="anonymous"
             src="https://unpkg.com/moment@2.18.1/min/moment.min.js"
             integrity="sha384-DRe+1gYJauFEenXeWS8TmYdBmDUqnR5Rcw7ax4KTqOxXWd4NAMP2VPU5H69U7yP9"></script>
+        <script type="text/javascript" crossorigin="anonymous"
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"
+            integrity="sha384-86mmuxXJYGTFcyG3Tr7nKO2BYpngqxq/EYijDDr0VCbSXm5HK6tfJbGl4HSwEoUk"></script>
 
         {% compress js %}
             <script type="text/javascript" src="{% static 'js/base.js' %}"></script>

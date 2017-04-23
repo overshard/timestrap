@@ -1,20 +1,42 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import timedelta
+
 from django.views.generic.base import RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 
 from .admin import EntryResource
-from .models import Timesheet, Task
+from .models import Timesheet, Task, Entry
 
 
-class HomeView(RedirectView):
-    # TODO: We should have a landing page but for now we will redirect to the
-    # login page.
-    permanent = False
-    query_string = True
-    pattern_name = 'timesheets'
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+
+        context['timesheets'] = Timesheet.objects.all()
+
+        entries_per_timesheet = []
+        for timesheet in context['timesheets']:
+            entries_per_timesheet.append(
+                Entry.objects.filter(task__timesheet=timesheet).count()
+            )
+        context['entries_per_timesheet'] = entries_per_timesheet
+
+        time_per_timesheet = []
+        for timesheet in context['timesheets']:
+            entries = Entry.objects.filter(task__timesheet=timesheet)
+            total_time = timedelta()
+            for entry in entries:
+                total_time += entry.duration
+            total_time = int(total_time.total_seconds()/3600)
+            time_per_timesheet.append(total_time)
+        context['time_per_timesheet'] = time_per_timesheet
+
+        return context
 
 
 class TimesheetsView(LoginRequiredMixin, TemplateView):

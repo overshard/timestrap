@@ -8,6 +8,7 @@
 
 {% block content %}
     <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
         {% if task %}
             <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ task.timesheet }}</a></li>
             <li class="breadcrumb-item">
