@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
+from import_export import resources
+
 from .models import Timesheet, Task, Entry
 
 
@@ -35,3 +37,9 @@ class EntryAdmin(admin.ModelAdmin):
             'fields': ('note',)
         }),
     )
+
+
+class EntryResource(resources.ModelResource):
+    class Meta:
+        model = Entry
+        fields = ('task__name', 'user__username', 'date', 'duration', 'note')

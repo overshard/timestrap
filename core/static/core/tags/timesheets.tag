@@ -52,7 +52,7 @@
         var loading;
         var timesheetsTable;
 
-        function getTimesheets(url) {
+        getTimesheets(e, url) {
             fetch(url || timesheetsApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
@@ -75,7 +75,7 @@
             });
         }
 
-        getTimesheets();
+        tag.getTimesheets();
 
         timesheetsPage(e) {
             loading.classList.remove('d-none');
@@ -108,7 +108,7 @@
                 method: 'post',
                 body: JSON.stringify(formValues)
             }).then(function(response) {
-                getTimesheets();
+                tag.getTimesheets();
             });
         }
     </script>

@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 
 from django.views.generic.base import RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
-from core.models import Timesheet, Task
+from .admin import EntryResource
+from .models import Timesheet, Task
 
 
 class HomeView(RedirectView):
@@ -46,3 +48,10 @@ class EntriesView(LoginRequiredMixin, TemplateView):
             context['timesheet'] = Timesheet.objects.get(id=timesheet)
 
         return context
+
+
+def entries_csv_export(request):
+    dataset = EntryResource().export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="entries.csv"'
+    return response

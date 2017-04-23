@@ -58,7 +58,7 @@
         var loading;
         var entriesTable;
 
-        function getTasks(url) {
+        getTasks(url) {
             let tasks = fetch(url || tasksApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
@@ -95,7 +95,7 @@
 			});
         }
 
-        getTasks();
+        tag.getTasks();
 
         tasksPage(e) {
             loading.classList.remove('d-none');
@@ -124,7 +124,7 @@
                 method: 'post',
                 body: JSON.stringify(formValues)
             }).then(function(response) {
-                getTasks();
+                tag.getTasks();
             });
         }
     </script>
