@@ -54,6 +54,14 @@ class HomeView(LoginRequiredMixin, TemplateView):
         time_per_day = time_per_day
         context['time_per_day'] = time_per_day
 
+        context['total_tasks'] = Task.objects.count()
+        context['total_entries'] = Entry.objects.count()
+        total_duration = Entry.objects.aggregate(Sum('duration'))
+        # TODO: Make hour conversion of timedelta into function since we use
+        # three times in this view alone.
+        total_hours = int(total_duration['duration__sum'].total_seconds()/3600)
+        context['total_hours'] = total_hours
+
         return context
 
 
