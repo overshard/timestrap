@@ -15,24 +15,56 @@
         </button>
     </p>
 
-    <table class="entries-table table table-striped table-sm w-100 d-none">
-        <thead class="thead-inverse">
-            <tr>
-                <th class="hidden-md-down">Date</th>
-                <th>User</th>
-                <th>Duration</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr each={ entries }>
-                <td class="hidden-md-down">{ date }</td>
-                <td>{ user_details.username }</td>
-                <td>{ duration }</td>
-                <td>{ note }</td>
-            </tr>
-        </tbody>
-    </table>
+    <form onsubmit={ submitEntry }>
+        <table class="entries-table table table-striped table-sm w-100 d-none">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Duration</th>
+                    <th>Note</th>
+                    <th>Task</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" ref="date" placeholder="Date">
+                    </td>
+                    <td>
+						<select class="user-select" ref="user">
+                            <option selected>User</option>
+							<option each={ users } value={ url }>{ username }</option>
+						</select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" ref="duration" placeholder="Duration">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" ref="note" placeholder="Note">
+                    </td>
+                    <td>
+						<select class="task-select" ref="task">
+                            <option selected>Task</option>
+							<option each={ tasks } value={ url }>{ name }</option>
+						</select>
+                    </td>
+                    <td class="text-right">
+                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                    </td>
+                </tr>
+                <tr each={ entries }>
+                    <td>{ date }</td>
+                    <td>{ user_details.username }</td>
+                    <td>{ duration }</td>
+                    <td>{ note }</td>
+                    <td>{ task_details.name }</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 
     <p class="loading text-center my-5">
         <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -46,24 +78,36 @@
         var entriesTable = null;
 
         function getEntries(url) {
-            let location = window.location.href;
-            location = location.split('?');
-            if (location.length === 2 && !url.includes(location[1])) {
-                if (url.split('?').length === 2) {
-                    url = url + '&' + location[1];
-                } else {
-                    url = url + '?' + location[1];
-                }
-            }
+            url = appendQuery(url);
 
-            fetch(url, {
+            let entries = fetch(url, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
                 })
             }).then(function(response) {
                 return response.json();
-            }).then(function(data) {
+            })
+
+            let users = fetch('/api/users/', {
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                })
+            }).then(function(response) {
+                return response.json();
+            })
+
+            let tasks = fetch('/api/tasks/', {
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                })
+            }).then(function(response) {
+                return response.json();
+            })
+
+            Promise.all([entries, users, tasks]).then(function(e) {
                 loading = document.querySelector('.loading');
                 entriesTable = document.querySelector('.entries-table');
 
@@ -71,10 +115,15 @@
                 entriesTable.classList.remove('d-none');
 
                 tag.update({
-                    entries: data.results,
-                    next: data.next,
-                    previous: data.previous
+                    entries: e[0].results,
+                    users: e[1].results,
+                    tasks: e[2].results,
+                    next: e[0].next,
+                    previous: e[0].previous
                 });
+
+				$('.user-select').chosen();
+				$('.task-select').chosen();
             });
         }
 
@@ -85,6 +134,29 @@
             loading.classList.remove('d-none');
             entriesTable.classList.add('d-none');
             getEntries(url);
+        }
+
+        submitEntry(e) {
+            e.preventDefault();
+            let csrfToken = Cookies.get('csrftoken');
+            let formValues = {
+                date: this.refs.date.value,
+                user: this.refs.user.value,
+                duration: this.refs.duration.value,
+                note: this.refs.note.value,
+                task: this.refs.task.value
+            }
+            fetch(url, {
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }),
+                method: 'post',
+                body: JSON.stringify(formValues)
+            }).then(function(response) {
+                getEntries(url);
+            });
         }
     </script>
 </entries>

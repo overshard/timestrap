@@ -15,21 +15,33 @@
         </button>
     </p>
 
-    <table class="timesheets-table table table-striped table-sm w-100 d-none">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr each={ timesheets }>
-                <td>{ name }</td>
-                <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</button>
-                    <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
-            </tr>
-        </tbody>
-    </table>
+    <form onsubmit={ submitTimesheet }>
+        <table class="timesheets-table table table-striped table-sm w-100 d-none">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
+                    </td>
+                    <td class="text-right">
+                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                    </td>
+                </tr>
+                <tr each={ timesheets }>
+                    <td>{ name }</td>
+                    <td class="text-right">
+                        <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</button>
+                        <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 
     <p class="loading text-center my-5">
         <i class="fa fa-spinner" aria-hidden="true"></i>
@@ -82,6 +94,25 @@
         goToEntries(e) {
             timesheet = e.target.dataset.id;
             document.location.href = '/entries/?task__timesheet=' + timesheet;
+        }
+
+        submitTimesheet(e) {
+            e.preventDefault();
+            let csrfToken = Cookies.get('csrftoken');
+            let formValues = {
+                name: this.refs.name.value
+            }
+            fetch(url, {
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }),
+                method: 'post',
+                body: JSON.stringify(formValues)
+            }).then(function(response) {
+                getTimesheets(url);
+            });
         }
     </script>
 </timesheets>
