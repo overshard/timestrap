@@ -63,7 +63,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # TODO: Make hour conversion of timedelta into function since we use
         # three times in this view alone.
         if total_duration['duration__sum']:
-            total_hours = int(total_duration['duration__sum'].total_seconds()/3600)
+            total_hours = int(total_duration['duration__sum']
+                              .total_seconds()/3600)
         else:
             total_hours = 0
         context['total_hours'] = total_hours
