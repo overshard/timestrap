@@ -3,10 +3,16 @@ Timestrap
 
 [![Travis][travis-shield]][travis-link] [![Coveralls][coveralls-shield]][coveralls-link]  [![License][license-shield]][license-link]
 
-[![Heroku][heroku-shield]][heroku-link]
-
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
+
+
+Quickstart
+----------
+
+Want to get up and running quickly?
+
+[![Heroku][heroku-shield]][heroku-link]
 
 
 Installation
