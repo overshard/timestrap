@@ -33,7 +33,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
             entries = (Entry.objects
                             .filter(task__timesheet=timesheet)
                             .aggregate(Sum('duration')))
-            total_time = int(entries['duration__sum'].total_seconds()/3600)
+            if entries['duration__sum']:
+                total_time = int(entries['duration__sum'].total_seconds()/3600)
+            else:
+                total_time = 0
             time_per_timesheet.append(total_time)
         context['time_per_timesheet'] = time_per_timesheet
 
@@ -59,7 +62,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
         total_duration = Entry.objects.aggregate(Sum('duration'))
         # TODO: Make hour conversion of timedelta into function since we use
         # three times in this view alone.
-        total_hours = int(total_duration['duration__sum'].total_seconds()/3600)
+        if total_duration['duration__sum']:
+            total_hours = int(total_duration['duration__sum'].total_seconds()/3600)
+        else:
+            total_hours = 0
         context['total_hours'] = total_hours
 
         return context
