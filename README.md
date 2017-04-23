@@ -80,3 +80,10 @@ generate some data. Don't run this on a production database or you'll have to
 do a lot of clean up.
 
     python manage.py fake
+
+
+Screenshots
+-----------
+
+![Entries](https://raw.githubusercontent.com/overshard/timestrap/master/screenshots/entries.png)
+![Dashboard](https://raw.githubusercontent.com/overshard/timestrap/master/screenshots/dashboard.png)
