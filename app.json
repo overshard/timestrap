@@ -1,0 +1,9 @@
+{
+    "name": "Timetrap",
+    "description": "Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.",
+    "repository": "https://github.com/overshard/timestrap",
+    "keywords": ["python", "django"],
+    "scripts": {
+        "postdeploy": "python manage.py migrate"
+    }
+}

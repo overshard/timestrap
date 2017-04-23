@@ -3,6 +3,8 @@ Timestrap
 
 [![Travis][travis-shield]][travis-link] [![Coveralls][coveralls-shield]][coveralls-link]  [![License][license-shield]][license-link]
 
+[![Heroku][heroku-shield]][heroku-link]
+
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
@@ -64,3 +66,5 @@ do a lot of clean up.
 [coveralls-link]: https://coveralls.io/github/overshard/timestrap
 [license-shield]: https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square
 [license-link]: https://github.com/overshard/timestrap/blob/master/LICENSE.md
+[heroku-shield]: https://www.herokucdn.com/deploy/button.svg
+[heroku-link]: https://heroku.com/deploy?template=https://github.com/overshard/timestrap
