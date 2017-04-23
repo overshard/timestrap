@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import timedelta
+from collections import OrderedDict
+from datetime import timedelta, date
 
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.db.models import Sum
 
 from .admin import EntryResource
 from .models import Timesheet, Task, Entry
@@ -20,21 +22,37 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context['timesheets'] = Timesheet.objects.all()
 
         entries_per_timesheet = []
-        for timesheet in context['timesheets']:
+        for timesheet in context['timesheets'].iterator():
             entries_per_timesheet.append(
                 Entry.objects.filter(task__timesheet=timesheet).count()
             )
         context['entries_per_timesheet'] = entries_per_timesheet
 
         time_per_timesheet = []
-        for timesheet in context['timesheets']:
-            entries = Entry.objects.filter(task__timesheet=timesheet)
-            total_time = timedelta()
-            for entry in entries:
-                total_time += entry.duration
-            total_time = int(total_time.total_seconds()/3600)
+        for timesheet in context['timesheets'].iterator():
+            entries = (Entry.objects
+                            .filter(task__timesheet=timesheet)
+                            .aggregate(Sum('duration')))
+            total_time = int(entries['duration__sum'].total_seconds()/3600)
             time_per_timesheet.append(total_time)
         context['time_per_timesheet'] = time_per_timesheet
+
+        time_per_day = OrderedDict()
+        current_date = date.today()
+        one_day = timedelta(days=1)
+        seven_days_ago = current_date - timedelta(days=7)
+        while current_date > seven_days_ago:
+            entries = (Entry.objects
+                            .filter(date=seven_days_ago)
+                            .aggregate(Sum('duration')))
+            if entries['duration__sum']:
+                total_time = int(entries['duration__sum'].total_seconds()/3600)
+            else:
+                total_time = 0
+            time_per_day[seven_days_ago] = total_time
+            seven_days_ago += one_day
+        time_per_day = time_per_day
+        context['time_per_day'] = time_per_day
 
         return context
 

@@ -34,10 +34,18 @@
 		var totalTimePerDayChart = new Chart(totalTimePerDay, {
 			type: 'bar',
 			data: {
-                labels: ["Red", "Blue", "Yellow"],
+                labels: [
+                    {% for k, v in time_per_day.items %}
+                        "{{ k }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ],
 				datasets: [{
                     label: "Time",
-					data: [12, 19, 3],
+                    data: [
+                        {% for k, v in time_per_day.items %}
+                            {{ v }}{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
                     backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
 				}]
 			}

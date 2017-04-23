@@ -3,11 +3,42 @@ from __future__ import unicode_literals
 
 from datetime import timedelta
 
-from django.test import TestCase
+from django.test import TestCase, Client, override_settings
 from django.contrib.auth.models import User
 from django.core.management import call_command
 
 from .models import Timesheet, Task, Entry
+
+from faker import Factory
+
+
+fake = Factory.create()
+
+
+@override_settings(
+    STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
+)
+class ViewsTestCase(TestCase):
+    def setUp(self):
+        call_command('fake', verbosity=0, iterations=1)
+
+        self.c = Client()
+
+        fake_user = fake.simple_profile()
+        fake_password = fake.password()
+        User.objects.create_user(fake_user['username'], fake_user['mail'],
+                                 fake_password)
+
+        self.c.login(username=fake_user['username'], password=fake_password)
+
+    # TODO: Uncomment once verbosity is fixed
+    # Forcing verbosity to 0 doesn't seem to work here, disabing till fixed
+    # def test_compress(self):
+    #     call_command('compress', verbosity=0, force=True)
+
+    def test_home_view(self):
+        page = self.c.get('/')
+        self.assertEqual(page.status_code, 200)
 
 
 class TimesheetTestCase(TestCase):
