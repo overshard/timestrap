@@ -19,3 +19,8 @@ django-import-export<0.6,>=0.5
 # should have flake8 and coveralls too but will split into another file
 # faker is reqired by a core management command
 Faker<0.8,>=0.7
+
+# heroku
+dj-database-url<0.5,>=0.4
+psycopg2<2.7,>=2.6
+gunicorn<19.7,>=19.6
