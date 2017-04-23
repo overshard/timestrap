@@ -25,13 +25,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="table-info">
                     <td>
                         <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
                     </td>
                     <td>
 						<select class="timesheet-select" ref="timesheet">
-                            <option selected>Timesheet</option>
 							<option each={ timesheets } value={ url }>{ name }</option>
 						</select>
                     </td>
@@ -42,7 +41,9 @@
                 <tr each={ tasks }>
                     <td>{ name }</td>
                     <td>{ timesheet_details.name }</td>
-                    <td class="text-right"><button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button></td>
+                    <td class="text-right">
+                        <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -54,15 +55,11 @@
 
     <script>
         var tag = this;
-        var url = '/api/tasks/';
-
-        var loading = null;
-        var entriesTable = null;
+        var loading;
+        var entriesTable;
 
         function getTasks(url) {
-            url = appendQuery(url);
-
-            let tasks = fetch(url, {
+            let tasks = fetch(url || tasksApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -71,7 +68,7 @@
                 return response.json();
             });
 
-            let timesheets = fetch('/api/timesheets/', {
+            let timesheets = fetch(timesheetsApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -98,18 +95,17 @@
 			});
         }
 
-        getTasks(url);
+        getTasks();
 
         tasksPage(e) {
-            url = e.target.dataset.url;
             loading.classList.remove('d-none');
             tasksTable.classList.add('d-none');
-            getTasks(url);
+            getTasks(e.target.dataset.url);
         }
 
         goToEntries(e) {
             task = e.target.dataset.id;
-            document.location.href = '/entries/?task=' + task;
+            document.location.href = entriesUrl + task;
         }
 
         submitTask(e) {
@@ -128,7 +124,7 @@
                 method: 'post',
                 body: JSON.stringify(formValues)
             }).then(function(response) {
-                getTasks(url);
+                getTasks();
             });
         }
     </script>

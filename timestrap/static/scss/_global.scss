@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+a.btn {
+    color: white !important;
+}
+
 .fa-spinner {
     font-size: 4em;
     @include animation(rotating 1s linear infinite);

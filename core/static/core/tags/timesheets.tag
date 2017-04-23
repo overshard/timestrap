@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="table-info">
                     <td>
                         <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
                     </td>
@@ -35,8 +35,8 @@
                 <tr each={ timesheets }>
                     <td>{ name }</td>
                     <td class="text-right">
-                        <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</button>
-                        <button class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</button>
+                        <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</a>
+                        <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</a>
                     </td>
                 </tr>
             </tbody>
@@ -49,13 +49,11 @@
 
     <script>
         var tag = this;
-        var url = '/api/timesheets/';
-
-        var loading = null;
-        var timesheetsTable = null;
+        var loading;
+        var timesheetsTable;
 
         function getTimesheets(url) {
-            fetch(url, {
+            fetch(url || timesheetsApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -77,23 +75,22 @@
             });
         }
 
-        getTimesheets(url);
+        getTimesheets();
 
         timesheetsPage(e) {
-            url = e.target.dataset.url;
             loading.classList.remove('d-none');
             timesheetsTable.classList.add('d-none');
-            getTimesheets(url);
+            getTimesheets(e.target.dataset.url);
         }
 
         goToTasks(e) {
             timesheet = e.target.dataset.id;
-            document.location.href = '/tasks/?timesheet=' + timesheet;
+            document.location.href = tasksUrl + timesheet;
         }
 
         goToEntries(e) {
             timesheet = e.target.dataset.id;
-            document.location.href = '/entries/?task__timesheet=' + timesheet;
+            document.location.href = entriesUrl + timesheet;
         }
 
         submitTimesheet(e) {
@@ -102,7 +99,7 @@
             let formValues = {
                 name: this.refs.name.value
             }
-            fetch(url, {
+            fetch(timesheetsApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -111,7 +108,7 @@
                 method: 'post',
                 body: JSON.stringify(formValues)
             }).then(function(response) {
-                getTimesheets(url);
+                getTimesheets();
             });
         }
     </script>

@@ -25,5 +25,24 @@
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
-    <script>riot.mount('entries')</script>
+    <script>
+        {% if task %}
+            var entriesApiUrl = "{% url 'entry-list' %}?task={{ task.id }}";
+        {% elif timesheet %}
+            var entriesApiUrl = "{% url 'entry-list' %}?task__timesheet={{ timesheet.id }}";
+        {% else %}
+            var entriesApiUrl = "{% url 'entry-list' %}";
+        {% endif %}
+        {% if task %}
+            var tasksApiUrl = "{% url 'task-list' %}?id={{ task.id }}";
+        {% elif timesheet %}
+            var tasksApiUrl = "{% url 'task-list' %}?timesheet={{ timesheet.id }}";
+        {% else %}
+            var tasksApiUrl = "{% url 'task-list' %}";
+        {% endif %}
+        var timesheetsApiUrl = "{% url 'timesheet-list' %}";
+        var usersApiUrl = "{% url 'user-list' %}";
+		var userId = {{ user.id }};
+        riot.mount('entries');
+    </script>
 {% endblock %}

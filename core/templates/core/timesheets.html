@@ -17,5 +17,10 @@
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/timesheets.tag' %}"></script>
-    <script>riot.mount('timesheets')</script>
+    <script>
+        var timesheetsApiUrl = "{% url 'timesheet-list' %}";
+        var tasksUrl = "{% url 'tasks' %}?timesheet=";
+        var entriesUrl = "{% url 'entries' %}?task__timesheet=";
+        riot.mount('timesheets');
+    </script>
 {% endblock %}

@@ -28,13 +28,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="table-info">
                     <td>
-                        <input type="text" class="form-control form-control-sm" ref="date" placeholder="Date">
+                        <input type="text" class="date-input form-control form-control-sm" ref="date" placeholder="Date">
                     </td>
                     <td>
 						<select class="user-select" ref="user">
-                            <option selected>User</option>
 							<option each={ users } value={ url }>{ username }</option>
 						</select>
                     </td>
@@ -46,7 +45,6 @@
                     </td>
                     <td>
 						<select class="task-select" ref="task">
-                            <option selected>Task</option>
 							<option each={ tasks } value={ url }>{ name }</option>
 						</select>
                     </td>
@@ -72,15 +70,11 @@
 
     <script>
         var tag = this;
-        var url = '/api/entries/';
-
-        var loading = null;
-        var entriesTable = null;
+        var loading;
+        var entriesTable;
 
         function getEntries(url) {
-            url = appendQuery(url);
-
-            let entries = fetch(url, {
+            let entries = fetch(url || entriesApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -89,7 +83,7 @@
                 return response.json();
             })
 
-            let users = fetch('/api/users/', {
+            let users = fetch(usersApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -98,7 +92,7 @@
                 return response.json();
             })
 
-            let tasks = fetch('/api/tasks/', {
+            let tasks = fetch(tasksApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -116,24 +110,26 @@
 
                 tag.update({
                     entries: e[0].results,
-                    users: e[1].results,
+                    users: promote(userId, e[1].results),
                     tasks: e[2].results,
                     next: e[0].next,
                     previous: e[0].previous
                 });
 
+                $('.date-input').pickadate({
+                    format: 'yyyy-mm-dd'
+                });
 				$('.user-select').chosen();
 				$('.task-select').chosen();
             });
         }
 
-        getEntries(url);
+        getEntries();
 
         entriesPage(e) {
-            url = e.target.dataset.url;
             loading.classList.remove('d-none');
             entriesTable.classList.add('d-none');
-            getEntries(url);
+            getEntries(e.target.dataset.url);
         }
 
         submitEntry(e) {
@@ -146,7 +142,7 @@
                 note: this.refs.note.value,
                 task: this.refs.task.value
             }
-            fetch(url, {
+            fetch(entriesApiUrl, {
                 credentials: 'include',
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -155,7 +151,7 @@
                 method: 'post',
                 body: JSON.stringify(formValues)
             }).then(function(response) {
-                getEntries(url);
+                getEntries();
             });
         }
     </script>

@@ -18,15 +18,16 @@ class UserViewSet(viewsets.ModelViewSet):
 class TimesheetViewSet(viewsets.ModelViewSet):
     queryset = Timesheet.objects.all()
     serializer_class = TimesheetSerializer
+    filter_fields = ('id',)
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    filter_fields = ('timesheet',)
+    filter_fields = ('id', 'timesheet',)
 
 
 class EntryViewSet(viewsets.ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    filter_fields = ('user', 'task', 'task__timesheet',)
+    filter_fields = ('id', 'user', 'task', 'task__timesheet',)
