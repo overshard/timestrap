@@ -14,6 +14,12 @@ Want to get up and running quickly?
 
 [![Heroku][heroku-shield]][heroku-link]
 
+We create a default username and password with superuser access to get you
+started, please change it via the admin panel:
+
+ + Username: `admin`
+ + Password: `changeme123`
+
 
 Installation
 ------------
