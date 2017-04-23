@@ -21,6 +21,16 @@ started, please change it via the admin panel:
  + Password: `changeme123`
 
 
+Example Website
+---------------
+
+I've setup an instance on Heroku of Timestrap that resets every 10 minutes if
+you want to play with it. The username and password are set to the same as the
+Quickstart ones.
+
+    https://timestrap.herokuapp.com/
+
+
 Installation
 ------------
 
