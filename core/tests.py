@@ -69,9 +69,12 @@ class EntryTestCase(TestCase):
         self.assertEqual(parsed_entry.duration, timedelta(hours=3, minutes=15))
 
 
-class FakeTestCase(TestCase):
+class CommandsTestCase(TestCase):
     def setUp(self):
         pass
 
     def test_fake(self):
         call_command('fake', verbosity=0)
+
+    def test_heroku(self):
+        call_command('heroku', verbosity=0)

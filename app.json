@@ -3,7 +3,17 @@
     "description": "Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.",
     "repository": "https://github.com/overshard/timestrap",
     "keywords": ["python", "django"],
+    "env": {
+        "DJANGO_SETTINGS_MODULE": {
+            "description": "We have a prebuilt config for Heroku",
+            "value": "timestrap.settings.heroku"
+        },
+        "SECRET_KEY": {
+            "description": "Used for the Django auth system",
+            "generator": "secret"
+        }
+    },
     "scripts": {
-        "postdeploy": "python manage.py migrate"
+        "postdeploy": "python manage.py heroku"
     }
 }
