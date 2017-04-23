@@ -80,7 +80,7 @@
         timesheetsPage(e) {
             loading.classList.remove('d-none');
             timesheetsTable.classList.add('d-none');
-            getTimesheets(e.target.dataset.url);
+            getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
         goToTasks(e) {

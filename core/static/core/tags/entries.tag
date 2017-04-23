@@ -58,7 +58,7 @@
                     <td>{ duration }</td>
                     <td>{ note }</td>
                     <td>{ task_details.name }</td>
-                    <td></td>
+                    <td class="text-right"><a class="btn btn-primary btn-sm" onclick={ deleteEntry } data-url={ url }><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -117,7 +117,10 @@
                 });
 
                 $('.date-input').pickadate({
-                    format: 'yyyy-mm-dd'
+                    format: 'yyyy-mm-dd',
+                    onStart: function() {
+                        this.set('select', new Date());
+                    }
                 });
 				$('.user-select').chosen();
 				$('.task-select').chosen();
@@ -129,7 +132,21 @@
         entriesPage(e) {
             loading.classList.remove('d-none');
             entriesTable.classList.add('d-none');
-            getEntries(e.target.dataset.url);
+            getEntries(e.currentTarget.getAttribute('data-url'));
+        }
+
+        deleteEntry(e) {
+            let csrfToken = Cookies.get('csrftoken');
+            fetch(e.currentTarget.getAttribute('data-url'), {
+                credentials: 'include',
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }),
+                method: 'delete'
+            }).then(function(response) {
+                getEntries();
+            });
         }
 
         submitEntry(e) {

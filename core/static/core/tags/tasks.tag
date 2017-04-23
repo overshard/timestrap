@@ -100,7 +100,7 @@
         tasksPage(e) {
             loading.classList.remove('d-none');
             tasksTable.classList.add('d-none');
-            getTasks(e.target.dataset.url);
+            getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
         goToEntries(e) {
