@@ -127,6 +127,8 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
 
+COMPRESS_OFFLINE = True
+
 
 # Rest framework
 # http://www.django-rest-framework.org/
