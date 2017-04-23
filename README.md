@@ -24,12 +24,11 @@ started, please change it via the admin panel:
 Example Website
 ---------------
 
-I've setup an instance on Heroku of Timestrap that resets every 10 minutes if
-you want to play with it. The username and password are set to the same as the
-Quickstart ones. If someone messes up the fun for everyone wait till the next
-reset or set the project up yourself.
-
-    https://timestrap.herokuapp.com/
+I've setup an [instance on Heroku](https://timestrap.herokuapp.com/) of
+Timestrap that resets every 10 minutes if you want to play with it. The
+username and password are set to the same as the Quickstart ones. If someone
+messes up the fun for everyone wait till the next reset or set the project up
+yourself.
 
 
 Installation
