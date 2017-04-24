@@ -44,6 +44,37 @@ class ViewsTestCase(TestCase):
         page = self.c.get('/')
         self.assertEqual(page.status_code, 200)
 
+    def test_timesheets_view(self):
+        # Test with and without data in the database
+        page = self.c.get('/timesheets/')
+        self.assertEqual(page.status_code, 200)
+
+        call_command('fake', verbosity=0, iterations=1)
+        page = self.c.get('/timesheets/')
+        self.assertEqual(page.status_code, 200)
+
+    def test_tasks_view(self):
+        # Test with and without data in the database
+        page = self.c.get('/tasks/')
+        self.assertEqual(page.status_code, 200)
+
+        call_command('fake', verbosity=0, iterations=1)
+        page = self.c.get('/tasks/')
+        self.assertEqual(page.status_code, 200)
+
+    def test_entries_view(self):
+        # Test with and without data in the database
+        page = self.c.get('/entries/')
+        self.assertEqual(page.status_code, 200)
+
+        call_command('fake', verbosity=0, iterations=1)
+        page = self.c.get('/entries/')
+        self.assertEqual(page.status_code, 200)
+
+    def test_entries_csv_view(self):
+        page = self.c.get('/entries/csv/')
+        self.assertEqual(page.status_code, 200)
+
 
 class AppTestCase(TestCase):
     def setUp(self):
