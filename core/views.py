@@ -5,6 +5,7 @@ from collections import OrderedDict
 from datetime import timedelta, date
 
 from django.views.generic.base import TemplateView
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.db.models import Sum
@@ -110,6 +111,7 @@ class EntriesView(LoginRequiredMixin, TemplateView):
         return context
 
 
+@login_required
 def entries_csv_export(request):
     dataset = EntryResource().export()
     response = HttpResponse(dataset.csv, content_type='text/csv')
