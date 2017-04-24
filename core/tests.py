@@ -6,6 +6,7 @@ from datetime import timedelta
 from django.test import TestCase, Client, override_settings
 from django.contrib.auth.models import User
 from django.core.management import call_command
+from django.apps import apps
 
 from .models import Timesheet, Task, Entry
 
@@ -42,6 +43,14 @@ class ViewsTestCase(TestCase):
         call_command('fake', verbosity=0, iterations=1)
         page = self.c.get('/')
         self.assertEqual(page.status_code, 200)
+
+
+class AppTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_core_config(self):
+        self.assertEqual(apps.get_app_config('core').name, 'core')
 
 
 class TimesheetTestCase(TestCase):

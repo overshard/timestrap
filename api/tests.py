@@ -4,11 +4,20 @@ from __future__ import unicode_literals
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.core.management import call_command
+from django.apps import apps
 
 from faker import Factory
 
 
 fake = Factory.create()
+
+
+class AppTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_api_config(self):
+        self.assertEqual(apps.get_app_config('api').name, 'api')
 
 
 class BrowseableApiTestCase(TestCase):
