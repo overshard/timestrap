@@ -41,7 +41,10 @@ yourself.
 Installation
 ------------
 
-Your system needs to have Python with virtualenv and pip installed.
+Your system needs to have Python with virtualenv and pip installed. If you are
+using Ubuntu you also need to install `build-essential` and on Mac `Xcode`. If
+you do not want to use postgres or have a problem building because of
+`psycopg2` remove that from your `requirements.txt` before `pip install`.
 
     virtualenv .venv
     source .venv/bin/activate
