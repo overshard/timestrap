@@ -115,6 +115,7 @@
                 });
             } else {
                 $(row).addClass('editing');
+                $(columns[1]).find('.btn-warning').html('Save');
                 $(columns[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
             }
         }
