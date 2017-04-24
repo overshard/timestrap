@@ -66,6 +66,10 @@ If you have not yet migrated your database do so by running:
 
     python manage.py migrate
 
+You'll need to create your first user too:
+
+    python manage.py createsuperuser
+
 After this you can run Timestrap and access it from your browser at
 `localhost:8000`.
 
