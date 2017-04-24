@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
+import django_filters
 
 from core.models import Timesheet, Task, Entry
 from .serializers import (UserSerializer, TimesheetSerializer, TaskSerializer,
@@ -27,7 +28,16 @@ class TaskViewSet(viewsets.ModelViewSet):
     filter_fields = ('id', 'timesheet',)
 
 
+class EntryFilter(django_filters.rest_framework.FilterSet):
+    min_date = django_filters.DateFilter(name="date", lookup_expr="gte")
+    max_date = django_filters.DateFilter(name="date", lookup_expr="lte")
+
+    class Meta:
+        model = Entry
+        fields = ('id', 'date', 'user', 'task', 'task__timesheet',)
+
+
 class EntryViewSet(viewsets.ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    filter_fields = ('id', 'user', 'task', 'task__timesheet',)
+    filter_class = EntryFilter
