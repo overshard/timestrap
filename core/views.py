@@ -75,6 +75,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
 class TimesheetsView(LoginRequiredMixin, TemplateView):
     template_name = 'core/timesheets.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(TimesheetsView, self).get_context_data(**kwargs)
+        context['timesheets'] = Timesheet.objects.all()
+        return context
+
 
 class TasksView(LoginRequiredMixin, TemplateView):
     template_name = 'core/tasks.html'

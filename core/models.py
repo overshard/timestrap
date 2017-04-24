@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 class Timesheet(models.Model):
     name = models.CharField(max_length=255)
+    complete = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-id']
@@ -20,6 +21,7 @@ class Timesheet(models.Model):
 class Task(models.Model):
     timesheet = models.ForeignKey(Timesheet, related_name='tasks')
     name = models.CharField(max_length=255)
+    complete = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['timesheet', '-id']
