@@ -17,7 +17,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class TimesheetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Timesheet
-        fields = ('id', 'url', 'name',)
+        fields = ('id', 'url', 'name', 'complete',)
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,7 +25,8 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Task
-        fields = ('id', 'url', 'timesheet', 'timesheet_details', 'name',)
+        fields = ('id', 'url', 'timesheet', 'timesheet_details', 'name',
+                  'complete',)
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
