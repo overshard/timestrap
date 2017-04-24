@@ -6,6 +6,9 @@ Timestrap
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
+**WARNING**: This app is currently very unstable as I have just started coding
+it. Everything will may, and probably will, change.
+
 
 Quickstart
 ----------
