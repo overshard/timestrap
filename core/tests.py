@@ -20,8 +20,6 @@ fake = Factory.create()
 )
 class ViewsTestCase(TestCase):
     def setUp(self):
-        call_command('fake', verbosity=0, iterations=1)
-
         self.c = Client()
 
         fake_user = fake.simple_profile()
@@ -37,6 +35,11 @@ class ViewsTestCase(TestCase):
     #     call_command('compress', verbosity=0, force=True)
 
     def test_home_view(self):
+        # Test with and without data in the database
+        page = self.c.get('/')
+        self.assertEqual(page.status_code, 200)
+
+        call_command('fake', verbosity=0, iterations=1)
         page = self.c.get('/')
         self.assertEqual(page.status_code, 200)
 
