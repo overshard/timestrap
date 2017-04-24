@@ -35,6 +35,7 @@
                 <tr each={ timesheets }>
                     <td>{ name }</td>
                     <td class="text-right">
+                        <a class="btn btn-warning btn-sm" onclick={ editTimesheet }>Edit</a>
                         <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</a>
                         <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</a>
                     </td>
@@ -91,6 +92,31 @@
         goToEntries(e) {
             timesheet = e.target.dataset.id;
             document.location.href = entriesUrl + timesheet;
+        }
+
+        // This is bad, need to figure out how riot expects inline editing
+        editTimesheet(e) {
+            let timesheet = e.item;
+            let row = e.target.parentElement.parentElement;
+            let columns = $(row).find('td');
+            let csrfToken = Cookies.get('csrftoken');
+            if ($(row).hasClass('editing')) {
+                timesheet.name = $(columns[0]).find('input').val();
+                fetch(timesheet.url, {
+                    credentials: 'include',
+                    headers: new Headers({
+                        'content-type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }),
+                    method: 'put',
+                    body: JSON.stringify(timesheet)
+                }).then(function(response) {
+                    tag.getTimesheets();
+                });
+            } else {
+                $(row).addClass('editing');
+                $(columns[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
+            }
         }
 
         submitTimesheet(e) {
