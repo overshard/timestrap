@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Reports{% endblock %}
+{% block title %}Reports{% endblock %}
+
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Reports</li>
+    </ol>
+
+    <reports />
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/reports.tag' %}"></script>
+    <script>
+        var usersApiUrl = "{% url 'user-list' %}";
+        var timesheetsApiUrl = "{% url 'timesheet-list' %}";
+        var tasksApiUrl = "{% url 'task-list' %}";
+        var entriesApiUrl = "{% url 'entry-list' %}";
+		var userId = {{ user.id }};
+        riot.mount('reports');
+    </script>
+{% endblock %}

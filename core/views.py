@@ -111,6 +111,10 @@ class EntriesView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class ReportsView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/reports.html'
+
+
 @login_required
 def entries_csv_export(request):
     dataset = EntryResource().export()
