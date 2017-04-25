@@ -1,7 +1,9 @@
 language: python
-# will test with python 3.x once project is more mature
 python:
     - 2.7
+    - 3.4
+    - 3.5
+    - 3.6
 # install dependencies
 install: 
     - pip install -r requirements.txt
