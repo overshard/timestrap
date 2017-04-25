@@ -1,16 +1,16 @@
 <timesheets>
     <p class="mb-4 clearfix">
         <button class="btn btn-primary btn-sm"
-            data-url="{ previous }"
-            if={ previous }
-            onclick={ timesheetsPage }>
+                data-url="{ previous }"
+                if={ previous }
+                onclick={ timesheetsPage }>
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
         </button>
 
         <button class="btn btn-primary btn-sm pull-right"
-            data-url="{ next }"
-            if={ next }
-            onclick={ timesheetsPage }>
+                data-url="{ next }"
+                if={ next }
+                onclick={ timesheetsPage }>
             Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </button>
     </p>
@@ -36,8 +36,8 @@
                     <td>{ name }</td>
                     <td class="text-right">
                         <a class="btn btn-warning btn-sm" onclick={ editTimesheet }>Edit</a>
-                        <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToTasks }>Tasks</a>
-                        <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</a>
+                        <a class="btn btn-primary btn-sm" onclick={ goToTasks }>Tasks</a>
+                        <a class="btn btn-primary btn-sm" onclick={ goToEntries }>Entries</a>
                     </td>
                 </tr>
             </tbody>
@@ -49,26 +49,17 @@
     </p>
 
     <script>
-        var tag = this;
-        var loading;
-        var timesheetsTable;
+        var self = this;
 
-        getTimesheets(e, url) {
-            fetch(url || timesheetsApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            }).then(function(data) {
-                loading = document.querySelector('.loading');
-                timesheetsTable = document.querySelector('.timesheets-table');
+        getTimesheets(url) {
+            url = (typeof url !== 'undefined') ? url : timesheetsApiUrl;
 
-                loading.classList.add('d-none');
-                timesheetsTable.classList.remove('d-none');
+            $('.loading, .timesheets-table').toggleClass('d-none');
 
-                tag.update({
+            autoFetch(url).then(function(data) {
+                $('.loading, .timesheets-table').toggleClass('d-none');
+
+                self.update({
                     timesheets: data.results,
                     next: data.next,
                     previous: data.previous
@@ -76,70 +67,47 @@
             });
         }
 
-        tag.getTimesheets();
-
         timesheetsPage(e) {
-            loading.classList.remove('d-none');
-            timesheetsTable.classList.add('d-none');
-            getEntries(e.currentTarget.getAttribute('data-url'));
+            self.getTimesheets(e.currentTarget.getAttribute('data-url'));
         }
 
         goToTasks(e) {
-            timesheet = e.target.dataset.id;
-            document.location.href = tasksUrl + timesheet;
+            document.location.href = tasksUrl + e.item.id;
         }
 
         goToEntries(e) {
-            timesheet = e.target.dataset.id;
-            document.location.href = entriesUrl + timesheet;
-        }
-
-        // This is bad, need to figure out how riot expects inline editing
-        editTimesheet(e) {
-            let timesheet = e.item;
-            let row = e.target.parentElement.parentElement;
-            let columns = $(row).find('td');
-            let csrfToken = Cookies.get('csrftoken');
-            if ($(row).hasClass('editing')) {
-                timesheet.name = $(columns[0]).find('input').val();
-                fetch(timesheet.url, {
-                    credentials: 'include',
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'X-CSRFToken': csrfToken
-                    }),
-                    method: 'put',
-                    body: JSON.stringify(timesheet)
-                }).then(function(response) {
-                    return response.json();
-                }).then(function(data) {
-                    $(columns[0]).html(data.name);
-                    $(columns[1]).find('.btn-warning').html('Edit');
-                });
-            } else {
-                $(row).addClass('editing');
-                $(columns[1]).find('.btn-warning').html('Save');
-                $(columns[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
-            }
+            document.location.href = entriesUrl + e.item.id;
         }
 
         submitTimesheet(e) {
             e.preventDefault();
-            let csrfToken = Cookies.get('csrftoken');
-            let formValues = {
-                name: this.refs.name.value
+            let body = {
+                name: self.refs.name.value
             }
-            fetch(timesheetsApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                }),
-                method: 'post',
-                body: JSON.stringify(formValues)
-            }).then(function(response) {
-                tag.getTimesheets();
+            autoFetch(timesheetsApiUrl, 'post', body).then(function(data) {
+                self.refs.name.value = '';
+                self.getTimesheets();
             });
         }
+
+        editTimesheet(e) {
+            let timesheet = e.item;
+            let tr = e.target.parentElement.parentElement;
+            let td = $(tr).find('td');
+            if ($(tr).hasClass('editing')) {
+                timesheet.name = $(td[0]).find('input').val();
+                autoFetch(timesheet.url, 'put', timesheet).then(function(data) {
+                    $(tr).removeClass('editing');
+                    $(td[0]).html(data.name);
+                    $(td[1]).find('.btn-warning').html('Edit');
+                });
+            } else {
+                $(tr).addClass('editing');
+                $(td[1]).find('.btn-warning').html('Save');
+                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
+            }
+        }
+
+        self.getTimesheets();
     </script>
 </timesheets>
