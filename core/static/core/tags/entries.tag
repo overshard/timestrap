@@ -1,16 +1,16 @@
 <entries>
     <p class="mb-4 clearfix">
         <button class="btn btn-primary btn-sm pull-right"
-            data-url="{ next }"
-            if={ next }
-            onclick={ entriesPage }>
+                data-url="{ next }"
+                if={ next }
+                onclick={ entriesPage }>
             Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </button>
 
         <button class="btn btn-primary btn-sm pull-right mr-1"
-            data-url="{ previous }"
-            if={ previous }
-            onclick={ entriesPage }>
+                data-url="{ previous }"
+                if={ previous }
+                onclick={ entriesPage }>
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
         </button>
 
@@ -68,7 +68,7 @@
                     <td>{ duration }</td>
                     <td>{ note }</td>
                     <td>{ task_details.name }</td>
-                    <td class="text-right"><a class="btn btn-primary btn-sm" onclick={ deleteEntry } data-url={ url }><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td class="text-right"></td>
                 </tr>
                 <tr class="table-active">
                     <td></td>
@@ -87,117 +87,68 @@
     </p>
 
     <script>
-        var tag = this;
-        var loading;
-        var entriesTable;
+        var self = this;
         var interval;
-        tag.timerState = 'Start';
-        tag.hours = 0;
-        tag.minutes = 0;
-        tag.seconds = 0;
-        tag.timerDuration = '00:00:00';
+        self.timerState = 'Start';
+        self.hours = 0;
+        self.minutes = 0;
+        self.seconds = 0;
+        self.timerDuration = '00:00:00';
 
-        getTimeInSeconds(time) {
-            let timeInSeconds = 0;
-            time = time.split(':');
-            timeInSeconds += parseInt(time[0])*3600;
-            timeInSeconds += parseInt(time[1])*60;
-            timeInSeconds += parseInt(time[2]);
-            return timeInSeconds;
-        }
 
-        pad(num) {
-            num = num.toString();
-            if (num.length === 1) {
-                num = '0' + num;
-            }
-            return num
-        }
-
+        // TODO: There has to be a better way
         tick() {
-            if (tag.seconds === 60) {
-                ++tag.minutes;
-                tag.seconds = -1;
+            if (self.seconds === 60) {
+                ++self.minutes;
+                self.seconds = -1;
             }
-            if (tag.minutes === 60) {
-                ++tag.hours;
-                tag.minutes = 0;
+            if (self.minutes === 60) {
+                ++self.hours;
+                self.minutes = 0;
             }
-            tag.update({
-                hours: tag.hours,
-                minutes: tag.minutes,
-                seconds: ++tag.seconds
+            self.update({
+                hours: self.hours,
+                minutes: self.minutes,
+                seconds: ++self.seconds
             });
         }
 
+
         timer(e) {
-            if (tag.timerState === 'Start') {
-                tag.timerState = 'Stop';
-                interval = setInterval(tag.tick, 1000);
+            if (self.timerState === 'Start') {
+                self.timerState = 'Stop';
+                interval = setInterval(self.tick, 1000);
             } else {
-                tag.timerState = 'Start';
+                self.timerState = 'Start';
                 clearInterval(interval);
-                tag.timerDuration = tag.pad(tag.hours) + ':' + tag.pad(tag.minutes) + ':' + tag.pad(tag.seconds);
-                tag.hours = 0;
-                tag.minutes = 0;
-                tag.seconds = 0;
+                self.timerDuration = pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds);
+                self.hours = 0;
+                self.minutes = 0;
+                self.seconds = 0;
             }
         }
 
+
         getEntries(url) {
-            let entries = fetch(url || entriesApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            })
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
 
-            let users = fetch(usersApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            })
+            $('.loading, .entries-table').toggleClass('d-none');
 
-            let tasks = fetch(tasksApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            })
+            let entries = quickFetch(url);
+            let users = quickFetch(usersApiUrl);
+            let tasks = quickFetch(tasksApiUrl);
 
             Promise.all([entries, users, tasks]).then(function(e) {
-                loading = document.querySelector('.loading');
-                entriesTable = document.querySelector('.entries-table');
-
-                loading.classList.add('d-none');
-                entriesTable.classList.remove('d-none');
-
-                let totalSeconds = 0;
-                for (var entry in e[0].results) {
-                    totalSeconds += tag.getTimeInSeconds(e[0].results[entry].duration);
-                }
-				let hours = Math.floor(totalSeconds / 3600);
-				totalSeconds %= 3600;
-				let minutes = Math.floor(totalSeconds / 60);
-				let seconds = totalSeconds % 60;
-                totalTimeCalc = hours +':'+ ('0'+minutes).slice(-2) +':'+ ('0'+seconds).slice(-2)
-
-                tag.update({
+                self.update({
                     entries: e[0].results,
                     users: promote(userId, e[1].results),
                     tasks: e[2].results,
-                    totalTime: totalTimeCalc,
+                    totalTime: getTotalTime(e[0].results),
                     next: e[0].next,
                     previous: e[0].previous
                 });
 
+                $('.loading, .entries-table').toggleClass('d-none');
                 $('.date-input').pickadate({
                     format: 'yyyy-mm-dd',
                     onStart: function() {
@@ -209,49 +160,35 @@
             });
         }
 
-        tag.getEntries();
 
         entriesPage(e) {
-            loading.classList.remove('d-none');
-            entriesTable.classList.add('d-none');
-            tag.getEntries(e.currentTarget.getAttribute('data-url'));
+            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
-        deleteEntry(e) {
-            let csrfToken = Cookies.get('csrftoken');
-            fetch(e.currentTarget.getAttribute('data-url'), {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                }),
-                method: 'delete'
-            }).then(function(response) {
-                tag.getEntries();
-            });
-        }
 
         submitEntry(e) {
             e.preventDefault();
             let csrfToken = Cookies.get('csrftoken');
-            let formValues = {
-                date: this.refs.date.value,
-                user: this.refs.user.value,
-                duration: this.refs.duration.value,
-                note: this.refs.note.value,
-                task: this.refs.task.value
+            let body = {
+                date: self.refs.date.value,
+                user: self.refs.user.value,
+                duration: self.refs.duration.value,
+                note: self.refs.note.value,
+                task: self.refs.task.value
             }
-            fetch(entriesApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                }),
-                method: 'post',
-                body: JSON.stringify(formValues)
-            }).then(function(response) {
-                tag.getEntries();
+            quickFetch(entriesApiUrl, 'post', body).then(function(data) {
+                // TODO: Just iterate over body
+                self.refs.date.value = '';
+                self.refs.user.value = '';
+                self.refs.duration.value = '';
+                self.refs.note.value = '';
+                self.refs.task.value = '';
+                self.entries.unshift(data);
+                self.update();
             });
         }
+
+
+        self.getEntries();
     </script>
 </entries>

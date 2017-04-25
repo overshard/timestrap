@@ -88,7 +88,8 @@
             }
             quickFetch(timesheetsApiUrl, 'post', body).then(function(data) {
                 self.refs.name.value = '';
-                self.getTimesheets();
+                self.timesheets.unshift(data);
+                self.update();
             });
         }
 
@@ -106,7 +107,7 @@
                 });
             } else {
                 $(tr).addClass('editing');
-                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
+                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '" onkeypress="return event.keyCode != 13;">');
                 $(td[1]).find('.btn-warning').html('Save');
             }
         }

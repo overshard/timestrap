@@ -99,7 +99,8 @@
             quickFetch(tasksApiUrl, 'post', body).then(function(data) {
                 self.refs.name.value = '';
                 self.refs.timesheet.value = '';
-                self.getTasks();
+                self.tasks.unshift(data);
+                self.update();
             });
         }
 
@@ -120,7 +121,7 @@
                 });
             } else {
                 $(tr).addClass('editing');
-                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + task.name + '">');
+                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + task.name + '" onkeypress="return event.keyCode != 13;">');
 
                 $('.timesheet-select').chosen('destroy');
                 $(td[1]).html($('.timesheet-select').parent().html());
