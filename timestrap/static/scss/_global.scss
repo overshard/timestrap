@@ -1,3 +1,11 @@
+// This is to fix bootstrap v4's navbar on mobile
+@media (max-width: 767px) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 .login-form,
 .login-errors {
     max-width: 400px;

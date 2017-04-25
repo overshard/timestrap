@@ -43,7 +43,7 @@
                 </button>
                 <h1 class="navbar-brand mb-0">{% block title %}{% endblock %}</h1>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
