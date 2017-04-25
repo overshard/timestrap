@@ -111,7 +111,10 @@
                     method: 'put',
                     body: JSON.stringify(timesheet)
                 }).then(function(response) {
-                    tag.getTimesheets();
+                    return response.json();
+                }).then(function(data) {
+                    $(columns[0]).html(data.name);
+                    $(columns[1]).find('.btn-warning').html('Edit');
                 });
             } else {
                 $(row).addClass('editing');
