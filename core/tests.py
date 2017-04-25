@@ -93,7 +93,7 @@ class TimesheetTestCase(TestCase):
         timesheet = Timesheet.objects.get(name='Timestrap')
         self.assertEqual(timesheet.name, 'Timestrap')
 
-    def test_timesheet_created(self):
+    def test_timesheet_created_unicode(self):
         Timesheet.objects.create(name='Юникод')
         timesheet = Timesheet.objects.get(name='Юникод')
         self.assertEqual(timesheet.name, 'Юникод')
@@ -109,7 +109,7 @@ class TaskTestCase(TestCase):
         self.assertEqual(task.name, 'Testing')
         self.assertEqual(task.timesheet, self.timesheet)
 
-    def test_task_unicode_creation(self):
+    def test_task_created_unicode(self):
         Task.objects.create(timesheet=self.timesheet, name='Юникод')
         task = Task.objects.get(name='Юникод')
         self.assertEqual(task.name, 'Юникод')
