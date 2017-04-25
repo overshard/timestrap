@@ -9,10 +9,6 @@ multiple formats and easily extensible.
 **WARNING**: This app is currently very unstable as I have just started coding
 it. Everything may, and probably will, change.
 
-**Hello HN**: Thank you for the very useful feedback during the first Show HN
-of Timestrap. I have/will read all the comments and take suggestions seriously
-for the development of Timestrap.
-
 
 Quickstart
 ----------
