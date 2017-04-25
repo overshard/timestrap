@@ -86,21 +86,33 @@ class AppTestCase(TestCase):
 
 class TimesheetTestCase(TestCase):
     def setUp(self):
-        Timesheet.objects.create(name='Timestrap')
+        pass
 
     def test_timesheet_created(self):
+        Timesheet.objects.create(name='Timestrap')
         timesheet = Timesheet.objects.get(name='Timestrap')
         self.assertEqual(timesheet.name, 'Timestrap')
+
+    def test_timesheet_created(self):
+        Timesheet.objects.create(name='Юникод')
+        timesheet = Timesheet.objects.get(name='Юникод')
+        self.assertEqual(timesheet.name, 'Юникод')
 
 
 class TaskTestCase(TestCase):
     def setUp(self):
         self.timesheet = Timesheet.objects.create(name='Timestrap')
-        Task.objects.create(timesheet=self.timesheet, name='Testing')
 
     def test_task_created(self):
+        Task.objects.create(timesheet=self.timesheet, name='Testing')
         task = Task.objects.get(name='Testing')
         self.assertEqual(task.name, 'Testing')
+        self.assertEqual(task.timesheet, self.timesheet)
+
+    def test_task_unicode_creation(self):
+        Task.objects.create(timesheet=self.timesheet, name='Юникод')
+        task = Task.objects.get(name='Юникод')
+        self.assertEqual(task.name, 'Юникод')
         self.assertEqual(task.timesheet, self.timesheet)
 
 

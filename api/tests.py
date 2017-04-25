@@ -55,6 +55,12 @@ class BrowseableApiTestCase(TestCase):
         })
         self.assertEqual(page.status_code, 201)
 
+    def test_timesheets_post_unicode(self):
+        page = self.c.post('/api/timesheets/', {
+            'name': 'Юникод'
+        })
+        self.assertEqual(page.status_code, 201)
+
     def test_tasks_post(self):
         timesheets_page = self.c.get('/api/timesheets/')
         timesheets = timesheets_page.json()
@@ -62,6 +68,17 @@ class BrowseableApiTestCase(TestCase):
         page = self.c.post('/api/timesheets/', {
             'timesheet': timesheets['results'][0]['url'],
             'name': fake.job()
+        })
+
+        self.assertEqual(page.status_code, 201)
+
+    def test_tasks_post_unicode(self):
+        timesheets_page = self.c.get('/api/timesheets/')
+        timesheets = timesheets_page.json()
+
+        page = self.c.post('/api/timesheets/', {
+            'timesheet': timesheets['results'][0]['url'],
+            'name': 'Юникод'
         })
 
         self.assertEqual(page.status_code, 201)
