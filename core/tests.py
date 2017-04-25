@@ -35,7 +35,7 @@ class ViewsTestCase(TestCase):
     # def test_compress(self):
     #     call_command('compress', verbosity=0, force=True)
 
-    def test_home_view(self):
+    def test_dashboard_view(self):
         # Test with and without data in the database
         page = self.c.get('/')
         self.assertEqual(page.status_code, 200)

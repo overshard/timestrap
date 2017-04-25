@@ -51,44 +51,47 @@
     <script>
         var self = this;
 
+
         getTimesheets(url) {
             url = (typeof url !== 'undefined') ? url : timesheetsApiUrl;
-
             $('.loading, .timesheets-table').toggleClass('d-none');
-
-            autoFetch(url).then(function(data) {
-                $('.loading, .timesheets-table').toggleClass('d-none');
-
+            quickFetch(url).then(function(data) {
                 self.update({
                     timesheets: data.results,
                     next: data.next,
                     previous: data.previous
                 });
+                $('.loading, .timesheets-table').toggleClass('d-none');
             });
         }
+
 
         timesheetsPage(e) {
             self.getTimesheets(e.currentTarget.getAttribute('data-url'));
         }
 
+
         goToTasks(e) {
             document.location.href = tasksUrl + e.item.id;
         }
 
+
         goToEntries(e) {
             document.location.href = entriesUrl + e.item.id;
         }
+
 
         submitTimesheet(e) {
             e.preventDefault();
             let body = {
                 name: self.refs.name.value
             }
-            autoFetch(timesheetsApiUrl, 'post', body).then(function(data) {
+            quickFetch(timesheetsApiUrl, 'post', body).then(function(data) {
                 self.refs.name.value = '';
                 self.getTimesheets();
             });
         }
+
 
         editTimesheet(e) {
             let timesheet = e.item;
@@ -96,17 +99,18 @@
             let td = $(tr).find('td');
             if ($(tr).hasClass('editing')) {
                 timesheet.name = $(td[0]).find('input').val();
-                autoFetch(timesheet.url, 'put', timesheet).then(function(data) {
+                quickFetch(timesheet.url, 'put', timesheet).then(function(data) {
                     $(tr).removeClass('editing');
                     $(td[0]).html(data.name);
                     $(td[1]).find('.btn-warning').html('Edit');
                 });
             } else {
                 $(tr).addClass('editing');
-                $(td[1]).find('.btn-warning').html('Save');
                 $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '">');
+                $(td[1]).find('.btn-warning').html('Save');
             }
         }
+
 
         self.getTimesheets();
     </script>

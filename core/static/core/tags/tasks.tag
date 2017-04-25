@@ -1,16 +1,16 @@
 <tasks>
     <p class="mb-4 clearfix">
         <button class="btn btn-primary btn-sm"
-            data-url="{ previous }"
-            if={ previous }
-            onclick={ tasksPage }>
+                data-url="{ previous }"
+                if={ previous }
+                onclick={ tasksPage }>
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
         </button>
 
         <button class="btn btn-primary btn-sm pull-right"
-            data-url="{ next }"
-            if={ next }
-            onclick={ tasksPage }>
+                data-url="{ next }"
+                if={ next }
+                onclick={ tasksPage }>
             Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </button>
     </p>
@@ -42,6 +42,7 @@
                     <td>{ name }</td>
                     <td>{ timesheet_details.name }</td>
                     <td class="text-right">
+                        <a class="btn btn-warning btn-sm" onclick={ editTask }>Edit</a>
                         <a class="btn btn-primary btn-sm" data-id="{ id }" onclick={ goToEntries }>Entries</a>
                     </td>
                 </tr>
@@ -54,78 +55,83 @@
     </p>
 
     <script>
-        var tag = this;
-        var loading;
-        var entriesTable;
+        var self = this;
+
 
         getTasks(url) {
-            let tasks = fetch(url || tasksApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            });
+            url = (typeof url !== 'undefined') ? url : tasksApiUrl;
 
-            let timesheets = fetch(timesheetsApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                })
-            }).then(function(response) {
-                return response.json();
-            });
+            $('.loading, .tasks-table').toggleClass('d-none');
+
+            let tasks = quickFetch(url);
+            let timesheets = quickFetch(timesheetsApiUrl);
 
 			Promise.all([tasks, timesheets]).then(function(e) {
-                loading = document.querySelector('.loading');
-                tasksTable = document.querySelector('.tasks-table');
-
-                loading.classList.add('d-none');
-                tasksTable.classList.remove('d-none');
-
-                tag.update({
+                self.update({
                     tasks: e[0].results,
                     timesheets: e[1].results,
                     next: e[0].next,
                     previous: e[0].previous
                 });
 
+                $('.loading, .tasks-table').toggleClass('d-none');
 				$('.timesheet-select').chosen();
 			});
         }
 
-        tag.getTasks();
 
         tasksPage(e) {
-            loading.classList.remove('d-none');
-            tasksTable.classList.add('d-none');
-            getEntries(e.currentTarget.getAttribute('data-url'));
+            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
+
         goToEntries(e) {
-            task = e.target.dataset.id;
-            document.location.href = entriesUrl + task;
+            document.location.href = entriesUrl + e.item.id;
         }
+
 
         submitTask(e) {
             e.preventDefault();
-            let csrfToken = Cookies.get('csrftoken');
-            let formValues = {
-                name: this.refs.name.value,
-                timesheet: this.refs.timesheet.value
+            let body = {
+                name: self.refs.name.value,
+                timesheet: self.refs.timesheet.value
             }
-            fetch(tasksApiUrl, {
-                credentials: 'include',
-                headers: new Headers({
-                    'content-type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                }),
-                method: 'post',
-                body: JSON.stringify(formValues)
-            }).then(function(response) {
-                tag.getTasks();
+            quickFetch(tasksApiUrl, 'post', body).then(function(data) {
+                self.refs.name.value = '';
+                self.refs.timesheet.value = '';
+                self.getTasks();
             });
         }
+
+
+        editTask(e) {
+            let task = e.item;
+            let tr = e.target.parentElement.parentElement;
+            let td = $(tr).find('td');
+
+            if ($(tr).hasClass('editing')) {
+                task.name = $(td[0]).find('input').val();
+                task.timesheet = $(td[1]).find('select').val();
+                quickFetch(task.url, 'put', task).then(function(data) {
+                    $(tr).removeClass('editing');
+                    $(td[0]).html(data.name);
+                    $(td[1]).html(data.timesheet_details.name);
+                    $(td[2]).find('.btn-warning').html('Edit');
+                });
+            } else {
+                $(tr).addClass('editing');
+                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + task.name + '">');
+
+                $('.timesheet-select').chosen('destroy');
+                $(td[1]).html($('.timesheet-select').parent().html());
+                $(td[1]).find('.timesheet-select option[value="' + task.timesheet + '"]').attr('selected', 'selected');
+                $('.timesheet-select').chosen();
+
+                $(td[2]).find('.btn-warning').html('Save');
+            }
+        }
+
+
+        self.getTasks();
     </script>
 </tasks>

@@ -14,11 +14,11 @@ from .admin import EntryResource
 from .models import Timesheet, Task, Entry
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/home.html'
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/dashboard.html'
 
     def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
+        context = super(DashboardView, self).get_context_data(**kwargs)
 
         context['timesheets'] = Timesheet.objects.all()
 

@@ -16,7 +16,7 @@ function promote(userId, arr) {
 
 // We use this function throughout all the things to send and recieve form our
 // django-rest-framework API
-function autoFetch(url, method, body) {
+function quickFetch(url, method, body) {
     let csrftoken = Cookies.get('csrftoken');
     method = (typeof method !== 'undefined') ? method : 'get';
 
