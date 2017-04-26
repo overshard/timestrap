@@ -45,5 +45,5 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Entry
-        fields = ('id', 'url', 'project', 'project_details', 'user', 'user_details',
-                  'date', 'duration', 'note',)
+        fields = ('id', 'url', 'project', 'project_details', 'user',
+                  'user_details', 'date', 'duration', 'note',)

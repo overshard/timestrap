@@ -46,4 +46,5 @@ class EntryAdmin(admin.ModelAdmin):
 class EntryResource(resources.ModelResource):
     class Meta:
         model = Entry
-        fields = ('project__name', 'user__username', 'date', 'duration', 'note')
+        fields = ('project__name', 'user__username', 'date', 'duration',
+                  'note')
