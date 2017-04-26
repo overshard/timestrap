@@ -50,14 +50,19 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'entries' %}">Entries</a>
                             </li>
-                            {% if user.is_staff %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/api/">API</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/">Admin</a>
-                                </li>
-                            {% endif %}
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_staff %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">Admin</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/api/">Timestrap API Browser</a>
+                                    <a class="dropdown-item" href="/admin/">Timestrap Admin</a>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                             </li>
@@ -68,7 +73,6 @@
                         {% endif %}
                     </ul>
                 </div>
-                <a class="navbar-brand" href="https://github.com/overshard/timestrap" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
             </div>
         </div>
 

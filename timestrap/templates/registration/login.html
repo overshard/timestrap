@@ -7,7 +7,7 @@
 
 
 {% block content %}
-    <div class="login-errors">
+    <div class="login-errors text-center mb-5">
         {% if form.errors %}
             <p>Your username and password didn't match. Please try again.</p>
         {% endif %}
@@ -17,8 +17,9 @@
                 <p>Your account doesn't have access to this page. To proceed,
                 please login with an account that has access.</p>
             {% else %}
-                <p>If you don't have a user yet create one via the CLI. If you
-                need more users add them via the admin panel.</p>
+                <h1 class="display-3 mb-3">Timestrap</h1>
+                <p class="small">Please login and if you need help check out our
+                <a href="https://github.com/overshard/timestrap">documentation</a>.</p>
             {% endif %}
         {% endif %}
     </div>
@@ -40,7 +41,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mt-5">
             <div class="offset-sm-3 col-sm-9">
                 <button class="btn btn-primary" type="submit">Login</button>
                 <a class="btn btn-secondary" href="{% url 'password_reset' %}">Lost password?</a>
