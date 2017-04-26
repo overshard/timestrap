@@ -117,23 +117,21 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def entries_csv_export(request):
-    task = request.GET.get('project_client')
+    client = request.GET.get('project_client')
     user = request.GET.get('user')
-    timesheet = request.GET.get('project')
+    project = request.GET.get('project')
     min_date = request.GET.get('min_date')
     max_date = request.GET.get('max_date')
     formattype = request.GET.get('export_format')
     print formattype
-    print task
+    print client
     print user
-    print timesheet
+    print project
     print min_date
     print max_date
     queryset = ''
-    if task:
-        queryset = Entry.objects.filter(task__id=task)
-    elif timesheet and task == '':
-        queryset = Entry.objects.filter(timesheet__id=timesheet)
+    if project:
+        queryset = Entry.objects.filter(project__id=project)
     dataset = EntryResource().export(queryset)
     if formattype == 'csv':
         response = HttpResponse(dataset.csv, content_type='text/csv')
