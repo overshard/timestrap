@@ -23,6 +23,7 @@
         var timesheetsApiUrl = "{% url 'timesheet-list' %}";
         var tasksApiUrl = "{% url 'task-list' %}";
         var entriesApiUrl = "{% url 'entry-list' %}";
+        var reportsExportUrl = "{% url 'reports-export' %}";
 		var userId = {{ user.id }};
         riot.mount('reports');
     </script>

@@ -1,20 +1,4 @@
 <reports>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ reportsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ reportsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-    </p>
-
     <form class="mb-4 row" onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
@@ -46,6 +30,26 @@
             <button type="submit" class="btn btn-primary btn-sm">Get Report</button>
         </div>
     </form>
+
+    <p class="mb-4 clearfix">
+        <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+            Export Report
+        </button>
+
+        <button class="btn btn-primary btn-sm pull-right"
+                data-url="{ next }"
+                if={ next }
+                onclick={ reportsPage }>
+            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </button>
+
+        <button class="btn btn-primary btn-sm pull-right mr-1"
+                data-url="{ previous }"
+                if={ previous }
+                onclick={ reportsPage }>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
+        </button>
+    </p>
 
     <table class="reports-table table table-striped table-sm w-100 d-none">
         <thead class="thead-inverse">
@@ -116,6 +120,18 @@
             }
             url = entriesApiUrl + '?' + $.param(query);
             self.getEntries(url);
+        }
+
+
+        exportReport(e) {
+            query = {
+                user: self.refs.user.value,
+                task: self.refs.task.value,
+                task__timesheet: self.refs.timesheet.value,
+                min_date: self.refs.min_date.value,
+                max_date: self.refs.max_date.value
+            }
+            document.location.href = reportsExportUrl + '?' + $.param(query);
         }
 
 

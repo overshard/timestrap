@@ -14,10 +14,6 @@
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
         </button>
 
-        <a class="btn btn-primary btn-sm pull-right mr-1" href='/entries/csv/'>
-            CSV Export
-        </a>
-
         <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
             { timerState } Timer
             <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
