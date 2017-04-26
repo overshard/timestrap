@@ -67,7 +67,7 @@
                 <td>{ user_details.username }</td>
                 <td>{ duration }</td>
                 <td>
-                    <span class="badge badge-primary">{ task_details.timesheet_details.name }</span>
+                    <span class="badge badge-success">{ task_details.timesheet_details.name }</span>
                     <span class="badge badge-info">{ task_details.name }</span>
                     <br>
                     { note }
