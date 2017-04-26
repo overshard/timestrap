@@ -1,6 +1,6 @@
 <timesheet>
     <td if={ !edit }>{ name }</td>
-    <td if={ edit }><input type="text" class="form-control form-control-sm" value="{ name }" onkeypress="return event.keyCode != 13;">
+    <td if={ edit }><input type="text" class="form-control form-control-sm" ref="name" value="{ name }" onkeypress="return event.keyCode != 13;">
     <td class="text-right">
         <a if={ !edit } class="btn btn-warning btn-sm" onclick={ editTimesheet }>Edit</a>
         <a if={ edit } class="btn btn-success btn-sm" onclick={ saveTimesheet }>Save</a>
@@ -32,9 +32,7 @@
 
         saveTimesheet(e) {
             e.preventDefault();
-            let tr = self.root;
-            let td = $(tr).find('td');
-            self.name = $(td[0]).find('input').val();
+            self.name = self.refs.name.value;
             quickFetch(self.url, 'put', self).then(function(data) {
                 self.name.value = '';
                 self.edit = false;
