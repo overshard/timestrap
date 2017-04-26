@@ -9,6 +9,7 @@ from django.core.management import call_command
 from django.apps import apps
 
 from .models import Timesheet, Task, Entry
+from .utils import parse_duration
 
 from faker import Factory
 
@@ -143,16 +144,11 @@ class EntryTestCase(TestCase):
         )
         self.assertEqual(len(entries), 1)
 
-    def test_entry_duration_parser(self):
+    def test_parse_duration(self):
         # TODO: Flesh this out more, currently only testing one variation of
         # the three supported
-        parsed_entry = Entry(
-            task=self.task,
-            user=self.user
-        )
-        parsed_entry.parse_duration('3.25')
-        parsed_entry.save()
-        self.assertEqual(parsed_entry.duration, timedelta(hours=3, minutes=15))
+        duration = parse_duration('3.25')
+        self.assertEqual(duration, timedelta(hours=3, minutes=15))
 
 
 class CommandsTestCase(TestCase):

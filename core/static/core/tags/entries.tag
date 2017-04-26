@@ -93,7 +93,6 @@
         self.hours = 0;
         self.minutes = 0;
         self.seconds = 0;
-        self.timerDuration = '00:00:00';
 
 
         // TODO: There has to be a better way
@@ -177,12 +176,8 @@
                 task: self.refs.task.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
-                // TODO: Just iterate over body
-                self.refs.date.value = '';
-                self.refs.user.value = '';
                 self.refs.duration.value = '';
                 self.refs.note.value = '';
-                self.refs.task.value = '';
                 self.entries.unshift(data);
                 self.update();
             });

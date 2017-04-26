@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from core.models import Timesheet, Task, Entry
+from core.fields import DurationField
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -30,6 +31,7 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
+    duration = DurationField()
     task_details = TaskSerializer(source='task', read_only=True)
     user_details = UserSerializer(source='user', read_only=True)
 

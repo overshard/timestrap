@@ -48,23 +48,3 @@ class Entry(models.Model):
 
     def __str__(self):
         return 'Entry for ' + self.task.name
-
-    def parse_duration(self, duration):
-        hours = None
-        minutes = None
-
-        if duration.isdigit():
-            hours = int(duration)
-        elif ':' in duration:
-            duration_split = duration.split(':')
-            hours = int(duration_split[0])
-            minutes = int(duration_split[1])
-        elif '.' in duration:
-            duration_split = duration.split('.')
-            hours = int(duration_split[0])
-            minutes = int(60 * float('.' + duration_split[1]))
-
-        if hours or minutes:
-            self.duration = timedelta(hours=hours, minutes=minutes)
-        else:
-            raise ValueError('Could not parse duration.')
