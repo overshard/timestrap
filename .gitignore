@@ -7,3 +7,6 @@
 
 # static files from compressor
 /static
+
+# documentation builds
+_build
