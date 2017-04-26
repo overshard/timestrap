@@ -1,16 +1,23 @@
-.. Timestrap documentation master file, created by
-   sphinx-quickstart on Tue Apr 25 21:25:31 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Timestrap's documentation!
 =====================================
+Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.
+
+.. warning::
+This app is currently very unstable as I have just started coding it. Everything may, and probably will, change.
+
+Quickstart
+##########
+
+Demo Website
+############
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+   installation.rst
+   deployment.rst
+   contributing.rst
 
 Indices and tables
 ==================
