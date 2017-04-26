@@ -122,7 +122,7 @@ def entries_csv_export(request):
     timesheet = request.GET.get('timesheet')
     min_date = request.GET.get('min_date')
     max_date = request.GET.get('max_date')
-    formattype = request.GET.get('format')
+    formattype = request.GET.get('export_format')
     print formattype
     print task
     print user
@@ -141,4 +141,8 @@ def entries_csv_export(request):
     elif formattype == 'xls':
         response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="entries.xls"'
+    elif formattype == 'json':
+        response = HttpResponse(dataset.json, content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="entries.json"'
+    
     return response
