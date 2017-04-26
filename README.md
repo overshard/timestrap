@@ -61,8 +61,7 @@ now you will need the build-deps for that or you'll need to remove it from
     sudo apt build-dep psycopg2
 
 
-Testing
--------
+## Testing
 
 I'm trying to push for 100% code coverage on this project! If you want to add
 or change something and test that everything still works you can do so easily
@@ -70,13 +69,12 @@ with:
 
     python manage.py test
 
-If you push code to our primary repository we test for style adherance and code
+If you push code to our primary repository we test for style adherence and code
 coverage. If you get a failed build to either of these we won't accept your
 code till it's fixed.
 
 
-Running Timestrap
------------------
+## Running Timestrap
 
 Always make sure you are in the virtual environment before running additional
 commands by first running `source .venv/bin/activate`. If you have already done
@@ -96,11 +94,30 @@ After this you can run Timestrap and access it from your browser at
     python manage.py runserver
 
 
-Generate Fake Data
-------------------
+## Generate Fake Data
 
 Want to see how Timestrap would look after being used a while? Run `fake` to
 generate some data. Don't run this on a production database or you'll have to
 do a lot of clean up.
 
     python manage.py fake
+
+
+## Password Resets and Email
+
+To support email for things like password resetting you need to update
+Timestrap's settings. I will not presume your email situation and allow you to
+do this yourself by reading [Django's documentation](https://docs.djangoproject.com/en/1.11/ref/settings/#email-backend).
+
+If you are using Heroku you can add `sendgrid` to your apps addons on the 
+Heroku admin panel or by running:
+
+    heroku addons:create sendgrid
+
+You then need to add these settings to `timestrap/settings/heroku.py`:
+
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
+    EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
