@@ -52,7 +52,7 @@ and/or Running Timestrap:
 
 You can install everything you need from apt.
 
-    sudo apt install build-essential virtualenv python-pip
+    sudo apt install build-essential python-dev virtualenv python-pip
 
 Since we include `psycopg2` for running on Heroku in the `requirements.txt` for
 now you will need the build-deps for that or you'll need to remove it from
