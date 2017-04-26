@@ -29,7 +29,7 @@
                     <th>User</th>
                     <th>Duration</th>
                     <th>Note</th>
-                    <th>Task</th>
+                    <th>Project</th>
                     <th></th>
                 </tr>
             </thead>
@@ -50,8 +50,8 @@
                         <input type="text" class="form-control form-control-sm" ref="note" placeholder="Note">
                     </td>
                     <td>
-						<select class="task-select" ref="task">
-							<option each={ tasks } value={ url }>{ name }</option>
+						<select class="project-select" ref="project">
+							<option each={ projects } value={ url }>{ name }</option>
 						</select>
                     </td>
                     <td class="text-right">
@@ -63,7 +63,7 @@
                     <td>{ user_details.username }</td>
                     <td>{ duration }</td>
                     <td>{ note }</td>
-                    <td>{ task_details.name }</td>
+                    <td>{ project_details.name }</td>
                     <td class="text-right"></td>
                 </tr>
                 <tr class="table-active">
@@ -131,13 +131,13 @@
 
             let entries = quickFetch(url);
             let users = quickFetch(usersApiUrl);
-            let tasks = quickFetch(tasksApiUrl);
+            let projects = quickFetch(projectsApiUrl);
 
-            Promise.all([entries, users, tasks]).then(function(e) {
+            Promise.all([entries, users, projects]).then(function(e) {
                 self.update({
                     entries: e[0].results,
                     users: promote(userId, e[1].results),
-                    tasks: e[2].results,
+                    projects: e[2].results,
                     totalTime: getTotalTime(e[0].results),
                     next: e[0].next,
                     previous: e[0].previous
@@ -151,7 +151,7 @@
                     }
                 });
 				$('.user-select').chosen({width: '100%'});
-				$('.task-select').chosen({width: '100%'});
+				$('.project-select').chosen({width: '100%'});
             });
         }
 
@@ -169,7 +169,7 @@
                 user: self.refs.user.value,
                 duration: self.refs.duration.value,
                 note: self.refs.note.value,
-                task: self.refs.task.value
+                project: self.refs.project.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
                 self.refs.duration.value = '';

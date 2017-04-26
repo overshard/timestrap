@@ -6,41 +6,33 @@ from datetime import date
 from django.db import models
 
 
-class Task(models.Model):
-    timesheet = models.ForeignKey('Timesheet', related_name='tasks')
+class Client(models.Model):
     name = models.CharField(max_length=255)
-    complete = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['timesheet', '-id']
-
-    def __str__(self):
-        return 'Task: ' + self.name
-
-
-class Timesheet(models.Model):
-    name = models.CharField(max_length=255)
-    complete = models.BooleanField(default=False)
-
-    def save(self, *args, **kwargs):
-        created = False
-        if self.id:
-            created = True
-        super(Timesheet, self).save(*args, **kwargs)
-        if not created:
-            Task.objects.create(name='General', timesheet=self)
+    archive = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-id']
 
     def __str__(self):
-        return 'Timesheet: ' + self.name
+        return 'Client: ' + self.name
+
+
+class Project(models.Model):
+    client = models.ForeignKey('Client', related_name='projects')
+    name = models.CharField(max_length=255)
+    archive = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['client', '-id']
+
+    def __str__(self):
+        return 'Project: ' + self.name
 
 
 class Entry(models.Model):
-    task = models.ForeignKey('Task', related_name='entries')
+    project = models.ForeignKey('Project', related_name='entries')
     user = models.ForeignKey('auth.User', related_name='entries')
-    date = models.DateField(blank=True)
+    date = models.DateField(blank=True)  # TODO: Swap to datetime field
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
 
@@ -54,4 +46,4 @@ class Entry(models.Model):
         super(Entry, self).save(*args, **kwargs)
 
     def __str__(self):
-        return 'Entry for ' + self.task.name
+        return 'Entry for ' + self.project.name + ' by ' + self.user.username

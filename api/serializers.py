@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from core.models import Timesheet, Task, Entry
+from core.models import Client, Project, Entry
 from core.fields import DurationField
 
 
@@ -15,27 +15,35 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username',)
 
 
-class TimesheetSerializer(serializers.HyperlinkedModelSerializer):
+class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Timesheet
-        fields = ('id', 'url', 'name', 'complete',)
+        model = Client
+        fields = ('id', 'url', 'name', 'archive',)
+
+    def get_queryset(self):
+        queryset = super(ClientSerializer, self).get_queryset()
+        return queryset.filter(archive=False)
 
 
-class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    timesheet_details = TimesheetSerializer(source='timesheet', read_only=True)
+class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+    client_details = ClientSerializer(source='client', read_only=True)
 
     class Meta:
-        model = Task
-        fields = ('id', 'url', 'timesheet', 'timesheet_details', 'name',
-                  'complete',)
+        model = Project
+        fields = ('id', 'url', 'client', 'client_details', 'name',
+                  'archive',)
+
+    def get_queryset(self):
+        queryset = super(ProjectSerializer, self).get_queryset()
+        return queryset.filter(archive=False)
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
     duration = DurationField()
-    task_details = TaskSerializer(source='task', read_only=True)
+    project_details = ProjectSerializer(source='project', read_only=True)
     user_details = UserSerializer(source='user', read_only=True)
 
     class Meta:
         model = Entry
-        fields = ('id', 'url', 'task', 'task_details', 'user', 'user_details',
+        fields = ('id', 'url', 'project', 'project_details', 'user', 'user_details',
                   'date', 'duration', 'note',)

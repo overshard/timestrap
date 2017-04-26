@@ -5,36 +5,36 @@ from django.contrib import admin
 
 from import_export import resources
 
-from .models import Timesheet, Task, Entry
+from .models import Client, Project, Entry
 
 
-@admin.register(Timesheet)
-class TimesheetAdmin(admin.ModelAdmin):
-    list_display = ('name', 'complete',)
-    list_editable = ('complete',)
-    list_filter = ('complete',)
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('name', 'archive',)
+    list_editable = ('archive',)
+    list_filter = ('archive',)
     search_fields = ('name',)
 
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'timesheet', 'complete',)
-    list_editable = ('complete',)
-    list_filter = ('timesheet', 'complete',)
-    search_fields = ('name', 'timesheet',)
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('name', 'client', 'archive',)
+    list_editable = ('archive',)
+    list_filter = ('client', 'archive',)
+    search_fields = ('name', 'client',)
 
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('task', 'user', 'date', 'duration',)
+    list_display = ('project', 'user', 'date', 'duration',)
     list_editable = ('date', 'duration',)
-    list_filter = ('task', 'task__timesheet', 'user', 'date',)
-    search_fields = ('task', 'task__timesheet', 'user', 'note',)
+    list_filter = ('project', 'project__client', 'user', 'date',)
+    search_fields = ('project', 'project__client', 'user', 'note',)
     fieldsets = (
         (None, {
-            'fields': ('task', 'user',)
+            'fields': ('project', 'user',)
         }),
-        ('Date Completed and Duration of Task', {
+        ('Date Completed and Duration of Project', {
             'fields': ('date', 'duration',)
         }),
         ('Extra', {
@@ -46,4 +46,4 @@ class EntryAdmin(admin.ModelAdmin):
 class EntryResource(resources.ModelResource):
     class Meta:
         model = Entry
-        fields = ('task__name', 'user__username', 'date', 'duration', 'note')
+        fields = ('project__name', 'user__username', 'date', 'duration', 'note')

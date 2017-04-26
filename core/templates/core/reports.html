@@ -20,8 +20,8 @@
     <script type="riot/tag" src="{% static 'core/tags/reports.tag' %}"></script>
     <script>
         var usersApiUrl = "{% url 'user-list' %}";
-        var timesheetsApiUrl = "{% url 'timesheet-list' %}";
-        var tasksApiUrl = "{% url 'task-list' %}";
+        var clientsApiUrl = "{% url 'client-list' %}";
+        var projectsApiUrl = "{% url 'project-list' %}";
         var entriesApiUrl = "{% url 'entry-list' %}";
         var reportsExportUrl = "{% url 'reports-export' %}";
 		var userId = {{ user.id }};

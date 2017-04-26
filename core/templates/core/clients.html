@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Clients{% endblock %}
+{% block title %}Clients{% endblock %}
+
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Clients</li>
+    </ol>
+
+    <clients />
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/clients.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/client.tag' %}"></script>
+    <script>
+        var clientsApiUrl = "{% url 'client-list' %}";
+        var projectsUrl = "{% url 'projects' %}?client=";
+        var entriesUrl = "{% url 'entries' %}?project__client=";
+        riot.mount('clients, client');
+    </script>
+{% endblock %}

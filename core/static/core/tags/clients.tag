@@ -1,22 +1,22 @@
-<timesheets>
+<clients>
     <p class="mb-4 clearfix">
         <button class="btn btn-primary btn-sm"
                 data-url="{ previous }"
                 if={ previous }
-                onclick={ timesheetsPage }>
+                onclick={ clientsPage }>
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
         </button>
 
         <button class="btn btn-primary btn-sm pull-right"
                 data-url="{ next }"
                 if={ next }
-                onclick={ timesheetsPage }>
+                onclick={ clientsPage }>
             Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </button>
     </p>
 
-    <form onsubmit={ submitTimesheet }>
-        <table class="timesheets-table table table-striped table-sm w-100 d-none">
+    <form onsubmit={ submitClient }>
+        <table class="clients-table table table-striped table-sm w-100 d-none">
             <thead class="thead-inverse">
                 <tr>
                     <th>Name</th>
@@ -32,7 +32,7 @@
                         <button type="submit" class="btn btn-primary btn-sm">Add</button>
                     </td>
                 </tr>
-                <tr each={ timesheets } data-is="timesheet">
+                <tr each={ clients } data-is="client">
                 </tr>
             </tbody>
         </table>
@@ -46,37 +46,37 @@
         var self = this;
 
 
-        getTimesheets(url) {
-            url = (typeof url !== 'undefined') ? url : timesheetsApiUrl;
-            $('.loading, .timesheets-table').toggleClass('d-none');
+        getClients(url) {
+            url = (typeof url !== 'undefined') ? url : clientsApiUrl;
+            $('.loading, .clients-table').toggleClass('d-none');
             quickFetch(url).then(function(data) {
                 self.update({
-                    timesheets: data.results,
+                    clients: data.results,
                     next: data.next,
                     previous: data.previous
                 });
-                $('.loading, .timesheets-table').toggleClass('d-none');
+                $('.loading, .clients-table').toggleClass('d-none');
             });
         }
 
 
-        timesheetsPage(e) {
-            self.getTimesheets(e.currentTarget.getAttribute('data-url'));
+        clientsPage(e) {
+            self.getClients(e.currentTarget.getAttribute('data-url'));
         }
 
 
-        submitTimesheet(e) {
+        submitClient(e) {
             e.preventDefault();
             let body = {
                 name: self.refs.name.value
             }
-            quickFetch(timesheetsApiUrl, 'post', body).then(function(data) {
+            quickFetch(clientsApiUrl, 'post', body).then(function(data) {
                 self.refs.name.value = '';
-                self.timesheets.unshift(data);
+                self.clients.unshift(data);
                 self.update();
             });
         }
 
-        self.getTimesheets();
+        self.getClients();
     </script>
-</timesheets>
+</clients>
