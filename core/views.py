@@ -117,9 +117,9 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def entries_csv_export(request):
-    task = request.GET.get('task')
+    task = request.GET.get('project_client')
     user = request.GET.get('user')
-    timesheet = request.GET.get('timesheet')
+    timesheet = request.GET.get('project')
     min_date = request.GET.get('min_date')
     max_date = request.GET.get('max_date')
     formattype = request.GET.get('export_format')
