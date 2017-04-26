@@ -7,25 +7,34 @@
 
 
 {% block content %}
-    <div class="row mb-5">
-        <div class="col-sm-4">
+    <div class="row my-5 px-2 d-flex justify-content-between">
+        <div class="col-sm-4 col-md-3 bg-success p-4 mb-3 rounded">
             <canvas id="tasksPerTimesheet"></canvas>
-            <h4 class="text-absolute-middle">{{ total_tasks }} Tasks</h4>
+            <h5 class="text-absolute-middle font-weight-normal text-white">
+                {{ total_tasks }} Tasks
+            </h5>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-md-3 bg-danger p-4 mb-3 rounded">
             <canvas id="entriesPerTimesheet"></canvas>
-            <h4 class="text-absolute-middle">{{ total_entries }} Entries</h4>
+            <h5 class="text-absolute-middle font-weight-normal text-white">
+                {{ total_entries }} Entries
+            </h5>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-md-3 bg-warning p-4 mb-3 rounded">
             <canvas id="timePerTimesheet"></canvas>
-            <h4 class="text-absolute-middle">{{ total_hours }} Hours</h4>
+            <h5 class="text-absolute-middle font-weight-normal text-white">
+                {{ total_hours }} Hours
+            </h5>
         </div>
     </div>
 
-        <canvas id="totalTimePerDay" height="100"></canvas>
-        <h4 class="text-center">Hours Per Day</h4>
+    <div class="card w-100 hidden-xs-down">
+        <h5 class="card-header">Hours Per Day</h5>
+        <div class="card-block">
+            <canvas id="totalTimePerDay" height="75"></canvas>
+        </div>
     </div>
 {% endblock %}
 
@@ -33,7 +42,7 @@
 	<script>
 		var totalTimePerDay = document.getElementById("totalTimePerDay");
 		var totalTimePerDayChart = new Chart(totalTimePerDay, {
-			type: 'bar',
+			type: 'line',
 			data: {
                 labels: [
                     {% for k, v in time_per_day.items %}
@@ -46,7 +55,9 @@
                             {{ v }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
-                    backgroundColor: "#36caeb"
+                    backgroundColor: "rgba(54, 202, 235, 0.2)",
+                    borderColor: "rgb(54, 202, 235)",
+                    lineTension: 0
 				}]
 			},
             options: {
@@ -71,11 +82,12 @@
                             "{{ timesheet.tasks.count }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
-                    backgroundColor: "#36eb87"
+                    backgroundColor: "white",
+                    borderColor: "#5cb85c"
 				}]
 			},
             options: {
-                cutoutPercentage: 75,
+                cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
@@ -97,11 +109,12 @@
                             "{{ entries }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
-                    backgroundColor: "#FF6384"
+                    backgroundColor: "white",
+                    borderColor: "#d9534f"
 				}]
 			},
             options: {
-                cutoutPercentage: 75,
+                cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
@@ -123,11 +136,12 @@
                             "{{ total_time }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
-                    backgroundColor: "#FFCE56"
+                    backgroundColor: "white",
+                    borderColor: "#f0ad4e"
 				}]
 			},
             options: {
-                cutoutPercentage: 75,
+                cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
