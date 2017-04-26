@@ -1,3 +1,5 @@
+from django.utils.duration import _get_duration_components
+
 from datetime import timedelta
 
 
@@ -25,3 +27,12 @@ def parse_duration(duration):
         return timedelta(hours=hours, minutes=minutes)
     else:
         raise ValueError('Could not parse duration.')
+
+
+def duration_string(duration):
+    days, hours, minutes, seconds, microseconds = _get_duration_components(duration)
+    hours += days * 24
+
+    string = '{:02d}:{:02d}'.format(hours, minutes)
+
+    return string
