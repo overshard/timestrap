@@ -45,7 +45,8 @@
                         {% for k, v in time_per_day.items %}
                             {{ v }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
-                    ]
+                    ],
+                    backgroundColor: "#36caeb"
 				}]
 			},
             options: {
@@ -70,7 +71,7 @@
                             "{{ timesheet.tasks.count }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
-                    backgroundColor: "#36A2EB"
+                    backgroundColor: "#36eb87"
 				}]
 			},
             options: {
