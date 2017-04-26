@@ -117,7 +117,28 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def entries_csv_export(request):
-    dataset = EntryResource().export()
-    response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="entries.csv"'
+    task = request.GET.get('task')
+    user = request.GET.get('user')
+    timesheet = request.GET.get('timesheet')
+    min_date = request.GET.get('min_date')
+    max_date = request.GET.get('max_date')
+    formattype = request.GET.get('format')
+    print formattype
+    print task
+    print user
+    print timesheet
+    print min_date
+    print max_date
+    queryset = ''
+    if task:
+        queryset = Entry.objects.filter(task__id=task)
+    elif timesheet and task == '':
+        queryset = Entry.objects.filter(timesheet__id=timesheet)
+    dataset = EntryResource().export(queryset)
+    if formattype == 'csv':
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="entries.csv"'
+    elif formattype == 'xls':
+        response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="entries.xls"'
     return response
