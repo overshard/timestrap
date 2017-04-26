@@ -72,8 +72,8 @@ class ViewsTestCase(TestCase):
         page = self.c.get('/entries/')
         self.assertEqual(page.status_code, 200)
 
-    def test_entries_csv_view(self):
-        page = self.c.get('/entries/csv/')
+    def test_reports_export_view(self):
+        page = self.c.get('/reports/export/')
         self.assertEqual(page.status_code, 200)
 
 

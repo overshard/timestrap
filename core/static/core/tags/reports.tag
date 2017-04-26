@@ -10,7 +10,7 @@
             <div class="form-group">
                 <select class="task-select" ref="task">
                     <option value=''>Task</option>
-                    <option each={ tasks } value={ id }>{ name }</option>
+                    <option each={ tasks } value={ id }>{ name } ({ timesheet_details.name })</option>
                 </select>
             </div>
             <div class="form-group">
