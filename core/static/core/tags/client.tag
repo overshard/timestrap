@@ -1,10 +1,9 @@
 <client>
     <td if={ !edit }>
-        <a class="text-primary" onclick={ goToEntries }><strong>{ name }</strong></a>
+        <a class="text-primary" onclick={ goToProjects }><strong>{ name }</strong></a>
     </td>
     <td if={ edit }><input type="text" class="form-control form-control-sm" ref="name" value="{ name }" onkeypress="return event.keyCode != 13;">
     <td class="text-right">
-        <a class="btn btn-primary btn-sm" onclick={ goToProjects }>Projects</a>
         <a if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </a>
@@ -27,11 +26,6 @@
 
         goToProjects(e) {
             document.location.href = projectsUrl + e.item.id;
-        }
-
-
-        goToEntries(e) {
-            document.location.href = entriesUrl + e.item.id;
         }
 
 
