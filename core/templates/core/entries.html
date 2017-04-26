@@ -4,22 +4,21 @@
 
 {% block meta_title %}Entries{% endblock %}
 {% block title %}Entries{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    {% if project %}
+        <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ project.client }}</a></li>
+        <li class="breadcrumb-item">
+            <a href="{% url 'projects' %}?client={{ project.client.id }}">{{ project }}</a>
+        </li>
+    {% elif client %}
+        <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ client }}</a></li>
+    {% endif %}
+    <li class="breadcrumb-item active">Entries</li>
+{% endblock %}
 
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        {% if project %}
-            <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ project.client }}</a></li>
-            <li class="breadcrumb-item">
-                <a href="{% url 'projects' %}?client={{ project.client.id }}">{{ project }}</a>
-            </li>
-        {% elif client %}
-            <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ client }}</a></li>
-        {% endif %}
-        <li class="breadcrumb-item active">Entries</li>
-    </ol>
-
     <entries />
 {% endblock %}
 

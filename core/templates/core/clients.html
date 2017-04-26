@@ -4,14 +4,13 @@
 
 {% block meta_title %}Clients{% endblock %}
 {% block title %}Clients{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Clients</li>
+{% endblock %}
 
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li class="breadcrumb-item active">Clients</li>
-    </ol>
-
     <clients />
 {% endblock %}
 
