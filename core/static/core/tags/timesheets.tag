@@ -32,13 +32,7 @@
                         <button type="submit" class="btn btn-primary btn-sm">Add</button>
                     </td>
                 </tr>
-                <tr each={ timesheets }>
-                    <td>{ name }</td>
-                    <td class="text-right">
-                        <a class="btn btn-warning btn-sm" onclick={ editTimesheet }>Edit</a>
-                        <a class="btn btn-primary btn-sm" onclick={ goToTasks }>Tasks</a>
-                        <a class="btn btn-primary btn-sm" onclick={ goToEntries }>Entries</a>
-                    </td>
+                <tr each={ timesheets } data-is="timesheet">
                 </tr>
             </tbody>
         </table>
@@ -71,16 +65,6 @@
         }
 
 
-        goToTasks(e) {
-            document.location.href = tasksUrl + e.item.id;
-        }
-
-
-        goToEntries(e) {
-            document.location.href = entriesUrl + e.item.id;
-        }
-
-
         submitTimesheet(e) {
             e.preventDefault();
             let body = {
@@ -92,26 +76,6 @@
                 self.update();
             });
         }
-
-
-        editTimesheet(e) {
-            let timesheet = e.item;
-            let tr = e.target.parentElement.parentElement;
-            let td = $(tr).find('td');
-            if ($(tr).hasClass('editing')) {
-                timesheet.name = $(td[0]).find('input').val();
-                quickFetch(timesheet.url, 'put', timesheet).then(function(data) {
-                    $(tr).removeClass('editing');
-                    $(td[0]).html(data.name);
-                    $(td[1]).find('.btn-warning').html('Edit');
-                });
-            } else {
-                $(tr).addClass('editing');
-                $(td[0]).html('<input type="text" class="form-control form-control-sm" value="' + timesheet.name + '" onkeypress="return event.keyCode != 13;">');
-                $(td[1]).find('.btn-warning').html('Save');
-            }
-        }
-
 
         self.getTimesheets();
     </script>
