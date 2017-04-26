@@ -1,6 +1,6 @@
 # Timestrap
 
-[![Build Status](https://travis-ci.org/overshard/timestrap.svg?branch=master)](https://travis-ci.org/overshard/timestrap) [![Coverage Status](https://coveralls.io/repos/github/overshard/timestrap/badge.svg?branch=master)](https://coveralls.io/github/overshard/timestrap?branch=master)
+[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=flat-square)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=flat-square)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square)](https://github.com/overshard/timestrap/blob/master/LICENSE.md)
 
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
