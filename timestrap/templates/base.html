@@ -31,40 +31,43 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <h1 class="navbar-brand mb-0">{% block title %}{% endblock %}</h1>
+                <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                                {% url 'clients' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Clients</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reports' %}">Reports</a>
+                                {% url 'projects' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Projects</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'timesheets' %}">Timesheets</a>
+                                {% url 'entries' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Entries</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'tasks' %}">Tasks</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'entries' %}">Entries</a>
+                                {% url 'reports' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Reports</a>
                             </li>
                         {% endif %}
                     </ul>
                     <ul class="navbar-nav">
-                        {% if user.is_staff %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">Admin</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/api/">Timestrap API Browser</a>
-                                    <a class="dropdown-item" href="/admin/">Timestrap Admin</a>
-                                </div>
-                            </li>
-                        {% endif %}
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">{{ user.username }}</a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="/api/">API Browser</a>
+                                    {% if user.is_staff %}
+                                        <a class="dropdown-item" href="/admin/">Admin</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                </div>
                             </li>
                         {% else %}
                             <li class="nav-item">
@@ -75,6 +78,22 @@
                 </div>
             </div>
         </div>
+
+
+        {% block title_breadcrumb %}
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h1 class="display-4">{% block title %}{% endblock %}</h1>
+                    </div>
+                    <div class="col-sm-8">
+                        <ol class="breadcrumb my-2">
+                            {% block breadcrumb %}{% endblock %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
 
         <div class="container">
             {% block content %}{% endblock %}

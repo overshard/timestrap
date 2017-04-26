@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 import django_filters
 
-from core.models import Timesheet, Task, Entry
-from .serializers import (UserSerializer, TimesheetSerializer, TaskSerializer,
+from core.models import Client, Project, Entry
+from .serializers import (UserSerializer, ClientSerializer, ProjectSerializer,
                           EntrySerializer)
 
 
@@ -16,16 +16,16 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class TimesheetViewSet(viewsets.ModelViewSet):
-    queryset = Timesheet.objects.all()
-    serializer_class = TimesheetSerializer
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
     filter_fields = ('id',)
 
 
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    filter_fields = ('id', 'timesheet',)
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filter_fields = ('id', 'client',)
 
 
 class EntryFilter(django_filters.rest_framework.FilterSet):
@@ -34,7 +34,7 @@ class EntryFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Entry
-        fields = ('id', 'date', 'user', 'task', 'task__timesheet',)
+        fields = ('id', 'date', 'user', 'project', 'project__client',)
 
 
 class EntryViewSet(viewsets.ModelViewSet):

@@ -9,21 +9,21 @@
 {% block content %}
     <div class="row my-5 px-2 d-flex justify-content-between">
         <div class="col-sm-4 col-md-3 bg-success p-4 mb-3 rounded">
-            <canvas id="tasksPerTimesheet"></canvas>
+            <canvas id="projectsPerClient"></canvas>
             <h5 class="text-absolute-middle font-weight-normal text-white">
-                {{ total_tasks }} Tasks
+                {{ total_projects }} Projects
             </h5>
         </div>
 
         <div class="col-sm-4 col-md-3 bg-danger p-4 mb-3 rounded">
-            <canvas id="entriesPerTimesheet"></canvas>
+            <canvas id="entriesPerClient"></canvas>
             <h5 class="text-absolute-middle font-weight-normal text-white">
                 {{ total_entries }} Entries
             </h5>
         </div>
 
         <div class="col-sm-4 col-md-3 bg-warning p-4 mb-3 rounded">
-            <canvas id="timePerTimesheet"></canvas>
+            <canvas id="timePerClient"></canvas>
             <h5 class="text-absolute-middle font-weight-normal text-white">
                 {{ total_hours }} Hours
             </h5>
@@ -67,19 +67,19 @@
             }
 		});
 
-		var tasksPerTimesheet = document.getElementById("tasksPerTimesheet");
-		var tasksPerTimesheetChart = new Chart(tasksPerTimesheet, {
+		var projectsPerClient = document.getElementById("projectsPerClient");
+		var projectsPerClientChart = new Chart(projectsPerClient, {
 			type: 'doughnut',
 			data: {
 				labels: [
-                    {% for timesheet in timesheets %}
-                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% for client in clients %}
+                        "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
 				datasets: [{
 					data: [
-                        {% for timesheet in timesheets %}
-                            "{{ timesheet.tasks.count }}"{% if not forloop.last %},{% endif %}
+                        {% for client in clients %}
+                            "{{ client.projects.count }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
                     backgroundColor: "white",
@@ -94,18 +94,18 @@
             }
 		});
 
-		var entriesPerTimesheet = document.getElementById("entriesPerTimesheet");
-		var entriesPerTimesheetChart = new Chart(entriesPerTimesheet, {
+		var entriesPerClient = document.getElementById("entriesPerClient");
+		var entriesPerClientChart = new Chart(entriesPerClient, {
 			type: 'doughnut',
 			data: {
 				labels: [
-                    {% for timesheet in timesheets %}
-                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% for client in clients %}
+                        "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
 				datasets: [{
 					data: [
-                        {% for entries in entries_per_timesheet %}
+                        {% for entries in entries_per_client %}
                             "{{ entries }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
@@ -121,18 +121,18 @@
             }
 		});
 
-		var timePerTimesheet = document.getElementById("timePerTimesheet");
-		var timePerTimesheetChart = new Chart(timePerTimesheet, {
+		var timePerClient = document.getElementById("timePerClient");
+		var timePerClientChart = new Chart(timePerClient, {
 			type: 'doughnut',
 			data: {
 				labels: [
-                    {% for timesheet in timesheets %}
-                        "{{ timesheet.name }}"{% if not forloop.last %},{% endif %}
+                    {% for client in clients %}
+                        "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
 				datasets: [{
 					data: [
-                        {% for total_time in time_per_timesheet %}
+                        {% for total_time in time_per_client %}
                             "{{ total_time }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
