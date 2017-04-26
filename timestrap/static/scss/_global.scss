@@ -12,12 +12,12 @@
     margin: 0 auto;
 }
 
-.btn {
+a {
     cursor: pointer;
-}
 
-a.btn-primary {
-    color: white !important;
+    &.btn-primary {
+        color: white !important;
+    }
 }
 
 .fa-spinner {

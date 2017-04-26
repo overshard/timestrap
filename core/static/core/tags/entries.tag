@@ -150,8 +150,8 @@
                         this.set('select', new Date());
                     }
                 });
-				$('.user-select').chosen();
-				$('.task-select').chosen();
+				$('.user-select').chosen({width: '100%'});
+				$('.task-select').chosen({width: '100%'});
             });
         }
 
