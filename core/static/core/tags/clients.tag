@@ -4,12 +4,12 @@
     </p>
 
     <form onsubmit={ submitClient }>
-        <div class="row mb-2 py-2 bg-primary">
-            <div class="col-10">
-                <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
+        <div class="row bg-primary form-row mb-2">
+            <div class="col-9">
+                <input type="text" class="form-control form-control-lg bg-primary" ref="name" placeholder="New Client Name">
             </div>
-            <div class="col-2 text-right">
-                <button type="submit" class="btn btn-success btn-sm">
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary btn-lg">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add
                 </button>
             </div>
