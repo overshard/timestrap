@@ -1,16 +1,20 @@
 <client>
-    <td if={ !edit }>
-        <a class="text-primary" onclick={ goToProjects }><strong>{ name }</strong></a>
-    </td>
-    <td if={ edit }><input type="text" class="form-control form-control-sm" ref="name" value="{ name }" onkeypress="return event.keyCode != 13;">
-    <td class="text-right">
-        <a if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    <div class="col-10" if={ !edit }>
+        <a class="text-primary" onclick={ goToProjects }>
+            <strong>{ name } <i class="fa fa-chevron-down" aria-hidden="true"></i></strong>
         </a>
-        <a if={ edit } class="btn btn-success btn-sm" onclick={ saveClient }>
-            <i class="fa fa-floppy-o" aria-hidden="true"></i>
-        </a>
-    </td>
+    </div>
+    <div class="col-10" if={ edit }>
+        <input type="text" class="form-control form-control-sm" ref="name" value="{ name }" onkeypress="return event.keyCode != 13;">
+    </div>
+    <div class="col-2 text-right">
+        <button if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+        </button>
+        <button if={ edit } class="btn btn-success btn-sm" onclick={ saveClient }>
+            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+        </button>
+    </div>
 
 
     <script>

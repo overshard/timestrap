@@ -11,12 +11,9 @@
     margin: 0 auto;
 }
 
-a {
+a,
+.btn {
     cursor: pointer;
-
-    &.btn-primary {
-        color: white !important;
-    }
 }
 
 .fa-spinner {
