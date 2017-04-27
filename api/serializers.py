@@ -15,10 +15,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username',)
 
 
+class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'url', 'name', 'client')
+
+    def get_queryset(self):
+        queryset = super(ClientProjectSerializer, self).get_queryset()
+        return queryset.filter(archive=False)
+
+
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
+    projects = ClientProjectSerializer(many=True, read_only=True)
+
     class Meta:
         model = Client
-        fields = ('id', 'url', 'name', 'archive',)
+        fields = ('id', 'url', 'name', 'archive', 'projects')
 
     def get_queryset(self):
         queryset = super(ClientSerializer, self).get_queryset()

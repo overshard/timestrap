@@ -18,11 +18,12 @@
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/clients.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/client.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/project.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         var clientsApiUrl = "{% url 'client-list' %}";
-        var projectsUrl = "{% url 'projects' %}?client=";
-        var entriesUrl = "{% url 'entries' %}?project__client=";
-        riot.mount('clients, client');
+        var projectsApiUrl = "{% url 'project-list' %}";
+        var entriesUrl = "{% url 'entries' %}";
+        riot.mount('clients, client, project');
     </script>
 {% endblock %}

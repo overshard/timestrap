@@ -1,20 +1,20 @@
 <clients>
-    <pager update="{ getClients }"/>
+    <pager update="{ getClients }" />
 
     <form onsubmit={ submitClient }>
-        <div class="row mb-2 py-2 bg-success">
+        <div class="row mb-2 py-2 bg-primary">
             <div class="col-10">
-                <input type="text" class="form-control" ref="name" placeholder="Name">
+                <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
             </div>
             <div class="col-2 text-right">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-success btn-sm">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add
                 </button>
             </div>
         </div>
     </form>
 
-    <div class="row mb-2 py-2 bg-faded" each={ clients } data-is="client"></div>
+    <client each={ clients } />
 
     <script>
         var self = this;
