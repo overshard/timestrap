@@ -3,14 +3,6 @@
 
 
 {% block meta_title %}Entries{% endblock %}
-{% block title %}Entries{% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    {% if project %}
-        <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ project.client }}</a></li>
-    {% endif %}
-    <li class="breadcrumb-item active">Entries</li>
-{% endblock %}
 
 
 {% block content %}

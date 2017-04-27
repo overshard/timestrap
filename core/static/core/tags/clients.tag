@@ -1,5 +1,7 @@
 <clients>
-    <pager update="{ getClients }" />
+    <p class="mb-4 clearfix">
+        <pager update="{ getClients }" />
+    </p>
 
     <form onsubmit={ submitClient }>
         <div class="row mb-2 py-2 bg-primary">

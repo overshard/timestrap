@@ -5,9 +5,10 @@
             <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
             <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
         </button>
+
+        <pager update="{ getEntries }"/>
     </p>
 
-    <pager update="{ getEntries }"/>
 
     <form onsubmit={ submitEntry }>
         <table class="entries-table table table-striped table-sm w-100 d-none">
@@ -39,7 +40,7 @@
                     </td>
                     <td>
 						<select class="project-select" ref="project">
-							<option each={ projects } value={ url }>{ name }</option>
+                            <option each={ projects } value={ url }>{ name } ({ client_details.name })</option>
 						</select>
                     </td>
                     <td class="text-right">

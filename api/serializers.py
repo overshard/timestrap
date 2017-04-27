@@ -37,8 +37,13 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
         return queryset.filter(archive=False)
 
 
+class ProjectClientSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Client
+        fields = ('id', 'url', 'name',)
+
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
-    client_details = ClientSerializer(source='client', read_only=True)
+    client_details = ProjectClientSerializer(source='client', read_only=True)
 
     class Meta:
         model = Project
