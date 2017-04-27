@@ -40,17 +40,21 @@ a,
     }
 
     input,
+    select,
     .btn {
         border-radius: 0;
         border: none;
         color: white !important;
+        width: 100%;
+    }
+
+    select {
+        padding: .75rem 1.5rem;
+        font-size: 1.25rem;
+        height: auto;
     }
 
 	input {
 		@include placeholder(rgba(255, 255, 255, 0.8));
-    }
-
-    .btn {
-        width: 100%;
     }
 }
