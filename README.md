@@ -7,6 +7,7 @@ multiple formats and easily extensible.
 
 
 ### Warning
+
 This app is currently very unstable as I have just started coding it.
 Everything may, and probably will, change.
 
@@ -22,6 +23,17 @@ started, please change it via the admin panel:
 
 - Username: `admin`
 - Password: `changeme123`
+
+If you are manually deploying to Heroku without using the deploy button make
+sure you create two settings before pushing using `heroku config:set`:
+
+    heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
+    heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
+
+You will also need to create a superuser after your push has been successful in
+order to login:
+
+    heroku run python manage.py createsuperuser
 
 
 ## Demo Website
