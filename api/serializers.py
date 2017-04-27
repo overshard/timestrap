@@ -42,6 +42,7 @@ class ProjectClientSerializer(serializers.HyperlinkedModelSerializer):
         model = Client
         fields = ('id', 'url', 'name',)
 
+
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     client_details = ProjectClientSerializer(source='client', read_only=True)
 
