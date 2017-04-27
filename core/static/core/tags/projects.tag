@@ -1,19 +1,5 @@
 <projects>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ projectsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ projectsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-    </p>
+    <pager update="{ getProjects }"/>
 
     <form onsubmit={ submitProject }>
         <table class="projects-table table table-striped table-sm w-100 d-none">
@@ -77,11 +63,6 @@
                 $('.loading, .projects-table').toggleClass('d-none');
 				$('.client-select').chosen();
 			});
-        }
-
-
-        projectsPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 
