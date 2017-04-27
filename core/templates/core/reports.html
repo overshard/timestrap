@@ -24,12 +24,6 @@
         var entriesApiUrl = "{% url 'entry-list' %}";
         var reportsExportUrl = "{% url 'reports-export' %}";
 		var userId = {{ user.id }};
-        riot.mount('reports', {
-            format: {
-                'csv' : 'csv',
-                'xls' : 'xls'
-            }
-        }
-        );
+        riot.mount('reports');
     </script> 
 {% endblock %}
