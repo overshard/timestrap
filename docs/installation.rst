@@ -1,10 +1,28 @@
 Installation
 ============
 
-Linux
-#####
-Tacos retro tattooed, selvage raclette polaroid snackwave listicle. Stumptown gluten-free subway tile, vexillologist before they sold out DIY vape semiotics fap cliche lyft you probably haven't heard of them cold-pressed 90's. Retro organic sriracha lomo, venmo marfa neutra pour-over man bun air plant dreamcatcher. Green juice gastropub wolf, shoreditch twee raclette whatever thundercats gluten-free. Ugh air plant hexagon kinfolk. Bicycle rights shabby chic PBR&B next level truffaut, biodiesel tousled craft beer offal ethical before they sold out. Cold-pressed bushwick copper mug, retro hella normcore quinoa.
+For all systems you are going to need:
+ 
+- Python 2.7, 3.4, 3.5, or 3.6
+- Python virtualenv and pip packages
+- The ability to compile Python native extensions
+ 
+Once you have all of that you can run the following and move onto Testing 
+and/or Running Timestrap:::
+ 
+   virtualenv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
 
-Windows
-#######
-Tacos retro tattooed, selvage raclette polaroid snackwave listicle. Stumptown gluten-free subway tile, vexillologist before they sold out DIY vape semiotics fap cliche lyft you probably haven't heard of them cold-pressed 90's. Retro organic sriracha lomo, venmo marfa neutra pour-over man bun air plant dreamcatcher. Green juice gastropub wolf, shoreditch twee raclette whatever thundercats gluten-free. Ugh air plant hexagon kinfolk. Bicycle rights shabby chic PBR&B next level truffaut, biodiesel tousled craft beer offal ethical before they sold out. Cold-pressed bushwick copper mug, retro hella normcore quinoa.
+Ubuntu
+######
+ 
+You can install everything you need from apt.::
+ 
+   sudo apt install build-essential python-dev virtualenv python-pip
+ 
+Since we include `psycopg2` for running on Heroku in the `requirements.txt` for 
+now you will need the build-deps for that or you'll need to remove it from 
+`requirements.txt` before installing them.::
+ 
+   sudo apt build-dep psycopg2
