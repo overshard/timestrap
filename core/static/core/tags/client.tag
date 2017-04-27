@@ -19,12 +19,12 @@
     </div>
 
     <form onsubmit={ submitProject } if={ productsShown }>
-        <div class="row mb-1 ml-3 py-1 bg-primary">
-            <div class="col-10">
-                <input type="text" class="form-control form-control-sm" ref="project_name" placeholder="Name">
+        <div class="row mb-1 ml-3 form-row bg-primary">
+            <div class="col-9">
+                <input type="text" class="form-control bg-primary" ref="project_name" placeholder="New Project Name">
             </div>
-            <div class="col-2 text-right">
-                <button type="submit" class="btn btn-success btn-sm">
+            <div class="col-3 text-right">
+                <button type="submit" class="btn btn-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add
                 </button>
             </div>
