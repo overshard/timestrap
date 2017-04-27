@@ -1,25 +1,13 @@
 <entries>
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ entriesPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ entriesPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
         <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
             { timerState } Timer
             <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
             <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
         </button>
     </p>
+
+    <pager update="{ getEntries }"/>
 
     <form onsubmit={ submitEntry }>
         <table class="entries-table table table-striped table-sm w-100 d-none">
@@ -153,11 +141,6 @@
 				$('.user-select').chosen({width: '100%'});
 				$('.project-select').chosen({width: '100%'});
             });
-        }
-
-
-        entriesPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 

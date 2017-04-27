@@ -1,19 +1,5 @@
 <clients>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ clientsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ clientsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-    </p>
+    <pager update="{ getClients }"/>
 
     <form onsubmit={ submitClient }>
         <table class="clients-table table table-striped table-sm w-100 d-none">
@@ -57,11 +43,6 @@
                 });
                 $('.loading, .clients-table').toggleClass('d-none');
             });
-        }
-
-
-        clientsPage(e) {
-            self.getClients(e.currentTarget.getAttribute('data-url'));
         }
 
 

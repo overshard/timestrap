@@ -18,6 +18,7 @@
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/clients.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/client.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         var clientsApiUrl = "{% url 'client-list' %}";
         var projectsUrl = "{% url 'projects' %}?client=";
