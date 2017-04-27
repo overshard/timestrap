@@ -47,19 +47,7 @@
             <option value="html">html</option>
         </select>
 
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ reportsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ reportsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
+        <pager update="{ getEntries }" />
     </p>
 
     <table class="reports-table table table-striped table-sm w-100 d-none">

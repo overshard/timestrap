@@ -41,11 +41,6 @@
                                    href="{{ url }}">Clients</a>
                             </li>
                             <li class="nav-item">
-                                {% url 'projects' as url %}
-                                <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Projects</a>
-                            </li>
-                            <li class="nav-item">
                                 {% url 'entries' as url %}
                                 <a class="nav-link {% if request.path == url %}active{% endif %}"
                                    href="{{ url }}">Entries</a>
@@ -79,21 +74,6 @@
             </div>
         </div>
 
-
-        {% block title_breadcrumb %}
-            <div class="container mb-4">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h1 class="display-4">{% block title %}{% endblock %}</h1>
-                    </div>
-                    <div class="col-sm-8">
-                        <ol class="breadcrumb my-2">
-                            {% block breadcrumb %}{% endblock %}
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        {% endblock %}
 
         <div class="container">
             {% block content %}{% endblock %}

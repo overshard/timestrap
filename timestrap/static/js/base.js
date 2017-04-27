@@ -52,7 +52,6 @@ function getTimeInSeconds(time) {
     time = time.split(':');
     timeInSeconds += parseInt(time[0])*3600;
     timeInSeconds += parseInt(time[1])*60;
-    timeInSeconds += parseInt(time[2]);
     return timeInSeconds;
 }
 
@@ -66,6 +65,5 @@ function getTotalTime(entries) {
     let hours = Math.floor(totalSeconds / 3600);
     totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
-    let seconds = totalSeconds % 60;
-    return hours +':'+ ('0'+minutes).slice(-2) +':'+ ('0'+seconds).slice(-2);
+    return hours +':'+ ('0'+minutes).slice(-2);
 }

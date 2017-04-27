@@ -4,7 +4,7 @@ from six import text_type
 
 from rest_framework.fields import DurationField
 
-from .utils import parse_duration
+from .utils import parse_duration, duration_string
 
 
 class DurationField(DurationField):
@@ -15,3 +15,6 @@ class DurationField(DurationField):
         if parsed is not None:
             return parsed
         self.fail('invalid', format='[[HH]:MM] or [[HH][.MM]]')
+
+    def to_representation(self, value):
+        return duration_string(value)

@@ -55,15 +55,6 @@ class ViewsTestCase(TestCase):
         page = self.c.get('/clients/')
         self.assertEqual(page.status_code, 200)
 
-    def test_projects_view(self):
-        # Test with and without data in the database
-        page = self.c.get('/projects/')
-        self.assertEqual(page.status_code, 200)
-
-        call_command('fake', verbosity=0, iterations=1)
-        page = self.c.get('/projects/')
-        self.assertEqual(page.status_code, 200)
-
     def test_entries_view(self):
         # Test with and without data in the database
         page = self.c.get('/entries/')

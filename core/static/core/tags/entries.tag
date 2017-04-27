@@ -1,86 +1,78 @@
 <entries>
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ entriesPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ entriesPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
         <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
             { timerState } Timer
             <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
             <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
         </button>
+
+        <pager update="{ getEntries }"/>
     </p>
+
 
     <form onsubmit={ submitEntry }>
-        <table class="entries-table table table-striped table-sm w-100 d-none">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>Date</th>
-                    <th>User</th>
-                    <th>Duration</th>
-                    <th>Note</th>
-                    <th>Project</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-info">
-                    <td>
-                        <input type="text" class="date-input form-control form-control-sm" ref="date" placeholder="Date">
-                    </td>
-                    <td>
-						<select class="user-select" ref="user">
-							<option each={ users } value={ url }>{ username }</option>
-						</select>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" ref="duration" placeholder="Duration" value="{ timerDuration }">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" ref="note" placeholder="Note">
-                    </td>
-                    <td>
-						<select class="project-select" ref="project">
-							<option each={ projects } value={ url }>{ name }</option>
-						</select>
-                    </td>
-                    <td class="text-right">
-                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
-                    </td>
-                </tr>
-                <tr each={ entries }>
-                    <td>{ date }</td>
-                    <td>{ user_details.username }</td>
-                    <td>{ duration }</td>
-                    <td>{ note }</td>
-                    <td>{ project_details.name }</td>
-                    <td class="text-right"></td>
-                </tr>
-                <tr class="table-active">
-                    <td></td>
-                    <td><strong>Total</strong></td>
-                    <td><strong>{ totalTime }</strong></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row bg-primary form-row mb-2">
+            <div class="col-sm-3">
+                <select class="custom-select bg-primary" ref="project">
+                    <option each={ projects } value={ url }>{ name } ({ client_details.name })</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-lg bg-primary" ref="note" placeholder="Note">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control form-control-lg bg-primary" ref="duration" placeholder="0:00" value="{ timerDuration }">
+            </div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add
+                </button>
+            </div>
+        </div>
     </form>
 
-    <p class="loading text-center my-5">
-        <i class="fa fa-spinner" aria-hidden="true"></i>
-    </p>
+    <div class="row bg-inverse py-2 mb-2 text-white">
+        <div class="col-sm-2">
+            <strong>Date</strong>
+        </div>
+        <div class="col-sm-2">
+            <strong>User</strong>
+        </div>
+        <div class="col-sm-3">
+            <strong>Project</strong>
+        </div>
+        <div class="col-sm-3">
+            <strong>Note</strong>
+        </div>
+        <div class="col-sm-2">
+            <strong>Duration</strong>
+        </div>
+    </div>
+    <div class="row bg-faded py-2 mb-2" each={ entries }>
+        <div class="col-sm-2">
+            { date }
+        </div>
+        <div class="col-sm-2">
+            { user_details.username }
+        </div>
+        <div class="col-sm-3">
+            { project_details.name }
+        </div>
+        <div class="col-sm-3">
+            { note }
+        </div>
+        <div class="col-sm-2">
+            { duration }
+        </div>
+    </div>
+    <div class="row bg-success text-white py-2">
+        <div class="offset-sm-8 col-sm-2 text-right">
+            <strong>Total</strong>
+        </div>
+        <div class="col-sm-2">
+            <strong>{ totalTime }</strong>
+        </div>
+    </div>
 
     <script>
         var self = this;
@@ -127,8 +119,6 @@
         getEntries(url) {
             url = (typeof url !== 'undefined') ? url : entriesApiUrl;
 
-            $('.loading, .entries-table').toggleClass('d-none');
-
             let entries = quickFetch(url);
             let users = quickFetch(usersApiUrl);
             let projects = quickFetch(projectsApiUrl);
@@ -150,14 +140,7 @@
                         this.set('select', new Date());
                     }
                 });
-				$('.user-select').chosen({width: '100%'});
-				$('.project-select').chosen({width: '100%'});
             });
-        }
-
-
-        entriesPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 
@@ -165,8 +148,7 @@
             e.preventDefault();
             let csrfToken = Cookies.get('csrftoken');
             let body = {
-                date: self.refs.date.value,
-                user: self.refs.user.value,
+                user: usersApiUrl + userId + '/',
                 duration: self.refs.duration.value,
                 note: self.refs.note.value,
                 project: self.refs.project.value

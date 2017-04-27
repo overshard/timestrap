@@ -82,19 +82,6 @@ class ClientsView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ProjectsView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/projects.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProjectsView, self).get_context_data(**kwargs)
-
-        client = self.request.GET.get('client')
-        if client:
-            context['client'] = Client.objects.get(id=client)
-
-        return context
-
-
 class EntriesView(LoginRequiredMixin, TemplateView):
     template_name = 'core/entries.html'
 

@@ -3,11 +3,6 @@
 
 
 {% block meta_title %}Reports{% endblock %}
-{% block title %}Reports{% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Reports</li>
-{% endblock %}
 
 
 {% block content %}
@@ -17,6 +12,7 @@
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/reports.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         var usersApiUrl = "{% url 'user-list' %}";
         var clientsApiUrl = "{% url 'client-list' %}";
@@ -24,6 +20,6 @@
         var entriesApiUrl = "{% url 'entry-list' %}";
         var reportsExportUrl = "{% url 'reports-export' %}";
 		var userId = {{ user.id }};
-        riot.mount('reports');
-    </script> 
+        riot.mount('reports, pager');
+    </script>
 {% endblock %}
