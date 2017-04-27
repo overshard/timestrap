@@ -1,39 +1,38 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import date, timedelta
+from datetime import date
 
 from django.db import models
-from django.contrib.auth.models import User
 
 
-class Timesheet(models.Model):
+class Client(models.Model):
     name = models.CharField(max_length=255)
-    complete = models.BooleanField(default=False)
+    archive = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-id']
 
     def __str__(self):
-        return 'Timesheet: ' + self.name
+        return 'Client: ' + self.name
 
 
-class Task(models.Model):
-    timesheet = models.ForeignKey(Timesheet, related_name='tasks')
+class Project(models.Model):
+    client = models.ForeignKey('Client', related_name='projects')
     name = models.CharField(max_length=255)
-    complete = models.BooleanField(default=False)
+    archive = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['timesheet', '-id']
+        ordering = ['client', '-id']
 
     def __str__(self):
-        return 'Task: ' + self.name
+        return 'Project: ' + self.name
 
 
 class Entry(models.Model):
-    task = models.ForeignKey(Task, related_name='entries')
-    user = models.ForeignKey(User, related_name='entries')
-    date = models.DateField(blank=True)
+    project = models.ForeignKey('Project', related_name='entries')
+    user = models.ForeignKey('auth.User', related_name='entries')
+    date = models.DateField(blank=True)  # TODO: Swap to datetime field
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
 
@@ -47,24 +46,4 @@ class Entry(models.Model):
         super(Entry, self).save(*args, **kwargs)
 
     def __str__(self):
-        return 'Entry for ' + self.task.name
-
-    def parse_duration(self, duration):
-        hours = None
-        minutes = None
-
-        if duration.isdigit():
-            hours = int(duration)
-        elif ':' in duration:
-            duration_split = duration.split(':')
-            hours = int(duration_split[0])
-            minutes = int(duration_split[1])
-        elif '.' in duration:
-            duration_split = duration.split('.')
-            hours = int(duration_split[0])
-            minutes = int(60 * float('.' + duration_split[1]))
-
-        if hours or minutes:
-            self.duration = timedelta(hours=hours, minutes=minutes)
-        else:
-            raise ValueError('Could not parse duration.')
+        return 'Entry for ' + self.project.name + ' by ' + self.user.username

@@ -1,17 +1,18 @@
-Timestrap
-=========
+# Timestrap
 
-[![Build Status](https://travis-ci.org/overshard/timestrap.svg?branch=master)](https://travis-ci.org/overshard/timestrap) [![Coverage Status](https://coveralls.io/repos/github/overshard/timestrap/badge.svg?branch=master)](https://coveralls.io/github/overshard/timestrap?branch=master)
+[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=flat-square)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=flat-square)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square)](https://github.com/overshard/timestrap/blob/master/LICENSE.md)
 
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
-**WARNING**: This app is currently very unstable as I have just started coding
-it. Everything may, and probably will, change.
+
+### Warning
+
+This app is currently very unstable as I have just started coding it.
+Everything may, and probably will, change.
 
 
-Quickstart
-----------
+## Quickstart
 
 Want to get up and running quickly?
 
@@ -20,36 +21,59 @@ Want to get up and running quickly?
 We create a default username and password with superuser access to get you
 started, please change it via the admin panel:
 
- + Username: `admin`
- + Password: `changeme123`
+- Username: `admin`
+- Password: `changeme123`
+
+If you are manually deploying to Heroku without using the deploy button make
+sure you create two settings before pushing using `heroku config:set`:
+
+    heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
+    heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
+
+You will also need to create a superuser after your push has been successful in
+order to login:
+
+    heroku run python manage.py createsuperuser
 
 
-Example Website
----------------
+## Demo Website
 
 I've setup an [instance on Heroku](https://timestrap.herokuapp.com/) of
 Timestrap that resets every 10 minutes if you want to play with it. The
 username and password are set to the same as the Quickstart ones. If someone
-messes up the fun for everyone wait till the next reset or set the project up
-yourself.
+messes up the fun for everyone wait till the next reset or start your own
+Heroku instance.
 
 
-Installation
-------------
+## Installation
 
-Your system needs to have Python with virtualenv and pip installed. If you are
-using Ubuntu you also need to install `build-essential` and on Mac `Xcode`. If
-you do not want to use postgres or have a problem building because of
-`psycopg2` remove that from your `requirements.txt` before `pip install`. In
-some cases you may also need to install `python-dev` on Ubuntu.
+For all systems you are going to need:
+
+- Python 2.7, 3.4, 3.5, or 3.6
+- Python virtualenv and pip packages
+- The ability to compile Python native extensions
+
+Once you have all of that you can run the following and move onto Testing
+and/or Running Timestrap:
 
     virtualenv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
 
+### Ubuntu
 
-Testing
--------
+You can install everything you need from apt.
+
+    sudo apt install build-essential python-dev virtualenv python-pip
+
+Since we include `psycopg2` for running on Heroku in the `requirements.txt` for
+now you will need the build-deps for that or you'll need to remove it from
+`requirements.txt` before installing them.
+
+    sudo apt build-dep psycopg2
+
+
+## Testing
 
 I'm trying to push for 100% code coverage on this project! If you want to add
 or change something and test that everything still works you can do so easily
@@ -57,13 +81,12 @@ with:
 
     python manage.py test
 
-If you push code to our primary repository we test for style adherance and code
+If you push code to our primary repository we test for style adherence and code
 coverage. If you get a failed build to either of these we won't accept your
 code till it's fixed.
 
 
-Running Timestrap
------------------
+## Running Timestrap
 
 Always make sure you are in the virtual environment before running additional
 commands by first running `source .venv/bin/activate`. If you have already done
@@ -83,8 +106,7 @@ After this you can run Timestrap and access it from your browser at
     python manage.py runserver
 
 
-Generate Fake Data
-------------------
+## Generate Fake Data
 
 Want to see how Timestrap would look after being used a while? Run `fake` to
 generate some data. Don't run this on a production database or you'll have to
@@ -93,8 +115,21 @@ do a lot of clean up.
     python manage.py fake
 
 
-Screenshots
------------
+## Password Resets and Email
 
-![Entries](https://raw.githubusercontent.com/overshard/timestrap/master/screenshots/entries.png)
-![Dashboard](https://raw.githubusercontent.com/overshard/timestrap/master/screenshots/dashboard.png)
+To support email for things like password resetting you need to update
+Timestrap's settings. I will not presume your email situation and allow you to
+do this yourself by reading [Django's documentation](https://docs.djangoproject.com/en/1.11/ref/settings/#email-backend).
+
+If you are using Heroku you can add `sendgrid` to your apps addons on the 
+Heroku admin panel or by running:
+
+    heroku addons:create sendgrid
+
+You then need to add these settings to `timestrap/settings/heroku.py`:
+
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
+    EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True

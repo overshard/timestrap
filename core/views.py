@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.db.models import Sum
 
 from .admin import EntryResource
-from .models import Timesheet, Task, Entry
+from .models import Client, Project, Entry
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -20,26 +20,26 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
-        context['timesheets'] = Timesheet.objects.all()
+        context['clients'] = Client.objects.all()
 
-        entries_per_timesheet = []
-        for timesheet in context['timesheets'].iterator():
-            entries_per_timesheet.append(
-                Entry.objects.filter(task__timesheet=timesheet).count()
+        entries_per_client = []
+        for client in context['clients'].iterator():
+            entries_per_client.append(
+                Entry.objects.filter(project__client=client).count()
             )
-        context['entries_per_timesheet'] = entries_per_timesheet
+        context['entries_per_client'] = entries_per_client
 
-        time_per_timesheet = []
-        for timesheet in context['timesheets'].iterator():
+        time_per_client = []
+        for client in context['clients'].iterator():
             entries = (Entry.objects
-                            .filter(task__timesheet=timesheet)
+                            .filter(project__client=client)
                             .aggregate(Sum('duration')))
             if entries['duration__sum']:
                 total_time = int(entries['duration__sum'].total_seconds()/3600)
             else:
                 total_time = 0
-            time_per_timesheet.append(total_time)
-        context['time_per_timesheet'] = time_per_timesheet
+            time_per_client.append(total_time)
+        context['time_per_client'] = time_per_client
 
         time_per_day = OrderedDict()
         current_date = date.today()
@@ -58,7 +58,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         time_per_day = time_per_day
         context['time_per_day'] = time_per_day
 
-        context['total_tasks'] = Task.objects.count()
+        context['total_projects'] = Project.objects.count()
         context['total_entries'] = Entry.objects.count()
         total_duration = Entry.objects.aggregate(Sum('duration'))
         # TODO: Make hour conversion of timedelta into function since we use
@@ -73,25 +73,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class TimesheetsView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/timesheets.html'
+class ClientsView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/clients.html'
 
     def get_context_data(self, **kwargs):
-        context = super(TimesheetsView, self).get_context_data(**kwargs)
-        context['timesheets'] = Timesheet.objects.all()
-        return context
-
-
-class TasksView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/tasks.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(TasksView, self).get_context_data(**kwargs)
-
-        timesheet = self.request.GET.get('timesheet')
-        if timesheet:
-            context['timesheet'] = Timesheet.objects.get(id=timesheet)
-
+        context = super(ClientsView, self).get_context_data(**kwargs)
+        context['clients'] = Client.objects.all()
         return context
 
 
@@ -101,12 +88,12 @@ class EntriesView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(EntriesView, self).get_context_data(**kwargs)
 
-        task = self.request.GET.get('task')
-        timesheet = self.request.GET.get('task__timesheet')
-        if task:
-            context['task'] = Task.objects.get(id=task)
-        if timesheet:
-            context['timesheet'] = Timesheet.objects.get(id=timesheet)
+        project = self.request.GET.get('project')
+        client = self.request.GET.get('project__client')
+        if project:
+            context['project'] = Project.objects.get(id=project)
+        if client:
+            context['client'] = Client.objects.get(id=client)
 
         return context
 

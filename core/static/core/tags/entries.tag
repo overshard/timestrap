@@ -1,29 +1,14 @@
 <entries>
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ entriesPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ entriesPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
-        <a class="btn btn-primary btn-sm pull-right mr-1" href='/entries/csv/'>
-            CSV Export
-        </a>
-
         <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
             { timerState } Timer
             <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
             <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
         </button>
+
+        <pager update="{ getEntries }"/>
     </p>
+
 
     <form onsubmit={ submitEntry }>
         <table class="entries-table table table-striped table-sm w-100 d-none">
@@ -33,7 +18,7 @@
                     <th>User</th>
                     <th>Duration</th>
                     <th>Note</th>
-                    <th>Task</th>
+                    <th>Project</th>
                     <th></th>
                 </tr>
             </thead>
@@ -54,8 +39,8 @@
                         <input type="text" class="form-control form-control-sm" ref="note" placeholder="Note">
                     </td>
                     <td>
-						<select class="task-select" ref="task">
-							<option each={ tasks } value={ url }>{ name }</option>
+						<select class="project-select" ref="project">
+                            <option each={ projects } value={ url }>{ name } ({ client_details.name })</option>
 						</select>
                     </td>
                     <td class="text-right">
@@ -67,7 +52,7 @@
                     <td>{ user_details.username }</td>
                     <td>{ duration }</td>
                     <td>{ note }</td>
-                    <td>{ task_details.name }</td>
+                    <td>{ project_details.name }</td>
                     <td class="text-right"></td>
                 </tr>
                 <tr class="table-active">
@@ -93,7 +78,6 @@
         self.hours = 0;
         self.minutes = 0;
         self.seconds = 0;
-        self.timerDuration = '00:00:00';
 
 
         // TODO: There has to be a better way
@@ -136,13 +120,13 @@
 
             let entries = quickFetch(url);
             let users = quickFetch(usersApiUrl);
-            let tasks = quickFetch(tasksApiUrl);
+            let projects = quickFetch(projectsApiUrl);
 
-            Promise.all([entries, users, tasks]).then(function(e) {
+            Promise.all([entries, users, projects]).then(function(e) {
                 self.update({
                     entries: e[0].results,
                     users: promote(userId, e[1].results),
-                    tasks: e[2].results,
+                    projects: e[2].results,
                     totalTime: getTotalTime(e[0].results),
                     next: e[0].next,
                     previous: e[0].previous
@@ -155,14 +139,9 @@
                         this.set('select', new Date());
                     }
                 });
-				$('.user-select').chosen();
-				$('.task-select').chosen();
+				$('.user-select').chosen({width: '100%'});
+				$('.project-select').chosen({width: '100%'});
             });
-        }
-
-
-        entriesPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 
@@ -174,15 +153,11 @@
                 user: self.refs.user.value,
                 duration: self.refs.duration.value,
                 note: self.refs.note.value,
-                task: self.refs.task.value
+                project: self.refs.project.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
-                // TODO: Just iterate over body
-                self.refs.date.value = '';
-                self.refs.user.value = '';
                 self.refs.duration.value = '';
                 self.refs.note.value = '';
-                self.refs.task.value = '';
                 self.entries.unshift(data);
                 self.update();
             });

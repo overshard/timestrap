@@ -1,23 +1,19 @@
 // This is to fix bootstrap v4's navbar on mobile
-@media (max-width: 767px) {
+@media (max-width: 576px) {
     .container {
         margin-left: 0;
         margin-right: 0;
     }
 }
 
-.login-form,
-.login-errors {
+.login-wrapper {
     max-width: 400px;
     margin: 0 auto;
 }
 
+a,
 .btn {
     cursor: pointer;
-}
-
-a.btn-primary {
-    color: white !important;
 }
 
 .fa-spinner {
@@ -35,5 +31,4 @@ a.btn-primary {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    z-index: -1;
 }

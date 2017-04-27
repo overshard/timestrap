@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 
 from faker import Factory
 
-from core.models import Timesheet, Task, Entry
+from core.models import Client, Project, Entry
 
 
 class Command(BaseCommand):
-    help = 'Generates a bunch of fake timesheets, tasks, and entries'
+    help = 'Generates a bunch of fake clients, projects, and entries'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -28,12 +28,12 @@ class Command(BaseCommand):
             iterations = 5
 
         for i in range(iterations):
-            Timesheet.objects.create(name=fake.company())
+            Client.objects.create(name=fake.company())
 
-        for timesheet in Timesheet.objects.iterator():
-            task_iterations = randint(iterations, iterations*2)
-            for i in range(task_iterations):
-                Task.objects.create(timesheet=timesheet, name=fake.job())
+        for client in Client.objects.iterator():
+            project_iterations = randint(iterations, iterations*2)
+            for i in range(project_iterations):
+                Project.objects.create(client=client, name=fake.job())
 
         for i in range(iterations):
             fake_user = fake.simple_profile(sex=None)
@@ -49,9 +49,9 @@ class Command(BaseCommand):
             User.objects.create_user(username, email, password)
 
         users = User.objects.all()
-        tasks = Task.objects.all()
+        projects = Project.objects.all()
 
-        for task in tasks:
+        for project in projects:
             entry_iterations = randint(iterations*2, iterations*4)
             for i in range(entry_iterations):
                 date = fake.date_time_between(
@@ -64,7 +64,7 @@ class Command(BaseCommand):
                     minutes=randint(1, 60)
                 )
                 Entry.objects.create(
-                    task=task,
+                    project=project,
                     user=choice(users),
                     date=date,
                     duration=duration,

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Clients{% endblock %}
+
+
+{% block content %}
+    <clients />
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'core/tags/clients.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/client.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/project.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
+    <script>
+        var clientsApiUrl = "{% url 'client-list' %}";
+        var projectsApiUrl = "{% url 'project-list' %}";
+        var entriesUrl = "{% url 'entries' %}";
+        riot.mount('clients, client, project');
+    </script>
+{% endblock %}

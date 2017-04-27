@@ -1,20 +1,4 @@
 <reports>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ reportsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ reportsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-    </p>
-
     <form class="mb-4 row" onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
@@ -24,15 +8,15 @@
                 </select>
             </div>
             <div class="form-group">
-                <select class="task-select" ref="task">
-                    <option value=''>Task</option>
-                    <option each={ tasks } value={ id }>{ name }</option>
+                <select class="project-select" ref="project">
+                    <option value=''>Project</option>
+                    <option each={ projects } value={ id }>{ name } ({ client_details.name })</option>
                 </select>
             </div>
             <div class="form-group">
-                <select class="timesheet-select" ref="timesheet">
-                    <option value=''>Timesheet</option>
-                    <option each={ timesheets } value={ id }>{ name }</option>
+                <select class="client-select" ref="client">
+                    <option value=''>Client</option>
+                    <option each={ clients } value={ id }>{ name }</option>
                 </select>
             </div>
         </div>
@@ -43,9 +27,28 @@
             <div class="form-group">
                 <input type="text" class="form-control form-control-sm date-input" ref="max_date" placeholder="Max Date">
             </div>
-            <button type="submit" class="btn btn-primary btn-sm">Get Report</button>
+            <button type="submit" class="btn btn-primary btn-sm w-100">Generate Report</button>
         </div>
     </form>
+
+    <p class="mb-4 clearfix">
+        <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+            Export Report
+        </button>
+
+        <select class="custom-select form-control-sm" ref="export_format">
+            <option value="csv">csv</option>
+            <option value="xls">xls</option>
+            <option value="xlsx">xlsx</option>
+            <option value="tsv">tsv</option>
+            <option value="ods">ods</option>
+            <option value="json">json</option>
+            <option value="yaml">yaml</option>
+            <option value="html">html</option>
+        </select>
+
+        <pager update="{ getEntries }" />
+    </p>
 
     <table class="reports-table table table-striped table-sm w-100 d-none">
         <thead class="thead-inverse">
@@ -53,7 +56,7 @@
                 <th>Date</th>
                 <th>User</th>
                 <th>Duration</th>
-                <th>Timesheet, Task, and Note</th>
+                <th>Client, Project, and Note</th>
                 <th></th>
             </tr>
         </thead>
@@ -63,8 +66,8 @@
                 <td>{ user_details.username }</td>
                 <td>{ duration }</td>
                 <td>
-                    <span class="badge badge-primary">{ task_details.timesheet_details.name }</span>
-                    <span class="badge badge-info">{ task_details.name }</span>
+                    <span class="badge badge-success">{ project_details.client_details.name }</span>
+                    <span class="badge badge-info">{ project_details.name }</span>
                     <br>
                     { note }
                 </td>
@@ -109,13 +112,26 @@
             e.preventDefault();
             query = {
                 user: self.refs.user.value,
-                task: self.refs.task.value,
-                task__timesheet: self.refs.timesheet.value,
+                project: self.refs.project.value,
+                project__client: self.refs.client.value,
                 min_date: self.refs.min_date.value,
                 max_date: self.refs.max_date.value
             }
             url = entriesApiUrl + '?' + $.param(query);
             self.getEntries(url);
+        }
+
+
+        exportReport(e) {
+            query = {
+                user: self.refs.user.value,
+                project: self.refs.project.value,
+                project__client: self.refs.client.value,
+                min_date: self.refs.min_date.value,
+                max_date: self.refs.max_date.value,
+                export_format: self.refs.export_format.value
+            }
+            document.location.href = reportsExportUrl + '?' + $.param(query);
         }
 
 
@@ -132,14 +148,14 @@
                 $('.user-select').chosen({width: '100%'});
             });
 
-            quickFetch(tasksApiUrl).then(function(data) {
-                self.update({tasks: data.results});
-                $('.task-select').chosen({width: '100%'});
+            quickFetch(projectsApiUrl).then(function(data) {
+                self.update({projects: data.results});
+                $('.project-select').chosen({width: '100%'});
             });
 
-            quickFetch(timesheetsApiUrl).then(function(data) {
-                self.update({timesheets: data.results});
-                $('.timesheet-select').chosen({width: '100%'});
+            quickFetch(clientsApiUrl).then(function(data) {
+                self.update({clients: data.results});
+                $('.client-select').chosen({width: '100%'});
             });
 
             $('.date-input').pickadate({

@@ -10,22 +10,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         {# Global stylesheets #}
-        {# TODO: Clean up for full release, we don't even use half of these #}
-        <link rel="stylesheet" type="text/css" crossorigin="anonymous"
-            href="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/css/bootstrap.min.css"
-            integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ">
-        <link rel="stylesheet" type="text/css" crossorigin="anonymous"
-            href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"
-            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN">
-        <link rel="stylesheet" type="text/css" crossorigin="anonymous"
-            href="https://unpkg.com/chosenjs@1.4.3/chosen.min.css"
-            integrity="sha384-75owfgoG1501AWptuyWsjxmqiz7ga5KO5blszuTaPsid6H2ZoDPUbU6FQ/BMsHYF">
-        <link rel="stylesheet" type="text/css" crossorigin="anonymous"
-            href="https://unpkg.com/pickadate@3.5.6/lib/compressed/themes/default.css"
-            integrity="sha384-VzsejxiDDp1cK0C6M9c6YPIL4FmyD+HDv3eDOsob26h8JK8Mnz+C2uiqMpk9DtYK">
-        <link rel="stylesheet" type="text/css" crossorigin="anonymous"
-            href="https://unpkg.com/pickadate@3.5.6/lib/compressed/themes/default.date.css"
-            integrity="sha384-7p/IO0DBbJT76LkdojzPyTsjlUHtkGlFo9G0IUsyTEjJGCY+ukgBjyeD8EDm7PZY">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" integrity="sha256-y4TDcAD4/j5o4keZvggf698Cr9Oc7JZ+gGMax23qmVA=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha256-rr9hHBQ43H7HSOmmNkxzQGazS/Khx+L8ZRHteEY1tQ4=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.min.css" integrity="sha256-mT46DtujUaKjYvj5sW6iVmmxhUmAslmmkuYdo6zVDP8=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.css" integrity="sha256-HJnF0By+MMhHfGTHjMMD7LlFL0KAQEMyWB86VbeFn4k=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.date.css" integrity="sha256-Ex8MCGbDP5+fEwTgLt8IbGaIDJu2uj88ZDJgZJrxA4Y=" crossorigin="anonymous" />
 
         {% compress css %}
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}">
@@ -41,35 +31,38 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <h1 class="navbar-brand mb-0">{% block title %}{% endblock %}</h1>
+                <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                                {% url 'clients' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Clients</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reports' %}">Reports</a>
+                                {% url 'entries' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Entries</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'timesheets' %}">Timesheets</a>
+                                {% url 'reports' as url %}
+                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                   href="{{ url }}">Reports</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'tasks' %}">Tasks</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'entries' %}">Entries</a>
-                            </li>
-                            {% if user.is_staff %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/api/">API</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/">Admin</a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">{{ user.username }}</a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="/api/">API Browser</a>
+                                    {% if user.is_staff %}
+                                        <a class="dropdown-item" href="/admin/">Admin</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                </div>
                             </li>
                         {% else %}
                             <li class="nav-item">
@@ -78,49 +71,24 @@
                         {% endif %}
                     </ul>
                 </div>
-                <a class="navbar-brand" href="https://github.com/overshard/timestrap" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
             </div>
         </div>
+
 
         <div class="container">
             {% block content %}{% endblock %}
         </div>
 
         {# Global javascript #}
-        {# TODO: Clean up for full release, we don't even use half of these #}
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/riot@3.4.2/riot+compiler.min.js"
-            integrity="sha384-uTFABZJTGxdQCuAGYhk8PBeBnuera25ceofBYR7LoHeaw6UMY30nUPaFVWKlBxYE"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/jquery@3.2.1/dist/jquery.min.js"
-            integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/tether@1.4.0/dist/js/tether.min.js"
-            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/js-cookie@2.1.4/src/js.cookie.js"
-            integrity="sha384-zfo3aN4O1oKdMpiAxnBEBvppZvyqJ+RLwxvGkcq90bVJBVDkEoPf1yeQHRy0yObs"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/js-cookie@2.1.4/src/js.cookie.js"
-            integrity="sha384-zfo3aN4O1oKdMpiAxnBEBvppZvyqJ+RLwxvGkcq90bVJBVDkEoPf1yeQHRy0yObs"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/chosenjs@1.4.3/chosen.jquery.min.js"
-            integrity="sha384-3X6V7VkXNtvUyKicwuYuOggtEL6K07X7vY4uIcZayrlXCRx3kXTlXTC/KLlF+kZW"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/pickadate@3.5.6/lib/compressed/picker.js"
-            integrity="sha384-xBD2PY7OwCPjwQePMdottKMamulkp8vgdJwxlKwMo7QidedlS/6Wngzgzm4df5It"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/pickadate@3.5.6/lib/compressed/picker.date.js"
-            integrity="sha384-IYrF/ykShZE6ujc2tH9FrNwZDBNRC7vTVFgVThyPkmbg3PP3edEOJwjJV8z9mH02"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://unpkg.com/moment@2.18.1/min/moment.min.js"
-            integrity="sha384-DRe+1gYJauFEenXeWS8TmYdBmDUqnR5Rcw7ax4KTqOxXWd4NAMP2VPU5H69U7yP9"></script>
-        <script type="text/javascript" crossorigin="anonymous"
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"
-            integrity="sha384-86mmuxXJYGTFcyG3Tr7nKO2BYpngqxq/EYijDDr0VCbSXm5HK6tfJbGl4HSwEoUk"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha256-gL1ibrbVcRIHKlCO5OXOPC/lZz/gpdApgQAzskqqXp8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha256-+kIbbrvS+0dNOjhmQJzmwe/RILR/8lb/+4+PUNVW09k=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.jquery.min.js" integrity="sha256-4PBBxPFHK8/lSC8/ZtuyV6sN3V2QQ0uutyuBQ8RsYew=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.js" integrity="sha256-A1y8n02GW5dvJFkEOX7UCbzJoko8kqgWUquWf9TWFS8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.date.js" integrity="sha256-rTh8vmcE+ZrUK3k9M6QCNZIBmAd1vumeuJkagq0EU3g=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" integrity="sha256-NjbogQqosWgor0UBdCURR5dzcvAgHnfUZMcZ8RCwkk8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.4.3/riot+compiler.min.js" integrity="sha256-s0V6tSSO3lyWO++9wmvvmNvbkNNfUVR9h/oOS80TU/w=" crossorigin="anonymous"></script>
 
         {% compress js %}
             <script type="text/javascript" src="{% static 'js/base.js' %}"></script>

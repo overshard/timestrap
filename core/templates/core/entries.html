@@ -3,45 +3,28 @@
 
 
 {% block meta_title %}Entries{% endblock %}
-{% block title %}Entries{% endblock %}
 
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        {% if task %}
-            <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ task.timesheet }}</a></li>
-            <li class="breadcrumb-item">
-                <a href="{% url 'tasks' %}?timesheet={{ task.timesheet.id }}">{{ task }}</a>
-            </li>
-        {% elif timesheet %}
-            <li class="breadcrumb-item"><a href="{% url 'timesheets' %}">{{ timesheet }}</a></li>
-        {% endif %}
-        <li class="breadcrumb-item active">Entries</li>
-    </ol>
-
     <entries />
 {% endblock %}
 
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
-        {% if task %}
-            var entriesApiUrl = "{% url 'entry-list' %}?task={{ task.id }}";
-        {% elif timesheet %}
-            var entriesApiUrl = "{% url 'entry-list' %}?task__timesheet={{ timesheet.id }}";
+        {% if project %}
+            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}";
         {% else %}
             var entriesApiUrl = "{% url 'entry-list' %}";
         {% endif %}
-        {% if task %}
-            var tasksApiUrl = "{% url 'task-list' %}?id={{ task.id }}";
-        {% elif timesheet %}
-            var tasksApiUrl = "{% url 'task-list' %}?timesheet={{ timesheet.id }}";
+        {% if project %}
+            var projectsApiUrl = "{% url 'project-list' %}?id={{ project.id }}";
         {% else %}
-            var tasksApiUrl = "{% url 'task-list' %}";
+            var projectsApiUrl = "{% url 'project-list' %}";
         {% endif %}
-        var timesheetsApiUrl = "{% url 'timesheet-list' %}";
+        var clientsApiUrl = "{% url 'client-list' %}";
         var usersApiUrl = "{% url 'user-list' %}";
 		var userId = {{ user.id }};
         riot.mount('entries');
