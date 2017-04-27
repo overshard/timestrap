@@ -20,6 +20,6 @@
         var entriesApiUrl = "{% url 'entry-list' %}";
         var reportsExportUrl = "{% url 'reports-export' %}";
 		var userId = {{ user.id }};
-        riot.mount('reports, pager');
+        riot.mount('reports');
     </script>
 {% endblock %}
