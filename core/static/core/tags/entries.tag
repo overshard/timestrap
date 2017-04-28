@@ -3,12 +3,11 @@
         <pager update="{ getEntries }"/>
     </p>
 
-
     <form onsubmit={ submitEntry }>
         <div class="row form-row mb-5 shadow-muted">
             <div class="col-sm-3">
-                <select class="custom-select" ref="project">
-                    <option value='' class="text-muted">Project</option>
+                <select class="custom-select" ref="project" required>
+                    <option value="" disabled selected>Project</option>
                     <option each={ projects } value={ url }>{ name }</option>
                 </select>
             </div>
@@ -16,7 +15,7 @@
                 <input type="text" class="form-control form-control-lg" ref="note" placeholder="Note">
             </div>
             <div class="col-sm-2">
-                <input type="text" class="form-control form-control-lg" onkeyup={ timer } ref="duration" placeholder="0:00" value="{ timerDuration }">
+                <input type="text" class="form-control form-control-lg" onkeyup={ timer } ref="duration" placeholder="0:00" value="{ timerDuration }" required>
             </div>
             <div class="col-sm-2">
                 <button type="submit" class="btn btn-success btn-lg" onclick={ timer }>{ timerState }</button>
@@ -41,6 +40,7 @@
             <strong>{ totalTime }</strong>
         </div>
     </div>
+
 
     <script>
         var interval
@@ -97,28 +97,25 @@
             url = (typeof url !== 'undefined') ? url : entriesApiUrl
 
             let entries = quickFetch(url)
-            let users = quickFetch(usersApiUrl)
             let projects = quickFetch(projectsApiUrl)
 
-            Promise.all([entries, users, projects]).then(function(e) {
+            Promise.all([entries, projects]).then(function(e) {
                 let dates = []
-                $.each(e[0].results, function(i, el) {
-                    if ($.inArray(el.date, dates) === -1) {
-                        dates.push(el.date)
+                let dateObjects = []
+
+                $.each(e[0].results, function(i, entry) {
+                    if ($.inArray(entry.date, dates) === -1) {
+                        dates.push(entry.date)
                     }
                 })
-                // Doing this in another loop and not the previous because
-                // inArray doesn't seem to match objects very well here.
-                let dateObjects = []
-                $.each(dates, function(i, el) {
-                    dateObjects.push({mainDate: el})
+                $.each(dates, function(i, date) {
+                    dateObjects.push({mainDate: date})
                 })
 
                 this.update({
                     dates: dateObjects,
                     entries: e[0].results,
-                    users: e[1].results,
-                    projects: e[2].results,
+                    projects: e[1].results,
                     totalTime: e[0].total_duration,
                     subtotalTime: e[0].subtotal_duration,
                     next: e[0].next,
