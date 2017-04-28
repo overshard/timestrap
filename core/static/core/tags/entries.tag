@@ -41,10 +41,14 @@
                     { duration }
                 </div>
                 <div class="col-sm-2 d-flex align-self-center justify-content-end">
-                    <button class="btn btn-default rounded-0 mr-1">Restart</button>
-                    <button class="btn btn-default rounded-0">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="entry-edit-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </button>
+                    <div class="dropdown-menu" aria-labelledby="entry-edit-menu">
+                        <a class="dropdown-item" href="#">Restart</a>
+                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
