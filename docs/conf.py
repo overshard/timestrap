@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Timestrap'
-copyright = '2017, overshard'
-author = 'overshard'
+copyright = '2017, Timestrap\'s Contributors'
+author = 'Timestrap\'s Contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -128,7 +128,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'Timestrap.tex', 'Timestrap Documentation',
-     'overshard', 'manual'),
+     'Timestrap\'s Contributors', 'manual'),
 ]
 
 
@@ -149,7 +149,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'Timestrap', 'Timestrap Documentation',
-     author, 'Timestrap', 'One line description of project.',
+     author, 'Timestrap', 'Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.',
      'Miscellaneous'),
 ]
 
