@@ -6,7 +6,6 @@ from datetime import timedelta
 def duration_string_from_delta(delta):
     seconds = delta.total_seconds()
     split = str(seconds/3600).split('.')
-    print split
 
     hours = int(split[0])
     minutes = int(float('.'+split[1])*60)
