@@ -51,20 +51,20 @@
 
 
         // TODO: There has to be a better way
-        tick() {
-            if (self.seconds === 60) {
-                ++self.minutes;
-                self.seconds = -1;
+        tick(entry) {
+            if (entry.seconds === 60) {
+                ++entry.minutes;
+                entry.seconds = -1;
             }
-            if (self.minutes === 60) {
-                ++self.hours;
-                self.minutes = 0;
+            if (entry.minutes === 60) {
+                ++entry.hours;
+                entry.minutes = 0;
             }
-            self.update({
-                hours: self.hours,
-                minutes: self.minutes,
-                seconds: ++self.seconds,
-                timerDuration: pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds)
+            entry.update({
+                hours: entry.hours,
+                minutes: entry.minutes,
+                seconds: ++entry.seconds,
+                timerDuration: pad(entry.hours) + ':' + pad(entry.minutes) + ':' + pad(entry.seconds)
             });
         }
 
@@ -77,7 +77,7 @@
             } else {
                 if (self.timerState === 'Start') {
                     self.timerState = 'Stop';
-                    interval = setInterval(self.tick, 1000);
+                    interval = setInterval(self.tick, 1000, self);
                     e.preventDefault();
                 } else {
                     self.timerState = 'Add';

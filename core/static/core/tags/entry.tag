@@ -58,24 +58,6 @@
         }
 
 
-        tick() {
-            if (self.seconds === 60) {
-                ++self.minutes;
-                self.seconds = -1;
-            }
-            if (self.minutes === 60) {
-                ++self.hours;
-                self.minutes = 0;
-            }
-            self.update({
-                hours: self.hours,
-                minutes: self.minutes,
-                seconds: ++self.seconds,
-                timerDuration: pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds)
-            });
-        }
-
-
         timer(e) {
             if (!self.timerState) {
                 let duration_parts = self.duration.split(':');
@@ -85,7 +67,7 @@
                 self.seconds = 0;
                 self.timerDuration = pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds);
                 self.timerState = 'Stop';
-                interval = setInterval(self.tick, 1000);
+                interval = setInterval(self.parent.tick, 1000, self);
                 e.preventDefault();
             } else {
                 clearInterval(interval);
