@@ -43,24 +43,23 @@
     </div>
 
     <script>
-        var self = this;
-        var interval;
-        self.timerState = 'Start';
-        self.hours = 0;
-        self.minutes = 0;
-        self.seconds = 0;
+        var interval
+        this.timerState = 'Start'
+        this.hours = 0
+        this.minutes = 0
+        this.seconds = 0
 
 
 
         // TODO: There has to be a better way
         tick(entry) {
             if (entry.seconds === 60) {
-                ++entry.minutes;
-                entry.seconds = -1;
+                ++entry.minutes
+                entry.seconds = -1
             }
             if (entry.minutes === 60) {
-                ++entry.hours;
-                entry.minutes = 0;
+                ++entry.hours
+                entry.minutes = 0
             }
             entry.update({
                 hours: entry.hours,
@@ -72,51 +71,50 @@
 
 
         timer(e) {
-            let duration = self.refs.duration.value;
+            let duration = this.refs.duration.value
             // TODO: Cleanup
-            if (duration && self.timerState !== 'Stop') {
-                self.timerState == 'Start';
+            if (duration && this.timerState !== 'Stop') {
+                this.timerState == 'Start'
             } else {
-                if (self.timerState === 'Start') {
-                    self.timerState = 'Stop';
-                    interval = setInterval(self.tick, 1000, self);
-                    e.preventDefault();
+                if (this.timerState === 'Start') {
+                    this.timerState = 'Stop'
+                    interval = setInterval(this.tick, 1000, this)
+                    e.preventDefault()
                 } else {
-                    self.timerState = 'Add';
-                    clearInterval(interval);
-                    self.timerDuration = pad(self.hours) + ':' + pad(self.minutes);
-                    self.hours = 0;
-                    self.minutes = 0;
-                    self.seconds = 0;
-                    e.preventDefault();
+                    this.timerState = 'Add'
+                    clearInterval(interval)
+                    this.timerDuration = pad(this.hours) + ':' + pad(this.minutes)
+                    this.hours = 0
+                    this.minutes = 0
+                    this.seconds = 0
+                    e.preventDefault()
                 }
             }
         }
 
 
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl
 
-            let entries = quickFetch(url);
-            let users = quickFetch(usersApiUrl);
-            let projects = quickFetch(projectsApiUrl);
+            let entries = quickFetch(url)
+            let users = quickFetch(usersApiUrl)
+            let projects = quickFetch(projectsApiUrl)
 
             Promise.all([entries, users, projects]).then(function(e) {
-                let dates = [];
+                let dates = []
                 $.each(e[0].results, function(i, el) {
                     if ($.inArray(el.date, dates) === -1) {
-                        dates.push(el.date);
+                        dates.push(el.date)
                     }
-                });
+                })
                 // Doing this in another loop and not the previous because
                 // inArray doesn't seem to match objects very well here.
-                let dateObjects = [];
+                let dateObjects = []
                 $.each(dates, function(i, el) {
-                    dateObjects.push({mainDate: el});
-                });
-                console.log(e[0]);
+                    dateObjects.push({mainDate: el})
+                })
 
-                self.update({
+                this.update({
                     dates: dateObjects,
                     entries: e[0].results,
                     users: e[1].results,
@@ -125,30 +123,31 @@
                     subtotalTime: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
-                });
-            });
+                })
+            }.bind(this))
         }
 
 
         submitEntry(e) {
-            e.preventDefault();
-            let csrfToken = Cookies.get('csrftoken');
+            e.preventDefault()
             let body = {
                 user: usersApiUrl + userId + '/',
-                duration: self.refs.duration.value,
-                note: self.refs.note.value,
-                project: self.refs.project.value
+                duration: this.refs.duration.value,
+                note: this.refs.note.value,
+                project: this.refs.project.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
-                self.refs.duration.value = '';
-                self.refs.note.value = '';
-                self.entries.unshift(data);
-                self.timerState = 'Start';
-                self.update();
-            });
+                this.refs.duration.value = ''
+                this.refs.note.value = ''
+                this.entries.unshift(data)
+                this.timerState = 'Start'
+                this.update()
+            }.bind(this))
         }
 
 
-        self.getEntries();
+        this.on('mount', function() {
+            this.getEntries()
+        }.bind(this))
     </script>
 </entries>

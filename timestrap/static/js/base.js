@@ -1,8 +1,8 @@
 // We use this function throughout all the things to send and recieve form our
 // django-rest-framework API
 function quickFetch(url, method, body) {
-    let csrftoken = Cookies.get('csrftoken');
-    method = (typeof method !== 'undefined') ? method : 'get';
+    let csrftoken = Cookies.get('csrftoken')
+    method = (typeof method !== 'undefined') ? method : 'get'
 
     // Give us back a promise we can .then() on, data can be accessed via
     // .then(function(data) {console.log(data)})
@@ -26,9 +26,9 @@ function quickFetch(url, method, body) {
 
 // Append number with 0 if there is only 1 digit
 function pad(num) {
-    num = num.toString();
+    num = num.toString()
     if (num.length === 1) {
-        num = '0' + num;
+        num = '0' + num
     }
     return num
 }
