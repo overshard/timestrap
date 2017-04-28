@@ -12,12 +12,13 @@
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/entry.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         {% if project %}
-            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}";
+            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}&user={{ user.id }}";
         {% else %}
-            var entriesApiUrl = "{% url 'entry-list' %}";
+            var entriesApiUrl = "{% url 'entry-list' %}?user={{ user.id }}";
         {% endif %}
         {% if project %}
             var projectsApiUrl = "{% url 'project-list' %}?id={{ project.id }}";

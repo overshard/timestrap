@@ -127,3 +127,12 @@ You then need to add these settings to `timestrap/settings/heroku.py`:
     EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
+
+
+## Time and Date Localization
+
+If you wish to change things like the date strings you'll need to play around
+with [Django's formtat localization settings](https://docs.djangoproject.com/en/1.11/topics/i18n/formatting/#controlling-localization-in-templates)
+in `timestrap/settings/base.py`. We don't do anything to try and localize by
+default but we are trying to avoid lock-in to a specific format. If you enable
+localization and run into any bugs let us know!

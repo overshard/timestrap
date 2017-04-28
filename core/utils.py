@@ -3,6 +3,19 @@ from django.utils.duration import _get_duration_components
 from datetime import timedelta
 
 
+def duration_string_from_delta(delta):
+    if delta is None:
+        return '0:00'
+    seconds = delta.total_seconds()
+    split = str(seconds/3600).split('.')
+
+    hours = int(split[0])
+    minutes = int(float('.'+split[1])*60)
+
+    string = '{}:{:02d}'.format(hours, minutes)
+    return string
+
+
 def parse_duration(duration):
     hours = None
     minutes = None

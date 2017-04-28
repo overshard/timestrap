@@ -18,12 +18,9 @@
 
 
     <script>
-        var self = this;
-
-
         editProject(e) {
-            self.edit = true;
-            self.update();
+            this.edit = true
+            this.update()
         }
 
 
@@ -31,18 +28,18 @@
             let query = {
                 project: e.item.id
             }
-            document.location.href = entriesUrl + '?' + $.param(query);
+            document.location.href = entriesUrl + '?' + $.param(query)
         }
 
 
         saveProject(e) {
-            e.preventDefault();
-            self.name = self.refs.name.value;
-            quickFetch(self.url, 'put', self).then(function(data) {
-                self.name.value = '';
-                self.edit = false;
-                self.update();
-            });
+            e.preventDefault()
+            this.name = this.refs.name.value
+            quickFetch(this.url, 'put', this).then(function(data) {
+                this.name.value = ''
+                this.edit = false
+                this.update()
+            }.bind(this));
         }
     </script>
 </project>

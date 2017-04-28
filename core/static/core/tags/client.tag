@@ -6,7 +6,7 @@
             </a>
         </div>
         <div class="col-10" if={ edit }>
-            <input type="text" class="form-control form-control-sm" ref="name" value="{ name }">
+            <input type="text" class="form-control form-control-sm" ref="name" value={ name }>
         </div>
         <div class="col-2 text-right">
             <button if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
@@ -31,52 +31,44 @@
         </div>
     </form>
 
-    <div class="row mb-1 ml-3 py-1 bg-faded"
-         each={ projects }
-         data-is="project"
-         if={ productsShown }>
-    </div>
+    <div class="row mb-1 ml-3 py-1 bg-faded" each={ projects } data-is="project" if={ productsShown }/>
 
 
     <script>
-        var self = this;
-
-
         editClient(e) {
-            self.edit = true;
-            self.update();
+            this.edit = true
+            this.update()
         }
 
 
         showProjects(e) {
-            self.productsShown = !self.productsShown;
-            self.update();
+            this.productsShown = !this.productsShown
+            this.update()
         }
 
 
         saveClient(e) {
-            e.preventDefault();
-            self.name = self.refs.name.value;
-            quickFetch(self.url, 'put', self).then(function(data) {
-                self.name.value = '';
-                self.edit = false;
-                self.update();
-            });
+            e.preventDefault()
+            this.name = this.refs.name.value
+            quickFetch(this.url, 'put', this).then(function(data) {
+                this.name.value = ''
+                this.edit = false
+                this.update()
+            }.bind(this));
         }
 
 
         submitProject(e) {
-            e.preventDefault();
+            e.preventDefault()
             let body = {
-                name: self.refs.project_name.value,
-                client: self.url
+                name: this.refs.project_name.value,
+                client: this.url
             }
-            console.log(body);
             quickFetch(projectsApiUrl, 'post', body).then(function(data) {
-                self.refs.project_name.value = '';
-                self.projects.unshift(data);
-                self.update();
-            });
+                this.refs.project_name.value = ''
+                this.projects.unshift(data)
+                this.update()
+            }.bind(this));
         }
     </script>
 </client>

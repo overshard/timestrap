@@ -6,6 +6,10 @@
     }
 }
 
+body {
+    background: #eeeeee;
+}
+
 .login-wrapper {
     max-width: 400px;
     margin: 0 auto;
@@ -44,7 +48,6 @@ a,
     .btn {
         border-radius: 0;
         border: none;
-        color: white !important;
         width: 100%;
     }
 
@@ -55,6 +58,30 @@ a,
     }
 
 	input {
-		@include placeholder(rgba(255, 255, 255, 0.8));
+		@include placeholder(#d7d7d7);
     }
+}
+
+.entries-rows {
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .row:nth-child(even)  {
+        background: #f7f7f7;
+    }
+}
+
+.row-fix {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.shadow-muted {
+    box-shadow: 0 0 5px #d7d7d7;
+}
+
+#entry-edit-menu::after {
+    display: none;
 }
