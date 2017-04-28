@@ -1,19 +1,3 @@
-// Promote a user to the front of a list
-function promote(userId, arr) {
-	let newArr = arr;
-
-    for (let i = 0; i < newArr.length; i++) {
-        if (newArr[i].id === userId) {
-            let a = newArr.splice(i, 1);
-            newArr.unshift(a[0]);
-            break;
-        }
-    }
-
-	return newArr;
-}
-
-
 // We use this function throughout all the things to send and recieve form our
 // django-rest-framework API
 function quickFetch(url, method, body) {

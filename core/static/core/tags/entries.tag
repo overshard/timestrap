@@ -119,7 +119,7 @@
                 self.update({
                     dates: dateObjects,
                     entries: e[0].results,
-                    users: promote(userId, e[1].results),
+                    users: e[1].results,
                     projects: e[2].results,
                     totalTime: e[0].total_duration,
                     subtotalTime: e[0].subtotal_duration,
