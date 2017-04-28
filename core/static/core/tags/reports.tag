@@ -75,8 +75,14 @@
             </tr>
             <tr class="table-active">
                 <td></td>
-                <td><strong>Total</strong></td>
-                <td><strong>{ totalTime }</strong></td>
+                <td>
+                    Subtotal<br>
+                    <strong>Total</strong>
+                </td>
+                <td>
+                    { subtotalTime }<br>
+                    <strong>{ totalTime }</strong>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
@@ -99,7 +105,8 @@
             quickFetch(url).then(function(data) {
                 self.update({
                     entries: data.results,
-                    totalTime: getTotalTime(data.results),
+                    totalTime: data.total_duration,
+                    subtotalTime: data.subtotal_duration,
                     next: data.next,
                     previous: data.previous
                 });

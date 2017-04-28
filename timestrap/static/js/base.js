@@ -48,26 +48,3 @@ function pad(num) {
     }
     return num
 }
-
-
-// Convert time string to seconds
-function getTimeInSeconds(time) {
-    let timeInSeconds = 0;
-    time = time.split(':');
-    timeInSeconds += parseInt(time[0])*3600;
-    timeInSeconds += parseInt(time[1])*60;
-    return timeInSeconds;
-}
-
-
-// Takes entries and outputs string
-function getTotalTime(entries) {
-    let totalSeconds = 0;
-    for (var entry in entries) {
-        totalSeconds += getTimeInSeconds(entries[entry].duration);
-    }
-    let hours = Math.floor(totalSeconds / 3600);
-    totalSeconds %= 3600;
-    let minutes = Math.floor(totalSeconds / 60);
-    return hours +':'+ ('0'+minutes).slice(-2);
-}
