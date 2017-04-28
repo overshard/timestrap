@@ -58,19 +58,13 @@ and/or Running Timestrap:
 
     virtualenv .venv
     source .venv/bin/activate
-    pip install -r requirements.txt
+    pip install -r requirements/development.txt
 
 ### Ubuntu
 
 You can install everything you need from apt.
 
     sudo apt install build-essential python-dev virtualenv python-pip
-
-Since we include `psycopg2` for running on Heroku in the `requirements.txt` for
-now you will need the build-deps for that or you'll need to remove it from
-`requirements.txt` before installing them.
-
-    sudo apt build-dep psycopg2
 
 
 ## Testing
