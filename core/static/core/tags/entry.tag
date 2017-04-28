@@ -11,26 +11,32 @@
     <div class="col-sm-5 d-flex align-self-end" if={ edit }>
         <input type="text" class="form-control form-control" ref="note" placeholder="Note" value="{ note }">
     </div>
-    <div class="col-sm-2 d-flex align-self-end" if={ !edit }>
+    <div class="col-sm-2 d-flex align-self-end" if={ !edit && !run_timer }>
         { duration }
     </div>
     <div class="col-sm-2 d-flex align-self-end" if={ edit }>
         <input type="text" class="form-control form-control" ref="duration" placeholder="0:00" value="{ duration }">
     </div>
-    <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ !edit }>
+    <div class="col-sm-2 d-flex align-self-end" if={ run_timer }>
+        <input type="text" class="form-control form-control" ref="duration" placeholder="0:00" value="{ timerDuration }">
+    </div>
+    <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ !edit && !run_timer }>
         <button class="btn btn-secondary dropdown-toggle" type="button" id="entry-edit-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
         <div class="dropdown-menu" aria-labelledby="entry-edit-menu">
-            <a class="dropdown-item" href="#">Restart</a>
+            <a class="dropdown-item" href="#" onclick={ restartEntry }>Restart</a>
             <a class="dropdown-item" href="#" onclick={ editEntry }>Edit</a>
             <a class="dropdown-item" href="#" onclick={ deleteEntry }>Delete</a>
         </div>
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ edit }>
-        <button class="btn btn-success btn-sm" onclick={ saveEntry }>
+        <button class="btn btn-success" onclick={ saveEntry }>
             <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
         </button>
+    </div>
+    <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ run_timer }>
+        <button type="submit" class="btn btn-success" onclick={ timer }>{ timerState }</button>
     </div>
 
 
@@ -41,6 +47,55 @@
         editEntry(e) {
             self.edit = true;
             self.update();
+        }
+
+
+        restartEntry(e) {
+            e.preventDefault();
+            self.run_timer = true;
+            self.timer(e);
+            self.update();
+        }
+
+
+        tick() {
+            if (self.seconds === 60) {
+                ++self.minutes;
+                self.seconds = -1;
+            }
+            if (self.minutes === 60) {
+                ++self.hours;
+                self.minutes = 0;
+            }
+            self.update({
+                hours: self.hours,
+                minutes: self.minutes,
+                seconds: ++self.seconds,
+                timerDuration: pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds)
+            });
+        }
+
+
+        timer(e) {
+            if (!self.timerState) {
+                let duration_parts = self.duration.split(':');
+                self.timerState = 'Start';
+                self.hours = duration_parts[0];
+                self.minutes = duration_parts[1];
+                self.seconds = 0;
+                self.timerDuration = pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds);
+                self.timerState = 'Stop';
+                interval = setInterval(self.tick, 1000);
+                e.preventDefault();
+            } else {
+                clearInterval(interval);
+                self.duration = pad(self.hours) + ':' + pad(self.minutes);
+                self.timerState = undefined;
+                self.run_timer = false;
+                self.edit = true;
+                self.update();
+                e.preventDefault();
+            }
         }
 
 
