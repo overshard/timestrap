@@ -4,6 +4,8 @@ from datetime import timedelta
 
 
 def duration_string_from_delta(delta):
+    if delta is None:
+        return '0:00'
     seconds = delta.total_seconds()
     split = str(seconds/3600).split('.')
 

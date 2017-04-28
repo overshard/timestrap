@@ -1,6 +1,6 @@
 <clients>
     <p class="mb-4 clearfix">
-        <pager update="{ getClients }" />
+        <pager update={ getClients }/>
     </p>
 
     <form onsubmit={ submitClient }>
@@ -18,34 +18,34 @@
 
     <client each={ clients } />
 
+
     <script>
-        var self = this;
-
-
         getClients(url) {
-            url = (typeof url !== 'undefined') ? url : clientsApiUrl;
+            url = (typeof url !== 'undefined') ? url : clientsApiUrl
             quickFetch(url).then(function(data) {
-                self.update({
+                this.update({
                     clients: data.results,
                     next: data.next,
                     previous: data.previous
-                });
-            });
+                })
+            }.bind(this))
         }
 
 
         submitClient(e) {
-            e.preventDefault();
+            e.preventDefault()
             let body = {
-                name: self.refs.name.value
+                name: this.refs.name.value
             }
             quickFetch(clientsApiUrl, 'post', body).then(function(data) {
-                self.refs.name.value = '';
-                self.clients.unshift(data);
-                self.update();
-            });
+                this.refs.name.value = ''
+                this.clients.unshift(data)
+                this.update()
+            }.bind(this));
         }
 
-        self.getClients();
+        this.on('mount', function() {
+            this.getClients()
+        }.bind(this))
     </script>
 </clients>
