@@ -7,8 +7,7 @@
     </div>
     <div class="col-sm-3" if={ edit }>
         <select class="custom-select" ref="project">
-            <option value='' class="text-muted">Project</option>
-            <option each={ parent.projects } value={ url } selected={ id == project_details.id }>{ name }</option>
+            <option each={ p in parent.projects } value={ p.url } selected={ p.id == project_details.id }>{ p.name }</option>
         </select>
     </div>
     <div class="col-sm-5 d-flex align-self-end" if={ !edit }>
@@ -91,9 +90,12 @@
             e.preventDefault();
             self.note = self.refs.note.value;
             self.duration = self.refs.duration.value;
+            self.project = self.refs.project.value;
+            self.project_details = self.parent.projects[self.refs.project.selectedIndex];
             quickFetch(self.url, 'put', self).then(function(data) {
                 self.note.value = '';
                 self.duration.value = '';
+                self.project.value = '';
                 self.edit = false;
                 self.update();
             });
