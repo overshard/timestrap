@@ -1,0 +1,5 @@
+-r ./base.txt
+
+# testing
+flake8<3.4,>=3.3
+coveralls<1.2,>=1.1
