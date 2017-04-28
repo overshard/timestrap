@@ -33,9 +33,11 @@
 
     <div class="row bg-success text-white py-2 my-5">
         <div class="offset-sm-6 col-sm-2 text-right">
+            Subtotal<br>
             <strong>Total</strong>
         </div>
         <div class="col-sm-2">
+            { subtotalTime }<br>
             <strong>{ totalTime }</strong>
         </div>
     </div>
@@ -112,13 +114,15 @@
                 $.each(dates, function(i, el) {
                     dateObjects.push({mainDate: el});
                 });
+                console.log(e[0]);
 
                 self.update({
                     dates: dateObjects,
                     entries: e[0].results,
                     users: promote(userId, e[1].results),
                     projects: e[2].results,
-                    totalTime: getTotalTime(e[0].results),
+                    totalTime: e[0].total_duration,
+                    subtotalTime: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
                 });
