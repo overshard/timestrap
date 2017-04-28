@@ -1,9 +1,15 @@
 <entry>
-    <div class="col-sm-3">
+    <div class="col-sm-3" if={ !edit }>
         <div class="text-muted small">
             { project_details.client_details.name }
         </div>
         { project_details.name }
+    </div>
+    <div class="col-sm-3" if={ edit }>
+        <select class="custom-select" ref="project">
+            <option value='' class="text-muted">Project</option>
+            <option each={ parent.projects } value={ url } selected={ id == project_details.id }>{ name }</option>
+        </select>
     </div>
     <div class="col-sm-5 d-flex align-self-end" if={ !edit }>
         { note }
