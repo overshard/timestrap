@@ -26,10 +26,10 @@
         <input type="text" class="form-control form-control" ref="duration" placeholder="0:00" value="{ timerDuration }">
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ !edit && !run_timer }>
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="entry-edit-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-faded dropdown-toggle rounded-0" type="button" id="entry-edit-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
-        <div class="dropdown-menu" aria-labelledby="entry-edit-menu">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="entry-edit-menu">
             <a class="dropdown-item" href="#" onclick={ restartEntry }>Restart</a>
             <a class="dropdown-item" href="#" onclick={ editEntry }>Edit</a>
             <a class="dropdown-item" href="#" onclick={ deleteEntry }>Delete</a>
@@ -50,6 +50,7 @@
 
 
         editEntry(e) {
+            e.preventDefault();
             self.edit = true;
             self.update();
         }
@@ -105,6 +106,8 @@
         deleteEntry(e) {
             e.preventDefault();
             quickFetch(self.url, 'delete').then(function() {
+                // TODO: Pretty sure we can remove something from the array in
+                // riotjs and not remove it via jQuery, would be cleaner.
                 $('#entry-' + self.id).remove();
             });
         }

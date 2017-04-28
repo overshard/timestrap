@@ -81,3 +81,7 @@ a,
 .shadow-muted {
     box-shadow: 0 0 5px #d7d7d7;
 }
+
+#entry-edit-menu::after {
+    display: none;
+}
