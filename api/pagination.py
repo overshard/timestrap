@@ -40,7 +40,9 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
             ('count', self.count),
             ('next', self.get_next_link()),
             ('previous', self.get_previous_link()),
-            ('total_duration', duration_string_from_delta(self.total_duration)),
-            ('subtotal_duration', duration_string_from_delta(self.subtotal_duration)),
+            ('total_duration',
+                duration_string_from_delta(self.total_duration)),
+            ('subtotal_duration',
+                duration_string_from_delta(self.subtotal_duration)),
             ('results', data)
-	]))
+        ]))
