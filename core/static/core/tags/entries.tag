@@ -1,72 +1,57 @@
 <entries>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
-            { timerState } Timer
-            <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
-            <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
-        </button>
-
+    <p class="mb-4 clearfix row-fix">
         <pager update="{ getEntries }"/>
     </p>
 
 
     <form onsubmit={ submitEntry }>
-        <div class="row bg-primary form-row mb-2">
+        <div class="row form-row mb-5 shadow-muted">
             <div class="col-sm-3">
-                <select class="custom-select bg-primary" ref="project">
-                    <option each={ projects } value={ url }>{ name } ({ client_details.name })</option>
+                <select class="custom-select" ref="project">
+                    <option value='' class="text-muted">Project</option>
+                    <option each={ projects } value={ url }>{ name }</option>
                 </select>
             </div>
-            <div class="col-sm-4">
-                <input type="text" class="form-control form-control-lg bg-primary" ref="note" placeholder="Note">
+            <div class="col-sm-5">
+                <input type="text" class="form-control form-control-lg" ref="note" placeholder="Note">
             </div>
             <div class="col-sm-2">
-                <input type="text" class="form-control form-control-lg bg-primary" ref="duration" placeholder="0:00" value="{ timerDuration }">
+                <input type="text" class="form-control form-control-lg" onkeyup={ timer } ref="duration" placeholder="0:00" value="{ timerDuration }">
             </div>
-            <div class="col-sm-3">
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add
-                </button>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success btn-lg" onclick={ timer }>{ timerState }</button>
             </div>
         </div>
     </form>
 
-    <div class="row bg-inverse py-2 mb-2 text-white">
-        <div class="col-sm-2">
-            <strong>Date</strong>
-        </div>
-        <div class="col-sm-2">
-            <strong>User</strong>
-        </div>
-        <div class="col-sm-3">
-            <strong>Project</strong>
-        </div>
-        <div class="col-sm-3">
-            <strong>Note</strong>
-        </div>
-        <div class="col-sm-2">
-            <strong>Duration</strong>
-        </div>
-    </div>
-    <div class="row bg-faded py-2 mb-2" each={ entries }>
-        <div class="col-sm-2">
-            { date }
-        </div>
-        <div class="col-sm-2">
-            { user_details.username }
-        </div>
-        <div class="col-sm-3">
-            { project_details.name }
-        </div>
-        <div class="col-sm-3">
-            { note }
-        </div>
-        <div class="col-sm-2">
-            { duration }
+    <div class="mb-5" each={ dates }>
+        <h5 class="text-muted">{ mainDate }</h5>
+        <div class="entries-rows shadow-muted row-fix">
+            <div class="row py-2" each={ entries } if={ mainDate === date }>
+                <div class="col-sm-3">
+                    <div class="text-muted small">
+                        { project_details.client_details.name }
+                    </div>
+                    { project_details.name }
+                </div>
+                <div class="col-sm-5 d-flex align-self-end">
+                    { note }
+                </div>
+                <div class="col-sm-2 d-flex align-self-end">
+                    { duration }
+                </div>
+                <div class="col-sm-2 d-flex align-self-center justify-content-end">
+                    <button class="btn btn-default rounded-0 mr-1">Restart</button>
+                    <button class="btn btn-default rounded-0">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row bg-success text-white py-2">
-        <div class="offset-sm-8 col-sm-2 text-right">
+
+    <div class="row bg-success text-white py-2 my-5">
+        <div class="offset-sm-6 col-sm-2 text-right">
             <strong>Total</strong>
         </div>
         <div class="col-sm-2">
@@ -83,6 +68,7 @@
         self.seconds = 0;
 
 
+
         // TODO: There has to be a better way
         tick() {
             if (self.seconds === 60) {
@@ -96,22 +82,31 @@
             self.update({
                 hours: self.hours,
                 minutes: self.minutes,
-                seconds: ++self.seconds
+                seconds: ++self.seconds,
+                timerDuration: pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds)
             });
         }
 
 
         timer(e) {
-            if (self.timerState === 'Start') {
-                self.timerState = 'Stop';
-                interval = setInterval(self.tick, 1000);
+            let duration = self.refs.duration.value;
+            // TODO: Cleanup
+            if (duration && self.timerState !== 'Stop') {
+                self.timerState == 'Start';
             } else {
-                self.timerState = 'Start';
-                clearInterval(interval);
-                self.timerDuration = pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds);
-                self.hours = 0;
-                self.minutes = 0;
-                self.seconds = 0;
+                if (self.timerState === 'Start') {
+                    self.timerState = 'Stop';
+                    interval = setInterval(self.tick, 1000);
+                    e.preventDefault();
+                } else {
+                    self.timerState = 'Add';
+                    clearInterval(interval);
+                    self.timerDuration = pad(self.hours) + ':' + pad(self.minutes);
+                    self.hours = 0;
+                    self.minutes = 0;
+                    self.seconds = 0;
+                    e.preventDefault();
+                }
             }
         }
 
@@ -124,21 +119,27 @@
             let projects = quickFetch(projectsApiUrl);
 
             Promise.all([entries, users, projects]).then(function(e) {
+                let dates = [];
+                $.each(e[0].results, function(i, el) {
+                    if ($.inArray(el.date, dates) === -1) {
+                        dates.push(el.date);
+                    }
+                });
+                // Doing this in another loop and not the previous because
+                // inArray doesn't seem to match objects very well here.
+                let dateObjects = [];
+                $.each(dates, function(i, el) {
+                    dateObjects.push({mainDate: el});
+                });
+
                 self.update({
+                    dates: dateObjects,
                     entries: e[0].results,
                     users: promote(userId, e[1].results),
                     projects: e[2].results,
                     totalTime: getTotalTime(e[0].results),
                     next: e[0].next,
                     previous: e[0].previous
-                });
-
-                $('.loading, .entries-table').toggleClass('d-none');
-                $('.date-input').pickadate({
-                    format: 'yyyy-mm-dd',
-                    onStart: function() {
-                        this.set('select', new Date());
-                    }
                 });
             });
         }
@@ -157,6 +158,7 @@
                 self.refs.duration.value = '';
                 self.refs.note.value = '';
                 self.entries.unshift(data);
+                self.timerState = 'Start';
                 self.update();
             });
         }
