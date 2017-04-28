@@ -1,3 +1,7 @@
+import recommonmark
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
@@ -38,7 +42,7 @@ templates_path = ['_templates']
 
 # Add markdown parser
 source_parsers = {
-   '.md': 'recommonmark.parser.CommonMarkParser',
+    '.md': CommonMarkParser,
 }
 
 # The suffix(es) of source filenames.
@@ -155,3 +159,11 @@ texinfo_documents = [
      author, 'Timestrap', 'Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.',
      'Miscellaneous'),
 ]
+
+# Setup AutoStructify to enable Auto Toc Tree
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)
