@@ -24,7 +24,7 @@
         <div class="dropdown-menu" aria-labelledby="entry-edit-menu">
             <a class="dropdown-item" href="#">Restart</a>
             <a class="dropdown-item" href="#" onclick={ editEntry }>Edit</a>
-            <a class="dropdown-item" href="#">Delete</a>
+            <a class="dropdown-item" href="#" onclick={ deleteEntry }>Delete</a>
         </div>
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ edit }>
@@ -53,6 +53,14 @@
                 self.duration.value = '';
                 self.edit = false;
                 self.update();
+            });
+        }
+
+
+        deleteEntry(e) {
+            e.preventDefault();
+            quickFetch(self.url, 'delete').then(function() {
+                $('#entry-' + self.id).remove();
             });
         }
     </script>

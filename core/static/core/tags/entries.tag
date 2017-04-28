@@ -27,7 +27,7 @@
     <div class="mb-5" each={ dates }>
         <h5 class="text-muted">{ mainDate }</h5>
         <div class="entries-rows shadow-muted row-fix">
-            <entry each={ entries } if={ mainDate === date } class="row py-2" />
+            <entry each={ entries } if={ mainDate === date } id="entry-{ id }" class="row py-2" />
         </div>
     </div>
 

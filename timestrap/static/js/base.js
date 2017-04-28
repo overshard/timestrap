@@ -31,7 +31,11 @@ function quickFetch(url, method, body) {
         method: method,
         body: JSON.stringify(body)
     }).then(function(response) {
-        return response.json()
+        // Delete response throws an error with .json().
+        // TODO: Figure out a proper way to return information on DELETE.
+        if (method != 'delete') {
+            return response.json()
+        }
     });
 }
 
