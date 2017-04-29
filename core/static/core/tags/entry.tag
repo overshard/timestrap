@@ -37,51 +37,41 @@
             </div>
         </virtual>
         <virtual if={ runTimer }>
-            <div class="col-sm-2 d-flex align-self-end">
-                <input type="text"
-                       class="form-control form-control"
-                       ref="duration"
-                       placeholder="0:00"
-                       value="{ timerDuration }"/>
-            </div>
-            <div class="col-sm-2 d-flex align-self-center justify-content-end">
-                <button type="submit"
-                        class="btn btn-success"
-                        onclick={ timer }>
-                    { timerState }
-                </button>
-            </div>
+            <input type="text"
+                   class="form-control form-control col-sm-2 rounded-0 border-0"
+                   ref="duration"
+                   placeholder="0:00"
+                   value="{ timerDuration }"/>
+            <button type="submit"
+                    class="btn btn-success col-sm-2 rounded-0"
+                    onclick={ timer }>
+                { timerState }
+            </button>
         </virtual>
     </virtual>
     <virtual if={ edit }>
-        <div class="col-sm-3">
-            <select class="custom-select" ref="project">
-                <option each={ p in parent.projects }
-                        value={ p.url }
-                        selected={ p.id == project_details.id }>
-                    { p.name }
-                </option>
-            </select>
-        </div>
-        <div class="col-sm-5 d-flex align-self-end">
-            <input type="text"
-                   class="form-control form-control"
-                   ref="note"
-                   placeholder="Note"
-                   value={ note }/>
-        </div>
-        <div class="col-sm-2 d-flex align-self-end">
-            <input type="text"
-                   class="form-control form-control"
-                   ref="duration"
-                   placeholder="0:00"
-                   value={ duration }/>
-        </div>
-        <div class="col-sm-2 d-flex align-self-center justify-content-end">
-            <button class="btn btn-success" onclick={ saveEntry }>
-                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
-            </button>
-        </div>
+        <select class="custom-select col-sm-3 rounded-0 border-0"
+                ref="project">
+            <option each={ p in parent.projects }
+                    value={ p.url }
+                    selected={ p.id == project_details.id }>
+                { p.name }
+            </option>
+        </select>
+        <input type="text"
+               class="form-control form-control col-sm-5 rounded-0 border-0"
+               ref="note"
+               placeholder="Note"
+               value={ note }/>
+        <input type="text"
+               class="form-control form-control col-sm-2 rounded-0 border-0"
+               ref="duration"
+               placeholder="0:00"
+               value={ duration }/>
+        <button class="btn btn-success col-sm-2 rounded-0"
+                onclick={ saveEntry }>
+            Save
+        </button>
     </virtual>
 
 
