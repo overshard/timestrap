@@ -3,16 +3,18 @@
         <pager update={ getClients }/>
     </p>
 
-    <form onsubmit={ submitClient }>
-        <div class="row bg-primary form-row mb-2">
-            <div class="col-9">
-                <input type="text" class="form-control form-control-lg bg-primary" ref="name" placeholder="New Client Name">
-            </div>
-            <div class="col-3">
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add
-                </button>
-            </div>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitClient }>
+        <div class="col-10">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   ref="name"
+                   placeholder="New Client Name"
+                   required>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-success btn-lg">
+                Add
+            </button>
         </div>
     </form>
 

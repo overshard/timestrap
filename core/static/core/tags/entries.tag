@@ -3,38 +3,36 @@
         <pager update={ getEntries }/>
     </p>
 
-    <form onsubmit={ submitEntry }>
-        <div class="row form-row mb-5 shadow-muted">
-            <div class="col-sm-3">
-                <select class="custom-select" ref="project" required>
-                    <option></option>  <!-- For select2 placeholder to work -->
-                    <optgroup each={ c in clients } label={ c }>
-                        <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="col-sm-5">
-                <input type="text"
-                       class="form-control form-control-lg"
-                       ref="note"
-                       placeholder="Note"/>
-            </div>
-            <div class="col-sm-2">
-                <input type="text"
-                       class="form-control form-control-lg"
-                       oninput={ timer }
-                       ref="duration"
-                       placeholder="0:00"
-                       value={ timerDuration }
-                       required/>
-            </div>
-            <div class="col-sm-2">
-                <button type="submit"
-                        class="btn btn-success btn-lg"
-                        onclick={ timer }>
-                    { timerState }
-                </button>
-            </div>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry }>
+        <div class="col-sm-3">
+            <select class="custom-select" ref="project" required>
+                <option></option>  <!-- For select2 placeholder to work -->
+                <optgroup each={ c in clients } label={ c }>
+                    <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   ref="note"
+                   placeholder="Note"/>
+        </div>
+        <div class="col-sm-2">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   oninput={ timer }
+                   ref="duration"
+                   placeholder="0:00"
+                   value={ timerDuration }
+                   required/>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit"
+                    class="btn btn-success btn-lg"
+                    onclick={ timer }>
+                { timerState }
+            </button>
         </div>
     </form>
 

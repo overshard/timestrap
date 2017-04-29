@@ -1,37 +1,46 @@
 <client>
-    <div class="row mb-2 py-2 bg-faded">
-        <div class="col-10" if={ !edit }>
-            <a class="text-primary" onclick={ showProjects }>
-                <strong>{ name } <i class="fa fa-chevron-down" aria-hidden="true"></i></strong>
-            </a>
-        </div>
-        <div class="col-10" if={ edit }>
-            <input type="text" class="form-control form-control-sm" ref="name" value={ name }>
-        </div>
-        <div class="col-2 text-right">
-            <button if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+    <div class="row mb-2 bg-faded">
+        <virtual if={ edit }>
+            <input type="text"
+                   class="form-control rounded-0 border-0 bg-faded col-10"
+                   ref="name"
+                   value={ name }/>
+            <button class="btn btn-success col-2 rounded-0"
+                    onclick={ saveClient }>
+                Save
             </button>
-            <button if={ edit } class="btn btn-success btn-sm" onclick={ saveClient }>
-                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+        </virtual>
+        <virtual if={ !edit }>
+            <div class="col-10 d-flex align-items-center">
+                <a class="text-primary font-weight-bold" onclick={ showProjects }>
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i> { name }
+                </a>
+            </div>
+            <button class="btn btn-warning col-2 rounded-0" onclick={ editClient }>
+                Edit
             </button>
-        </div>
+        </virtual>
     </div>
 
     <form onsubmit={ submitProject } if={ productsShown }>
-        <div class="row mb-1 ml-3 form-row bg-primary">
-            <div class="col-9">
-                <input type="text" class="form-control bg-primary" ref="project_name" placeholder="New Project Name">
-            </div>
-            <div class="col-3 text-right">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add
-                </button>
-            </div>
+        <div class="row mb-1">
+            <input type="text"
+                   class="form-control form-control-sm rounded-0 border-0 col-10"
+                   ref="project_name"
+                   placeholder="New Project Name"
+                   required/>
+            <button type="submit" class="btn btn-success btn-sm col-2 rounded-0">
+                Add
+            </button>
         </div>
     </form>
 
-    <div class="row mb-1 ml-3 py-1 bg-faded" each={ projects } data-is="project" if={ productsShown }/>
+    <div class="mb-2">
+        <project class="row mb-1 bg-faded"
+                 each={ projects }
+                 data-is="project"
+                 if={ productsShown }/>
+    </div>
 
 
     <script>
