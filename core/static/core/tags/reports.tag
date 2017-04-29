@@ -47,127 +47,115 @@
             <option value="html">html</option>
         </select>
 
-        <pager update="{ getEntries }" />
+        <pager update={ getEntries } />
     </p>
 
-    <table class="reports-table table table-striped table-sm w-100 d-none">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Date</th>
-                <th>User</th>
-                <th>Duration</th>
-                <th>Client, Project, and Note</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr each={ entries }>
-                <td>{ date }</td>
-                <td>{ user_details.username }</td>
-                <td>{ duration }</td>
-                <td>
-                    <span class="badge badge-success">{ project_details.client_details.name }</span>
-                    <span class="badge badge-info">{ project_details.name }</span>
-                    <br>
+    <div class="mb-5" each={ dates }>
+        <h5 class="text-muted">{ mainDate }</h5>
+        <div class="entries-rows shadow-muted row-fix">
+            <div class="row py-2" each={ entries } if={ mainDate === date }>
+                <div class="col-sm-3">
+                    <div class="text-muted small">
+                        { project_details.client_details.name }
+                    </div>
+                    { project_details.name }
+                </div>
+                <div class="col-sm-5 d-flex align-self-end">
                     { note }
-                </td>
-                <td class="text-right"></td>
-            </tr>
-            <tr class="table-active">
-                <td></td>
-                <td>
-                    Subtotal<br>
-                    <strong>Total</strong>
-                </td>
-                <td>
-                    { subtotalTime }<br>
-                    <strong>{ totalTime }</strong>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+                <div class="col-sm-2 d-flex align-self-end">
+                    { duration }
+                </div>
+                <div class="col-sm-2 d-flex align-self-center">
+                    { user_details.username }
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p class="loading text-center my-5">
-        <i class="fa fa-spinner" aria-hidden="true"></i>
-    </p>
 
     <script>
-        var self = this;
-
-
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
-
-            $('.loading, .reports-table').toggleClass('d-none');
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl
 
             quickFetch(url).then(function(data) {
-                self.update({
+                let dates = []
+                let dateObjects = []
+
+                $.each(data.results, function(i, entry) {
+                    if ($.inArray(entry.date, dates) === -1) {
+                        dates.push(entry.date)
+                    }
+                })
+                $.each(dates, function(i, date) {
+                    dateObjects.push({mainDate: date})
+                })
+
+                this.update({
+                    dates: dateObjects,
                     entries: data.results,
                     totalTime: data.total_duration,
                     subtotalTime: data.subtotal_duration,
                     next: data.next,
                     previous: data.previous
-                });
-                $('.loading, .reports-table').toggleClass('d-none');
-            });
+                })
+            }.bind(this))
         }
 
 
         getReport(e) {
-            e.preventDefault();
+            e.preventDefault()
             query = {
-                user: self.refs.user.value,
-                project: self.refs.project.value,
-                project__client: self.refs.client.value,
-                min_date: self.refs.min_date.value,
-                max_date: self.refs.max_date.value
+                user: this.refs.user.value,
+                project: this.refs.project.value,
+                project__client: this.refs.client.value,
+                min_date: this.refs.min_date.value,
+                max_date: this.refs.max_date.value
             }
             url = entriesApiUrl + '?' + $.param(query);
-            self.getEntries(url);
+            this.getEntries(url);
         }
 
 
         exportReport(e) {
             query = {
-                user: self.refs.user.value,
-                project: self.refs.project.value,
-                project__client: self.refs.client.value,
-                min_date: self.refs.min_date.value,
-                max_date: self.refs.max_date.value,
-                export_format: self.refs.export_format.value
+                user: this.refs.user.value,
+                project: this.refs.project.value,
+                project__client: this.refs.client.value,
+                min_date: this.refs.min_date.value,
+                max_date: this.refs.max_date.value,
+                export_format: this.refs.export_format.value
             }
             document.location.href = reportsExportUrl + '?' + $.param(query);
         }
 
 
         reportsPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
+            this.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 
-        self.getEntries();
+        this.on('mount', function() {
+            this.getEntries()
 
-        self.on('mount', function() {
             quickFetch(usersApiUrl).then(function(data) {
-                self.update({users: data.results});
+                this.update({users: data.results});
                 $('.user-select').chosen({width: '100%'});
-            });
+            }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
-                self.update({projects: data.results});
+                this.update({projects: data.results});
                 $('.project-select').chosen({width: '100%'});
-            });
+            }.bind(this))
 
             quickFetch(clientsApiUrl).then(function(data) {
-                self.update({clients: data.results});
+                this.update({clients: data.results});
                 $('.client-select').chosen({width: '100%'});
-            });
+            }.bind(this))
 
             $('.date-input').pickadate({
                 format: 'yyyy-mm-dd'
-            });
-        });
+            })
+        }.bind(this))
     </script>
 </reports>
