@@ -129,8 +129,8 @@
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value
             }
-            url = entriesApiUrl + '?' + $.param(query);
-            this.getEntries(url);
+            url = entriesApiUrl + '?' + $.param(query)
+            this.getEntries(url)
         }
 
 
@@ -143,12 +143,12 @@
                 max_date: this.refs.max_date.value,
                 export_format: this.refs.export_format.value
             }
-            document.location.href = reportsExportUrl + '?' + $.param(query);
+            document.location.href = reportsExportUrl + '?' + $.param(query)
         }
 
 
         reportsPage(e) {
-            this.getEntries(e.currentTarget.getAttribute('data-url'));
+            this.getEntries(e.currentTarget.getAttribute('data-url'))
         }
 
 
@@ -156,11 +156,11 @@
             this.getEntries()
 
             quickFetch(usersApiUrl).then(function(data) {
-                this.update({users: data.results});
+                this.update({users: data.results})
                 $('.user-select').select2({
                     placeholder: 'User',
                     allowClear: true
-                });
+                })
             }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
@@ -174,19 +174,19 @@
                 this.update({
                     clients: clients,
                     projects: data.results
-                });
+                })
                 $('.project-select').select2({
                     placeholder: 'Project',
                     allowClear: true
-                });
+                })
             }.bind(this))
 
             quickFetch(clientsApiUrl).then(function(data) {
-                this.update({clients: data.results});
+                this.update({clients: data.results})
                 $('.client-select').select2({
                     placeholder: 'Client',
                     allowClear: true
-                });
+                })
             }.bind(this))
 
             $('.date-input').pickadate({
