@@ -60,6 +60,32 @@ a,
 	input {
 		@include placeholder(#d7d7d7);
     }
+
+    .select2-container--default {
+        .select2-selection--single {
+            border: none;
+            border-radius: 0;
+            height: 49px;
+
+            .select2-selection__rendered {
+                line-height: 49px;
+                padding-left: 15px;
+                font-size: 1.3em;
+            }
+
+            .select2-selection__arrow {
+                height: 49px;
+            }
+        }
+
+    }
+
+    // FIXME: This isn't being applied?
+    .select2-dropdown {
+        border-radius: 0;
+        border: none;
+        box-shadow: 0 0 5px #d7d7d7;
+    }
 }
 
 .entries-rows {
@@ -84,4 +110,8 @@ a,
 
 #entry-edit-menu::after {
     display: none;
+}
+
+.select2 {
+    width: 100% !important;
 }

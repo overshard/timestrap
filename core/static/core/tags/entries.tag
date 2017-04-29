@@ -7,7 +7,7 @@
         <div class="row form-row mb-5 shadow-muted">
             <div class="col-sm-3">
                 <select class="custom-select" ref="project" required>
-                    <option value="" disabled selected>Project</option>
+                    <option></option>  <!-- For select2 placeholder to work -->
                     <optgroup each={ c in clients } label={ c }>
                         <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
                     </optgroup>
@@ -57,6 +57,10 @@
             <strong>{ totalTime }</strong>
         </div>
     </div>
+
+
+    <style>
+    </style>
 
 
     <script>
@@ -137,6 +141,8 @@
                     next: e[0].next,
                     previous: e[0].previous
                 })
+
+                $('.custom-select').select2({placeholder: 'Project'});
             }.bind(this))
         }
 

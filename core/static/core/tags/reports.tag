@@ -3,13 +3,13 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="user-select" ref="user">
-                    <option value=''>User</option>
+                    <option></option>  <!-- For select2 placeholder to work -->
                     <option each={ users } value={ id }>{ username }</option>
                 </select>
             </div>
             <div class="form-group">
                 <select class="project-select" ref="project">
-                    <option value=''>Project</option>
+                    <option></option>  <!-- For select2 placeholder to work -->
                     <optgroup each={ c in clients } label={ c }>
                         <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
                     </optgroup>
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <select class="client-select" ref="client">
-                    <option value=''>Client</option>
+                    <option></option>  <!-- For select2 placeholder to work -->
                     <option each={ clients } value={ id }>{ name }</option>
                 </select>
             </div>
@@ -157,7 +157,7 @@
 
             quickFetch(usersApiUrl).then(function(data) {
                 this.update({users: data.results});
-                $('.user-select').chosen({width: '100%'});
+                $('.user-select').select2({placeholder: 'User'});
             }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
@@ -172,12 +172,12 @@
                     clients: clients,
                     projects: data.results
                 });
-                $('.project-select').chosen({width: '100%'});
+                $('.project-select').select2({placeholder: 'Project'});
             }.bind(this))
 
             quickFetch(clientsApiUrl).then(function(data) {
                 this.update({clients: data.results});
-                $('.client-select').chosen({width: '100%'});
+                $('.client-select').select2({placeholder: 'Client'});
             }.bind(this))
 
             $('.date-input').pickadate({
