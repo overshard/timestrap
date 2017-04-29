@@ -5,7 +5,7 @@ from django.db.models import Sum
 from rest_framework.pagination import LimitOffsetPagination, _get_count
 from rest_framework.response import Response
 
-from core.utils import duration_string_from_delta
+from core.utils import duration_string
 
 
 class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
@@ -41,8 +41,8 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
             ('next', self.get_next_link()),
             ('previous', self.get_previous_link()),
             ('total_duration',
-                duration_string_from_delta(self.total_duration)),
+                duration_string(self.total_duration)),
             ('subtotal_duration',
-                duration_string_from_delta(self.subtotal_duration)),
+                duration_string(self.subtotal_duration)),
             ('results', data)
         ]))

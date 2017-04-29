@@ -4,6 +4,9 @@ from __future__ import unicode_literals
 from datetime import date
 
 from django.db import models
+from django.db.models import Sum
+
+from .utils import duration_string
 
 
 class Client(models.Model):
@@ -16,6 +19,14 @@ class Client(models.Model):
     def __str__(self):
         return 'Client: ' + self.name
 
+    def get_total_projects(self):
+        return self.projects.count()
+
+    def get_total_duration(self):
+        return duration_string(self.projects.aggregate(
+                Sum('entries__duration')
+        )['entries__duration__sum'])
+
 
 class Project(models.Model):
     client = models.ForeignKey('Client', related_name='projects')
@@ -27,6 +38,14 @@ class Project(models.Model):
 
     def __str__(self):
         return 'Project: ' + self.name
+
+    def get_total_entries(self):
+        return self.entries.count()
+
+    def get_total_duration(self):
+        return duration_string(self.entries.aggregate(
+            Sum('duration')
+        )['duration__sum'])
 
 
 class Entry(models.Model):

@@ -140,7 +140,10 @@
                     previous: e[0].previous
                 })
 
-                $('.custom-select').select2({placeholder: 'Project'});
+                $('.custom-select').select2({
+                    placeholder: 'Project',
+                    dropdownAutoWidth: true
+                });
             }.bind(this))
         }
 

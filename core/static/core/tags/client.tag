@@ -11,10 +11,18 @@
             </button>
         </virtual>
         <virtual if={ !edit }>
-            <div class="col-10 d-flex align-items-center">
+            <div class="col-6 d-flex align-items-center">
                 <a class="text-primary font-weight-bold" onclick={ showProjects }>
-                    <i class="fa fa-chevron-down" aria-hidden="true"></i> { name }
+                    <i class="fa fa-chevron-circle-{ chevron }" aria-hidden="true"></i> { name }
                 </a>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-clock-o small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <span class="mb-1">{ total_duration }</span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-list small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <span class="mb-1">{ total_projects }</span>
             </div>
             <button class="btn btn-warning col-2 rounded-0" onclick={ editClient }>
                 Edit
@@ -52,6 +60,11 @@
 
         showProjects(e) {
             this.productsShown = !this.productsShown
+            if (this.chevron === 'down') {
+                this.chevron = 'up'
+            } else {
+                this.chevron = 'down'
+            }
             this.update()
         }
 
@@ -79,5 +92,10 @@
                 this.update()
             }.bind(this));
         }
+
+        this.on('mount', function() {
+            this.chevron = 'down'
+            this.update()
+        }.bind(this))
     </script>
 </client>

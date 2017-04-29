@@ -17,21 +17,17 @@
 @mixin placeholder($property) {
     &::-webkit-input-placeholder {
         color: $property !important;
-        font-style: italic;
     }
     
     &::-moz-placeholder {
         color: $property !important;
-        font-style: italic;
     }
     
     &:-ms-input-placeholder {
         color: $property !important;
-        font-style: italic;
     }
     
     &::placeholder {
         color: $property !important;
-        font-style: italic;
     }
 }

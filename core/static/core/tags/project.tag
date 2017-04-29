@@ -10,9 +10,17 @@
         </button>
     </virtual>
     <virtual if={ !edit }>
-        <a class="text-primary col-10" onclick={ goToEntries }>
+        <a class="text-primary col-6" onclick={ goToEntries }>
             { name }
         </a>
+        <div class="col-2 d-flex align-items-center">
+            <i class="fa fa-clock-o small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+            <span class="mb-1">{ total_duration }</span>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            <i class="fa fa-list small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+            <span class="mb-1">{ total_entries }</span>
+        </div>
         <button class="btn btn-warning btn-sm col-2 rounded-0 border-0"
                 onclick={ editProject }>
             Edit
