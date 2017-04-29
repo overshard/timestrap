@@ -157,7 +157,10 @@
 
             quickFetch(usersApiUrl).then(function(data) {
                 this.update({users: data.results});
-                $('.user-select').select2({placeholder: 'User'});
+                $('.user-select').select2({
+                    placeholder: 'User',
+                    allowClear: true
+                });
             }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
@@ -172,12 +175,18 @@
                     clients: clients,
                     projects: data.results
                 });
-                $('.project-select').select2({placeholder: 'Project'});
+                $('.project-select').select2({
+                    placeholder: 'Project',
+                    allowClear: true
+                });
             }.bind(this))
 
             quickFetch(clientsApiUrl).then(function(data) {
                 this.update({clients: data.results});
-                $('.client-select').select2({placeholder: 'Client'});
+                $('.client-select').select2({
+                    placeholder: 'Client',
+                    allowClear: true
+                });
             }.bind(this))
 
             $('.date-input').pickadate({
