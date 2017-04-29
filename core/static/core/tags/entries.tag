@@ -20,10 +20,10 @@
             <div class="col-sm-2">
                 <input type="text"
                        class="form-control form-control-lg"
-                       onkeyup={ timer }
+                       oninput={ timer }
                        ref="duration"
                        placeholder="0:00"
-                       value="{ timerDuration }"
+                       value={ timerDuration }
                        required/>
             </div>
             <div class="col-sm-2">
@@ -58,9 +58,6 @@
 
 
     <script>
-        this.timerState = 'Start'
-
-
         // TODO: There has to be a better way
         tick(entry) {
             if (entry.seconds === 60) {
@@ -82,23 +79,27 @@
 
         timer(e) {
             let duration = this.refs.duration.value
-            // TODO: Cleanup
-            if (duration && this.timerState !== 'Stop') {
-                this.timerState == 'Start'
-            } else {
-                if (this.timerState === 'Start') {
-                    this.timerState = 'Stop'
-                    var interval = setInterval(this.tick, 1000, this)
-                    e.preventDefault()
-                } else {
-                    this.timerState = 'Add'
-                    clearInterval(interval)
-                    this.timerDuration = pad(this.hours) + ':' + pad(this.minutes)
-                    this.hours = 0
-                    this.minutes = 0
-                    this.seconds = 0
-                    e.preventDefault()
-                }
+            if (this.timerState === 'Start' && duration) {
+                this.timerState = 'Add'
+            } else if (this.timerState === 'Start') {
+                this.timerState = 'Stop'
+                this.timerDuration = '00:00:00'
+                this.hours = 0
+                this.minutes = 0
+                this.seconds = 0
+                interval = setInterval(this.tick, 1000, this)
+                e.preventDefault()
+            } else if (this.timerState === 'Stop') {
+                clearInterval(interval)
+                this.timerState = 'Add'
+                this.timerDuration = pad(this.hours) + ':' + pad(this.minutes)
+                this.hours = 0
+                this.minutes = 0
+                this.seconds = 0
+                e.preventDefault()
+            } else if (!duration) {
+                this.timerState = 'Start'
+                e.preventDefault()
             }
         }
 
@@ -149,6 +150,7 @@
 
 
         this.on('mount', function() {
+            this.timerState = 'Start'
             this.getEntries()
         }.bind(this))
     </script>
