@@ -80,12 +80,13 @@ a,
 
     }
 
-    // FIXME: This isn't being applied?
-    .select2-dropdown {
-        border-radius: 0;
-        border: none;
-        box-shadow: 0 0 5px #d7d7d7;
-    }
+}
+
+// Will not apply inside form-row?
+.select2-dropdown {
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: 0 0 5px #d7d7d7 !important;
 }
 
 .entries-rows {

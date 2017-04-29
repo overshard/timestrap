@@ -3,42 +3,54 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="user-select" ref="user">
-                    <option></option>  <!-- For select2 placeholder to work -->
+                    <option><!-- For select2 placeholder to work --></option>
                     <option each={ users } value={ id }>{ username }</option>
                 </select>
             </div>
             <div class="form-group">
                 <select class="project-select" ref="project">
-                    <option></option>  <!-- For select2 placeholder to work -->
+                    <option><!-- For select2 placeholder to work --></option>
                     <optgroup each={ c in clients } label={ c }>
-                        <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
+                        <option each={ projects }
+                                value={ url }
+                                if={ c === client_details.name }>
+                            { name }
+                        </option>
                     </optgroup>
                 </select>
             </div>
             <div class="form-group">
                 <select class="client-select" ref="client">
-                    <option></option>  <!-- For select2 placeholder to work -->
+                    <option><!-- For select2 placeholder to work --></option>
                     <option each={ clients } value={ id }>{ name }</option>
                 </select>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control form-control-sm date-input" ref="min_date" placeholder="Min Date">
+                <input type="text"
+                       class="form-control form-control-sm date-input"
+                       ref="min_date"
+                       placeholder="Min Date"/>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control form-control-sm date-input" ref="max_date" placeholder="Max Date">
+                <input type="text"
+                       class="form-control form-control-sm date-input"
+                       ref="max_date"
+                       placeholder="Max Date"/>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm w-100">Generate Report</button>
+            <button type="submit" class="btn btn-primary btn-sm w-100">
+                Generate Report
+            </button>
         </div>
     </form>
 
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+        <button class="btn btn-primary btn-sm rounded-0" onclick={ exportReport }>
             Export Report
         </button>
 
-        <select class="custom-select form-control-sm" ref="export_format">
+        <select class="custom-select form-control-sm rounded-0" ref="export_format">
             <option value="csv">csv</option>
             <option value="xls">xls</option>
             <option value="xlsx">xlsx</option>

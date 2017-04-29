@@ -6,14 +6,14 @@
             </div>
             { project_details.name }
         </div>
-        <div class="col-sm-5 d-flex align-this-end">
+        <div class="col-sm-5 d-flex align-self-end">
             { note }
         </div>
         <virtual if={ !runTimer }>
-            <div class="col-sm-2 d-flex align-this-end">
+            <div class="col-sm-2 d-flex align-self-end">
                 { duration }
             </div>
-            <div class="col-sm-2 d-flex align-this-center justify-content-end">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <button class="btn btn-faded dropdown-toggle rounded-0"
                         type="button"
                         id="entry-edit-menu"
@@ -37,14 +37,14 @@
             </div>
         </virtual>
         <virtual if={ runTimer }>
-            <div class="col-sm-2 d-flex align-this-end">
+            <div class="col-sm-2 d-flex align-self-end">
                 <input type="text"
                        class="form-control form-control"
                        ref="duration"
                        placeholder="0:00"
                        value="{ timerDuration }"/>
             </div>
-            <div class="col-sm-2 d-flex align-this-center justify-content-end">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <button type="submit"
                         class="btn btn-success"
                         onclick={ timer }>
@@ -63,21 +63,21 @@
                 </option>
             </select>
         </div>
-        <div class="col-sm-5 d-flex align-this-end">
+        <div class="col-sm-5 d-flex align-self-end">
             <input type="text"
                    class="form-control form-control"
                    ref="note"
                    placeholder="Note"
                    value={ note }/>
         </div>
-        <div class="col-sm-2 d-flex align-this-end">
+        <div class="col-sm-2 d-flex align-self-end">
             <input type="text"
                    class="form-control form-control"
                    ref="duration"
                    placeholder="0:00"
                    value={ duration }/>
         </div>
-        <div class="col-sm-2 d-flex align-this-center justify-content-end">
+        <div class="col-sm-2 d-flex align-self-center justify-content-end">
             <button class="btn btn-success" onclick={ saveEntry }>
                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
             </button>
@@ -94,28 +94,24 @@
 
 
         restartEntry(e) {
-            e.preventDefault()
             this.runTimer = true
             this.timer(e)
-            this.update()
         }
 
 
         timer(e) {
             if (!this.timerState) {
-                let duration_parts = this.duration.split(':')
-                this.timerState = 'Start'
-                this.hours = duration_parts[0]
-                this.minutes = duration_parts[1]
-                this.seconds = 0
-                this.timerDuration = pad(this.hours) + ':' + pad(this.minutes) + ':' + pad(this.seconds)
                 this.timerState = 'Stop'
+                let durSplit = this.duration.split(':')
+                this.totalSeconds = (durSplit[0] * 3600) + (durSplit[1] * 60)
+                this.parent.tick(this)
                 interval = setInterval(this.parent.tick, 1000, this)
                 e.preventDefault()
             } else {
-                clearInterval(interval);
-                this.duration = pad(this.hours) + ':' + pad(this.minutes)
                 this.timerState = undefined
+                clearInterval(interval);
+                let dur = this.timerDuration
+                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'))
                 this.runTimer = false
                 this.edit = true
                 this.update()

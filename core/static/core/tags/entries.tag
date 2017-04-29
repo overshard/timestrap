@@ -6,9 +6,13 @@
     <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry }>
         <div class="col-sm-3">
             <select class="custom-select" ref="project" required>
-                <option></option>  <!-- For select2 placeholder to work -->
+                <option><!-- For select2 placeholder to work --></option>
                 <optgroup each={ c in clients } label={ c }>
-                    <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
+                    <option each={ projects }
+                            value={ url }
+                            if={ c === client_details.name }>
+                        { name }
+                    </option>
                 </optgroup>
             </select>
         </div>
@@ -62,21 +66,13 @@
 
 
     <script>
-        // TODO: There has to be a better way
         tick(entry) {
-            if (entry.seconds === 60) {
-                ++entry.minutes
-                entry.seconds = -1
-            }
-            if (entry.minutes === 60) {
-                ++entry.hours
-                entry.minutes = 0
-            }
+            ++entry.totalSeconds
+            let hours = pad(Math.floor(entry.totalSeconds / 3600))
+            let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60))
+            let seconds = pad(entry.totalSeconds % 3600 % 60)
             entry.update({
-                hours: entry.hours,
-                minutes: entry.minutes,
-                seconds: ++entry.seconds,
-                timerDuration: pad(entry.hours) + ':' + pad(entry.minutes) + ':' + pad(entry.seconds)
+                timerDuration: hours + ':' + minutes + ':' + seconds
             });
         }
 
@@ -88,18 +84,16 @@
             } else if (this.timerState === 'Start') {
                 this.timerState = 'Stop'
                 this.timerDuration = '00:00:00'
-                this.hours = 0
-                this.minutes = 0
-                this.seconds = 0
+                this.totalSeconds = 0
                 interval = setInterval(this.tick, 1000, this)
                 e.preventDefault()
             } else if (this.timerState === 'Stop') {
-                clearInterval(interval)
                 this.timerState = 'Add'
-                this.timerDuration = pad(this.hours) + ':' + pad(this.minutes)
-                this.hours = 0
-                this.minutes = 0
-                this.seconds = 0
+                this.totalSeconds = 0
+                clearInterval(interval)
+                let dur = this.timerDuration
+                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'))
+                this.totalSeconds = 0
                 e.preventDefault()
             } else if (!duration) {
                 this.timerState = 'Start'
