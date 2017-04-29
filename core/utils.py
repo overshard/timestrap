@@ -30,9 +30,11 @@ def parse_duration(duration):
 
 
 def duration_string(duration):
-    days, hours, minutes, seconds, microseconds = _get_duration_components(duration)  # noqa: E501
-    hours += days * 24
+    if duration is not None:
+        days, hours, minutes, seconds, microseconds = _get_duration_components(duration)  # noqa: E501
+        hours += days * 24
 
-    string = '{}:{:02d}'.format(hours, minutes)
-
+        string = '{}:{:02d}'.format(hours, minutes)
+    else:
+        string = '0:00'
     return string
