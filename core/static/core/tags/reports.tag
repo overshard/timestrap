@@ -1,5 +1,5 @@
 <reports>
-    <form class="mb-4 row" onsubmit={ getReport }>
+    <form class="mb-4 row report-form shadow-muted pt-3 pb-1" onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="user-select" ref="user">
@@ -52,7 +52,7 @@
         <pager update={ getEntries } />
     </p>
 
-    <div class="row bg-inverse text-white py-2 my-5">
+    <div class="row bg-inverse text-white py-2 mb-4">
         <div class="col-sm-3 font-weight-bold">
             Project
         </div>
@@ -83,7 +83,7 @@
                 <div class="col-sm-2 d-flex align-self-end">
                     { duration }
                 </div>
-                <div class="col-sm-2 d-flex align-self-center">
+                <div class="col-sm-2 d-flex align-self-end">
                     { user_details.username }
                 </div>
             </div>
