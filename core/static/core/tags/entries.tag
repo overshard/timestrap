@@ -8,7 +8,9 @@
             <div class="col-sm-3">
                 <select class="custom-select" ref="project" required>
                     <option value="" disabled selected>Project</option>
-                    <option each={ projects } value={ url }>{ name }</option>
+                    <optgroup each={ c in clients } label={ c }>
+                        <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
+                    </optgroup>
                 </select>
             </div>
             <div class="col-sm-5">
@@ -118,8 +120,16 @@
                     }
                 })
 
+                let clients = []
+                $.each(e[1].results, function(i, project) {
+                    if ($.inArray(project.client_details.name, clients) === -1) {
+                        clients.push(project.client_details.name)
+                    }
+                })
+
                 this.update({
                     dates: dates,
+                    clients: clients,
                     entries: e[0].results,
                     projects: e[1].results,
                     totalTime: e[0].total_duration,

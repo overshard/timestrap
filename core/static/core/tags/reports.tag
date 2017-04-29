@@ -10,7 +10,9 @@
             <div class="form-group">
                 <select class="project-select" ref="project">
                     <option value=''>Project</option>
-                    <option each={ projects } value={ id }>{ name } ({ client_details.name })</option>
+                    <optgroup each={ c in clients } label={ c }>
+                        <option each={ projects } value={ url } if={ c == client_details.name }>{ name }</option>
+                    </optgroup>
                 </select>
             </div>
             <div class="form-group">
@@ -159,7 +161,17 @@
             }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
-                this.update({projects: data.results});
+                let clients = []
+                $.each(data.results, function(i, project) {
+                    if ($.inArray(project.client_details.name, clients) === -1) {
+                        clients.push(project.client_details.name)
+                    }
+                })
+
+                this.update({
+                    clients: clients,
+                    projects: data.results
+                });
                 $('.project-select').chosen({width: '100%'});
             }.bind(this))
 
