@@ -50,6 +50,21 @@
         <pager update={ getEntries } />
     </p>
 
+    <div class="row bg-inverse text-white py-2 my-5">
+        <div class="col-sm-3 font-weight-bold">
+            Project
+        </div>
+        <div class="col-sm-5 font-weight-bold">
+            Note
+        </div>
+        <div class="col-sm-2 font-weight-bold">
+            Duration
+        </div>
+        <div class="col-sm-2 font-weight-bold">
+            User
+        </div>
+    </div>
+
     <div class="mb-5" each={ dates }>
         <h5 class="text-muted">{ mainDate }</h5>
         <div class="entries-rows shadow-muted row-fix">

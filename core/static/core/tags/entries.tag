@@ -1,6 +1,6 @@
 <entries>
     <p class="mb-4 clearfix row-fix">
-        <pager update="{ getEntries }"/>
+        <pager update={ getEntries }/>
     </p>
 
     <form onsubmit={ submitEntry }>
@@ -12,21 +12,36 @@
                 </select>
             </div>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-lg" ref="note" placeholder="Note">
+                <input type="text"
+                       class="form-control form-control-lg"
+                       ref="note"
+                       placeholder="Note"/>
             </div>
             <div class="col-sm-2">
-                <input type="text" class="form-control form-control-lg" onkeyup={ timer } ref="duration" placeholder="0:00" value="{ timerDuration }" required>
+                <input type="text"
+                       class="form-control form-control-lg"
+                       onkeyup={ timer }
+                       ref="duration"
+                       placeholder="0:00"
+                       value="{ timerDuration }"
+                       required/>
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success btn-lg" onclick={ timer }>{ timerState }</button>
+                <button type="submit"
+                        class="btn btn-success btn-lg"
+                        onclick={ timer }>
+                    { timerState }
+                </button>
             </div>
         </div>
     </form>
 
-    <div class="mb-5" each={ dates }>
-        <h5 class="text-muted">{ mainDate }</h5>
+    <div class="mb-5" each={ d in dates }>
+        <h5 class="text-muted">{ d }</h5>
         <div class="entries-rows shadow-muted row-fix">
-            <entry each={ entries } if={ mainDate === date } id="entry-{ id }" class="row py-2" />
+            <entry each={ entries }
+                   if={ d === date }
+                   class="row py-2"/>
         </div>
     </div>
 
@@ -43,12 +58,7 @@
 
 
     <script>
-        var interval
         this.timerState = 'Start'
-        this.hours = 0
-        this.minutes = 0
-        this.seconds = 0
-
 
 
         // TODO: There has to be a better way
@@ -78,7 +88,7 @@
             } else {
                 if (this.timerState === 'Start') {
                     this.timerState = 'Stop'
-                    interval = setInterval(this.tick, 1000, this)
+                    var interval = setInterval(this.tick, 1000, this)
                     e.preventDefault()
                 } else {
                     this.timerState = 'Add'
@@ -101,19 +111,14 @@
 
             Promise.all([entries, projects]).then(function(e) {
                 let dates = []
-                let dateObjects = []
-
                 $.each(e[0].results, function(i, entry) {
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date)
                     }
                 })
-                $.each(dates, function(i, date) {
-                    dateObjects.push({mainDate: date})
-                })
 
                 this.update({
-                    dates: dateObjects,
+                    dates: dates,
                     entries: e[0].results,
                     projects: e[1].results,
                     totalTime: e[0].total_duration,
@@ -128,7 +133,7 @@
         submitEntry(e) {
             e.preventDefault()
             let body = {
-                user: usersApiUrl + userId + '/',
+                user: userApiUrl,
                 duration: this.refs.duration.value,
                 note: this.refs.note.value,
                 project: this.refs.project.value

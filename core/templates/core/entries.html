@@ -27,7 +27,7 @@
         {% endif %}
         var clientsApiUrl = "{% url 'client-list' %}";
         var usersApiUrl = "{% url 'user-list' %}";
-		var userId = {{ user.id }};
+        var userApiUrl = "{% url 'user-detail' user.id %}"
         riot.mount('entries');
     </script>
 {% endblock %}
