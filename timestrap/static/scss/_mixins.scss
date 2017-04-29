@@ -13,3 +13,21 @@
          -o-animation: $property;
             animation: $property;
 }
+
+@mixin placeholder($property) {
+    &::-webkit-input-placeholder {
+        color: $property !important;
+    }
+    
+    &::-moz-placeholder {
+        color: $property !important;
+    }
+    
+    &:-ms-input-placeholder {
+        color: $property !important;
+    }
+    
+    &::placeholder {
+        color: $property !important;
+    }
+}

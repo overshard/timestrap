@@ -9,6 +9,7 @@ import django_filters
 from core.models import Client, Project, Entry
 from .serializers import (UserSerializer, ClientSerializer, ProjectSerializer,
                           EntrySerializer)
+from .pagination import LimitOffsetPaginationWithTotals
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -40,4 +41,5 @@ class EntryFilter(django_filters.rest_framework.FilterSet):
 class EntryViewSet(viewsets.ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
+    pagination_class = LimitOffsetPaginationWithTotals
     filter_class = EntryFilter

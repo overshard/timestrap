@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from .views import (DashboardView, ReportsView, ClientsView, ProjectsView,
-                    EntriesView, entries_csv_export)
+from .views import (DashboardView, ReportsView, ClientsView, EntriesView,
+                    entries_csv_export)
 
 
 urlpatterns = [
@@ -9,6 +9,5 @@ urlpatterns = [
     url(r'^reports/$', ReportsView.as_view(), name='reports'),
     url(r'^reports/export/$', entries_csv_export, name='reports-export'),
     url(r'^clients/$', ClientsView.as_view(), name='clients'),
-    url(r'^projects/$', ProjectsView.as_view(), name='projects'),
     url(r'^entries/$', EntriesView.as_view(), name='entries'),
 ]

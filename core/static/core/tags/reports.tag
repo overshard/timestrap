@@ -1,42 +1,56 @@
 <reports>
-    <form class="mb-4 row" onsubmit={ getReport }>
+    <form class="mb-4 row report-form shadow-muted pt-3 pb-1" onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="user-select" ref="user">
-                    <option value=''>User</option>
+                    <option><!-- For select2 placeholder to work --></option>
                     <option each={ users } value={ id }>{ username }</option>
                 </select>
             </div>
             <div class="form-group">
                 <select class="project-select" ref="project">
-                    <option value=''>Project</option>
-                    <option each={ projects } value={ id }>{ name } ({ client_details.name })</option>
+                    <option><!-- For select2 placeholder to work --></option>
+                    <optgroup each={ c in clients } label={ c }>
+                        <option each={ projects }
+                                value={ url }
+                                if={ c === client_details.name }>
+                            { name }
+                        </option>
+                    </optgroup>
                 </select>
             </div>
             <div class="form-group">
                 <select class="client-select" ref="client">
-                    <option value=''>Client</option>
+                    <option><!-- For select2 placeholder to work --></option>
                     <option each={ clients } value={ id }>{ name }</option>
                 </select>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control form-control-sm date-input" ref="min_date" placeholder="Min Date">
+                <input type="text"
+                       class="form-control form-control-sm date-input"
+                       ref="min_date"
+                       placeholder="Min Date"/>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control form-control-sm date-input" ref="max_date" placeholder="Max Date">
+                <input type="text"
+                       class="form-control form-control-sm date-input"
+                       ref="max_date"
+                       placeholder="Max Date"/>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm w-100">Generate Report</button>
+            <button type="submit" class="btn btn-primary btn-sm w-100">
+                Generate Report
+            </button>
         </div>
     </form>
 
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+        <button class="btn btn-primary btn-sm rounded-0" onclick={ exportReport }>
             Export Report
         </button>
 
-        <select class="custom-select form-control-sm" ref="export_format">
+        <select class="custom-select form-control-sm rounded-0" ref="export_format">
             <option value="csv">csv</option>
             <option value="xls">xls</option>
             <option value="xlsx">xlsx</option>
@@ -47,132 +61,149 @@
             <option value="html">html</option>
         </select>
 
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ reportsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ reportsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
+        <pager update={ getEntries } />
     </p>
 
-    <table class="reports-table table table-striped table-sm w-100 d-none">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Date</th>
-                <th>User</th>
-                <th>Duration</th>
-                <th>Client, Project, and Note</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr each={ entries }>
-                <td>{ date }</td>
-                <td>{ user_details.username }</td>
-                <td>{ duration }</td>
-                <td>
-                    <span class="badge badge-success">{ project_details.client_details.name }</span>
-                    <span class="badge badge-info">{ project_details.name }</span>
-                    <br>
+    <div class="row bg-inverse text-white py-2 mb-4">
+        <div class="col-sm-3 font-weight-bold">
+            Project
+        </div>
+        <div class="col-sm-5 font-weight-bold">
+            Note
+        </div>
+        <div class="col-sm-2 font-weight-bold">
+            Duration
+        </div>
+        <div class="col-sm-2 font-weight-bold">
+            User
+        </div>
+    </div>
+
+    <div class="mb-5" each={ dates }>
+        <h5 class="text-muted">{ mainDate }</h5>
+        <div class="entries-rows shadow-muted row-fix">
+            <div class="row py-2" each={ entries } if={ mainDate === date }>
+                <div class="col-sm-3">
+                    <div class="text-muted small">
+                        { project_details.client_details.name }
+                    </div>
+                    { project_details.name }
+                </div>
+                <div class="col-sm-5 d-flex align-self-end">
                     { note }
-                </td>
-                <td class="text-right"></td>
-            </tr>
-            <tr class="table-active">
-                <td></td>
-                <td><strong>Total</strong></td>
-                <td><strong>{ totalTime }</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+                <div class="col-sm-2 d-flex align-self-end">
+                    { duration }
+                </div>
+                <div class="col-sm-2 d-flex align-self-end">
+                    { user_details.username }
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p class="loading text-center my-5">
-        <i class="fa fa-spinner" aria-hidden="true"></i>
-    </p>
 
     <script>
-        var self = this;
-
-
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
-
-            $('.loading, .reports-table').toggleClass('d-none');
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl
 
             quickFetch(url).then(function(data) {
-                self.update({
+                let dates = []
+                let dateObjects = []
+
+                $.each(data.results, function(i, entry) {
+                    if ($.inArray(entry.date, dates) === -1) {
+                        dates.push(entry.date)
+                    }
+                })
+                $.each(dates, function(i, date) {
+                    dateObjects.push({mainDate: date})
+                })
+
+                this.update({
+                    dates: dateObjects,
                     entries: data.results,
-                    totalTime: getTotalTime(data.results),
+                    totalTime: data.total_duration,
+                    subtotalTime: data.subtotal_duration,
                     next: data.next,
                     previous: data.previous
-                });
-                $('.loading, .reports-table').toggleClass('d-none');
-            });
+                })
+            }.bind(this))
         }
 
 
         getReport(e) {
-            e.preventDefault();
+            e.preventDefault()
             query = {
-                user: self.refs.user.value,
-                project: self.refs.project.value,
-                project__client: self.refs.client.value,
-                min_date: self.refs.min_date.value,
-                max_date: self.refs.max_date.value
+                user: this.refs.user.value,
+                project: this.refs.project.value,
+                project__client: this.refs.client.value,
+                min_date: this.refs.min_date.value,
+                max_date: this.refs.max_date.value
             }
-            url = entriesApiUrl + '?' + $.param(query);
-            self.getEntries(url);
+            url = entriesApiUrl + '?' + $.param(query)
+            this.getEntries(url)
         }
 
 
         exportReport(e) {
             query = {
-                user: self.refs.user.value,
-                project: self.refs.project.value,
-                project__client: self.refs.client.value,
-                min_date: self.refs.min_date.value,
-                max_date: self.refs.max_date.value,
-                export_format: self.refs.export_format.value
+                user: this.refs.user.value,
+                project: this.refs.project.value,
+                project__client: this.refs.client.value,
+                min_date: this.refs.min_date.value,
+                max_date: this.refs.max_date.value,
+                export_format: this.refs.export_format.value
             }
-            document.location.href = reportsExportUrl + '?' + $.param(query);
+            document.location.href = reportsExportUrl + '?' + $.param(query)
         }
 
 
         reportsPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
+            this.getEntries(e.currentTarget.getAttribute('data-url'))
         }
 
 
-        self.getEntries();
+        this.on('mount', function() {
+            this.getEntries()
 
-        self.on('mount', function() {
             quickFetch(usersApiUrl).then(function(data) {
-                self.update({users: data.results});
-                $('.user-select').chosen({width: '100%'});
-            });
+                this.update({users: data.results})
+                $('.user-select').select2({
+                    placeholder: 'User',
+                    allowClear: true
+                })
+            }.bind(this))
 
             quickFetch(projectsApiUrl).then(function(data) {
-                self.update({projects: data.results});
-                $('.project-select').chosen({width: '100%'});
-            });
+                let clients = []
+                $.each(data.results, function(i, project) {
+                    if ($.inArray(project.client_details.name, clients) === -1) {
+                        clients.push(project.client_details.name)
+                    }
+                })
+
+                this.update({
+                    clients: clients,
+                    projects: data.results
+                })
+                $('.project-select').select2({
+                    placeholder: 'Project',
+                    allowClear: true
+                })
+            }.bind(this))
 
             quickFetch(clientsApiUrl).then(function(data) {
-                self.update({clients: data.results});
-                $('.client-select').chosen({width: '100%'});
-            });
+                this.update({clients: data.results})
+                $('.client-select').select2({
+                    placeholder: 'Client',
+                    allowClear: true
+                })
+            }.bind(this))
 
             $('.date-input').pickadate({
                 format: 'yyyy-mm-dd'
-            });
-        });
+            })
+        }.bind(this))
     </script>
 </reports>

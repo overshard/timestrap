@@ -3,19 +3,6 @@
 
 
 {% block meta_title %}Entries{% endblock %}
-{% block title %}Entries{% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    {% if project %}
-        <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ project.client }}</a></li>
-        <li class="breadcrumb-item">
-            <a href="{% url 'projects' %}?client={{ project.client.id }}">{{ project }}</a>
-        </li>
-    {% elif client %}
-        <li class="breadcrumb-item"><a href="{% url 'clients' %}">{{ client }}</a></li>
-    {% endif %}
-    <li class="breadcrumb-item active">Entries</li>
-{% endblock %}
 
 
 {% block content %}
@@ -25,24 +12,22 @@
 
 {% block extra_js %}
     <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/entry.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         {% if project %}
-            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}";
-        {% elif client %}
-            var entriesApiUrl = "{% url 'entry-list' %}?project__client={{ client.id }}";
+            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}&user={{ user.id }}";
         {% else %}
-            var entriesApiUrl = "{% url 'entry-list' %}";
+            var entriesApiUrl = "{% url 'entry-list' %}?user={{ user.id }}";
         {% endif %}
         {% if project %}
             var projectsApiUrl = "{% url 'project-list' %}?id={{ project.id }}";
-        {% elif client %}
-            var projectsApiUrl = "{% url 'project-list' %}?client={{ client.id }}";
         {% else %}
             var projectsApiUrl = "{% url 'project-list' %}";
         {% endif %}
         var clientsApiUrl = "{% url 'client-list' %}";
         var usersApiUrl = "{% url 'user-list' %}";
-		var userId = {{ user.id }};
+        var userApiUrl = "{% url 'user-detail' user.id %}"
         riot.mount('entries');
     </script>
 {% endblock %}

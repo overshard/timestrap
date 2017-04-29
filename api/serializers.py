@@ -15,18 +15,55 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username',)
 
 
+class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
+    total_entries = serializers.SerializerMethodField()
+    total_duration = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Project
+        fields = ('id', 'url', 'name', 'client', 'total_entries',
+                  'total_duration')
+
+    def get_queryset(self):
+        queryset = super(ClientProjectSerializer, self).get_queryset()
+        return queryset.filter(archive=False)
+
+    def get_total_entries(self, obj):
+        return obj.get_total_entries()
+
+    def get_total_duration(self, obj):
+        return obj.get_total_duration()
+
+
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
+    projects = ClientProjectSerializer(many=True, read_only=True)
+    total_projects = serializers.SerializerMethodField()
+    total_duration = serializers.SerializerMethodField()
+
     class Meta:
         model = Client
-        fields = ('id', 'url', 'name', 'archive',)
+        fields = ('id', 'url', 'name', 'archive', 'projects', 'total_projects',
+                  'total_duration')
 
     def get_queryset(self):
         queryset = super(ClientSerializer, self).get_queryset()
         return queryset.filter(archive=False)
 
+    def get_total_projects(self, obj):
+        return obj.get_total_projects()
+
+    def get_total_duration(self, obj):
+        return obj.get_total_duration()
+
+
+class ProjectClientSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Client
+        fields = ('id', 'url', 'name',)
+
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
-    client_details = ClientSerializer(source='client', read_only=True)
+    client_details = ProjectClientSerializer(source='client', read_only=True)
 
     class Meta:
         model = Project

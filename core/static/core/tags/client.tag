@@ -1,42 +1,101 @@
 <client>
-    <td if={ !edit }>
-        <a class="text-primary" onclick={ goToProjects }><strong>{ name }</strong></a>
-    </td>
-    <td if={ edit }><input type="text" class="form-control form-control-sm" ref="name" value="{ name }" onkeypress="return event.keyCode != 13;">
-    <td class="text-right">
-        <a if={ !edit } class="btn btn-warning btn-sm" onclick={ editClient }>
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-        </a>
-        <a if={ edit } class="btn btn-success btn-sm" onclick={ saveClient }>
-            <i class="fa fa-floppy-o" aria-hidden="true"></i>
-        </a>
-    </td>
+    <div class="row mb-2 bg-faded">
+        <virtual if={ edit }>
+            <input type="text"
+                   class="form-control rounded-0 border-0 bg-faded col-10"
+                   ref="name"
+                   value={ name }/>
+            <button class="btn btn-success col-2 rounded-0"
+                    onclick={ saveClient }>
+                Save
+            </button>
+        </virtual>
+        <virtual if={ !edit }>
+            <div class="col-6 d-flex align-items-center">
+                <a class="text-primary font-weight-bold" onclick={ showProjects }>
+                    <i class="fa fa-chevron-circle-{ chevron }" aria-hidden="true"></i> { name }
+                </a>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-clock-o small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <span class="mb-1">{ total_duration }</span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-list small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <span class="mb-1">{ total_projects }</span>
+            </div>
+            <button class="btn btn-warning col-2 rounded-0" onclick={ editClient }>
+                Edit
+            </button>
+        </virtual>
+    </div>
+
+    <form onsubmit={ submitProject } if={ productsShown }>
+        <div class="row mb-1">
+            <input type="text"
+                   class="form-control form-control-sm rounded-0 border-0 col-10"
+                   ref="project_name"
+                   placeholder="New Project Name"
+                   required/>
+            <button type="submit" class="btn btn-success btn-sm col-2 rounded-0">
+                Add
+            </button>
+        </div>
+    </form>
+
+    <div class="mb-2">
+        <project class="row mb-1 bg-faded"
+                 each={ projects }
+                 data-is="project"
+                 if={ productsShown }/>
+    </div>
 
 
     <script>
-        var self = this;
-        var edit = false;
-
-
         editClient(e) {
-            self.edit = true;
-            self.update();
+            this.edit = true
+            this.update()
         }
 
 
-        goToProjects(e) {
-            document.location.href = projectsUrl + e.item.id;
+        showProjects(e) {
+            this.productsShown = !this.productsShown
+            if (this.chevron === 'down') {
+                this.chevron = 'up'
+            } else {
+                this.chevron = 'down'
+            }
+            this.update()
         }
 
 
         saveClient(e) {
-            e.preventDefault();
-            self.name = self.refs.name.value;
-            quickFetch(self.url, 'put', self).then(function(data) {
-                self.name.value = '';
-                self.edit = false;
-                self.update();
-            });
+            e.preventDefault()
+            this.name = this.refs.name.value
+            quickFetch(this.url, 'put', this).then(function(data) {
+                this.name.value = ''
+                this.edit = false
+                this.update()
+            }.bind(this));
         }
+
+
+        submitProject(e) {
+            e.preventDefault()
+            let body = {
+                name: this.refs.project_name.value,
+                client: this.url
+            }
+            quickFetch(projectsApiUrl, 'post', body).then(function(data) {
+                this.refs.project_name.value = ''
+                this.projects.unshift(data)
+                this.update()
+            }.bind(this));
+        }
+
+        this.on('mount', function() {
+            this.chevron = 'down'
+            this.update()
+        }.bind(this))
     </script>
 </client>

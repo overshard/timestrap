@@ -1,185 +1,168 @@
 <entries>
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ entriesPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right mr-1"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ entriesPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
-        <button class="btn btn-primary btn-sm mr-2" onclick={ timer }>
-            { timerState } Timer
-            <i class="fa fa-clock-o ml-2" aria-hidden="true"></i>
-            <span class="timer text-bold">{ hours }h { minutes }m { seconds }s</span>
-        </button>
+    <p class="mb-4 clearfix row-fix">
+        <pager update={ getEntries }/>
     </p>
 
-    <form onsubmit={ submitEntry }>
-        <table class="entries-table table table-striped table-sm w-100 d-none">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>Date</th>
-                    <th>User</th>
-                    <th>Duration</th>
-                    <th>Note</th>
-                    <th>Project</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-info">
-                    <td>
-                        <input type="text" class="date-input form-control form-control-sm" ref="date" placeholder="Date">
-                    </td>
-                    <td>
-						<select class="user-select" ref="user">
-							<option each={ users } value={ url }>{ username }</option>
-						</select>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" ref="duration" placeholder="Duration" value="{ timerDuration }">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" ref="note" placeholder="Note">
-                    </td>
-                    <td>
-						<select class="project-select" ref="project">
-							<option each={ projects } value={ url }>{ name }</option>
-						</select>
-                    </td>
-                    <td class="text-right">
-                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
-                    </td>
-                </tr>
-                <tr each={ entries }>
-                    <td>{ date }</td>
-                    <td>{ user_details.username }</td>
-                    <td>{ duration }</td>
-                    <td>{ note }</td>
-                    <td>{ project_details.name }</td>
-                    <td class="text-right"></td>
-                </tr>
-                <tr class="table-active">
-                    <td></td>
-                    <td><strong>Total</strong></td>
-                    <td><strong>{ totalTime }</strong></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry }>
+        <div class="col-sm-3">
+            <select class="custom-select" ref="project" required>
+                <option><!-- For select2 placeholder to work --></option>
+                <optgroup each={ c in clients } label={ c }>
+                    <option each={ projects }
+                            value={ url }
+                            if={ c === client_details.name }>
+                        { name }
+                    </option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   ref="note"
+                   placeholder="Note"/>
+        </div>
+        <div class="col-sm-2">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   oninput={ timer }
+                   ref="duration"
+                   placeholder="0:00"
+                   value={ timerDuration }
+                   required/>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit"
+                    class="btn btn-success btn-lg"
+                    onclick={ timer }>
+                { timerState }
+            </button>
+        </div>
     </form>
 
-    <p class="loading text-center my-5">
-        <i class="fa fa-spinner" aria-hidden="true"></i>
-    </p>
+    <div class="mb-5" each={ d in dates }>
+        <h5 class="text-muted">{ d }</h5>
+        <div class="entries-rows shadow-muted row-fix">
+            <entry each={ entries }
+                   if={ d === date }
+                   class="row py-2"/>
+        </div>
+    </div>
+
+    <div class="row bg-success text-white py-2 my-5">
+        <div class="offset-sm-6 col-sm-2 text-right">
+            Subtotal<br>
+            <strong>Total</strong>
+        </div>
+        <div class="col-sm-2">
+            { subtotalTime }<br>
+            <strong>{ totalTime }</strong>
+        </div>
+    </div>
+
+
+    <style>
+    </style>
+
 
     <script>
-        var self = this;
-        var interval;
-        self.timerState = 'Start';
-        self.hours = 0;
-        self.minutes = 0;
-        self.seconds = 0;
-
-
-        // TODO: There has to be a better way
-        tick() {
-            if (self.seconds === 60) {
-                ++self.minutes;
-                self.seconds = -1;
-            }
-            if (self.minutes === 60) {
-                ++self.hours;
-                self.minutes = 0;
-            }
-            self.update({
-                hours: self.hours,
-                minutes: self.minutes,
-                seconds: ++self.seconds
+        tick(entry) {
+            ++entry.totalSeconds
+            let hours = pad(Math.floor(entry.totalSeconds / 3600))
+            let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60))
+            let seconds = pad(entry.totalSeconds % 3600 % 60)
+            entry.update({
+                timerDuration: hours + ':' + minutes + ':' + seconds
             });
         }
 
 
         timer(e) {
-            if (self.timerState === 'Start') {
-                self.timerState = 'Stop';
-                interval = setInterval(self.tick, 1000);
-            } else {
-                self.timerState = 'Start';
-                clearInterval(interval);
-                self.timerDuration = pad(self.hours) + ':' + pad(self.minutes) + ':' + pad(self.seconds);
-                self.hours = 0;
-                self.minutes = 0;
-                self.seconds = 0;
+            let duration = this.refs.duration.value
+            if (this.timerState === 'Start' && duration) {
+                this.timerState = 'Add'
+            } else if (this.timerState === 'Start') {
+                this.timerState = 'Stop'
+                this.timerDuration = '00:00:00'
+                this.totalSeconds = 0
+                interval = setInterval(this.tick, 1000, this)
+                e.preventDefault()
+            } else if (this.timerState === 'Stop') {
+                this.timerState = 'Add'
+                this.totalSeconds = 0
+                clearInterval(interval)
+                let dur = this.timerDuration
+                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'))
+                this.totalSeconds = 0
+                e.preventDefault()
+            } else if (!duration) {
+                this.timerState = 'Start'
+                e.preventDefault()
             }
         }
 
 
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl
 
-            $('.loading, .entries-table').toggleClass('d-none');
+            let entries = quickFetch(url)
+            let projects = quickFetch(projectsApiUrl)
 
-            let entries = quickFetch(url);
-            let users = quickFetch(usersApiUrl);
-            let projects = quickFetch(projectsApiUrl);
+            Promise.all([entries, projects]).then(function(e) {
+                let dates = []
+                $.each(e[0].results, function(i, entry) {
+                    if ($.inArray(entry.date, dates) === -1) {
+                        dates.push(entry.date)
+                    }
+                })
 
-            Promise.all([entries, users, projects]).then(function(e) {
-                self.update({
+                let clients = []
+                $.each(e[1].results, function(i, project) {
+                    if ($.inArray(project.client_details.name, clients) === -1) {
+                        clients.push(project.client_details.name)
+                    }
+                })
+
+                this.update({
+                    dates: dates,
+                    clients: clients,
                     entries: e[0].results,
-                    users: promote(userId, e[1].results),
-                    projects: e[2].results,
-                    totalTime: getTotalTime(e[0].results),
+                    projects: e[1].results,
+                    totalTime: e[0].total_duration,
+                    subtotalTime: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
+                })
+
+                $('.custom-select').select2({
+                    placeholder: 'Project',
+                    dropdownAutoWidth: true
                 });
-
-                $('.loading, .entries-table').toggleClass('d-none');
-                $('.date-input').pickadate({
-                    format: 'yyyy-mm-dd',
-                    onStart: function() {
-                        this.set('select', new Date());
-                    }
-                });
-				$('.user-select').chosen({width: '100%'});
-				$('.project-select').chosen({width: '100%'});
-            });
-        }
-
-
-        entriesPage(e) {
-            self.getEntries(e.currentTarget.getAttribute('data-url'));
+            }.bind(this))
         }
 
 
         submitEntry(e) {
-            e.preventDefault();
-            let csrfToken = Cookies.get('csrftoken');
+            e.preventDefault()
             let body = {
-                date: self.refs.date.value,
-                user: self.refs.user.value,
-                duration: self.refs.duration.value,
-                note: self.refs.note.value,
-                project: self.refs.project.value
+                user: userApiUrl,
+                duration: this.refs.duration.value,
+                note: this.refs.note.value,
+                project: this.refs.project.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
-                self.refs.duration.value = '';
-                self.refs.note.value = '';
-                self.entries.unshift(data);
-                self.update();
-            });
+                this.refs.duration.value = ''
+                this.refs.note.value = ''
+                this.entries.unshift(data)
+                this.timerState = 'Start'
+                this.update()
+            }.bind(this))
         }
 
 
-        self.getEntries();
+        this.on('mount', function() {
+            this.timerState = 'Start'
+            this.getEntries()
+        }.bind(this))
     </script>
 </entries>

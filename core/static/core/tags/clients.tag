@@ -1,82 +1,53 @@
 <clients>
     <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm"
-                data-url="{ previous }"
-                if={ previous }
-                onclick={ clientsPage }>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
-        </button>
-
-        <button class="btn btn-primary btn-sm pull-right"
-                data-url="{ next }"
-                if={ next }
-                onclick={ clientsPage }>
-            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
+        <pager update={ getClients }/>
     </p>
 
-    <form onsubmit={ submitClient }>
-        <table class="clients-table table table-striped table-sm w-100 d-none">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-info">
-                    <td>
-                        <input type="text" class="form-control form-control-sm" ref="name" placeholder="Name">
-                    </td>
-                    <td class="text-right">
-                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
-                    </td>
-                </tr>
-                <tr each={ clients } data-is="client">
-                </tr>
-            </tbody>
-        </table>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitClient }>
+        <div class="col-10">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   ref="name"
+                   placeholder="New Client Name"
+                   required>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-success btn-lg">
+                Add
+            </button>
+        </div>
     </form>
 
-    <p class="loading text-center my-5">
-        <i class="fa fa-spinner" aria-hidden="true"></i>
-    </p>
+    <client each={ clients } />
+
 
     <script>
-        var self = this;
-
-
         getClients(url) {
-            url = (typeof url !== 'undefined') ? url : clientsApiUrl;
-            $('.loading, .clients-table').toggleClass('d-none');
+            url = (typeof url !== 'undefined') ? url : clientsApiUrl
             quickFetch(url).then(function(data) {
-                self.update({
+                this.update({
                     clients: data.results,
                     next: data.next,
                     previous: data.previous
-                });
-                $('.loading, .clients-table').toggleClass('d-none');
-            });
-        }
-
-
-        clientsPage(e) {
-            self.getClients(e.currentTarget.getAttribute('data-url'));
+                })
+            }.bind(this))
         }
 
 
         submitClient(e) {
-            e.preventDefault();
+            e.preventDefault()
             let body = {
-                name: self.refs.name.value
+                name: this.refs.name.value
             }
             quickFetch(clientsApiUrl, 'post', body).then(function(data) {
-                self.refs.name.value = '';
-                self.clients.unshift(data);
-                self.update();
-            });
+                this.refs.name.value = ''
+                this.clients.unshift(data)
+                this.update()
+            }.bind(this));
         }
 
-        self.getClients();
+        this.on('mount', function() {
+            this.getClients()
+        }.bind(this))
     </script>
 </clients>
