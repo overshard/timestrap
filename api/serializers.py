@@ -21,7 +21,8 @@ class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'url', 'name', 'client', 'total_entries', 'total_duration')
+        fields = ('id', 'url', 'name', 'client', 'total_entries',
+                  'total_duration')
 
     def get_queryset(self):
         queryset = super(ClientProjectSerializer, self).get_queryset()
@@ -41,7 +42,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Client
-        fields = ('id', 'url', 'name', 'archive', 'projects', 'total_projects', 'total_duration')
+        fields = ('id', 'url', 'name', 'archive', 'projects', 'total_projects',
+                  'total_duration')
 
     def get_queryset(self):
         queryset = super(ClientSerializer, self).get_queryset()
