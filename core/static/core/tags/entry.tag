@@ -77,60 +77,60 @@
 
     <script>
         editEntry(e) {
-            e.preventDefault()
-            this.edit = true
-            this.update()
+            e.preventDefault();
+            this.edit = true;
+            this.update();
         }
 
 
         restartEntry(e) {
-            this.runTimer = true
-            this.timer(e)
+            this.runTimer = true;
+            this.timer(e);
         }
 
 
         timer(e) {
             if (!this.timerState) {
-                this.timerState = 'Stop'
-                let durSplit = this.duration.split(':')
-                this.totalSeconds = (durSplit[0] * 3600) + (durSplit[1] * 60)
-                this.parent.tick(this)
-                interval = setInterval(this.parent.tick, 1000, this)
-                e.preventDefault()
+                this.timerState = 'Stop';
+                let durSplit = this.duration.split(':');
+                this.totalSeconds = (durSplit[0] * 3600) + (durSplit[1] * 60);
+                this.parent.tick(this);
+                interval = setInterval(this.parent.tick, 1000, this);
+                e.preventDefault();
             } else {
-                this.timerState = undefined
+                this.timerState = undefined;
                 clearInterval(interval);
-                let dur = this.timerDuration
-                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'))
-                this.runTimer = false
-                this.edit = true
-                this.update()
-                e.preventDefault()
+                let dur = this.timerDuration;
+                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'));
+                this.runTimer = false;
+                this.edit = true;
+                this.update();
+                e.preventDefault();
             }
         }
 
 
         saveEntry(e) {
-            e.preventDefault()
-            this.note = this.refs.note.value
-            this.duration = this.refs.duration.value
-            this.project = this.refs.project.value
-            this.project_details = this.parent.projects[this.refs.project.selectedIndex]
+            e.preventDefault();
+            this.note = this.refs.note.value;
+            this.duration = this.refs.duration.value;
+            this.project = this.refs.project.value;
+            this.project_details = this.parent.projects[this.refs.project.selectedIndex];
             quickFetch(this.url, 'put', this).then(function(data) {
-                this.note.value = ''
-                this.duration.value = ''
-                this.project.value = ''
-                this.edit = false
-                this.update()
-            }.bind(this))
+                this.note.value = '';
+                this.duration.value = '';
+                this.project.value = '';
+                this.edit = false;
+                this.update();
+            }.bind(this));
         }
 
 
         deleteEntry(e) {
-            e.preventDefault()
+            e.preventDefault();
             quickFetch(this.url, 'delete').then(function() {
-                this.unmount()
-            }.bind(this))
+                this.unmount();
+            }.bind(this));
         }
     </script>
 </entry>

@@ -105,19 +105,19 @@
 
     <script>
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
 
             quickFetch(url).then(function(data) {
-                let dates = []
-                let dateObjects = []
+                let dates = [];
+                let dateObjects = [];
 
                 $.each(data.results, function(i, entry) {
                     if ($.inArray(entry.date, dates) === -1) {
-                        dates.push(entry.date)
+                        dates.push(entry.date);
                     }
                 })
                 $.each(dates, function(i, date) {
-                    dateObjects.push({mainDate: date})
+                    dateObjects.push({mainDate: date});
                 })
 
                 this.update({
@@ -127,13 +127,13 @@
                     subtotalTime: data.subtotal_duration,
                     next: data.next,
                     previous: data.previous
-                })
-            }.bind(this))
+                });
+            }.bind(this));
         }
 
 
         getReport(e) {
-            e.preventDefault()
+            e.preventDefault();
             query = {
                 user: this.refs.user.value,
                 project: this.refs.project.value,
@@ -141,8 +141,8 @@
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value
             }
-            url = entriesApiUrl + '?' + $.param(query)
-            this.getEntries(url)
+            url = entriesApiUrl + '?' + $.param(query);
+            this.getEntries(url);
         }
 
 
@@ -155,55 +155,55 @@
                 max_date: this.refs.max_date.value,
                 export_format: this.refs.export_format.value
             }
-            document.location.href = reportsExportUrl + '?' + $.param(query)
+            document.location.href = reportsExportUrl + '?' + $.param(query);
         }
 
 
         reportsPage(e) {
-            this.getEntries(e.currentTarget.getAttribute('data-url'))
+            this.getEntries(e.currentTarget.getAttribute('data-url'));
         }
 
 
         this.on('mount', function() {
-            this.getEntries()
+            this.getEntries();
 
             quickFetch(usersApiUrl).then(function(data) {
-                this.update({users: data.results})
+                this.update({users: data.results});
                 $('.user-select').select2({
                     placeholder: 'User',
                     allowClear: true
-                })
-            }.bind(this))
+                });
+            }.bind(this));
 
             quickFetch(projectsApiUrl).then(function(data) {
-                let clients = []
+                let clients = [];
                 $.each(data.results, function(i, project) {
                     if ($.inArray(project.client_details.name, clients) === -1) {
-                        clients.push(project.client_details.name)
+                        clients.push(project.client_details.name);
                     }
                 })
 
                 this.update({
                     clients: clients,
                     projects: data.results
-                })
+                });
                 $('.project-select').select2({
                     placeholder: 'Project',
                     allowClear: true
-                })
-            }.bind(this))
+                });
+            }.bind(this));
 
             quickFetch(clientsApiUrl).then(function(data) {
-                this.update({clients: data.results})
+                this.update({clients: data.results});
                 $('.client-select').select2({
                     placeholder: 'Client',
                     allowClear: true
-                })
-            }.bind(this))
+                });
+            }.bind(this));
 
             $('.date-input').pickadate({
                 format: 'yyyy-mm-dd'
-            })
-        }.bind(this))
+            });
+        }.bind(this));
     </script>
 </reports>
