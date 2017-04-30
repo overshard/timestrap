@@ -23,31 +23,31 @@
 
     <script>
         getClients(url) {
-            url = (typeof url !== 'undefined') ? url : clientsApiUrl
+            url = (typeof url !== 'undefined') ? url : clientsApiUrl;
             quickFetch(url).then(function(data) {
                 this.update({
                     clients: data.results,
                     next: data.next,
                     previous: data.previous
-                })
-            }.bind(this))
+                });
+            }.bind(this));
         }
 
 
         submitClient(e) {
-            e.preventDefault()
+            e.preventDefault();
             let body = {
                 name: this.refs.name.value
             }
             quickFetch(clientsApiUrl, 'post', body).then(function(data) {
-                this.refs.name.value = ''
-                this.clients.unshift(data)
-                this.update()
+                this.refs.name.value = '';
+                this.clients.unshift(data);
+                this.update();
             }.bind(this));
         }
 
         this.on('mount', function() {
-            this.getClients()
-        }.bind(this))
+            this.getClients();
+        }.bind(this));
     </script>
 </clients>

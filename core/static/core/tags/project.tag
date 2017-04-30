@@ -30,8 +30,8 @@
 
     <script>
         editProject(e) {
-            this.edit = true
-            this.update()
+            this.edit = true;
+            this.update();
         }
 
 
@@ -39,17 +39,17 @@
             let query = {
                 project: e.item.id
             }
-            document.location.href = entriesUrl + '?' + $.param(query)
+            document.location.href = entriesUrl + '?' + $.param(query);
         }
 
 
         saveProject(e) {
-            e.preventDefault()
-            this.name = this.refs.name.value
+            e.preventDefault();
+            this.name = this.refs.name.value;
             quickFetch(this.url, 'put', this).then(function(data) {
-                this.name.value = ''
-                this.edit = false
-                this.update()
+                this.name.value = '';
+                this.edit = false;
+                this.update();
             }.bind(this));
         }
     </script>

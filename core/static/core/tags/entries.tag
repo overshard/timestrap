@@ -67,10 +67,10 @@
 
     <script>
         tick(entry) {
-            ++entry.totalSeconds
-            let hours = pad(Math.floor(entry.totalSeconds / 3600))
-            let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60))
-            let seconds = pad(entry.totalSeconds % 3600 % 60)
+            ++entry.totalSeconds;
+            let hours = pad(Math.floor(entry.totalSeconds / 3600));
+            let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60));
+            let seconds = pad(entry.totalSeconds % 3600 % 60);
             entry.update({
                 timerDuration: hours + ':' + minutes + ':' + seconds
             });
@@ -78,48 +78,48 @@
 
 
         timer(e) {
-            let duration = this.refs.duration.value
+            let duration = this.refs.duration.value;
             if (this.timerState === 'Start' && duration) {
-                this.timerState = 'Add'
+                this.timerState = 'Add';
             } else if (this.timerState === 'Start') {
-                this.timerState = 'Stop'
-                this.timerDuration = '00:00:00'
-                this.totalSeconds = 0
-                interval = setInterval(this.tick, 1000, this)
-                e.preventDefault()
+                this.timerState = 'Stop';
+                this.timerDuration = '00:00:00';
+                this.totalSeconds = 0;
+                interval = setInterval(this.tick, 1000, this);
+                e.preventDefault();
             } else if (this.timerState === 'Stop') {
-                this.timerState = 'Add'
-                this.totalSeconds = 0
-                clearInterval(interval)
-                let dur = this.timerDuration
-                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'))
-                this.totalSeconds = 0
-                e.preventDefault()
+                this.timerState = 'Add';
+                this.totalSeconds = 0;
+                clearInterval(interval);
+                let dur = this.timerDuration;
+                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'));
+                this.totalSeconds = 0;
+                e.preventDefault();
             } else if (!duration) {
-                this.timerState = 'Start'
-                e.preventDefault()
+                this.timerState = 'Start';
+                e.preventDefault();
             }
         }
 
 
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl
+            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
 
-            let entries = quickFetch(url)
-            let projects = quickFetch(projectsApiUrl)
+            let entries = quickFetch(url);
+            let projects = quickFetch(projectsApiUrl);
 
             Promise.all([entries, projects]).then(function(e) {
-                let dates = []
+                let dates = [];
                 $.each(e[0].results, function(i, entry) {
                     if ($.inArray(entry.date, dates) === -1) {
-                        dates.push(entry.date)
+                        dates.push(entry.date);
                     }
                 })
 
-                let clients = []
+                let clients = [];
                 $.each(e[1].results, function(i, project) {
                     if ($.inArray(project.client_details.name, clients) === -1) {
-                        clients.push(project.client_details.name)
+                        clients.push(project.client_details.name);
                     }
                 })
 
@@ -132,18 +132,18 @@
                     subtotalTime: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
-                })
+                });
 
                 $('.custom-select').select2({
                     placeholder: 'Project',
                     dropdownAutoWidth: true
                 });
-            }.bind(this))
+            }.bind(this));
         }
 
 
         submitEntry(e) {
-            e.preventDefault()
+            e.preventDefault();
             let body = {
                 user: userApiUrl,
                 duration: this.refs.duration.value,
@@ -151,18 +151,18 @@
                 project: this.refs.project.value
             }
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
-                this.refs.duration.value = ''
-                this.refs.note.value = ''
-                this.entries.unshift(data)
-                this.timerState = 'Start'
-                this.update()
-            }.bind(this))
+                this.refs.duration.value = '';
+                this.refs.note.value = '';
+                this.entries.unshift(data);
+                this.timerState = 'Start';
+                this.update();
+            }.bind(this));
         }
 
 
         this.on('mount', function() {
-            this.timerState = 'Start'
-            this.getEntries()
-        }.bind(this))
+            this.timerState = 'Start';
+            this.getEntries();
+        }.bind(this));
     </script>
 </entries>

@@ -53,49 +53,49 @@
 
     <script>
         editClient(e) {
-            this.edit = true
-            this.update()
+            this.edit = true;
+            this.update();
         }
 
 
         showProjects(e) {
-            this.productsShown = !this.productsShown
+            this.productsShown = !this.productsShown;
             if (this.chevron === 'down') {
-                this.chevron = 'up'
+                this.chevron = 'up';
             } else {
-                this.chevron = 'down'
+                this.chevron = 'down';
             }
-            this.update()
+            this.update();
         }
 
 
         saveClient(e) {
-            e.preventDefault()
-            this.name = this.refs.name.value
+            e.preventDefault();
+            this.name = this.refs.name.value;
             quickFetch(this.url, 'put', this).then(function(data) {
-                this.name.value = ''
-                this.edit = false
-                this.update()
+                this.name.value = '';
+                this.edit = false;
+                this.update();
             }.bind(this));
         }
 
 
         submitProject(e) {
-            e.preventDefault()
+            e.preventDefault();
             let body = {
                 name: this.refs.project_name.value,
                 client: this.url
             }
             quickFetch(projectsApiUrl, 'post', body).then(function(data) {
-                this.refs.project_name.value = ''
-                this.projects.unshift(data)
-                this.update()
+                this.refs.project_name.value = '';
+                this.projects.unshift(data);
+                this.update();
             }.bind(this));
         }
 
         this.on('mount', function() {
-            this.chevron = 'down'
-            this.update()
-        }.bind(this))
+            this.chevron = 'down';
+            this.update();
+        }.bind(this));
     </script>
 </client>
