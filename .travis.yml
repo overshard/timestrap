@@ -9,7 +9,7 @@ install:
     - pip install -r requirements/development.txt
 # style guide test, temp ignore of some django generated code
 before_script:
-    - flake8 --exclude=migrations,settings,manage.py,.venv,docs .
+    - flake8 --exclude=migrations,settings,manage.py,.venv,docs,invoicing .
 # run main tests
 script:
     - coverage run --source=core,api manage.py test
