@@ -131,7 +131,9 @@
         deleteEntry(e) {
             e.preventDefault();
             quickFetch(this.url, 'delete').then(function() {
-                this.unmount();
+                let index = this.parent.entries.indexOf(e.item);
+                this.parent.entries.splice(index, 1);
+                this.parent.update();
             }.bind(this));
         }
     </script>
