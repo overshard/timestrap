@@ -154,6 +154,9 @@
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
                 this.entries.unshift(data);
+                if ($.inArray(data.date, this.dates) === -1) {
+                    this.dates.unshift(data.date);
+                }
                 this.timerState = 'Start';
                 this.update();
             }.bind(this));
