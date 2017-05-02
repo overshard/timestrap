@@ -112,15 +112,17 @@
 
         saveEntry(e) {
             e.preventDefault();
-            this.note = this.refs.note.value;
-            this.duration = this.refs.duration.value;
-            this.project = this.refs.project.value;
-            this.project_details = this.parent.projects[this.refs.project.selectedIndex];
-            quickFetch(this.url, 'put', this).then(function(data) {
+            let body = this;
+            body.note = this.refs.note.value;
+            body.duration = this.refs.duration.value;
+            body.project = this.refs.project.value;
+            quickFetch(this.url, 'put', body).then(function(data) {
                 this.note.value = '';
                 this.duration.value = '';
                 this.project.value = '';
                 this.edit = false;
+                let index = this.parent.entries.indexOf(e.item);
+                this.parent.entries[index] = data;
                 this.update();
             }.bind(this));
         }
@@ -129,7 +131,13 @@
         deleteEntry(e) {
             e.preventDefault();
             quickFetch(this.url, 'delete').then(function() {
+<<<<<<< HEAD
                 this.unmount();
+=======
+                let index = this.parent.entries.indexOf(e.item);
+                this.parent.entries.splice(index, 1);
+                this.parent.update();
+>>>>>>> 8306a81eb19dba8c55f566dc1f994c2f2f538bb4
             }.bind(this));
         }
     </script>

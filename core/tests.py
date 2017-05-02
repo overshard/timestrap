@@ -67,6 +67,12 @@ class ViewsTestCase(TestCase):
     def test_reports_export_view(self):
         page = self.c.get('/reports/export/')
         self.assertEqual(page.status_code, 200)
+        
+        call_command('fake', verbosity=0, iterations=1)
+        page = self.c.get('/reports/export/')
+        self.assertEqual(page.status_code, 200)
+        #test queryset
+        #test formats
 
 
 class AppTestCase(TestCase):

@@ -7,6 +7,7 @@ from datetime import timedelta, date
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Sum
 
@@ -103,26 +104,32 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 
 @login_required
-def entries_csv_export(request):
-    QueryDict = request.GET.copy()
+def reports_export(request):
+    query_dict = request.GET.copy()
     kwargs = {}
-    for key in ('project', 'project__client', 'user'):
+    filter_dict = {
+        'min_date': 'date__gte',
+        'max_date': 'date__lte',
+        'project': 'project',
+        'project__client': 'project__client',
+        'user': 'user'
+        }
+    for key in request.GET:
+        print key
         value = request.GET.get(key)
         if value:
-            kwargs[key] = value
-    if QueryDict['export_format'] is not None:
-        formattype = QueryDict['export_format']
+            if key in filter_dict:
+                print filter_dict[key]
+                kwargs[filter_dict[key]] = value
+
     if kwargs:
         queryset = Entry.objects.filter(**kwargs)
         dataset = EntryResource().export(queryset)
-    if formattype == 'csv':
-        response = HttpResponse(dataset.csv, content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="entries.csv"'
-    elif formattype == 'xls':
-        response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="entries.xls"'
-    elif formattype == 'json':
-        response = HttpResponse(dataset.json, content_type='application/json')
-        response['Content-Disposition'] = 'attachment; filename="entries.json"'
-    
+    else:
+        queryset = Entry.objects.all()
+        dataset = EntryResource().export(queryset)
+
+    export_format = query_dict.get('export_format', 'csv')
+    response = HttpResponse(getattr(dataset, export_format), content_type='text/' + export_format)
+    response['Content-Disposition'] = 'attachment; filename="entries.'+ export_format + '"'
     return response
