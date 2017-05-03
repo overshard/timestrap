@@ -93,7 +93,7 @@
                     { note }
                 </div>
                 <div class="col-sm-2 d-flex align-self-end">
-                    { duration }
+                    { durationToString(duration) }
                 </div>
                 <div class="col-sm-2 d-flex align-self-end">
                     { user_details.username }
@@ -123,8 +123,8 @@
                 this.update({
                     dates: dateObjects,
                     entries: data.results,
-                    totalTime: data.total_duration,
-                    subtotalTime: data.subtotal_duration,
+                    totalDuration: data.total_duration,
+                    subtotalDuration: data.subtotal_duration,
                     next: data.next,
                     previous: data.previous
                 });
