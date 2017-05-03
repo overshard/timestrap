@@ -2,6 +2,8 @@ from django.utils.duration import _get_duration_components
 
 from datetime import timedelta
 
+from decimal import Decimal
+
 
 def parse_duration(duration):
     hours = None
@@ -38,3 +40,14 @@ def duration_string(duration):
     else:
         string = '0:00'
     return string
+
+
+def duration_decimal(duration):
+    if duration is not None:
+        days, hours, minutes, seconds, microseconds = _get_duration_components(duration)  # noqa: E501
+        hours += days * 24
+
+        decimal = Decimal(hours) + Decimal(minutes/60)
+    else:
+        decimal = Decimal(0)
+    return decimal
