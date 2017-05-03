@@ -123,6 +123,7 @@
                 this.edit = false;
                 let index = this.parent.entries.indexOf(e.item);
                 this.parent.entries[index] = data;
+                this.duration = data.duration;
                 this.update();
             }.bind(this));
         }
