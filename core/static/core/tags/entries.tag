@@ -134,8 +134,6 @@
                     previous: e[0].previous
                 });
 
-                console.log(e[0]);
-
                 $('.custom-select').select2({
                     placeholder: 'Project',
                     dropdownAutoWidth: true
