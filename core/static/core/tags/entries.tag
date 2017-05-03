@@ -165,6 +165,13 @@
         }
 
 
+        updateTotals(newDuration, oldDuration) {
+            this.totalDuration += newDuration - oldDuration;
+            this.subtotalDuration += newDuration - oldDuration;
+            this.update();
+        }
+
+
         this.on('mount', function() {
             this.timerState = 'Start';
             this.getEntries();

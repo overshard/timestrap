@@ -113,6 +113,7 @@
         saveEntry(e) {
             e.preventDefault();
             let body = this;
+            let oldDuration = body.duration;
             body.note = this.refs.note.value;
             body.duration = this.refs.duration.value;
             body.project = this.refs.project.value;
@@ -125,6 +126,7 @@
                 this.parent.entries[index] = data;
                 this.duration = data.duration;
                 this.update();
+                this.parent.updateTotals(this.duration, oldDuration);
             }.bind(this));
         }
 
@@ -134,7 +136,8 @@
             quickFetch(this.url, 'delete').then(function() {
                 let index = this.parent.entries.indexOf(e.item);
                 this.parent.entries.splice(index, 1);
-                this.parent.update();
+                // updateTotals executes parent update.
+                this.parent.updateTotals(0, this.duration);
             }.bind(this));
         }
     </script>
