@@ -55,8 +55,8 @@
             <strong>Total</strong>
         </div>
         <div class="col-sm-2">
-            { subtotalTime }<br>
-            <strong>{ totalTime }</strong>
+            { durationToString(subtotalDuration) }<br>
+            <strong>{ durationToString(totalDuration) }</strong>
         </div>
     </div>
 
@@ -128,11 +128,13 @@
                     clients: clients,
                     entries: e[0].results,
                     projects: e[1].results,
-                    totalTime: e[0].total_duration,
-                    subtotalTime: e[0].subtotal_duration,
+                    totalDuration: e[0].total_duration,
+                    subtotalDuration: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
                 });
+
+                console.log(e[0]);
 
                 $('.custom-select').select2({
                     placeholder: 'Project',
