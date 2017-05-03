@@ -11,7 +11,7 @@
         </div>
         <virtual if={ !runTimer }>
             <div class="col-sm-2 d-flex align-self-end">
-                { duration }
+                { durationToString(duration) }
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <button class="btn btn-faded dropdown-toggle rounded-0"
@@ -67,7 +67,7 @@
                class="form-control form-control col-sm-2 rounded-0 border-0"
                ref="duration"
                placeholder="0:00"
-               value={ duration }/>
+               value={ durationToString(duration) }/>
         <button class="btn btn-success col-sm-2 rounded-0"
                 onclick={ saveEntry }>
             Save
