@@ -22,8 +22,6 @@ def parse_duration(duration):
         hours = int(duration_split[0])
         minutes = int(60 * float('.' + duration_split[1]))
 
-    if hours is None:
-        hours = 0
     if minutes is None:
         minutes = 0
 
