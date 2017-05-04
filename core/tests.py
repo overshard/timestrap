@@ -155,6 +155,8 @@ class EntryTestCase(TestCase):
         self.assertEqual(duration, '1:30')
         duration = duration_string(timedelta(hours=3, minutes=2))
         self.assertEqual(duration, '3:02')
+        duration = duration_string(None)
+        self.assertAlmostEqual(duration, '0:00')
 
     def test_duration_decimal(self):
         # TODO: Determine is assertAlmostEqual is appropriate here.
@@ -162,6 +164,8 @@ class EntryTestCase(TestCase):
         self.assertAlmostEqual(duration, Decimal(2.05))
         duration = duration_decimal(timedelta(hours=5, minutes=15))
         self.assertAlmostEqual(duration, Decimal(5.25))
+        duration = duration_decimal(None)
+        self.assertAlmostEqual(duration, Decimal(0))
 
 
 class CommandsTestCase(TestCase):
