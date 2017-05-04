@@ -139,10 +139,16 @@ class EntryTestCase(TestCase):
         self.assertEqual(len(entries), 1)
 
     def test_parse_duration(self):
-        # TODO: Flesh this out more, currently only testing one variation of
-        # the three supported
         duration = parse_duration('3.25')
         self.assertEqual(duration, timedelta(hours=3, minutes=15))
+        duration = parse_duration('2:34')
+        self.assertEqual(duration, timedelta(hours=2, minutes=34))
+        duration = parse_duration('0:05')
+        self.assertEqual(duration, timedelta(hours=0, minutes=5))
+        duration = parse_duration('5')
+        self.assertEqual(duration, timedelta(hours=5))
+        with self.assertRaises(ValueError):
+            parse_duration('wut')
 
     def test_duration_string(self):
         duration = duration_string(timedelta(hours=1, minutes=30))
