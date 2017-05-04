@@ -158,7 +158,7 @@
                     this.dates.unshift(data.date);
                 }
                 this.timerState = 'Start';
-                this.update();
+                this.updateTotals(data.duration, 0);
             }.bind(this));
         }
 
