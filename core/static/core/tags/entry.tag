@@ -11,7 +11,7 @@
         </div>
         <virtual if={ !runTimer }>
             <div class="col-sm-2 d-flex align-self-end">
-                { duration }
+                { durationToString(duration) }
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <button class="btn btn-faded dropdown-toggle rounded-0"
@@ -67,7 +67,7 @@
                class="form-control form-control col-sm-2 rounded-0 border-0"
                ref="duration"
                placeholder="0:00"
-               value={ duration }/>
+               value={ durationToString(duration) }/>
         <button class="btn btn-success col-sm-2 rounded-0"
                 onclick={ saveEntry }>
             Save
@@ -92,8 +92,9 @@
         timer(e) {
             if (!this.timerState) {
                 this.timerState = 'Stop';
-                let durSplit = this.duration.split(':');
-                this.totalSeconds = (durSplit[0] * 3600) + (durSplit[1] * 60);
+                let hours = Math.floor(this.duration);
+                let minutes = (this.duration - hours) * 60;
+                this.totalSeconds = (hours * 3600) + (minutes * 60);
                 this.parent.tick(this);
                 interval = setInterval(this.parent.tick, 1000, this);
                 e.preventDefault();
@@ -101,10 +102,10 @@
                 this.timerState = undefined;
                 clearInterval(interval);
                 let dur = this.timerDuration;
-                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'));
                 this.runTimer = false;
                 this.edit = true;
                 this.update();
+                this.refs.duration.value = dur.substr(0, dur.lastIndexOf(':'));
                 e.preventDefault();
             }
         }
@@ -113,6 +114,7 @@
         saveEntry(e) {
             e.preventDefault();
             let body = this;
+            let oldDuration = body.duration;
             body.note = this.refs.note.value;
             body.duration = this.refs.duration.value;
             body.project = this.refs.project.value;
@@ -123,7 +125,9 @@
                 this.edit = false;
                 let index = this.parent.entries.indexOf(e.item);
                 this.parent.entries[index] = data;
+                this.duration = data.duration;
                 this.update();
+                this.parent.updateTotals(this.duration, oldDuration);
             }.bind(this));
         }
 
@@ -133,7 +137,8 @@
             quickFetch(this.url, 'delete').then(function() {
                 let index = this.parent.entries.indexOf(e.item);
                 this.parent.entries.splice(index, 1);
-                this.parent.update();
+                // updateTotals executes parent update.
+                this.parent.updateTotals(0, this.duration);
             }.bind(this));
         }
     </script>

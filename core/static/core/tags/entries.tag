@@ -55,8 +55,8 @@
             <strong>Total</strong>
         </div>
         <div class="col-sm-2">
-            { subtotalTime }<br>
-            <strong>{ totalTime }</strong>
+            { durationToString(subtotalDuration) }<br>
+            <strong>{ durationToString(totalDuration) }</strong>
         </div>
     </div>
 
@@ -128,8 +128,8 @@
                     clients: clients,
                     entries: e[0].results,
                     projects: e[1].results,
-                    totalTime: e[0].total_duration,
-                    subtotalTime: e[0].subtotal_duration,
+                    totalDuration: e[0].total_duration,
+                    subtotalDuration: e[0].subtotal_duration,
                     next: e[0].next,
                     previous: e[0].previous
                 });
@@ -158,8 +158,15 @@
                     this.dates.unshift(data.date);
                 }
                 this.timerState = 'Start';
-                this.update();
+                this.updateTotals(data.duration, 0);
             }.bind(this));
+        }
+
+
+        updateTotals(newDuration, oldDuration) {
+            this.totalDuration += newDuration - oldDuration;
+            this.subtotalDuration += newDuration - oldDuration;
+            this.update();
         }
 
 
