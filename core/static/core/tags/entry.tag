@@ -92,8 +92,9 @@
         timer(e) {
             if (!this.timerState) {
                 this.timerState = 'Stop';
-                let durSplit = this.duration.split(':');
-                this.totalSeconds = (durSplit[0] * 3600) + (durSplit[1] * 60);
+                let hours = Math.floor(this.duration);
+                let minutes = (this.duration - hours) * 60;
+                this.totalSeconds = (hours * 3600) + (minutes * 60);
                 this.parent.tick(this);
                 interval = setInterval(this.parent.tick, 1000, this);
                 e.preventDefault();
@@ -101,10 +102,10 @@
                 this.timerState = undefined;
                 clearInterval(interval);
                 let dur = this.timerDuration;
-                this.timerDuration = dur.substr(0, dur.lastIndexOf(':'));
                 this.runTimer = false;
                 this.edit = true;
                 this.update();
+                this.refs.duration.value = dur.substr(0, dur.lastIndexOf(':'));
                 e.preventDefault();
             }
         }

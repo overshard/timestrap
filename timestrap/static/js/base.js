@@ -36,7 +36,10 @@ function pad(num) {
 
 // Convert a decimal duration to a string (0:00).
 function durationToString(duration) {
-    let hours = Math.floor(duration);
-    let minutes = Math.round((duration - hours) * 60);
-    return hours + ':' + pad(minutes);
+    if (typeof(duration) === 'number') {
+        let hours = Math.floor(duration);
+        let minutes = Math.round((duration - hours) * 60);
+        duration = hours + ':' + pad(minutes);
+    }
+    return duration;
 }
