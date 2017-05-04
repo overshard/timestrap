@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from datetime import timedelta
 
+from decimal import Decimal
+
 from django.test import TestCase, override_settings
 from django.test import Client as HttpClient
 from django.contrib.auth.models import User
@@ -10,7 +12,7 @@ from django.core.management import call_command
 from django.apps import apps
 
 from .models import Client, Project, Entry
-from .utils import parse_duration
+from .utils import parse_duration, duration_string, duration_decimal
 
 from faker import Factory
 
@@ -141,6 +143,19 @@ class EntryTestCase(TestCase):
         # the three supported
         duration = parse_duration('3.25')
         self.assertEqual(duration, timedelta(hours=3, minutes=15))
+
+    def test_duration_string(self):
+        duration = duration_string(timedelta(hours=1, minutes=30))
+        self.assertEqual(duration, '1:30')
+        duration = duration_string(timedelta(hours=3, minutes=2))
+        self.assertEqual(duration, '3:02')
+
+    def test_duration_decimal(self):
+        # TODO: Determine is assertAlmostEqual is appropriate here.
+        duration = duration_decimal(timedelta(hours=2, minutes=3))
+        self.assertAlmostEqual(duration, Decimal(2.05))
+        duration = duration_decimal(timedelta(hours=5, minutes=15))
+        self.assertAlmostEqual(duration, Decimal(5.25))
 
 
 class CommandsTestCase(TestCase):
