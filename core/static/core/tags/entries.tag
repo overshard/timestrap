@@ -114,14 +114,14 @@
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }
-                })
+                });
 
                 let clients = [];
                 $.each(e[1].results, function(i, project) {
                     if ($.inArray(project.client_details.name, clients) === -1) {
                         clients.push(project.client_details.name);
                     }
-                })
+                });
 
                 this.update({
                     dates: dates,
@@ -149,16 +149,18 @@
                 duration: this.refs.duration.value,
                 note: this.refs.note.value,
                 project: this.refs.project.value
-            }
+            };
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
-                this.entries.unshift(data);
-                if ($.inArray(data.date, this.dates) === -1) {
-                    this.dates.unshift(data.date);
+                if (data.id) {
+                    this.entries.unshift(data);
+                    if ($.inArray(data.date, this.dates) === -1) {
+                        this.dates.unshift(data.date);
+                    }
+                    this.timerState = 'Start';
+                    this.updateTotals(data.duration, 0);
                 }
-                this.timerState = 'Start';
-                this.updateTotals(data.duration, 0);
             }.bind(this));
         }
 

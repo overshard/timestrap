@@ -38,11 +38,13 @@
             e.preventDefault();
             let body = {
                 name: this.refs.name.value
-            }
+            };
             quickFetch(clientsApiUrl, 'post', body).then(function(data) {
                 this.refs.name.value = '';
-                this.clients.unshift(data);
-                this.update();
+                if (data.id) {
+                    this.clients.unshift(data);
+                    this.update();
+                }
             }.bind(this));
         }
 

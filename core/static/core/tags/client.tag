@@ -71,8 +71,13 @@
 
         saveClient(e) {
             e.preventDefault();
-            this.name = this.refs.name.value;
-            quickFetch(this.url, 'put', this).then(function(data) {
+            let body = {
+                name: this.refs.name.value
+            };
+            quickFetch(this.url, 'put', body).then(function(data) {
+                if (data.id) {
+                    this.name = body.name;
+                }
                 this.name.value = '';
                 this.edit = false;
                 this.update();
@@ -85,11 +90,13 @@
             let body = {
                 name: this.refs.project_name.value,
                 client: this.url
-            }
+            };
             quickFetch(projectsApiUrl, 'post', body).then(function(data) {
                 this.refs.project_name.value = '';
-                this.projects.unshift(data);
-                this.update();
+                if (data.id) {
+                    this.projects.unshift(data);
+                    this.update();
+                }
             }.bind(this));
         }
 

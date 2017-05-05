@@ -113,32 +113,43 @@
 
         saveEntry(e) {
             e.preventDefault();
-            let body = this;
-            let oldDuration = body.duration;
-            body.note = this.refs.note.value;
-            body.duration = this.refs.duration.value;
-            body.project = this.refs.project.value;
+            let body = {
+                user: this.user,
+                project: this.refs.project.value,
+                note: this.refs.note.value,
+                duration: this.refs.duration.value,
+            };
             quickFetch(this.url, 'put', body).then(function(data) {
                 this.note.value = '';
                 this.duration.value = '';
                 this.project.value = '';
                 this.edit = false;
-                let index = this.parent.entries.indexOf(e.item);
-                this.parent.entries[index] = data;
-                this.duration = data.duration;
-                this.update();
-                this.parent.updateTotals(this.duration, oldDuration);
+                if (data.id) {
+                    let index = this.parent.entries.indexOf(e.item);
+                    this.parent.entries[index] = data;
+                    this.project = data.project;
+                    this.note = data.note;
+                    let oldDuration = this.duration;
+                    this.duration = data.duration;
+                    this.update();
+                    this.parent.updateTotals(this.duration, oldDuration);
+                }
+                else {
+                    this.update();
+                }
             }.bind(this));
         }
 
 
         deleteEntry(e) {
             e.preventDefault();
-            quickFetch(this.url, 'delete').then(function() {
-                let index = this.parent.entries.indexOf(e.item);
-                this.parent.entries.splice(index, 1);
-                // updateTotals executes parent update.
-                this.parent.updateTotals(0, this.duration);
+            quickFetch(this.url, 'delete').then(function(response) {
+                if (response.status === 204) {
+                    let index = this.parent.entries.indexOf(e.item);
+                    this.parent.entries.splice(index, 1);
+                    // updateTotals executes parent update.
+                    this.parent.updateTotals(0, this.duration);
+                }
             }.bind(this));
         }
     </script>
