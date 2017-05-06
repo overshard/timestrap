@@ -10,3 +10,6 @@
 
 # documentation builds
 _build
+
+# static files from yarn
+/node_modules

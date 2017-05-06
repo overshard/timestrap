@@ -121,7 +121,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'timestrap/static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'timestrap/static'),
+    os.path.join(BASE_DIR, 'node_modules')
+]
 
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),

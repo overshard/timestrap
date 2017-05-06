@@ -35,6 +35,11 @@ order to login:
 
     heroku run python manage.py createsuperuser
 
+And finally you need to setup multiple buildpacks because we use yarn for our
+static files:
+
+    heroku buildpacks:set heroku/python
+    heroku buildpacks:add --index 1 heroku/nodejs
 
 ## Demo Website
 
@@ -49,9 +54,10 @@ Heroku instance.
 
 For all systems you are going to need:
 
-- Python 2.7, 3.4, 3.5, or 3.6
+- Python
 - Python virtualenv and pip packages
 - The ability to compile Python native extensions
+- Node.js with with npm
 
 Once you have all of that you can run the following and move onto Testing
 and/or Running Timestrap:
@@ -60,11 +66,16 @@ and/or Running Timestrap:
     source .venv/bin/activate
     pip install -r requirements/development.txt
 
+
 ### Ubuntu
 
-You can install everything you need from apt.
+You can install everything you need from apt. A note about node on Ubuntu, it
+installs to `/usr/bin/nodejs` and every node project checks `/usr/bin/node` so
+we have to create a link between the two.
 
-    sudo apt install build-essential python-dev virtualenv python-pip
+    sudo apt install build-essential python-dev virtualenv python-pip npm
+    sudo npm install -g yarn
+    sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 
 ## Testing
@@ -85,6 +96,10 @@ code till it's fixed.
 Always make sure you are in the virtual environment before running additional
 commands by first running `source .venv/bin/activate`. If you have already done
 this from the previous step and have not left the environment continue on!
+
+We need to fetch our JS and CSS dependencies:
+
+    yarn install --modules-folder timestrap/static/vendor
 
 If you have not yet migrated your database do so by running:
 
