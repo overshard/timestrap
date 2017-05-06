@@ -3,7 +3,7 @@
         <pager update={ getEntries }/>
     </p>
 
-    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry }>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
         <div class="col-sm-3">
             <select class="custom-select" ref="project" required>
                 <option><!-- For select2 placeholder to work --></option>
@@ -45,7 +45,8 @@
         <div class="entries-rows shadow-muted row-fix">
             <entry each={ entries }
                    if={ d === date }
-                   class="row py-2"/>
+                   class="row py-2"
+                   perms={ perms} />
         </div>
     </div>
 
@@ -114,14 +115,14 @@
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }
-                })
+                });
 
                 let clients = [];
                 $.each(e[1].results, function(i, project) {
                     if ($.inArray(project.client_details.name, clients) === -1) {
                         clients.push(project.client_details.name);
                     }
-                })
+                });
 
                 this.update({
                     dates: dates,
@@ -149,16 +150,18 @@
                 duration: this.refs.duration.value,
                 note: this.refs.note.value,
                 project: this.refs.project.value
-            }
+            };
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
-                this.entries.unshift(data);
-                if ($.inArray(data.date, this.dates) === -1) {
-                    this.dates.unshift(data.date);
+                if (data.id) {
+                    this.entries.unshift(data);
+                    if ($.inArray(data.date, this.dates) === -1) {
+                        this.dates.unshift(data.date);
+                    }
+                    this.timerState = 'Start';
+                    this.updateTotals(data.duration, 0);
                 }
-                this.timerState = 'Start';
-                this.updateTotals(data.duration, 0);
             }.bind(this));
         }
 
@@ -170,8 +173,20 @@
         }
 
 
+        getPerms() {
+            quickFetch('/api/permissions/').then(function(data) {
+                   let perms = Object;
+                   $.each(data.results, function(i, perm) {
+                        perms[perm.codename] = perm;
+                    });
+                   this.perms = perms;
+                });
+        }
+
+
         this.on('mount', function() {
             this.timerState = 'Start';
+            this.getPerms();
             this.getEntries();
         }.bind(this));
     </script>

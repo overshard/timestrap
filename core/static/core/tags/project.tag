@@ -22,7 +22,7 @@
             <span class="mb-1">{ total_entries }</span>
         </div>
         <button class="btn btn-warning btn-sm col-2 rounded-0 border-0"
-                onclick={ editProject }>
+                onclick={ editProject } disabled={ !perms.change_project }>
             Edit
         </button>
     </virtual>
@@ -38,15 +38,21 @@
         goToEntries(e) {
             let query = {
                 project: e.item.id
-            }
+            };
             document.location.href = entriesUrl + '?' + $.param(query);
         }
 
 
         saveProject(e) {
             e.preventDefault();
-            this.name = this.refs.name.value;
-            quickFetch(this.url, 'put', this).then(function(data) {
+            let body = {
+                client: this.client,
+                name: this.refs.name.value
+            };
+            quickFetch(this.url, 'put', body).then(function(data) {
+                if (data.id) {
+                    this.name = body.name;
+                }
                 this.name.value = '';
                 this.edit = false;
                 this.update();

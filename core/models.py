@@ -14,6 +14,7 @@ class Client(models.Model):
     archive = models.BooleanField(default=False)
 
     class Meta:
+        default_permissions = ('view', 'add', 'change', 'delete')
         ordering = ['-id']
 
     def __str__(self):
@@ -34,6 +35,7 @@ class Project(models.Model):
     archive = models.BooleanField(default=False)
 
     class Meta:
+        default_permissions = ('view', 'add', 'change', 'delete')
         ordering = ['client', '-id']
 
     def __str__(self):
@@ -56,6 +58,7 @@ class Entry(models.Model):
     note = models.TextField(blank=True, null=True)
 
     class Meta:
+        default_permissions = ('view', 'add', 'change', 'delete')
         ordering = ['-date', '-id']
         verbose_name_plural = 'Entries'
 

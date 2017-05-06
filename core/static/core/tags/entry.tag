@@ -13,7 +13,7 @@
             <div class="col-sm-2 d-flex align-self-end">
                 { durationToString(duration) }
             </div>
-            <div class="col-sm-2 d-flex align-self-center justify-content-end">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ perms.change_entry || perms.delete_entry }>
                 <button class="btn btn-faded dropdown-toggle rounded-0"
                         type="button"
                         id="entry-edit-menu"
@@ -24,13 +24,13 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right"
                      aria-labelledby="entry-edit-menu">
-                    <a class="dropdown-item" href="#" onclick={ restartEntry }>
+                    <a class="dropdown-item" href="#" onclick={ restartEntry } if={ perms.change_entry }>
                         Restart
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ editEntry }>
+                    <a class="dropdown-item" href="#" onclick={ editEntry } if={ perms.change_entry }>
                         Edit
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ deleteEntry }>
+                    <a class="dropdown-item" href="#" onclick={ deleteEntry } if={ perms.delete_entry }>
                         Delete
                     </a>
                 </div>
@@ -113,32 +113,43 @@
 
         saveEntry(e) {
             e.preventDefault();
-            let body = this;
-            let oldDuration = body.duration;
-            body.note = this.refs.note.value;
-            body.duration = this.refs.duration.value;
-            body.project = this.refs.project.value;
+            let body = {
+                user: this.user,
+                project: this.refs.project.value,
+                note: this.refs.note.value,
+                duration: this.refs.duration.value,
+            };
             quickFetch(this.url, 'put', body).then(function(data) {
                 this.note.value = '';
                 this.duration.value = '';
                 this.project.value = '';
                 this.edit = false;
-                let index = this.parent.entries.indexOf(e.item);
-                this.parent.entries[index] = data;
-                this.duration = data.duration;
-                this.update();
-                this.parent.updateTotals(this.duration, oldDuration);
+                if (data.id) {
+                    let index = this.parent.entries.indexOf(e.item);
+                    this.parent.entries[index] = data;
+                    this.project = data.project;
+                    this.note = data.note;
+                    let oldDuration = this.duration;
+                    this.duration = data.duration;
+                    this.update();
+                    this.parent.updateTotals(this.duration, oldDuration);
+                }
+                else {
+                    this.update();
+                }
             }.bind(this));
         }
 
 
         deleteEntry(e) {
             e.preventDefault();
-            quickFetch(this.url, 'delete').then(function() {
-                let index = this.parent.entries.indexOf(e.item);
-                this.parent.entries.splice(index, 1);
-                // updateTotals executes parent update.
-                this.parent.updateTotals(0, this.duration);
+            quickFetch(this.url, 'delete').then(function(response) {
+                if (response.status === 204) {
+                    let index = this.parent.entries.indexOf(e.item);
+                    this.parent.entries.splice(index, 1);
+                    // updateTotals executes parent update.
+                    this.parent.updateTotals(0, this.duration);
+                }
             }.bind(this));
         }
     </script>

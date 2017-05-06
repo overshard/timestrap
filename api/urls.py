@@ -2,11 +2,13 @@ from django.conf.urls import url, include
 
 from rest_framework import routers
 
-from .views import UserViewSet, ClientViewSet, ProjectViewSet, EntryViewSet
+from .views import (UserViewSet, PermissionViewSet, ClientViewSet,
+                    ProjectViewSet, EntryViewSet)
 
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'permissions', PermissionViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'entries', EntryViewSet)
