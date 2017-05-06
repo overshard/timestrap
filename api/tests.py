@@ -47,13 +47,31 @@ class BrowseableApiTestCase(TestCase):
 
     def test_clients_get(self):
         page = self.c.get('/api/clients/')
+        self.assertEqual(page.status_code, 403)
+
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_client'))
+
+        page = self.c.get('/api/clients/')
         self.assertEqual(page.status_code, 200)
 
     def test_projects_get(self):
         page = self.c.get('/api/projects/')
+        self.assertEqual(page.status_code, 403)
+
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_project'))
+
+        page = self.c.get('/api/projects/')
         self.assertEqual(page.status_code, 200)
 
     def test_entries_get(self):
+        page = self.c.get('/api/entries/')
+        self.assertEqual(page.status_code, 403)
+
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_entry'))
+
         page = self.c.get('/api/entries/')
         self.assertEqual(page.status_code, 200)
 
@@ -81,6 +99,9 @@ class BrowseableApiTestCase(TestCase):
         self.assertEqual(page.status_code, 201)
 
     def test_projects_post(self):
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_client'))
+
         clients_page = self.c.get('/api/clients/')
         clients = clients_page.json()
 
@@ -103,7 +124,8 @@ class BrowseableApiTestCase(TestCase):
 
     def test_projects_post_unicode(self):
         self.user.user_permissions.add(
-            Permission.objects.get(codename='add_project'))
+            Permission.objects.get(codename='add_project'),
+            Permission.objects.get(codename='view_client'))
 
         clients_page = self.c.get('/api/clients/')
         clients = clients_page.json()
@@ -116,6 +138,9 @@ class BrowseableApiTestCase(TestCase):
         self.assertEqual(page.status_code, 201)
 
     def test_entries_post(self):
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_project'))
+
         projects_page = self.c.get('/api/projects/')
         projects = projects_page.json()
         users_page = self.c.get('/api/users/')
