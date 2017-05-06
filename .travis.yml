@@ -14,7 +14,7 @@ install:
     - pip install -r requirements/development.txt
 # many excludes here are currently temporary
 before_script:
-    - flake8 --exclude=migrations,settings,manage.py,.venv,docs,invoicing .
+    - flake8 --exclude=migrations,settings,manage.py,.venv,docs,invoicing,node_modules .
 script:
     - coverage run --source=core,api manage.py test
 after_success:
