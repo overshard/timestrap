@@ -139,16 +139,24 @@ class EntryTestCase(TestCase):
         self.assertEqual(len(entries), 1)
 
     def test_parse_duration(self):
-        # TODO: Flesh this out more, currently only testing one variation of
-        # the three supported
         duration = parse_duration('3.25')
         self.assertEqual(duration, timedelta(hours=3, minutes=15))
+        duration = parse_duration('2:34')
+        self.assertEqual(duration, timedelta(hours=2, minutes=34))
+        duration = parse_duration('0:05')
+        self.assertEqual(duration, timedelta(hours=0, minutes=5))
+        duration = parse_duration('5')
+        self.assertEqual(duration, timedelta(hours=5))
+        with self.assertRaises(ValueError):
+            parse_duration('wut')
 
     def test_duration_string(self):
         duration = duration_string(timedelta(hours=1, minutes=30))
         self.assertEqual(duration, '1:30')
         duration = duration_string(timedelta(hours=3, minutes=2))
         self.assertEqual(duration, '3:02')
+        duration = duration_string(None)
+        self.assertAlmostEqual(duration, '0:00')
 
     def test_duration_decimal(self):
         # TODO: Determine is assertAlmostEqual is appropriate here.
@@ -156,6 +164,8 @@ class EntryTestCase(TestCase):
         self.assertAlmostEqual(duration, Decimal(2.05))
         duration = duration_decimal(timedelta(hours=5, minutes=15))
         self.assertAlmostEqual(duration, Decimal(5.25))
+        duration = duration_decimal(None)
+        self.assertAlmostEqual(duration, Decimal(0))
 
 
 class CommandsTestCase(TestCase):
