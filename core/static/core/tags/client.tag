@@ -12,9 +12,10 @@
         </virtual>
         <virtual if={ !edit }>
             <div class="col-6 d-flex align-items-center">
-                <a class="text-primary font-weight-bold" onclick={ showProjects }>
+                <a class="text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
                     <i class="fa fa-chevron-circle-{ chevron }" aria-hidden="true"></i> { name }
                 </a>
+                <span class="text-primary font-weight-bold" if={ !perms.view_project }>{ name }</span>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-clock-o small text-muted text-uppercase mr-2" aria-hidden="true"></i>
@@ -47,7 +48,7 @@
         <project class="row mb-1 bg-faded"
                  each={ projects }
                  data-is="project"
-                 if={ productsShown }
+                 if={ productsShown && perms.view_project }
                  perms={ perms } />
     </div>
 
