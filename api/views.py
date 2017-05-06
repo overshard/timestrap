@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 from rest_framework import viewsets
 import django_filters
 
 from core.models import Client, Project, Entry
-from .serializers import (UserSerializer, ClientSerializer, ProjectSerializer,
+from .serializers import (UserSerializer, ClientSerializer,
+                          PermissionSerializer, ProjectSerializer,
                           EntrySerializer)
 from .pagination import LimitOffsetPaginationWithTotals
 
@@ -15,6 +16,18 @@ from .pagination import LimitOffsetPaginationWithTotals
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            queryset = Permission.objects.all()
+        else:
+            queryset = Permission.objects.filter(user=self.request.user)
+        return queryset
 
 
 class ClientViewSet(viewsets.ModelViewSet):
