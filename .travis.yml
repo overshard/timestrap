@@ -8,13 +8,11 @@ python:
 env:
     - TRAVIS_NODE_VERSION="4"
     - TRAVIS_NODE_VERSION="6"
-# get yarn static files installed
-before_install:
+# install dependencies
+install: 
     - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
     - sudo npm install -g yarn
     - yarn
-# install dependencies
-install: 
     - pip install -r requirements/development.txt
 # style guide test, temp ignore of some django generated code
 before_script:
