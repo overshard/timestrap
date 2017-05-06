@@ -27,12 +27,15 @@ class BrowseableApiTestCase(TestCase):
 
         self.c = HttpClient()
 
-        fake_user = fake.simple_profile()
-        fake_password = fake.password()
-        User.objects.create_user(fake_user['username'], fake_user['mail'],
-                                 fake_password)
+        super_user = fake.simple_profile()
+        super_user_password = fake.password()
+        User.objects.create_user(super_user['username'],
+                                 super_user['mail'],
+                                 super_user_password,
+                                 is_superuser=True)
 
-        self.c.login(username=fake_user['username'], password=fake_password)
+        self.c.login(username=super_user['username'],
+                     password=super_user_password)
 
     def test_users_get(self):
         page = self.c.get('/api/users/')
