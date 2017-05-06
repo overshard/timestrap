@@ -1,9 +1,15 @@
+sudo: required
 language: python
 python:
     - 2.7
     - 3.4
     - 3.5
     - 3.6
+# get yarn static files installed
+before_install:
+    - sudo apt-get install npm
+    - sudo npm install -g yarn
+    - yarn
 # install dependencies
 install: 
     - pip install -r requirements/development.txt
