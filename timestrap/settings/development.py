@@ -2,6 +2,10 @@ from .base import *
 
 DEBUG = True
 
+# Used for development compressing testing
+#COMPRESS_OFFLINE = False
+#COMPRESS_ENABLED = True
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'CHANGE-ME' 

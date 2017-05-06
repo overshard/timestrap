@@ -11,19 +11,21 @@
 
         {# Global stylesheets #}
         {% compress css %}
-            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'tether/dist/css/tether.min.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'select2/dist/css/select2.min.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'pickadate/lib/compressed/themes/default.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'pickadate/lib/compressed/themes/default.date.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'tether/dist/css/tether.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'select2/dist/css/select2.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.date.css' %}" %}/>
 
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}"/>
         {% endcompress %}
 
-        {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
+        {% compress css %}
+            {% block extra_css %}
+                {# Override this in templates to add extra stylesheets #}
+            {% endblock %}
+        {% endcompress %}
     </head>
     <body>
         <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
@@ -83,21 +85,23 @@
 
         {# Global javascript #}
         {% compress js %}
-            <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-            <script src="{% static 'tether/dist/js/tether.min.js' %}"></script>
-            <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
-            <script src="{% static 'select2/dist/js/select2.min.js' %}"></script>
-            <script src="{% static 'pickadate/lib/compressed/picker.js' %}"></script>
-            <script src="{% static 'pickadate/lib/compressed/picker.date.js' %}"></script>
+            <script src="{% static 'jquery/dist/jquery.js' %}"></script>
+            <script src="{% static 'tether/dist/js/tether.js' %}"></script>
+            <script src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
+            <script src="{% static 'select2/dist/js/select2.js' %}"></script>
+            <script src="{% static 'pickadate/lib/picker.js' %}"></script>
+            <script src="{% static 'pickadate/lib/picker.date.js' %}"></script>
             <script src="{% static 'js-cookie/src/js.cookie.js' %}"></script>
-            <script src="{% static 'chart.js/dist/Chart.min.js' %}"></script>
-            <script src="{% static 'riot/riot+compiler.min.js' %}"></script>
+            <script src="{% static 'chart.js/dist/Chart.js' %}"></script>
+            <script src="{% static 'riot/riot.js' %}"></script>
 
             <script src="{% static 'js/base.js' %}"></script>
         {% endcompress %}
 
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        {% compress js inline %}
+            {% block extra_js %}
+                {# Override this in templates to add extra javascript #}
+            {% endblock %}
+        {% endcompress %}
     </body>
 </html>

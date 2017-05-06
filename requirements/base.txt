@@ -6,7 +6,6 @@ django-widget-tweaks<1.5,>=1.4
 
 # static files
 django_compressor<2.2,>=2.1
-django-libsass<0.8,>=0.7
 whitenoise<3.4,>=3.3
 
 # api

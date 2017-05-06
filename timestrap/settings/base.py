@@ -127,9 +127,16 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'node_modules')
 ]
 
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.rCSSMinFilter',
+]
+
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
+    ('text/x-scss', 'node_modules/node-sass/bin/node-sass --output-style compressed {infile} > {outfile}'),
+    ('riot/tag', 'node_modules/riot/node_modules/.bin/riot {infile} {outfile}'),
 )
+
 
 COMPRESS_OFFLINE = True
 
