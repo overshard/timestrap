@@ -7,7 +7,8 @@ python:
     - 3.6
 # get yarn static files installed
 before_install:
-    - sudo apt-get install npm
+    - curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+    - sudo apt-get install nodejs
     - sudo npm install -g yarn
     - yarn
 # install dependencies
