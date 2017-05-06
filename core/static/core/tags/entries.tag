@@ -3,7 +3,7 @@
         <pager update={ getEntries }/>
     </p>
 
-    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry }>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
         <div class="col-sm-3">
             <select class="custom-select" ref="project" required>
                 <option><!-- For select2 placeholder to work --></option>
@@ -45,7 +45,8 @@
         <div class="entries-rows shadow-muted row-fix">
             <entry each={ entries }
                    if={ d === date }
-                   class="row py-2"/>
+                   class="row py-2"
+                   perms={ perms} />
         </div>
     </div>
 
@@ -172,8 +173,20 @@
         }
 
 
+        getPerms() {
+            quickFetch('/api/permissions/').then(function(data) {
+                   let perms = Object;
+                   $.each(data.results, function(i, perm) {
+                        perms[perm.codename] = perm;
+                    });
+                   this.perms = perms;
+                });
+        }
+
+
         this.on('mount', function() {
             this.timerState = 'Start';
+            this.getPerms();
             this.getEntries();
         }.bind(this));
     </script>

@@ -1,6 +1,6 @@
 <client>
     <div class="row mb-2 bg-faded">
-        <virtual if={ edit }>
+        <virtual if={ edit && perms.change_client }>
             <input type="text"
                    class="form-control rounded-0 border-0 bg-faded col-10"
                    ref="name"
@@ -24,13 +24,13 @@
                 <i class="fa fa-list small text-muted text-uppercase mr-2" aria-hidden="true"></i>
                 <span class="mb-1">{ total_projects }</span>
             </div>
-            <button class="btn btn-warning col-2 rounded-0" onclick={ editClient }>
+            <button class="btn btn-warning col-2 rounded-0" onclick={ editClient } disabled={ !perms.change_client }>
                 Edit
             </button>
         </virtual>
     </div>
 
-    <form onsubmit={ submitProject } if={ productsShown }>
+    <form onsubmit={ submitProject } if={ productsShown && perms.add_project }>
         <div class="row mb-1">
             <input type="text"
                    class="form-control form-control-sm rounded-0 border-0 col-10"
@@ -47,7 +47,8 @@
         <project class="row mb-1 bg-faded"
                  each={ projects }
                  data-is="project"
-                 if={ productsShown }/>
+                 if={ productsShown }
+                 perms={ perms } />
     </div>
 
 

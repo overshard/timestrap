@@ -13,7 +13,7 @@
             <div class="col-sm-2 d-flex align-self-end">
                 { durationToString(duration) }
             </div>
-            <div class="col-sm-2 d-flex align-self-center justify-content-end">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ perms.change_entry || perms.delete_entry }>
                 <button class="btn btn-faded dropdown-toggle rounded-0"
                         type="button"
                         id="entry-edit-menu"
@@ -24,13 +24,13 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right"
                      aria-labelledby="entry-edit-menu">
-                    <a class="dropdown-item" href="#" onclick={ restartEntry }>
+                    <a class="dropdown-item" href="#" onclick={ restartEntry } if={ perms.change_entry }>
                         Restart
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ editEntry }>
+                    <a class="dropdown-item" href="#" onclick={ editEntry } if={ perms.change_entry }>
                         Edit
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ deleteEntry }>
+                    <a class="dropdown-item" href="#" onclick={ deleteEntry } if={ perms.delete_entry }>
                         Delete
                     </a>
                 </div>

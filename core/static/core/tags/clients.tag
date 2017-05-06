@@ -3,7 +3,7 @@
         <pager update={ getClients }/>
     </p>
 
-    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitClient }>
+    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitClient } if={ perms && perms.add_client }>
         <div class="col-10">
             <input type="text"
                    class="form-control form-control-lg"
@@ -18,7 +18,7 @@
         </div>
     </form>
 
-    <client each={ clients } />
+    <client each={ clients } perms={ perms } />
 
 
     <script>
@@ -48,7 +48,19 @@
             }.bind(this));
         }
 
+
+        getPerms() {
+            quickFetch('/api/permissions/').then(function(data) {
+                   let perms = Object;
+                   $.each(data.results, function(i, perm) {
+                        perms[perm.codename] = perm;
+                    });
+                   this.perms = perms;
+                });
+        }
+
         this.on('mount', function() {
+            this.getPerms();
             this.getClients();
         }.bind(this));
     </script>
