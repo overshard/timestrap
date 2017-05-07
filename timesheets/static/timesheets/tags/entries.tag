@@ -4,10 +4,13 @@
     </div>
 
     <div class="row py-1 bg-inverse text-white font-weight-bold">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
+            Date
+        </div>
+        <div class="col-sm-2">
             Project
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             Note
         </div>
         <div class="col-sm-2">
@@ -18,7 +21,13 @@
     </div>
 
     <form class="row mb-4 py-2 bg-faded" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
+            <input type="text"
+                   class="form-control form-control-sm date-input"
+                   ref="date"
+                   placeholder="Date"/>
+        </div>
+        <div class="col-sm-2">
             <select class="custom-select" ref="project" required>
                 <option><!-- For select2 placeholder to work --></option>
                 <optgroup each={ c in clients } label={ c }>
@@ -30,7 +39,7 @@
                 </optgroup>
             </select>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <input type="text"
                    class="form-control form-control-sm"
                    ref="note"
@@ -154,6 +163,13 @@
                     width: '100%',
                     dropdownAutoWidth: true
                 });
+
+                $('.date-input').pickadate({
+                    format: 'yyyy-mm-dd',
+                    onStart: function() {
+                        this.set('select', new Date());
+                    }
+                });
             }.bind(this));
         }
 
@@ -164,7 +180,8 @@
                 user: userApiUrl,
                 duration: this.refs.duration.value,
                 note: this.refs.note.value,
-                project: this.refs.project.value
+                project: this.refs.project.value,
+                date: this.refs.date.value
             };
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
                 this.refs.duration.value = '';
