@@ -77,8 +77,7 @@
             </div>
         </div>
 
-
-        <div class="container">
+        <div id="view-{{ request.resolver_match.view_name }}" class="container">
             {% block content %}{% endblock %}
         </div>
 
