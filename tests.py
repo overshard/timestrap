@@ -6,7 +6,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 
 from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.firefox.webelement import FirefoxWebElement
+from selenium.common.exceptions import NoSuchElementException
 
 from pyvirtualdisplay import Display
 
@@ -60,26 +60,26 @@ class SeleniumTests(StaticLiveServerTestCase):
         password_input = self.selenium.find_element_by_name('password')
         password_input.send_keys('incorrect password')
         self.selenium.find_element_by_name('login').click()
-        # Log in failure creates an alert notice.
-        self.selenium.find_element_by_css_selector('.alert.alert-danger')
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_id('view-dashboard')
 
         self.logIn()
 
     def test_clients(self):
         self.logIn()
 
-        self.assertNotIn('Clients', self.selenium.find_element_by_css_selector(
-            '#navbarNav').text)
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('a[href="/clients/"]')
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_client'))
         self.selenium.get(self.live_server_url)
+        self.selenium.find_element_by_css_selector('a[href="/clients/"]')
         self.selenium.find_element_by_css_selector(
             'a[href="/clients/"]').click()
         self.selenium.find_element_by_id('view-clients')
 
-        # The <clients> tag only has two elements when there is no add form.
-        self.assertEqual(len(self.selenium.find_elements_by_css_selector(
-            'clients > *')), 2)
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_name('client-add')
         self.user.user_permissions.add(
             Permission.objects.get(codename='add_client'))
         self.selenium.refresh()
@@ -89,19 +89,17 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.assertIn('Client', self.selenium.find_element_by_css_selector(
             'client:first-of-type').text)
 
-        # If Projects are not viewable, the client name will be in a <span>
-        # instead of an <a>.
-        self.assertIsInstance(self.selenium.find_element_by_css_selector(
-            'client span.text-primary'), FirefoxWebElement)
+        with self.assertRaises(NoSuchElementException):
+            # Chevron to display projects
+            self.selenium.find_element_by_css_selector(
+                'client i.fa-chevron-circle-down')
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_project'))
         self.selenium.refresh()
-        self.selenium.find_element_by_css_selector('client a.text-primary')
+        self.selenium.find_element_by_css_selector('client i')
 
-        # The <client> tag only has two elements when there is no Project add
-        # form.
-        self.assertEqual(len(self.selenium.find_elements_by_css_selector(
-            'client > *')), 2)
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('project-add')
         self.user.user_permissions.add(
             Permission.objects.get(codename='add_project'))
         self.selenium.refresh()
@@ -111,25 +109,27 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_css_selector(
             'form[name="project-add"] button[type="submit"]').click()
         self.assertIn('Project', self.selenium.find_element_by_css_selector(
-            'client project').text)
+            'client:first-of-type').text)
 
     def test_entries(self):
         self.logIn()
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('a[href="/entries/"]')
 
-        self.assertNotIn('Entries', self.selenium.find_element_by_css_selector(
-            '#navbarNav').text)
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_entry'))
+
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('a[href="/entries/"]')
+
         self.selenium.find_element_by_css_selector(
             'a[href="/entries/"]').click()
         self.selenium.find_element_by_id('view-entries')
 
     def test_reports(self):
         self.logIn()
-
         self.selenium.find_element_by_css_selector('a[href="/reports/"]')
+
         self.selenium.find_element_by_css_selector(
             'a[href="/reports/"]').click()
         self.selenium.find_element_by_id('view-reports')

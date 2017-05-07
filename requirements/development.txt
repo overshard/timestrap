@@ -4,7 +4,8 @@
 flake8<3.4,>=3.3
 coveralls<1.2,>=1.1
 selenium<3.5,>=3.4
+PyVirtualDisplay<0.3,>=0.2
 
 # documentation
-Sphinx
-recommonmark
+Sphinx<1.6,>=1.5
+recommonmark<0.5,>=0.4

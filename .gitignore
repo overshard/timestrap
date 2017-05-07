@@ -10,3 +10,6 @@
 
 # documentation builds
 _build
+
+# geckodriver
+/geckodriver.log

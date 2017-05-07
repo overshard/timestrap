@@ -63,10 +63,28 @@ and/or Running Timestrap:
 
 You can install everything you need from apt.
 
-    sudo apt install python-virtualenv python-pip
+    sudo apt install build-essential python-dev python-virtualenv python-pip
+
+If you want to run tests you will need to install some additional packages,
+these are not required though and if you are working on small changes or
+documentation then you can rely on Travis CI to run tests for you.
+
+    sudo apt install firefox xvfb
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz
+    tar zxf geckodriver-v0.16.1-linux64.tar.gz
+    sudo mv geckodriver /usr/local/bin/
+
+If you run into issues with the version of geckodriver above, want to make
+sure you have the latest, or get one for your specific processor if you aren't
+running a linux64 environment go to the [geckodriver releases GitHub page](https://github.com/mozilla/geckodriver/releases).
 
 
 ## Testing
+
+We use selenium with the geckodriver for testing. If you wish to run tests you
+will need to make sure you have Firefox installed and on a headless Linux
+machine you'll need xvfb. For installation instructions on those see the above
+documentation
 
 I'm trying to push for 100% code coverage on this project! If you want to add
 or change something and test that everything still works you can do so easily
