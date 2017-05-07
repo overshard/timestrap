@@ -11,6 +11,8 @@
 
 
 {% block extra_js %}
+    <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/reports.tag' %}"></script>
     <script>
         var usersApiUrl = "{% url 'user-list' %}";
         var clientsApiUrl = "{% url 'client-list' %}";

@@ -11,6 +11,9 @@
 
 
 {% block extra_js %}
+    <script type="riot/tag" src="{% static 'timesheets/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/entry.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
     <script>
         {% if project %}
             var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}&user={{ user.id }}";

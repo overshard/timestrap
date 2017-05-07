@@ -54,10 +54,8 @@ Heroku instance.
 
 For all systems you are going to need:
 
-- Python
-- Python virtualenv and pip packages
-- The ability to compile Python native extensions
-- Node.js with with npm
+- Python 2.7, 3.4, 3.5, or 3.6
+- Python virtualenv and pip packages for your version of Python
 
 Once you have all of that you can run the following and move onto Testing
 and/or Running Timestrap:
@@ -69,17 +67,9 @@ and/or Running Timestrap:
 
 ### Ubuntu
 
-You can install everything you need from apt. A note about node on Ubuntu, it
-installs to `/usr/bin/nodejs` and every node project checks `/usr/bin/node` so
-we have to create a link between the two.
+You can install everything you need from apt.
 
-    sudo apt install virtualenv python-pip npm
-    sudo ln -s /usr/bin/nodejs /usr/bin/node
-    sudo npm install -g yarn
-
-**NOTE:** If you are using a version older than 16.04 of Ubuntu you may need to
-use a PPA for Node.js. The version included in older versions of Ubuntu is not
-able to run yarn. Node.js 4.x or above is required.
+    sudo apt install python-virtualenv python-pip
 
 
 ## Testing
@@ -100,10 +90,6 @@ code till it's fixed.
 Always make sure you are in the virtual environment before running additional
 commands by first running `source .venv/bin/activate`. If you have already done
 this from the previous step and have not left the environment continue on!
-
-We need to fetch our JS and CSS dependencies:
-
-    yarn
 
 If you have not yet migrated your database do so by running:
 

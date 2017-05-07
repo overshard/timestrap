@@ -17,8 +17,8 @@ function quickFetch(url, method, body) {
     }).then(function(response) {
         let result = null;
         switch (response.status) {
-            case 200: // HTTP_200_OK
-            case 201: // HTTP_201_CREATED
+            case 200:  // HTTP_200_OK
+            case 201:  // HTTP_201_CREATED
                 result = response.json();
                 break;
             default:

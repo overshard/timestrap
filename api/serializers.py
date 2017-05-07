@@ -83,7 +83,6 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
     duration = DurationField()
-    date = serializers.DateField(format='%B %d, %Y')
     project_details = ProjectSerializer(source='project', read_only=True)
     user_details = UserSerializer(source='user', read_only=True)
 

@@ -10,16 +10,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
-        {# TODO: Fix compression with bootstrap, navbar breaks when compressed #}
-        <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" %}/>
+        {# TODO: Figure out why bootstrap nav messes up when compressed #}
+        <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" %}/>
         {% compress css %}
-            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'tether/dist/css/tether.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'select2/dist/css/select2.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.date.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'vendor/tether/css/tether.min.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.css' %}" %}/>
+            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.date.css' %}" %}/>
 
-            <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}"/>
+            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
         {% endcompress %}
 
         {% block extra_css %}
@@ -84,23 +84,15 @@
 
         {# Global javascript #}
         {% compress js %}
-            <script type="text/javascript" src="{% static 'jquery/dist/jquery.js' %}"></script>
-            <script type="text/javascript" src="{% static 'tether/dist/js/tether.js' %}"></script>
-            <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
-            <script type="text/javascript" src="{% static 'select2/dist/js/select2.js' %}"></script>
-            <script type="text/javascript" src="{% static 'pickadate/lib/picker.js' %}"></script>
-            <script type="text/javascript" src="{% static 'pickadate/lib/picker.date.js' %}"></script>
-            <script type="text/javascript" src="{% static 'js-cookie/src/js.cookie.js' %}"></script>
-            <script type="text/javascript" src="{% static 'chart.js/dist/Chart.js' %}"></script>
-            <script type="text/javascript" src="{% static 'riot/riot.js' %}"></script>
-
-            <script type="riot/tag" src="{% static 'timesheets/tags/client.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/clients.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/entries.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/entry.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/project.tag' %}"></script>
-            <script type="riot/tag" src="{% static 'timesheets/tags/reports.tag' %}"></script>
+            <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+            <script src="{% static 'vendor/tether/js/tether.min.js' %}"></script>
+            <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+            <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+            <script src="{% static 'vendor/pickadate/picker.js' %}"></script>
+            <script src="{% static 'vendor/pickadate/picker.date.js' %}"></script>
+            <script src="{% static 'vendor/js-cookie/js.cookie.js' %}"></script>
+            <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+            <script src="{% static 'vendor/riot/riot+compiler.min.js' %}"></script>
 
             <script src="{% static 'js/base.js' %}"></script>
         {% endcompress %}
