@@ -10,10 +10,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
+        {# TODO: Fix compression with bootstrap, navbar breaks when compressed #}
+        <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" %}/>
         {% compress css %}
             <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}" %}/>
             <link rel="stylesheet" href="{% static 'tether/dist/css/tether.css' %}" %}/>
-            <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}" %}/>
             <link rel="stylesheet" href="{% static 'select2/dist/css/select2.css' %}" %}/>
             <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.css' %}" %}/>
             <link rel="stylesheet" href="{% static 'pickadate/lib/themes/default.date.css' %}" %}/>
