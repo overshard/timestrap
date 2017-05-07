@@ -45,21 +45,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         password_input.clear()
         password_input.send_keys(self.profile['password'])
         self.selenium.find_element_by_name('login').click()
-        return self.verifyById('view-dashboard')
-
-    def verifyById(self, id):
-        try:
-            self.selenium.find_element_by_id(id)
-            return True
-        except NoSuchElementException:
-            return False
-
-    def verifyByXpath(self, xpath):
-        try:
-            self.selenium.find_element_by_xpath(xpath)
-            return True
-        except NoSuchElementException:
-            return False
+        self.selenium.find_element_by_id('view-dashboard')
 
     def test_login(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
@@ -69,39 +55,42 @@ class SeleniumTests(StaticLiveServerTestCase):
         password_input = self.selenium.find_element_by_name('password')
         password_input.send_keys('incorrect password')
         self.selenium.find_element_by_name('login').click()
-        self.assertFalse(self.verifyById('view-dashboard'))
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_id('view-dashboard')
 
-        self.assertTrue(self.logIn())
+        self.logIn()
 
     def test_clients(self):
         self.logIn()
-        self.assertFalse(self.verifyByXpath('//a[@href="/clients/"]'))
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('a[href="/clients/"]')
 
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_client'))
 
         self.selenium.get(self.live_server_url)
-        self.assertTrue(self.verifyByXpath('//a[@href="/clients/"]'))
+        self.selenium.find_element_by_css_selector('a[href="/clients/"]')
 
-        self.selenium.find_element_by_xpath('//a[@href="/clients/"]').click()
-        self.assertTrue(self.verifyById('view-clients'))
+        self.selenium.find_element_by_css_selector('a[href="/clients/"]').click()
+        self.selenium.find_element_by_id('view-clients')
 
     def test_entries(self):
         self.logIn()
-        self.assertFalse(self.verifyByXpath('//a[@href="/entries/"]'))
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('a[href="/entries/"]')
 
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_entry'))
 
         self.selenium.get(self.live_server_url)
-        self.assertTrue(self.verifyByXpath('//a[@href="/entries/"]'))
+        self.selenium.find_element_by_css_selector('a[href="/entries/"]')
 
-        self.selenium.find_element_by_xpath('//a[@href="/entries/"]').click()
-        self.assertTrue(self.verifyById('view-entries'))
+        self.selenium.find_element_by_css_selector('a[href="/entries/"]').click()
+        self.selenium.find_element_by_id('view-entries')
 
     def test_reports(self):
         self.logIn()
-        self.assertTrue(self.verifyByXpath('//a[@href="/reports/"]'))
+        self.selenium.find_element_by_css_selector('a[href="/reports/"]')
 
-        self.selenium.find_element_by_xpath('//a[@href="/reports/"]').click()
-        self.assertTrue(self.verifyById('view-reports'))
+        self.selenium.find_element_by_css_selector('a[href="/reports/"]').click()
+        self.selenium.find_element_by_id('view-reports')
