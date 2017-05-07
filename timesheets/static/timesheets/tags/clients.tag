@@ -3,7 +3,7 @@
         <pager update={ getClients }/>
     </div>
 
-    <div class="row py-1 bg-inverse text-white font-weight-bold">
+    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
         <div class="col-sm-6">
             Client
         </div>
@@ -17,7 +17,10 @@
         </div>
     </div>
 
-    <form name="client-add" class="row mb-4 py-2 bg-faded" onsubmit={ submitClient } if={ perms && perms.add_client }>
+    <form name="client-add"
+          class="row mb-4 py-2 bg-faded rounded-bottom"
+          onsubmit={ submitClient }
+          if={ perms && perms.add_client }>
         <div class="col-10">
             <input name="client-name"
                    type="text"
