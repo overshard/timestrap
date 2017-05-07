@@ -9,7 +9,6 @@ from django.test import TestCase, override_settings
 from django.test import Client as HttpClient
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from django.apps import apps
 
 from .models import Client, Project, Entry
 from .utils import parse_duration, duration_string, duration_decimal
