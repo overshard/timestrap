@@ -45,12 +45,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='task',
             name='timesheet',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tasks', to='core.Timesheet'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tasks', to='timesheets.Timesheet'),
         ),
         migrations.AddField(
             model_name='entry',
             name='task',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='entries', to='core.Task'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='entries', to='timesheets.Task'),
         ),
         migrations.AddField(
             model_name='entry',

@@ -5,8 +5,8 @@ from django.contrib.auth.models import User, Permission
 
 from rest_framework import serializers
 
-from core.models import Client, Project, Entry
-from core.fields import DurationField
+from timesheets.models import Client, Project, Entry
+from timesheets.fields import DurationField
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

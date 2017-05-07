@@ -11,9 +11,6 @@
 
 
 {% block extra_js %}
-    <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
-    <script type="riot/tag" src="{% static 'core/tags/entry.tag' %}"></script>
-    <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
     <script>
         {% if project %}
             var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}&user={{ user.id }}";
@@ -27,9 +24,8 @@
         {% endif %}
         var clientsApiUrl = "{% url 'client-list' %}";
         var usersApiUrl = "{% url 'user-list' %}";
-        {% if user.is_authenticated %}
-            var userApiUrl = "{% url 'user-detail' user.id %}"
-        {% endif %}
+        var userApiUrl = "{% url 'user-detail' user.id %}"
+
         riot.mount('entries');
     </script>
 {% endblock %}

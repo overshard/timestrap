@@ -71,14 +71,6 @@ class ViewsTestCase(TestCase):
         self.assertEqual(page.status_code, 200)
 
 
-class AppTestCase(TestCase):
-    def setUp(self):
-        pass
-
-    def test_core_config(self):
-        self.assertEqual(apps.get_app_config('core').name, 'core')
-
-
 class ClientTestCase(TestCase):
     def setUp(self):
         pass
@@ -121,13 +113,13 @@ class EntryTestCase(TestCase):
             project=self.project,
             user=self.user,
             duration=timedelta(hours=1),
-            note='Creating tests for the core app'
+            note='Creating tests for the timesheets app'
         )
         Entry.objects.create(
             project=self.project,
             user=self.user,
             duration=timedelta(hours=2),
-            note='Continue creating tests for the core app'
+            note='Continue creating tests for the timesheets app'
         )
 
     def test_entry_created(self):

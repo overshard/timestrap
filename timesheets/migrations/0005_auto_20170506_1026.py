@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_auto_20170426_1717'),
+        ('timesheets', '0004_auto_20170426_1717'),
     ]
 
     operations = [
@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='project',
             name='client',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='core.Client'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='timesheets.Client'),
         ),
     ]

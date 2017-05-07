@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Permission
 from rest_framework import viewsets, permissions
 import django_filters
 
-from core.models import Client, Project, Entry
+from timesheets.models import Client, Project, Entry
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
                           EntrySerializer)

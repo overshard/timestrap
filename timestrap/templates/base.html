@@ -22,11 +22,9 @@
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}"/>
         {% endcompress %}
 
-        {% compress css %}
-            {% block extra_css %}
-                {# Override this in templates to add extra stylesheets #}
-            {% endblock %}
-        {% endcompress %}
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
     </head>
     <body>
         <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
@@ -37,18 +35,18 @@
                 <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
-                        {% if perms.core.view_client %}
+                        {% if perms.timesheets.view_client %}
                             <li class="nav-item">
                                 {% url 'clients' as url %}
                                 <a class="nav-link {% if request.path == url %}active{% endif %}"
                                    href="{{ url }}">Clients</a>
                             </li>
                         {% endif %}
-                        {% if perms.core.view_entry %}
+                        {% if perms.timesheets.view_entry %}
                             <li class="nav-item">
                                 {% url 'entries' as url %}
                                 <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Entries</a>
+                                   href="{{ url }}">Timesheet</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
@@ -86,23 +84,29 @@
 
         {# Global javascript #}
         {% compress js %}
-            <script src="{% static 'jquery/dist/jquery.js' %}"></script>
-            <script src="{% static 'tether/dist/js/tether.js' %}"></script>
-            <script src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
-            <script src="{% static 'select2/dist/js/select2.js' %}"></script>
-            <script src="{% static 'pickadate/lib/picker.js' %}"></script>
-            <script src="{% static 'pickadate/lib/picker.date.js' %}"></script>
-            <script src="{% static 'js-cookie/src/js.cookie.js' %}"></script>
-            <script src="{% static 'chart.js/dist/Chart.js' %}"></script>
-            <script src="{% static 'riot/riot.js' %}"></script>
+            <script type="text/javascript" src="{% static 'jquery/dist/jquery.js' %}"></script>
+            <script type="text/javascript" src="{% static 'tether/dist/js/tether.js' %}"></script>
+            <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
+            <script type="text/javascript" src="{% static 'select2/dist/js/select2.js' %}"></script>
+            <script type="text/javascript" src="{% static 'pickadate/lib/picker.js' %}"></script>
+            <script type="text/javascript" src="{% static 'pickadate/lib/picker.date.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js-cookie/src/js.cookie.js' %}"></script>
+            <script type="text/javascript" src="{% static 'chart.js/dist/Chart.js' %}"></script>
+            <script type="text/javascript" src="{% static 'riot/riot.js' %}"></script>
+
+            <script type="riot/tag" src="{% static 'timesheets/tags/client.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/clients.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/entries.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/entry.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/project.tag' %}"></script>
+            <script type="riot/tag" src="{% static 'timesheets/tags/reports.tag' %}"></script>
 
             <script src="{% static 'js/base.js' %}"></script>
         {% endcompress %}
 
-        {% compress js inline %}
-            {% block extra_js %}
-                {# Override this in templates to add extra javascript #}
-            {% endblock %}
-        {% endcompress %}
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
     </body>
 </html>
