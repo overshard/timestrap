@@ -74,13 +74,13 @@
                     </div>
                     { project_details.name }
                 </div>
-                <div class="col-sm-5 d-flex align-self-center">
+                <div class="col-sm-5 d-flex align-self-end">
                     { note }
                 </div>
-                <div class="col-sm-2 d-flex align-self-center justify-content-end font-weight-bold">
+                <div class="col-sm-2 d-flex align-self-end justify-content-end font-weight-bold">
                     { durationToString(duration) }
                 </div>
-                <div class="col-sm-2 d-flex align-self-center">
+                <div class="col-sm-2 d-flex align-self-end">
                     { user_details.username }
                 </div>
             </div>
