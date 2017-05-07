@@ -69,7 +69,8 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='view_client'))
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('a[href="/clients/"]')
-        self.selenium.find_element_by_css_selector('a[href="/clients/"]').click()
+        self.selenium.find_element_by_css_selector(
+            'a[href="/clients/"]').click()
         self.selenium.find_element_by_id('view-clients')
 
         with self.assertRaises(NoSuchElementException):
@@ -116,12 +117,14 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('a[href="/entries/"]')
 
-        self.selenium.find_element_by_css_selector('a[href="/entries/"]').click()
+        self.selenium.find_element_by_css_selector(
+            'a[href="/entries/"]').click()
         self.selenium.find_element_by_id('view-entries')
 
     def test_reports(self):
         self.logIn()
         self.selenium.find_element_by_css_selector('a[href="/reports/"]')
 
-        self.selenium.find_element_by_css_selector('a[href="/reports/"]').click()
+        self.selenium.find_element_by_css_selector(
+            'a[href="/reports/"]').click()
         self.selenium.find_element_by_id('view-reports')
