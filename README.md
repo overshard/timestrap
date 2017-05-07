@@ -73,9 +73,13 @@ You can install everything you need from apt. A note about node on Ubuntu, it
 installs to `/usr/bin/nodejs` and every node project checks `/usr/bin/node` so
 we have to create a link between the two.
 
-    sudo apt install build-essential python-dev virtualenv python-pip npm
-    sudo npm install -g yarn
+    sudo apt install virtualenv python-pip npm
     sudo ln -s /usr/bin/nodejs /usr/bin/node
+    sudo npm install -g yarn
+
+**NOTE:** If you are using a version older than 16.04 of Ubuntu you may need to
+use a PPA for Node.js. The version included in older versions of Ubuntu is not
+able to run yarn. Node.js 4.x or above is required.
 
 
 ## Testing
@@ -99,7 +103,7 @@ this from the previous step and have not left the environment continue on!
 
 We need to fetch our JS and CSS dependencies:
 
-    yarn install --modules-folder timestrap/static/vendor
+    yarn
 
 If you have not yet migrated your database do so by running:
 
