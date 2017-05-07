@@ -38,17 +38,17 @@
 {% endblock %}
 
 {% block extra_js %}
-	<script>
-		var totalTimePerDay = document.getElementById("totalTimePerDay");
-		var totalTimePerDayChart = new Chart(totalTimePerDay, {
-			type: 'line',
-			data: {
+    <script>
+        var totalTimePerDay = document.getElementById("totalTimePerDay");
+        var totalTimePerDayChart = new Chart(totalTimePerDay, {
+            type: 'line',
+            data: {
                 labels: [
                     {% for k, v in time_per_day.items %}
                         "{{ k }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
-				datasets: [{
+                datasets: [{
                     data: [
                         {% for k, v in time_per_day.items %}
                             {{ v }}{% if not forloop.last %},{% endif %}
@@ -57,94 +57,94 @@
                     backgroundColor: "rgba(54, 202, 235, 0.2)",
                     borderColor: "rgb(54, 202, 235)",
                     lineTension: 0
-				}]
-			},
+                }]
+            },
             options: {
                 legend: {
                     display: false
                 }
             }
-		});
+        });
 
-		var projectsPerClient = document.getElementById("projectsPerClient");
-		var projectsPerClientChart = new Chart(projectsPerClient, {
-			type: 'doughnut',
-			data: {
-				labels: [
+        var projectsPerClient = document.getElementById("projectsPerClient");
+        var projectsPerClientChart = new Chart(projectsPerClient, {
+            type: 'doughnut',
+            data: {
+                labels: [
                     {% for client in clients %}
                         "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
-				datasets: [{
-					data: [
+                datasets: [{
+                    data: [
                         {% for client in clients %}
                             "{{ client.projects.count }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
                     backgroundColor: "white",
                     borderColor: "#5cb85c"
-				}]
-			},
+                }]
+            },
             options: {
                 cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
             }
-		});
+        });
 
-		var entriesPerClient = document.getElementById("entriesPerClient");
-		var entriesPerClientChart = new Chart(entriesPerClient, {
-			type: 'doughnut',
-			data: {
-				labels: [
+        var entriesPerClient = document.getElementById("entriesPerClient");
+        var entriesPerClientChart = new Chart(entriesPerClient, {
+            type: 'doughnut',
+            data: {
+                labels: [
                     {% for client in clients %}
                         "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
-				datasets: [{
-					data: [
+                datasets: [{
+                    data: [
                         {% for entries in entries_per_client %}
                             "{{ entries }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
                     backgroundColor: "white",
                     borderColor: "#d9534f"
-				}]
-			},
+                }]
+            },
             options: {
                 cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
             }
-		});
+        });
 
-		var timePerClient = document.getElementById("timePerClient");
-		var timePerClientChart = new Chart(timePerClient, {
-			type: 'doughnut',
-			data: {
-				labels: [
+        var timePerClient = document.getElementById("timePerClient");
+        var timePerClientChart = new Chart(timePerClient, {
+            type: 'doughnut',
+            data: {
+                labels: [
                     {% for client in clients %}
                         "{{ client.name }}"{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 ],
-				datasets: [{
-					data: [
+                datasets: [{
+                    data: [
                         {% for total_time in time_per_client %}
                             "{{ total_time }}"{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
                     backgroundColor: "white",
                     borderColor: "#f0ad4e"
-				}]
-			},
+                }]
+            },
             options: {
                 cutoutPercentage: 85,
                 legend: {
                     display: false
                 }
             }
-		});
-	</script>
+        });
+    </script>
 {% endblock %}
