@@ -1,5 +1,28 @@
 <reports>
-    <form class="mb-4 row report-form shadow-muted pt-3 pb-1" onsubmit={ getReport }>
+    <div class="row py-2 mb-4 bg-faded rounded">
+        <div class="col-12">
+            <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+                <i class="fa fa-download" aria-hidden="true"></i>
+                Export Report
+            </button>
+
+            <select class="custom-select form-control-sm" ref="export_format">
+                <option value="csv">csv</option>
+                <option value="xls">xls</option>
+                <option value="xlsx">xlsx</option>
+                <option value="tsv">tsv</option>
+                <option value="ods">ods</option>
+                <option value="json">json</option>
+                <option value="yaml">yaml</option>
+                <option value="html">html</option>
+            </select>
+
+            <pager update={ getEntries } />
+        </div>
+    </div>
+
+    <form class="row mb-4 pt-3 pb-1 bg-faded rounded"
+          onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
                 <select class="user-select" ref="user">
@@ -12,7 +35,7 @@
                     <option><!-- For select2 placeholder to work --></option>
                     <optgroup each={ c in clients } label={ c.name }>
                         <option each={ projects }
-                                value={ url }
+                                value={ id }
                                 if={ c.name === client_details.name }>
                             { name }
                         </option>
@@ -45,45 +68,41 @@
         </div>
     </form>
 
-    <p class="mb-4 clearfix">
-        <button class="btn btn-primary btn-sm rounded-0" onclick={ exportReport }>
-            Export Report
-        </button>
-
-        <select class="custom-select form-control-sm rounded-0" ref="export_format">
-            <option value="csv">csv</option>
-            <option value="xls">xls</option>
-            <option value="xlsx">xlsx</option>
-            <option value="tsv">tsv</option>
-            <option value="ods">ods</option>
-            <option value="json">json</option>
-            <option value="yaml">yaml</option>
-            <option value="html">html</option>
-        </select>
-
-        <pager update={ getEntries } />
-    </p>
-
-    <div class="mb-5" each={ dates }>
-        <h5 class="text-muted">{ mainDate }</h5>
-        <div class="entry-rows">
+    <div class="mb-4" each={ dates }>
+        <div class="row inset-row">
+            <div class="col-12">
+                <h2 class="display-4 text-muted">{ mainDate }</h5>
+            </div>
+        </div>
+        <div class="entry-rows rounded">
             <div class="row py-2 bg-faded small" each={ entries } if={ mainDate === date }>
-                <div class="col-sm-3">
+                <div class="col-sm-3 client-project">
                     <div class="text-muted small">
                         { project_details.client_details.name }
                     </div>
                     { project_details.name }
                 </div>
-                <div class="col-sm-5 d-flex align-self-end">
+                <div class="col-sm-5 d-flex align-self-end note">
                     { note }
                 </div>
-                <div class="col-sm-2 d-flex align-self-end justify-content-end font-weight-bold">
+                <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
                     { durationToString(duration) }
                 </div>
-                <div class="col-sm-2 d-flex align-self-end">
+                <div class="col-sm-2 d-flex align-self-end username">
                     { user_details.username }
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row bg-success text-white py-2 mb-4 rounded">
+        <div class="offset-sm-6 col-sm-2 text-right">
+            Subtotal<br>
+            <strong>Total</strong>
+        </div>
+        <div class="col-sm-2 text-right">
+            { durationToString(subtotalDuration) }<br>
+            <strong>{ durationToString(totalDuration) }</strong>
         </div>
     </div>
 
@@ -97,6 +116,7 @@
                 let dateObjects = [];
 
                 $.each(data.results, function(i, entry) {
+                    entry.date = moment(entry.date).format('LL');
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }

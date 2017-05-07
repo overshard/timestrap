@@ -1,9 +1,17 @@
 <entries>
-    <div class="mb-4 clearfix">
-        <pager update={ getEntries }/>
+    <div class="row py-2 mb-4 bg-faded rounded">
+        <div class="col-12">
+            <a href="/reports/"
+               class="btn btn-primary btn-sm">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                Create Reports
+            </a>
+
+            <pager update={ getEntries }/>
+        </div>
     </div>
 
-    <div class="row py-1 bg-inverse text-white font-weight-bold">
+    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
         <div class="col-sm-2">
             Date
         </div>
@@ -20,7 +28,9 @@
         </div>
     </div>
 
-    <form class="row mb-4 py-2 bg-faded" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
+    <form class="row mb-4 py-2 bg-faded rounded-bottom"
+          onsubmit={ submitEntry }
+          if={ perms && perms.add_entry }>
         <div class="col-sm-2">
             <input type="text"
                    class="form-control form-control-sm date-input"
@@ -63,13 +73,13 @@
         </div>
     </form>
 
-    <div class="mb-5" each={ d in dates }>
+    <div class="mb-4" each={ d in dates }>
         <div class="row inset-row">
             <div class="col-12">
                 <h2 class="display-4 text-muted">{ d }</h5>
             </div>
         </div>
-        <div class="entry-rows">
+        <div class="entry-rows rounded">
             <entry each={ entries }
                    if={ d === date }
                    class="row py-2 bg-faded small"
@@ -77,7 +87,7 @@
         </div>
     </div>
 
-    <div class="row bg-success text-white py-2 my-5">
+    <div class="row bg-success text-white py-2 mb-4 rounded">
         <div class="offset-sm-6 col-sm-2 text-right">
             Subtotal<br>
             <strong>Total</strong>

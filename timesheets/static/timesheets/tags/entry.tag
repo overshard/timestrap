@@ -1,6 +1,6 @@
 <entry>
     <virtual if={ !edit }>
-        <div class="col-sm-3">
+        <div class="col-sm-3 client-project">
             <div class="text-muted small">
                 { project_details.client_details.name }
             </div>
