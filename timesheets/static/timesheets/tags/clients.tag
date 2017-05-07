@@ -17,9 +17,10 @@
         </div>
     </div>
 
-    <form class="row mb-4 py-2 bg-faded" onsubmit={ submitClient } if={ perms && perms.add_client }>
+    <form name="client-add" class="row mb-4 py-2 bg-faded" onsubmit={ submitClient } if={ perms && perms.add_client }>
         <div class="col-10">
-            <input type="text"
+            <input name="client-name"
+                   type="text"
                    class="form-control form-control-sm"
                    ref="name"
                    placeholder="New Client Name"

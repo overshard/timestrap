@@ -62,17 +62,48 @@ class SeleniumTests(StaticLiveServerTestCase):
 
     def test_clients(self):
         self.logIn()
+
         with self.assertRaises(NoSuchElementException):
             self.selenium.find_element_by_css_selector('a[href="/clients/"]')
-
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_client'))
-
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('a[href="/clients/"]')
-
         self.selenium.find_element_by_css_selector('a[href="/clients/"]').click()
         self.selenium.find_element_by_id('view-clients')
+
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_name('client-add')
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='add_client'))
+        self.selenium.refresh()
+        self.selenium.find_element_by_name('client-name').send_keys('Client')
+        self.selenium.find_element_by_css_selector(
+            'form[name="client-add"] button[type="submit"]').click()
+        self.assertIn('Client', self.selenium.find_element_by_css_selector(
+            'client:first-of-type').text)
+
+        with self.assertRaises(NoSuchElementException):
+            # Chevron to display projects
+            self.selenium.find_element_by_css_selector(
+                'client i.fa-chevron-circle-down')
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_project'))
+        self.selenium.refresh()
+        self.selenium.find_element_by_css_selector('client i')
+
+        with self.assertRaises(NoSuchElementException):
+            self.selenium.find_element_by_css_selector('project-add')
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='add_project'))
+        self.selenium.refresh()
+        self.selenium.find_element_by_css_selector(
+            'client i.fa-chevron-circle-down').click()
+        self.selenium.find_element_by_name('project-name').send_keys('Project')
+        self.selenium.find_element_by_css_selector(
+            'form[name="project-add"] button[type="submit"]').click()
+        self.assertIn('Project', self.selenium.find_element_by_css_selector(
+            'client:first-of-type').text)
 
     def test_entries(self):
         self.logIn()
