@@ -6,82 +6,98 @@
             </div>
             { project_details.name }
         </div>
-        <div class="col-sm-5 d-flex align-self-center">
+        <div class="col-sm-5 d-flex align-self-end">
             { note }
         </div>
         <virtual if={ !runTimer }>
-            <div class="col-sm-2 d-flex align-self-center justify-content-end font-weight-bold">
+            <div class="col-sm-2 d-flex align-self-end justify-content-end font-weight-bold">
                 { durationToString(duration) }
             </div>
-            <div class="col-sm-2 d-flex align-self-center"
-                 if={ perms.change_entry || perms.delete_entry }>
-                <button class="btn btn-faded btn-sm w-100 btn-icon dropdown-toggle"
-                        type="button"
-                        id="entry-edit-menu"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right"
-                     aria-labelledby="entry-edit-menu">
-                    <a class="dropdown-item"
-                       href="#"
-                       onclick={ restartEntry }
-                       if={ perms.change_entry }>
-                        Restart
-                    </a>
-                    <a class="dropdown-item"
-                       href="#"
-                       onclick={ editEntry }
-                       if={ perms.change_entry }>
-                        Edit
-                    </a>
-                    <a class="dropdown-item"
-                       href="#"
-                       onclick={ deleteEntry }
-                       if={ perms.delete_entry }>
-                        Delete
-                    </a>
-                </div>
+            <div class="col-sm-2 d-flex align-self-center justify-content-end">
+                <virtual if={ perms.change_entry || perms.delete_entry }>
+                    <button class="btn btn-faded btn-sm btn-icon dropdown-toggle"
+                            type="button"
+                            id="entry-edit-menu"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right"
+                         aria-labelledby="entry-edit-menu">
+                        <a class="dropdown-item"
+                           href="#"
+                           onclick={ restartEntry }
+                           if={ perms.change_entry }>
+                            Restart
+                        </a>
+                        <a class="dropdown-item"
+                           href="#"
+                           onclick={ editEntry }
+                           if={ perms.change_entry }>
+                            Edit
+                        </a>
+                        <a class="dropdown-item"
+                           href="#"
+                           onclick={ deleteEntry }
+                           if={ perms.delete_entry }>
+                            Delete
+                        </a>
+                    </div>
+                </virtual>
             </div>
         </virtual>
         <virtual if={ runTimer }>
-            <input type="text"
-                   class="form-control form-control col-sm-2"
-                   ref="duration"
-                   placeholder="0:00"
-                   value="{ timerDuration }"/>
-            <button type="submit"
-                    class="btn btn-success col-sm-2"
-                    onclick={ timer }>
-                { timerState }
+            <div class="col-sm-2">
+                <input type="text"
+                       class="form-control form-control-sm text-right font-weight-bold"
+                       ref="duration"
+                       placeholder="0:00"
+                       value="{ timerDuration }"/>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit"
+                        class="btn btn-success btn-sm w-100"
+                        onclick={ timer }>
+                    { timerState }
+            </div>
             </button>
         </virtual>
     </virtual>
     <virtual if={ edit }>
-        <select class="custom-select col-sm-3"
-                ref="project">
-            <option each={ p in parent.projects }
-                    value={ p.url }
-                    selected={ p.id == project_details.id }>
-                { p.name }
-            </option>
-        </select>
-        <input type="text"
-               class="form-control form-control col-sm-5"
-               ref="note"
-               placeholder="Note"
-               value={ note }/>
-        <input type="text"
-               class="form-control form-control col-sm-2"
-               ref="duration"
-               placeholder="0:00"
-               value={ durationToString(duration) }/>
-        <button class="btn btn-success col-sm-2 rounded-0"
-                onclick={ saveEntry }>
-            Save
-        </button>
+        <div class="col-sm-3">
+            <!-- FIXME: Something is buggy about parent.project_details.id -->
+            <select class="custom-select custom-select-edit" ref="project" required>
+                <optgroup each={ c in parent.clients } label={ c }>
+                    <option each={ p in parent.parent.projects }
+                            value={ p.url }
+                            if={ c === p.client_details.name }
+                            selected={ p.id === parent.project_details.id }>
+                        { p.name }
+                    </option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <input type="text"
+                   class="form-control form-control-sm"
+                   ref="note"
+                   placeholder="Note"
+                   value={ note }/>
+        </div>
+        <div class="col-sm-2">
+            <input type="text"
+                   class="form-control form-control-sm text-right font-weight-bold"
+                   ref="duration"
+                   placeholder="0:00"
+                   value={ durationToString(duration) }/>
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-success btn-sm w-100"
+                    onclick={ saveEntry }>
+                Save
+            </button>
+        </div>
     </virtual>
 
 
@@ -90,6 +106,10 @@
             e.preventDefault();
             this.edit = true;
             this.update();
+            $('.custom-select-edit').select2({
+                width: '100%',
+                dropdownAutoWidth: true
+            });
         }
 
 
