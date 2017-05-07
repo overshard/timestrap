@@ -49,7 +49,8 @@ Heroku instance.
 For all systems you are going to need:
 
 - Python 2.7, 3.4, 3.5, or 3.6
-- Python virtualenv and pip packages for your version of Python
+- Python virtualenv and pip packages
+- Ability to compile python native extensions
 
 Once you have all of that you can run the following and move onto Testing
 and/or Running Timestrap:
@@ -57,6 +58,11 @@ and/or Running Timestrap:
     virtualenv .venv
     source .venv/bin/activate
     pip install -r requirements/development.txt
+
+If you'd prefer to have a minimal installation of Timestrap you can use our
+base requirements instead of the development or Heroku requirements by running:
+
+    pip install -r requirements/base.txt
 
 
 ### Ubuntu
