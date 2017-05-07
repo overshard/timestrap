@@ -64,11 +64,14 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'Timestrap', 'Timestrap Documentation',
-     author, 'Timestrap', 'Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.',
+     author, 'Timestrap', 'Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.',  # noqa: E501
      'Miscellaneous'),
 ]
 
 # Setup AutoStructify to enable Auto Toc Tree
+github_doc_root = 'https://github.com/overshard/timestrap/tree/master/docs/'
+
+
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'url_resolver': lambda url: github_doc_root + url,
