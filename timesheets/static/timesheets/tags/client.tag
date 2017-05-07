@@ -40,10 +40,11 @@
         </virtual>
     </div>
 
-    <form onsubmit={ submitProject } if={ productsShown && perms.add_project }>
+    <form name="project-add" onsubmit={ submitProject } if={ productsShown && perms.add_project }>
         <div class="row bg-faded ml-4 mb-1 py-1">
             <div class="col-10">
-                <input type="text"
+                <input name="project-name"
+                       type="text"
                        class="form-control form-control-sm"
                        ref="project_name"
                        placeholder="New Project Name"
