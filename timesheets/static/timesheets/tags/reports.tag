@@ -66,21 +66,21 @@
 
     <div class="mb-5" each={ dates }>
         <h5 class="text-muted">{ mainDate }</h5>
-        <div class="entries-rows shadow-muted row-fix">
-            <div class="row py-2" each={ entries } if={ mainDate === date }>
+        <div class="entry-rows">
+            <div class="row py-2 bg-faded small" each={ entries } if={ mainDate === date }>
                 <div class="col-sm-3">
                     <div class="text-muted small">
                         { project_details.client_details.name }
                     </div>
                     { project_details.name }
                 </div>
-                <div class="col-sm-5 d-flex align-self-end">
+                <div class="col-sm-5 d-flex align-self-center">
                     { note }
                 </div>
-                <div class="col-sm-2 d-flex align-self-end">
+                <div class="col-sm-2 d-flex align-self-center justify-content-end font-weight-bold">
                     { durationToString(duration) }
                 </div>
-                <div class="col-sm-2 d-flex align-self-end">
+                <div class="col-sm-2 d-flex align-self-center">
                     { user_details.username }
                 </div>
             </div>
@@ -156,6 +156,7 @@
                 this.update({users: data.results});
                 $('.user-select').select2({
                     placeholder: 'User',
+                    width: '100%',
                     allowClear: true
                 });
             }.bind(this));
@@ -174,6 +175,7 @@
                 });
                 $('.project-select').select2({
                     placeholder: 'Project',
+                    width: '100%',
                     allowClear: true
                 });
             }.bind(this));
@@ -182,6 +184,7 @@
                 this.update({clients: data.results});
                 $('.client-select').select2({
                     placeholder: 'Client',
+                    width: '100%',
                     allowClear: true
                 });
             }.bind(this));

@@ -1,4 +1,5 @@
-// This is to fix bootstrap v4 navbar on mobile
+/* Fix bootstrap v4 not positioning xs nav bar stuff properly */
+
 @media (max-width: 576px) {
     .container {
         margin-left: 0;
@@ -6,22 +7,27 @@
     }
 }
 
-body {
-    background: #eeeeee;
-}
+
+/* Fix bootstrap v4 not using pointer on some objects */
 
 a,
 button {
     cursor: pointer;
 }
 
+
+/* Login */
+
 .login-wrapper {
     max-width: 400px;
     margin: 0 auto;
 }
 
+
+/* Dashboard */
+
 .text-absolute-middle {
-	position: absolute;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -32,69 +38,38 @@ button {
     padding: 20px;
 }
 
-.form-row input,
-.form-row select,
-.form-row .btn {
-    border-radius: 0;
-    border: none;
-    width: 100%;
+
+/* Entries */
+
+.entry-rows .row:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, .05)
 }
 
-.form-row select {
-    padding: .70rem 1.5rem;
-    font-size: 1.25rem;
-    height: auto;
+.entry-rows .row {
+    border-top: 1px solid #eceeef;
 }
 
-.form-row .select2-container--default .select2-selection--single {
-    border: none;
-    border-radius: 0;
-    height: 49px;
-}
-
-.form-row .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 49px;
-    padding-left: 15px;
-    font-size: 1.3em;
-}
-
-.form-row .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 49px;
-}
-
-// Will not apply inside form-row?
-.select2-dropdown {
-    border-radius: 0 !important;
-    border: none !important;
-    box-shadow: 0 0 5px #d7d7d7 !important;
-}
-
-.entries-rows .row {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.entries-rows .row:nth-child(even)  {
-    background: #f7f7f7;
-}
-
-.row-fix {
-    margin-left: -15px;
-    margin-right: -15px;
-}
-
-.shadow-muted {
-    box-shadow: 0 0 5px #d7d7d7;
-}
-
-#entry-edit-menu::after {
+.btn-icon::after {
     display: none;
 }
 
-.select2 {
-    width: 100% !important;
+
+/* Select2 theme */
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #d2d2d2;
+    height: 27px;
 }
 
-.report-form {
-    background: white;
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 23px;
+    font-size: .875rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #636c72;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 25px;
 }

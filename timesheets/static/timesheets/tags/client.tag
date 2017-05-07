@@ -1,51 +1,65 @@
 <client>
-    <div class="row mb-2 bg-faded">
+    <div class="row mb-2 py-2 bg-faded">
         <virtual if={ edit && perms.change_client }>
-            <input type="text"
-                   class="form-control rounded-0 border-0 bg-faded col-10"
-                   ref="name"
-                   value={ name }/>
-            <button class="btn btn-success col-2 rounded-0"
-                    onclick={ saveClient }>
-                Save
-            </button>
+            <div class="col-10">
+                <input type="text"
+                       class="form-control form-control-sm"
+                       ref="name"
+                       value={ name }/>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-success btn-sm w-100"
+                        onclick={ saveClient }>
+                    Save
+                </button>
+            </div>
         </virtual>
         <virtual if={ !edit }>
             <div class="col-6 d-flex align-items-center">
                 <a class="text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
-                    <i class="fa fa-chevron-circle-{ chevron }" aria-hidden="true"></i> { name }
+                    <i class="fa fa-chevron-circle-{ chevron } small mr-2" aria-hidden="true"></i>
+                    <span class="mb-1">{ name }</span>
                 </a>
                 <span class="text-primary font-weight-bold" if={ !perms.view_project }>{ name }</span>
             </div>
             <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-clock-o small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
                 <span class="mb-1">{ total_duration }</span>
             </div>
             <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-list small text-muted text-uppercase mr-2" aria-hidden="true"></i>
+                <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
                 <span class="mb-1">{ total_projects }</span>
             </div>
-            <button class="btn btn-warning col-2 rounded-0" onclick={ editClient } disabled={ !perms.change_client }>
-                Edit
-            </button>
+            <div class="col-2">
+                <button class="btn btn-warning btn-sm w-100"
+                        onclick={ editClient }
+                        disabled={ !perms.change_client }>
+                    Edit
+                </button>
+            </div>
         </virtual>
     </div>
 
     <form onsubmit={ submitProject } if={ productsShown && perms.add_project }>
-        <div class="row mb-1">
-            <input type="text"
-                   class="form-control form-control-sm rounded-0 border-0 col-10"
-                   ref="project_name"
-                   placeholder="New Project Name"
-                   required/>
-            <button type="submit" class="btn btn-success btn-sm col-2 rounded-0">
-                Add
-            </button>
+        <div class="row bg-faded ml-4 mb-1 py-1">
+            <div class="col-10">
+                <input type="text"
+                       class="form-control form-control-sm"
+                       ref="project_name"
+                       placeholder="New Project Name"
+                       required/>
+            </div>
+            <div class="col-2">
+                <button type="submit"
+                        class="btn btn-success btn-sm w-100">
+                    Add
+                </button>
+            </div>
         </div>
     </form>
 
     <div class="mb-2">
-        <project class="row mb-1 bg-faded"
+        <project class="row ml-4 mb-1 py-1 bg-faded"
                  each={ projects }
                  data-is="project"
                  if={ productsShown && perms.view_project }

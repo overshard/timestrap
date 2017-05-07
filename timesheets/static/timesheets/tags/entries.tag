@@ -1,9 +1,23 @@
 <entries>
-    <p class="mb-4 clearfix row-fix">
+    <div class="mb-4 clearfix">
         <pager update={ getEntries }/>
-    </p>
+    </div>
 
-    <form class="row form-row mb-5 shadow-muted" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
+    <div class="row py-1 bg-inverse text-white font-weight-bold">
+        <div class="col-sm-3">
+            Project
+        </div>
+        <div class="col-sm-5">
+            Note
+        </div>
+        <div class="col-sm-2">
+            Duration
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+
+    <form class="row mb-4 py-2 bg-faded" onsubmit={ submitEntry } if={ perms && perms.add_entry }>
         <div class="col-sm-3">
             <select class="custom-select" ref="project" required>
                 <option><!-- For select2 placeholder to work --></option>
@@ -18,13 +32,13 @@
         </div>
         <div class="col-sm-5">
             <input type="text"
-                   class="form-control form-control-lg"
+                   class="form-control form-control-sm"
                    ref="note"
                    placeholder="Note"/>
         </div>
         <div class="col-sm-2">
             <input type="text"
-                   class="form-control form-control-lg"
+                   class="form-control form-control-sm text-right font-weight-bold"
                    oninput={ timer }
                    ref="duration"
                    placeholder="0:00"
@@ -33,7 +47,7 @@
         </div>
         <div class="col-sm-2">
             <button type="submit"
-                    class="btn btn-success btn-lg"
+                    class="btn btn-success btn-sm w-100"
                     onclick={ timer }>
                 { timerState }
             </button>
@@ -42,10 +56,10 @@
 
     <div class="mb-5" each={ d in dates }>
         <h5 class="text-muted">{ d }</h5>
-        <div class="entries-rows shadow-muted row-fix">
+        <div class="entry-rows">
             <entry each={ entries }
                    if={ d === date }
-                   class="row py-2"
+                   class="row py-2 bg-faded small"
                    perms={ perms} />
         </div>
     </div>
@@ -55,7 +69,7 @@
             Subtotal<br>
             <strong>Total</strong>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 text-right">
             { durationToString(subtotalDuration) }<br>
             <strong>{ durationToString(totalDuration) }</strong>
         </div>
@@ -137,6 +151,7 @@
 
                 $('.custom-select').select2({
                     placeholder: 'Project',
+                    width: '100%',
                     dropdownAutoWidth: true
                 });
             }.bind(this));

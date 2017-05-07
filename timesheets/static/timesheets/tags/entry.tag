@@ -6,15 +6,16 @@
             </div>
             { project_details.name }
         </div>
-        <div class="col-sm-5 d-flex align-self-end">
+        <div class="col-sm-5 d-flex align-self-center">
             { note }
         </div>
         <virtual if={ !runTimer }>
-            <div class="col-sm-2 d-flex align-self-end">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end font-weight-bold">
                 { durationToString(duration) }
             </div>
-            <div class="col-sm-2 d-flex align-self-center justify-content-end" if={ perms.change_entry || perms.delete_entry }>
-                <button class="btn btn-faded dropdown-toggle rounded-0"
+            <div class="col-sm-2 d-flex align-self-center"
+                 if={ perms.change_entry || perms.delete_entry }>
+                <button class="btn btn-faded btn-sm w-100 btn-icon dropdown-toggle"
                         type="button"
                         id="entry-edit-menu"
                         data-toggle="dropdown"
@@ -24,13 +25,22 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right"
                      aria-labelledby="entry-edit-menu">
-                    <a class="dropdown-item" href="#" onclick={ restartEntry } if={ perms.change_entry }>
+                    <a class="dropdown-item"
+                       href="#"
+                       onclick={ restartEntry }
+                       if={ perms.change_entry }>
                         Restart
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ editEntry } if={ perms.change_entry }>
+                    <a class="dropdown-item"
+                       href="#"
+                       onclick={ editEntry }
+                       if={ perms.change_entry }>
                         Edit
                     </a>
-                    <a class="dropdown-item" href="#" onclick={ deleteEntry } if={ perms.delete_entry }>
+                    <a class="dropdown-item"
+                       href="#"
+                       onclick={ deleteEntry }
+                       if={ perms.delete_entry }>
                         Delete
                     </a>
                 </div>
@@ -38,19 +48,19 @@
         </virtual>
         <virtual if={ runTimer }>
             <input type="text"
-                   class="form-control form-control col-sm-2 rounded-0 border-0"
+                   class="form-control form-control col-sm-2"
                    ref="duration"
                    placeholder="0:00"
                    value="{ timerDuration }"/>
             <button type="submit"
-                    class="btn btn-success col-sm-2 rounded-0"
+                    class="btn btn-success col-sm-2"
                     onclick={ timer }>
                 { timerState }
             </button>
         </virtual>
     </virtual>
     <virtual if={ edit }>
-        <select class="custom-select col-sm-3 rounded-0 border-0"
+        <select class="custom-select col-sm-3"
                 ref="project">
             <option each={ p in parent.projects }
                     value={ p.url }
@@ -59,12 +69,12 @@
             </option>
         </select>
         <input type="text"
-               class="form-control form-control col-sm-5 rounded-0 border-0"
+               class="form-control form-control col-sm-5"
                ref="note"
                placeholder="Note"
                value={ note }/>
         <input type="text"
-               class="form-control form-control col-sm-2 rounded-0 border-0"
+               class="form-control form-control col-sm-2"
                ref="duration"
                placeholder="0:00"
                value={ durationToString(duration) }/>
