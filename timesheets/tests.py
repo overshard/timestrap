@@ -123,7 +123,7 @@ class EntryTestCase(TestCase):
 
     def test_entry_created(self):
         entry = Entry.objects.get(duration=timedelta(hours=1))
-        self.assertEqual(entry.note, 'Creating tests for the core app')
+        self.assertEqual(entry.note, 'Creating tests for the timesheets app')
         entries = Entry.objects.filter(
             duration__lte=timedelta(hours=1, minutes=30)
         )
