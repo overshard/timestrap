@@ -64,7 +64,11 @@
     </form>
 
     <div class="mb-5" each={ d in dates }>
-        <h5 class="text-muted">{ d }</h5>
+        <div class="row inset-row">
+            <div class="col-12">
+                <h2 class="display-4 text-muted">{ d }</h5>
+            </div>
+        </div>
         <div class="entry-rows">
             <entry each={ entries }
                    if={ d === date }
@@ -135,6 +139,7 @@
             Promise.all([entries, projects]).then(function(e) {
                 let dates = [];
                 $.each(e[0].results, function(i, entry) {
+                    entry.date = moment(entry.date).format('LL');
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }
@@ -187,6 +192,7 @@
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
                 if (data.id) {
+                    data.date = moment(data.date).format('LL');
                     this.entries.unshift(data);
                     if ($.inArray(data.date, this.dates) === -1) {
                         this.dates.unshift(data.date);

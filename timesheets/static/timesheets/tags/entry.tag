@@ -6,11 +6,11 @@
             </div>
             { project_details.name }
         </div>
-        <div class="col-sm-5 d-flex align-self-end">
+        <div class="col-sm-5 d-flex align-self-end note">
             { note }
         </div>
         <virtual if={ !runTimer }>
-            <div class="col-sm-2 d-flex align-self-end justify-content-end font-weight-bold">
+            <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
                 { durationToString(duration) }
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
