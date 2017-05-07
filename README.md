@@ -35,12 +35,6 @@ order to login:
 
     heroku run python manage.py createsuperuser
 
-And finally you need to setup multiple buildpacks because we use yarn for our
-static files:
-
-    heroku buildpacks:set heroku/python
-    heroku buildpacks:add --index 1 heroku/nodejs
-
 ## Demo Website
 
 I've setup an [instance on Heroku](https://timestrap.herokuapp.com/) of
