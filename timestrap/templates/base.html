@@ -34,25 +34,27 @@
                 <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
-                        {% if perms.timesheets.view_client %}
+                        {% if user.is_authenticated %}
+                            {% if perms.timesheets.view_client %}
+                                <li class="nav-item">
+                                    {% url 'clients' as url %}
+                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                       href="{{ url }}">Clients</a>
+                                </li>
+                            {% endif %}
+                            {% if perms.timesheets.view_entry %}
+                                <li class="nav-item">
+                                    {% url 'entries' as url %}
+                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                       href="{{ url }}">Timesheet</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
-                                {% url 'clients' as url %}
+                                {% url 'reports' as url %}
                                 <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Clients</a>
+                                   href="{{ url }}">Reports</a>
                             </li>
                         {% endif %}
-                        {% if perms.timesheets.view_entry %}
-                            <li class="nav-item">
-                                {% url 'entries' as url %}
-                                <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Timesheet</a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            {% url 'reports' as url %}
-                            <a class="nav-link {% if request.path == url %}active{% endif %}"
-                               href="{{ url }}">Reports</a>
-                        </li>
                     </ul>
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
