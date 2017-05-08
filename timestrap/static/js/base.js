@@ -15,11 +15,17 @@ function quickFetch(url, method, body) {
         method: method,
         body: JSON.stringify(body)
     }).then(function(response) {
-        // Delete response throws an error with .json().
-        // TODO: Figure out a proper way to return information on DELETE.
-        if (method != 'delete') {
-            return response.json();
+        let result = null;
+        switch (response.status) {
+            case 200:  // HTTP_200_OK
+            case 201:  // HTTP_201_CREATED
+                result = response.json();
+                break;
+            default:
+                result = response;
+                break;
         }
+        return result;
     });
 }
 
@@ -31,4 +37,15 @@ function pad(num) {
         num = '0' + num;
     }
     return num;
+}
+
+
+// Convert a decimal duration to a string (0:00).
+function durationToString(duration) {
+    if (typeof(duration) === 'number') {
+        let hours = Math.floor(duration);
+        let minutes = Math.round((duration - hours) * 60);
+        duration = hours + ':' + pad(minutes);
+    }
+    return duration;
 }

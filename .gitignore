@@ -11,3 +11,8 @@
 # documentation builds
 _build
 
+<<<<<<< HEAD
+=======
+# geckodriver
+/geckodriver.log
+>>>>>>> 6bb8508e5fc20ef51b8bf9e40073a52a3dc403ed

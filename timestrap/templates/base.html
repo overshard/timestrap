@@ -3,22 +3,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title>{% block meta_title %}{% endblock %} - Timestrap</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" integrity="sha256-y4TDcAD4/j5o4keZvggf698Cr9Oc7JZ+gGMax23qmVA=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha256-rr9hHBQ43H7HSOmmNkxzQGazS/Khx+L8ZRHteEY1tQ4=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" integrity="sha256-xJOZHfpxLR/uhh1BwYFS5fhmOAdIRQaiOul5F/b7v3s=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.css" integrity="sha256-HJnF0By+MMhHfGTHjMMD7LlFL0KAQEMyWB86VbeFn4k=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.date.css" integrity="sha256-Ex8MCGbDP5+fEwTgLt8IbGaIDJu2uj88ZDJgZJrxA4Y=" crossorigin="anonymous" />
-
         {% compress css %}
-            <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/base.scss' %}">
+            <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vendor/tether/css/tether.min.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.date.css' %}"/>
+
+            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
         {% endcompress %}
 
         {% block extra_css %}
@@ -35,16 +35,20 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                {% url 'clients' as url %}
-                                <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Clients</a>
-                            </li>
-                            <li class="nav-item">
-                                {% url 'entries' as url %}
-                                <a class="nav-link {% if request.path == url %}active{% endif %}"
-                                   href="{{ url }}">Entries</a>
-                            </li>
+                            {% if perms.timesheets.view_client %}
+                                <li class="nav-item">
+                                    {% url 'clients' as url %}
+                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                       href="{{ url }}">Clients</a>
+                                </li>
+                            {% endif %}
+                            {% if perms.timesheets.view_entry %}
+                                <li class="nav-item">
+                                    {% url 'entries' as url %}
+                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                       href="{{ url }}">Timesheet</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
                                 {% url 'reports' as url %}
                                 <a class="nav-link {% if request.path == url %}active{% endif %}"
@@ -74,24 +78,24 @@
             </div>
         </div>
 
-
-        <div class="container">
+        <div id="view-{{ request.resolver_match.view_name }}" class="container">
             {% block content %}{% endblock %}
         </div>
 
         {# Global javascript #}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha256-gL1ibrbVcRIHKlCO5OXOPC/lZz/gpdApgQAzskqqXp8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha256-+kIbbrvS+0dNOjhmQJzmwe/RILR/8lb/+4+PUNVW09k=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" integrity="sha256-+mWd/G69S4qtgPowSELIeVAv7+FuL871WXaolgXnrwQ=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.js" integrity="sha256-A1y8n02GW5dvJFkEOX7UCbzJoko8kqgWUquWf9TWFS8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.date.js" integrity="sha256-rTh8vmcE+ZrUK3k9M6QCNZIBmAd1vumeuJkagq0EU3g=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" integrity="sha256-NjbogQqosWgor0UBdCURR5dzcvAgHnfUZMcZ8RCwkk8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.4.3/riot+compiler.min.js" integrity="sha256-s0V6tSSO3lyWO++9wmvvmNvbkNNfUVR9h/oOS80TU/w=" crossorigin="anonymous"></script>
-
         {% compress js %}
-            <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+            <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+            <script src="{% static 'vendor/moment.js/moment.min.js' %}"></script>
+            <script src="{% static 'vendor/tether/js/tether.min.js' %}"></script>
+            <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+            <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+            <script src="{% static 'vendor/pickadate/picker.js' %}"></script>
+            <script src="{% static 'vendor/pickadate/picker.date.js' %}"></script>
+            <script src="{% static 'vendor/js-cookie/js.cookie.js' %}"></script>
+            <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+            <script src="{% static 'vendor/riot/riot+compiler.min.js' %}"></script>
+
+            <script src="{% static 'js/base.js' %}"></script>
         {% endcompress %}
 
         {% block extra_js %}

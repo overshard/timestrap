@@ -5,8 +5,8 @@ Django<1.12,>=1.11
 django-widget-tweaks<1.5,>=1.4
 
 # static files
-django_compressor<2.2,>=2.1
-django-libsass<0.8,>=0.7
+# compressor 2.1.1 has a bug with inlined svgs so we install from the develop branch
+http://github.com/django-compressor/django-compressor/tarball/develop#egg=django-compressor==2.1.1
 whitenoise<3.4,>=3.3
 
 # api

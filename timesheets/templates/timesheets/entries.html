@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Entries{% endblock %}
+
+
+{% block content %}
+    <entries />
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'timesheets/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/entry.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
+    <script>
+        {% if project %}
+            var entriesApiUrl = "{% url 'entry-list' %}?project={{ project.id }}&user={{ user.id }}";
+        {% else %}
+            var entriesApiUrl = "{% url 'entry-list' %}?user={{ user.id }}";
+        {% endif %}
+        {% if project %}
+            var projectsApiUrl = "{% url 'project-list' %}?id={{ project.id }}";
+        {% else %}
+            var projectsApiUrl = "{% url 'project-list' %}";
+        {% endif %}
+        var clientsApiUrl = "{% url 'client-list' %}";
+        var usersApiUrl = "{% url 'user-list' %}";
+        var userApiUrl = "{% url 'user-detail' user.id %}"
+
+        riot.mount('entries');
+    </script>
+{% endblock %}

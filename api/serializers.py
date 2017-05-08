@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 from rest_framework import serializers
 
-from core.models import Client, Project, Entry
-from core.fields import DurationField
+from timesheets.models import Client, Project, Entry
+from timesheets.fields import DurationField
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'url', 'username',)
+        fields = ('id', 'url', 'username')
+
+
+class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ('id', 'url', 'name', 'codename')
 
 
 class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):

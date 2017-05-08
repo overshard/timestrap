@@ -4,15 +4,18 @@ python:
     - 3.4
     - 3.5
     - 3.6
-# install dependencies
+addons:
+    firefox: 53.0
+before_install:
+    - wget https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz
+    - mkdir geckodriver
+    - tar -xzf geckodriver-v0.16.1-linux64.tar.gz -C geckodriver
+    - export PATH=$PATH:$PWD/geckodriver
 install: 
     - pip install -r requirements/development.txt
-# style guide test, temp ignore of some django generated code
 before_script:
-    - flake8 --exclude=migrations,settings,manage.py,.venv,docs,invoicing .
-# run main tests
+    - flake8 --exclude=.venv,migrations .
 script:
     - coverage run --source=core,api manage.py test
-# report code coverage to coveralls
 after_success:
     - coveralls

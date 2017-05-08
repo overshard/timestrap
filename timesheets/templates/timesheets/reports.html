@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block meta_title %}Reports{% endblock %}
+
+
+{% block content %}
+    <reports />
+{% endblock %}
+
+
+{% block extra_js %}
+    <script type="riot/tag" src="{% static 'timesheets/tags/pager.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'timesheets/tags/reports.tag' %}"></script>
+    <script>
+        var usersApiUrl = "{% url 'user-list' %}";
+        var clientsApiUrl = "{% url 'client-list' %}";
+        var projectsApiUrl = "{% url 'project-list' %}";
+        var entriesApiUrl = "{% url 'entry-list' %}";
+        var reportsExportUrl = "{% url 'reports-export' %}";
+		var userId = {{ user.id }};
+        riot.mount('reports');
+    </script>
+{% endblock %}
