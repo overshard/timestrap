@@ -10,9 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
-        {# TODO: Figure out why bootstrap nav messes up when compressed #}
-        <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"/>
         {% compress css %}
+            <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"/>
             <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"/>
             <link rel="stylesheet" href="{% static 'vendor/tether/css/tether.min.css' %}"/>
             <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}"/>
