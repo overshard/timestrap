@@ -226,7 +226,6 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.assertIn('Client\nProject 1\nChanged note\n1:30',
                       self.selenium.find_element_by_css_selector('entry').text)
 
-
     def test_reports(self):
         self.logIn()
 
