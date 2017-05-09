@@ -30,7 +30,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         cls.profile['password'] = fake.password()
         super(SeleniumTests, cls).setUpClass()
         cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(5)
+        cls.selenium.implicitly_wait(10)
 
     @classmethod
     def tearDownClass(cls):
