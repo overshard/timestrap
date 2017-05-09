@@ -59,6 +59,14 @@ class SeleniumTests(StaticLiveServerTestCase):
         else:
             return elements
 
+    def waitForPresence(self, element):
+        return WebDriverWait(self.selenium, self.wait_time).until(
+            ec.presence_of_element_located(element))
+
+    def waitForText(self, element, text):
+        return WebDriverWait(self.selenium, self.wait_time).until(
+            ec.text_to_be_present_in_element(element, text))
+
     def logIn(self):
         self.user = User.objects.create_user(self.profile['username'],
                                              self.profile['mail'],
@@ -72,9 +80,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         password_input.clear()
         password_input.send_keys(self.profile['password'])
         self.find(By.NAME, 'login').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.ID, 'view-dashboard'))
-        )
+        self.waitForPresence((By.ID, 'view-dashboard'))
 
     def test_login(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
@@ -85,9 +91,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         password_input.send_keys('incorrect password')
         self.find(By.NAME, 'login').click()
         # Log in failure creates an alert notice.
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR,
-                                            '.alert.alert-danger')))
+        self.waitForPresence((By.CSS_SELECTOR, '.alert.alert-danger'))
 
         self.logIn()
 
@@ -99,8 +103,7 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='view_client'))
         self.selenium.get(self.live_server_url)
         self.find(By.CSS_SELECTOR, 'a[href="/clients/"]').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.ID, 'view-clients')))
+        self.waitForPresence((By.ID, 'view-clients'))
 
         # The <clients> tag only has two elements when there is no add form.
         self.assertEqual(len(self.find(By.CSS_SELECTOR, 'clients > *')), 2)
@@ -110,9 +113,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.CSS_SELECTOR,
                   'form[name="client-add"] button[type="submit"]').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, 'client:first-of-type'), 'Client'))
+        self.waitForText((By.CSS_SELECTOR, 'client:first-of-type'), 'Client')
 
         # The client edit button should be disabled for unprivileged users.
         self.assertIsInstance(self.find(
@@ -121,14 +122,11 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='change_client'))
         self.selenium.refresh()
         self.find(By.CSS_SELECTOR, 'client button').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, 'client input')))
-        self.find(By.CSS_SELECTOR, 'client input').send_keys(
-            ' Changed')
+        self.waitForPresence((By.CSS_SELECTOR, 'client input'))
+        self.find(By.CSS_SELECTOR, 'client input').send_keys(' Changed')
         self.find(By.CSS_SELECTOR, 'client button').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, 'client:first-of-type'), 'Client Changed'))
+        self.waitForText((By.CSS_SELECTOR, 'client:first-of-type'),
+                         'Client Changed')
 
         # If Projects are not viewable, the client name will be in a <span>
         # instead of an <a>.
@@ -146,14 +144,11 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='add_project'))
         self.selenium.refresh()
         self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.NAME, 'project-name')))
+        self.waitForPresence((By.NAME, 'project-name'))
         self.find(By.NAME, 'project-name').send_keys('Project')
         self.find(By.CSS_SELECTOR,
                   'form[name="project-add"] button[type="submit"]').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, 'client project'), 'Project'))
+        self.waitForText((By.CSS_SELECTOR, 'client project'), 'Project')
 
         # The project edit button should be disabled for unprivileged users.
         self.assertIsInstance(self.find(
@@ -162,16 +157,13 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='change_project'))
         self.selenium.refresh()
         self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, 'project button')))
+        self.waitForPresence((By.CSS_SELECTOR, 'project button'))
         self.find(By.CSS_SELECTOR, 'project button').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR, 'project input')))
+        self.waitForPresence((By.CSS_SELECTOR, 'project input'))
         self.find(By.CSS_SELECTOR, 'project input').send_keys(' Changed')
         self.find(By.CSS_SELECTOR, 'project button').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, 'project:first-of-type'), 'Project Changed'))
+        self.waitForText((By.CSS_SELECTOR, 'project:first-of-type'),
+                         'Project Changed')
 
     def test_entries(self):
         self.logIn()
@@ -181,8 +173,7 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='view_entry'))
         self.selenium.get(self.live_server_url)
         self.find(By.CSS_SELECTOR, 'a[href="/entries/"]').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.ID, 'view-entries')))
+        self.waitForPresence((By.ID, 'view-entries'))
 
         client = Client(name="Client", archive=False)
         client.save()
@@ -199,9 +190,7 @@ class SeleniumTests(StaticLiveServerTestCase):
             Permission.objects.get(codename='view_project'))
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CLASS_NAME,
-                                            'select2-search__field')))
+        self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
         self.find(By.CLASS_NAME, 'select2-search__field').send_keys('Project 2')
         self.find(By.CLASS_NAME, 'select2-search__field').send_keys(Keys.RETURN)
         self.find(By.CSS_SELECTOR,
@@ -210,9 +199,8 @@ class SeleniumTests(StaticLiveServerTestCase):
                   'entries form input[placeholder="0:00"').send_keys('0:35')
         self.find(By.CSS_SELECTOR,
                   'entries form button[type="submit"]').submit()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.text_to_be_present_in_element((By.CSS_SELECTOR, 'entry'),
-                                             'Client\nProject 2\nNote\n0:35'))
+        self.waitForText((By.CSS_SELECTOR, 'entry'),
+                         'Client\nProject 2\nNote\n0:35')
 
         # The <entry> tag does not have an Edit button.
         self.assertNotIn('Edit', self.find(By.CSS_SELECTOR, 'entry').text)
@@ -223,17 +211,12 @@ class SeleniumTests(StaticLiveServerTestCase):
         # The second entry is the "Edit" link option. For some reason there are
         # two <a> elements for each drop down entry and the real one is the
         # second one.
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR,
-                                            '.dropdown-menu a:nth-of-type(2)')))
+        self.waitForPresence((By.CSS_SELECTOR, '.dropdown-menu a'))
         self.find(By.CSS_SELECTOR, '.dropdown-menu a:nth-of-type(2)')[1].click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CSS_SELECTOR,
-                                            'entry .select2-selection__arrow')))
+        self.waitForPresence((By.CSS_SELECTOR,
+                              'entry .select2-selection__arrow'))
         self.find(By.CSS_SELECTOR, 'entry .select2-selection__arrow').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.CLASS_NAME,
-                                            'select2-search__field')))
+        self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
         self.find(By.CLASS_NAME, 'select2-search__field').send_keys('Project 1')
         self.find(By.CLASS_NAME, 'select2-search__field').send_keys(Keys.RETURN)
         self.find(By.CSS_SELECTOR, 'entry input[value="Note"]').clear()
@@ -250,5 +233,4 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.logIn()
 
         self.find(By.CSS_SELECTOR, 'a[href="/reports/"]').click()
-        WebDriverWait(self.selenium, self.wait_time).until(
-            ec.presence_of_element_located((By.ID, 'view-reports')))
+        self.waitForPresence((By.ID, 'view-reports'))
