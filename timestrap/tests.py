@@ -89,6 +89,23 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.assertIn('Client', self.selenium.find_element_by_css_selector(
             'client:first-of-type').text)
 
+        # The client edit button should be disabled for unprivileged users.
+        self.assertIsInstance(self.selenium.find_element_by_css_selector(
+            'client button:disabled'), FirefoxWebElement)
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='change_client'))
+        self.selenium.refresh()
+        self.selenium.find_element_by_css_selector(
+            'client button').click()
+        self.selenium.find_element_by_css_selector('client input').send_keys(
+            'Client Changed')
+        self.selenium.find_element_by_css_selector('client button').click()
+        self.assertIn(
+            'Client Changed',
+            self.selenium.find_element_by_css_selector(
+                'client:first-of-type').text
+        )
+
         # If Projects are not viewable, the client name will be in a <span>
         # instead of an <a>.
         self.assertIsInstance(self.selenium.find_element_by_css_selector(
@@ -112,6 +129,25 @@ class SeleniumTests(StaticLiveServerTestCase):
             'form[name="project-add"] button[type="submit"]').click()
         self.assertIn('Project', self.selenium.find_element_by_css_selector(
             'client project').text)
+
+        # The project edit button should be disabled for unprivileged users.
+        self.assertIsInstance(self.selenium.find_element_by_css_selector(
+            'project button:disabled'), FirefoxWebElement)
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='change_project'))
+        self.selenium.refresh()
+        self.selenium.find_element_by_css_selector(
+            'client i.fa-chevron-circle-down').click()
+        self.selenium.find_element_by_css_selector(
+            'project button').click()
+        self.selenium.find_element_by_css_selector('project input').send_keys(
+            'Project Changed')
+        self.selenium.find_element_by_css_selector('project button').click()
+        self.assertIn(
+            'Project Changed',
+            self.selenium.find_element_by_css_selector(
+                'project:first-of-type').text
+        )
 
     def test_entries(self):
         self.logIn()
