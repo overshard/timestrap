@@ -201,6 +201,12 @@
             quickFetch(entriesApiUrl, 'post', body).then(function(data) {
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
+<<<<<<< HEAD:core/static/core/tags/entries.tag
+                this.entries.unshift(data);
+
+                if ($.inArray(data.date, this.dates) === -1) {
+                    this.dates.unshift(data.date);
+=======
                 if (data.id) {
                     data.date = moment(data.date).format('LL');
                     this.entries.unshift(data);
@@ -209,6 +215,7 @@
                     }
                     this.timerState = 'Start';
                     this.updateTotals(data.duration, 0);
+>>>>>>> 6bb8508e5fc20ef51b8bf9e40073a52a3dc403ed:timesheets/static/timesheets/tags/entries.tag
                 }
             }.bind(this));
         }

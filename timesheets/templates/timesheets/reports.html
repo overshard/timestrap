@@ -19,7 +19,7 @@
         var projectsApiUrl = "{% url 'project-list' %}";
         var entriesApiUrl = "{% url 'entry-list' %}";
         var reportsExportUrl = "{% url 'reports-export' %}";
-        var userId = {{ user.id }};
+		var userId = {{ user.id }};
         riot.mount('reports');
     </script>
 {% endblock %}
