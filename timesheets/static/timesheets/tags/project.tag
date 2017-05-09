@@ -15,8 +15,8 @@
     </virtual>
     <virtual if={ !edit }>
         <a class="text-primary col-6" onclick={ goToEntries }>
+            <i class="fa fa-arrow-right mr-2" aria-hidden="true"></i>
             <span class="mb-1">{ name }</span>
-            <i class="fa fa-arrow-right ml-2" aria-hidden="true"></i>
         </a>
         <div class="col-2 d-flex align-items-center">
             <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>

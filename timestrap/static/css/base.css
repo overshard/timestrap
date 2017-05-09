@@ -50,19 +50,24 @@ button {
 }
 
 
+.project-rows .row:nth-of-type(2n),
 .entry-rows .row:nth-of-type(2n+1) {
     background-color: #fbf3e5;
 }
 
+.project-rows .row,
 .entry-rows .row {
     border-top: 1px solid #eceeef;
 }
+
 
 .entry-rows .row:first-child {
     border-top-right-radius: .25rem;
     border-top-left-radius: .25rem;
 }
 
+
+.project-rows .row:last-child,
 .entry-rows .row:last-child {
     border-bottom-right-radius: .25rem;
     border-bottom-left-radius: .25rem;

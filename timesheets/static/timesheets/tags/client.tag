@@ -1,5 +1,5 @@
 <client>
-    <div class="row mb-2 py-2 bg-faded">
+    <div class="row py-2 bg-faded rounded">
         <virtual if={ edit && perms.change_client }>
             <div class="col-10">
                 <input type="text"
@@ -41,7 +41,7 @@
     </div>
 
     <form name="project-add" onsubmit={ submitProject } if={ productsShown && perms.add_project }>
-        <div class="row bg-faded ml-4 mb-1 py-1">
+        <div class="row bg-faded py-2">
             <div class="col-10">
                 <input name="project-name"
                        type="text"
@@ -59,8 +59,8 @@
         </div>
     </form>
 
-    <div class="mb-2">
-        <project class="row ml-4 mb-1 py-1 bg-faded"
+    <div class="mb-2 project-rows">
+        <project class="row py-1 bg-faded"
                  each={ projects }
                  data-is="project"
                  if={ productsShown && perms.view_project }
