@@ -35,8 +35,8 @@ class SeleniumTests(StaticLiveServerTestCase):
             display = Display(visible=0, size=(1280, 720))
             display.start()
         except EasyProcessCheckInstalledError:
-            # Fall back to geckodriver without headless if Xvfb is not available
-            # (as is the case on Windows).
+            # Fall back to geckodriver without headless if Xvfb is not
+            # available (as is the case on Windows).
             # TODO: Implement a cross-platform headless solution.
             pass
 
@@ -191,8 +191,10 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow').click()
         self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
-        self.find(By.CLASS_NAME, 'select2-search__field').send_keys('Project 2')
-        self.find(By.CLASS_NAME, 'select2-search__field').send_keys(Keys.RETURN)
+        self.find(By.CLASS_NAME,
+                  'select2-search__field').send_keys('Project 2')
+        self.find(By.CLASS_NAME,
+                  'select2-search__field').send_keys(Keys.RETURN)
         self.find(By.CSS_SELECTOR,
                   'entries form input[placeholder="Note"').send_keys('Note')
         self.find(By.CSS_SELECTOR,
@@ -212,18 +214,22 @@ class SeleniumTests(StaticLiveServerTestCase):
         # two <a> elements for each drop down entry and the real one is the
         # second one.
         self.waitForPresence((By.CSS_SELECTOR, '.dropdown-menu a'))
-        self.find(By.CSS_SELECTOR, '.dropdown-menu a:nth-of-type(2)')[1].click()
+        self.find(By.CSS_SELECTOR,
+                  '.dropdown-menu a:nth-of-type(2)')[1].click()
         self.waitForPresence((By.CSS_SELECTOR,
                               'entry .select2-selection__arrow'))
         self.find(By.CSS_SELECTOR, 'entry .select2-selection__arrow').click()
         self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
-        self.find(By.CLASS_NAME, 'select2-search__field').send_keys('Project 1')
-        self.find(By.CLASS_NAME, 'select2-search__field').send_keys(Keys.RETURN)
+        self.find(By.CLASS_NAME,
+                  'select2-search__field').send_keys('Project 1')
+        self.find(By.CLASS_NAME,
+                  'select2-search__field').send_keys(Keys.RETURN)
         self.find(By.CSS_SELECTOR, 'entry input[value="Note"]').clear()
         self.find(By.CSS_SELECTOR,
                   'entry input[value="Note"]').send_keys('Changed note')
         self.find(By.CSS_SELECTOR, 'entry input[value="0:35"]').clear()
-        self.find(By.CSS_SELECTOR, 'entry input[value="0:35"]').send_keys('1.5')
+        self.find(By.CSS_SELECTOR,
+                  'entry input[value="0:35"]').send_keys('1.5')
         self.find(By.CSS_SELECTOR, 'entry button').click()
         self.selenium.refresh()
         self.assertIn('Client\nProject 1\nChanged note\n1:30',
