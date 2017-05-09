@@ -11,6 +11,8 @@ from selenium.webdriver.firefox.webelement import FirefoxWebElement
 
 from pyvirtualdisplay import Display
 
+from easyprocess import EasyProcessCheckInstalledError
+
 from faker import Factory
 
 from timesheets.models import Client, Project
@@ -26,8 +28,14 @@ class SeleniumTests(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        display = Display(visible=0, size=(1280, 720))
-        display.start()
+        try:
+            display = Display(visible=0, size=(1280, 720))
+            display.start()
+        except EasyProcessCheckInstalledError:
+            # Fall back to geckodriver without headless if Xvfb is not available
+            # (as is the case on Windows).
+            # TODO: Implement a cross-platform headless solution.
+            pass
 
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
