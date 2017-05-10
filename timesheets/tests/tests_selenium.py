@@ -18,7 +18,7 @@ from easyprocess import EasyProcessCheckInstalledError
 
 from faker import Factory
 
-from timesheets.models import Client, Project
+from ..models import Client, Project
 
 
 fake = Factory.create()
