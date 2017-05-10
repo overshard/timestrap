@@ -22,6 +22,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         context['clients'] = Client.objects.all()
 
+        context['projects'] = (Project.objects
+                                      .exclude(estimate=None)
+                                      .filter(archive=False))
+
         entries_per_client = []
         for client in context['clients'].iterator():
             entries_per_client.append(

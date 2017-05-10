@@ -35,6 +35,27 @@
             <canvas id="totalTimePerDay" height="75"></canvas>
         </div>
     </div>
+
+    <div class="card w-100 hidden-xs-down mt-5">
+        <h5 class="card-header">Projects Percent Done</h5>
+        <div class="card-block">
+            {% for project in projects %}
+                <div class="row">
+                    <div class="col-5 percent-done-name">
+                        {{ project.name }}
+                    </div>
+                    <div class="col-7">
+                        <div class="progress w-100">
+                            <div class="progress-bar{% if project.get_percent_done > 100 %} bg-danger{% endif %}"
+                                 style="width: {{ project.get_percent_done }}%">
+                                {{ project.get_percent_done }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}

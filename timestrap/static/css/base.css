@@ -38,6 +38,12 @@ button {
     padding: 20px;
 }
 
+.percent-done-name {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 
 /* Entries */
 

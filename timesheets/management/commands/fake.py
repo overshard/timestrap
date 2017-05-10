@@ -33,7 +33,15 @@ class Command(BaseCommand):
         for client in Client.objects.iterator():
             project_iterations = randint(iterations, iterations*2)
             for i in range(project_iterations):
-                Project.objects.create(client=client, name=fake.job())
+                estimated = choice([True, False])
+                estimate = None
+                if estimated:
+                    estimate = timedelta(hours=randint(5, 150))
+                Project.objects.create(
+                    client=client,
+                    estimate=estimate,
+                    name=fake.job()
+                )
 
         for i in range(iterations):
             fake_user = fake.simple_profile(sex=None)
