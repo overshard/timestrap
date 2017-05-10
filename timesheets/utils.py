@@ -8,9 +8,6 @@ from decimal import Decimal
 
 
 def parse_duration(duration):
-    if duration == '':
-        return None
-
     hours = None
     minutes = None
 

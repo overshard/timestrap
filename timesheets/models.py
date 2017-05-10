@@ -35,7 +35,6 @@ class Project(models.Model):
     archive = models.BooleanField(default=False)
     estimate = models.DurationField(blank=True, null=True)
 
-
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
         ordering = ['client', '-id']
@@ -54,10 +53,12 @@ class Project(models.Model):
     def get_percent_done(self):
         if self.estimate is not None:
             total_duration = float(self.get_total_duration().split(':')[0])
-            total_estimate = float(duration_string(self.estimate).split(':')[0])
-            return int(100 * (total_duration/total_estimate))
-        else:
-            return None
+            total_estimate = \
+                float(duration_string(self.estimate).split(':')[0])
+            if total_duration != 0 and total_estimate != 0:
+                return int(100 * (total_duration/total_estimate))
+        return None
+
 
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')

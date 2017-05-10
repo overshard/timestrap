@@ -25,7 +25,7 @@ class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
     total_entries = serializers.SerializerMethodField()
     total_duration = serializers.SerializerMethodField()
     percent_done = serializers.SerializerMethodField()
-    estimate = DurationField()
+    estimate = DurationField(required=False)
 
     class Meta:
         model = Project
@@ -78,7 +78,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     total_entries = serializers.SerializerMethodField()
     total_duration = serializers.SerializerMethodField()
     percent_done = serializers.SerializerMethodField()
-    estimate = DurationField()
+    estimate = DurationField(required=False)
 
     class Meta:
         model = Project
