@@ -33,6 +33,8 @@ class Project(models.Model):
     client = models.ForeignKey('Client', related_name='projects')
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
+    estimate = models.DurationField(blank=True, null=True)
+
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -49,11 +51,18 @@ class Project(models.Model):
             Sum('duration')
         )['duration__sum'])
 
+    def get_percent_done(self):
+        if self.estimate is not None:
+            total_duration = float(self.get_total_duration().split(':')[0])
+            total_estimate = float(duration_string(self.estimate).split(':')[0])
+            return int(100 * (total_duration/total_estimate))
+        else:
+            return None
 
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')
     user = models.ForeignKey('auth.User', related_name='entries')
-    date = models.DateField(blank=True)  # TODO: Swap to datetime field
+    date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
 

@@ -14,6 +14,8 @@ class DurationField(DurationField):
         parsed = parse_duration(text_type(value))
         if parsed is not None:
             return parsed
+        else:
+            return None
         self.fail('invalid', format='[[HH]:MM] or [[HH][.MM]]')
 
     def to_representation(self, value):

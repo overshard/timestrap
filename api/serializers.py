@@ -24,11 +24,13 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
 class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
     total_entries = serializers.SerializerMethodField()
     total_duration = serializers.SerializerMethodField()
+    percent_done = serializers.SerializerMethodField()
+    estimate = DurationField()
 
     class Meta:
         model = Project
-        fields = ('id', 'url', 'name', 'client', 'total_entries',
-                  'total_duration')
+        fields = ('id', 'url', 'name', 'client', 'estimate', 'total_entries',
+                  'total_duration', 'percent_done')
 
     def get_queryset(self):
         queryset = super(ClientProjectSerializer, self).get_queryset()
@@ -39,6 +41,9 @@ class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_total_duration(self, obj):
         return obj.get_total_duration()
+
+    def get_percent_done(self, obj):
+        return obj.get_percent_done()
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
@@ -70,15 +75,29 @@ class ProjectClientSerializer(serializers.HyperlinkedModelSerializer):
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     client_details = ProjectClientSerializer(source='client', read_only=True)
+    total_entries = serializers.SerializerMethodField()
+    total_duration = serializers.SerializerMethodField()
+    percent_done = serializers.SerializerMethodField()
+    estimate = DurationField()
 
     class Meta:
         model = Project
         fields = ('id', 'url', 'client', 'client_details', 'name',
-                  'archive',)
+                  'archive', 'estimate', 'total_entries', 'total_duration',
+                  'percent_done')
 
     def get_queryset(self):
         queryset = super(ProjectSerializer, self).get_queryset()
         return queryset.filter(archive=False)
+
+    def get_total_entries(self, obj):
+        return obj.get_total_entries()
+
+    def get_total_duration(self, obj):
+        return obj.get_total_duration()
+
+    def get_percent_done(self, obj):
+        return obj.get_percent_done()
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):

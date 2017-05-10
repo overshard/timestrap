@@ -42,13 +42,20 @@
 
     <form name="project-add" onsubmit={ submitProject } if={ productsShown && perms.add_project }>
         <div class="row bg-faded py-2">
-            <div class="col-10">
+            <div class="col-8">
                 <input name="project-name"
                        type="text"
                        class="form-control form-control-sm"
                        ref="project_name"
                        placeholder="New Project Name"
                        required/>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control form-control-sm"
+                       placeholder="Estimate"
+                       ref="estimate"
+                       value={ estimate }/>
             </div>
             <div class="col-2">
                 <button type="submit"
@@ -106,6 +113,7 @@
             e.preventDefault();
             let body = {
                 name: this.refs.project_name.value,
+                estimate: this .refs.estimate.value,
                 client: this.url
             };
             quickFetch(projectsApiUrl, 'post', body).then(function(data) {

@@ -88,6 +88,8 @@ class ClientTestCase(TestCase):
 class ProjectTestCase(TestCase):
     def setUp(self):
         self.client = Client.objects.create(name='Timestrap')
+        self.user = User.objects.create_user('testuser', 'test@example.com',
+                                             'testpassword')
 
     def test_project_created(self):
         Project.objects.create(client=self.client, name='Testing')
@@ -100,6 +102,20 @@ class ProjectTestCase(TestCase):
         project = Project.objects.get(name='Юникод')
         self.assertEqual(project.name, 'Юникод')
         self.assertEqual(project.client, self.client)
+
+    def test_project_estimate(self):
+        project = Project.objects.create(
+            client=self.client,
+            name='Testing',
+            estimate=timedelta(hours=50)
+        )
+        Entry.objects.create(
+            project=project,
+            user=self.user,
+            duration=timedelta(hours=10),
+            note='Creating tests for the timesheets app'
+        )
+        self.assertEqual(project.get_percent_done(), 20)
 
 
 class EntryTestCase(TestCase):
