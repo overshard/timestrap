@@ -34,8 +34,8 @@ class SeleniumTests(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         try:
-            display = Display(visible=0, size=(1280, 720))
-            display.start()
+            cls.display = Display(visible=0, size=(1280, 720))
+            cls.display.start()
         except EasyProcessCheckInstalledError:
             # Fall back to geckodriver without headless if Xvfb is not
             # available (as is the case on Windows).
@@ -52,6 +52,11 @@ class SeleniumTests(StaticLiveServerTestCase):
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
+        try:
+            cls.display.stop()
+        except EasyProcessCheckInstalledError:
+            pass
+
         super(SeleniumTests, cls).tearDownClass()
 
     def find(self, by, value):
