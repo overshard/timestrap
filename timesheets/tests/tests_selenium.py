@@ -182,6 +182,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
         # The project edit button should be disabled for unprivileged users.
+        self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
         self.assertIsInstance(self.find(
             By.CSS_SELECTOR, 'project button:disabled'), FirefoxWebElement)
         self.addPerms(['change_project'])
