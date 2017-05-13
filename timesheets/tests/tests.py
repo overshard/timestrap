@@ -175,6 +175,27 @@ class EntryTestCase(TestCase):
         self.assertAlmostEqual(duration, Decimal(0))
 
 
+class ReportsTestCase(TestCase):
+    def setUp(self):
+        self.c = HttpClient()
+
+        fake_user = fake.simple_profile()
+        fake_password = fake.password()
+        User.objects.create_user(fake_user['username'], fake_user['mail'],
+                                 fake_password)
+
+        self.c.login(username=fake_user['username'], password=fake_password)
+
+        call_command('fake', verbosity=0, iterations=1)
+
+    def test_export_response(self):
+        report = self.c.get('/reports/export/')
+        self.assertEqual(report.status_code, 200)
+        self.assertEqual(report.get('Content-Type'), 'text/csv')
+        self.assertEqual(report.get('Content-Disposition'),
+                         'attachment; filename="report.csv"')
+
+
 class CommandsTestCase(TestCase):
     def setUp(self):
         pass
