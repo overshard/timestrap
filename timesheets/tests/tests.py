@@ -13,6 +13,10 @@ from django.core.management import call_command
 from ..models import Client, Project, Entry
 from ..utils import parse_duration, duration_string, duration_decimal
 
+from csv import DictReader
+
+from io import StringIO
+
 from faker import Factory
 
 
@@ -194,6 +198,25 @@ class ReportsTestCase(TestCase):
         self.assertEqual(report.get('Content-Type'), 'text/csv')
         self.assertEqual(report.get('Content-Disposition'),
                          'attachment; filename="report.csv"')
+
+    def test_export_all(self):
+        report = self.c.get('/reports/export/')
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+
+        # TODO: Improve this for better reporting when assertions fail.
+        for line in lines:
+            entries = Entry.objects.filter(
+                date=line['date'],
+                duration=parse_duration(line['duration']),
+                note=line['note'],
+                project__name=line['project__name'],
+                user__username=line['user__username']
+            )
+            self.assertEqual(len(entries), 1)
+            entries[0].delete()
+
+        # The above should have deleted _all_ entries
+        self.assertEqual(len(list(Entry.objects.all())), 0)
 
 
 class CommandsTestCase(TestCase):
