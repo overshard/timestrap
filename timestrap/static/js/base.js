@@ -52,14 +52,21 @@ function durationToString(duration) {
 
 
 function toggleButtonInUse(button) {
-    if (!button.disabled) {
-        button.classList.add('progress-bar-striped');
-        button.classList.add('progress-bar-animated');
-        button.disabled = true;
+    if (typeof button.toggleClass !== 'undefined') {
+        button.toggleClass('progress-bar-striped');
+        button.toggleClass('progress-bar-animated');
+        button.prop( "disabled", function( i, val ) { return !val; });
     }
     else {
-        button.classList.remove('progress-bar-striped');
-        button.classList.remove('progress-bar-animated');
-        button.disabled = false;
+        if (!button.disabled) {
+            button.disabled = true;
+            button.classList.add('progress-bar-striped');
+            button.classList.add('progress-bar-animated');
+        }
+        else {
+            button.disabled = false;
+            button.classList.remove('progress-bar-striped');
+            button.classList.remove('progress-bar-animated');
+        }
     }
 }
