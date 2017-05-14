@@ -51,7 +51,7 @@ function durationToString(duration) {
 }
 
 
-function toggleButtonInUse(button) {
+function toggleButtonBusy(button) {
     if (typeof button.toggleClass !== 'undefined') {
         button.toggleClass('progress-bar-striped');
         button.toggleClass('progress-bar-animated');

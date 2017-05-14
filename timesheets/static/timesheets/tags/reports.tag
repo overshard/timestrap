@@ -110,8 +110,8 @@
     <script>
         getEntries(url) {
             url = (typeof url !== 'undefined') ? url : entriesApiUrl;
-            toggleButtonInUse($('#generate-report'));
-            toggleButtonInUse($('#export-report'));
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
 
             quickFetch(url).then(function(data) {
                 let dates = [];
@@ -136,8 +136,8 @@
                     previous: data.previous
                 });
 
-                toggleButtonInUse($('#generate-report'));
-                toggleButtonInUse($('#export-report'));
+                toggleButtonBusy($('#generate-report'));
+                toggleButtonBusy($('#export-report'));
             }.bind(this));
         }
 
@@ -157,8 +157,8 @@
 
 
         exportReport(e) {
-            toggleButtonInUse($('#generate-report'));
-            toggleButtonInUse($('#export-report'));
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
             query = {
                 user: this.refs.user.value,
                 project: this.refs.project.value,
@@ -170,8 +170,8 @@
 
             // TODO: Use a promise? This doesn't work for button toggling.
             document.location.href = reportsExportUrl + '?' + $.param(query);
-            toggleButtonInUse($('#generate-report'));
-            toggleButtonInUse($('#export-report'));
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
         }
 
 

@@ -79,7 +79,7 @@
         saveProject(e) {
             e.preventDefault();
             clickedButton = e.explicitOriginalTarget;
-            toggleButtonInUse(clickedButton);
+            toggleButtonBusy(clickedButton);
             let body = {
                 client: this.client,
                 name: this.refs.name.value,
@@ -94,7 +94,7 @@
                 this.name.value = '';
                 this.edit = false;
                 this.update();
-                toggleButtonInUse(clickedButton);
+                toggleButtonBusy(clickedButton);
             }.bind(this));
         }
     </script>
