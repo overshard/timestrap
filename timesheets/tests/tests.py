@@ -192,6 +192,16 @@ class ReportsTestCase(TestCase):
 
         call_command('fake', verbosity=0, iterations=1)
 
+    def assert_entries_by_params(self, params):
+        url = '/reports/export/?'
+        for param, value in params.items():
+            url += '{0}={1}&'.format(param, value)
+        report = self.c.get(url)
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+        for line in lines:
+            self.filter_exported_entry(line).delete()
+        self.assertFalse(Entry.objects.filter(**params).exists())
+
     def filter_exported_entry(self, line):
         # TODO: Improve this for better reporting when assertions fail.
         entries = Entry.objects.filter(
@@ -226,22 +236,21 @@ class ReportsTestCase(TestCase):
             self.assertEqual(report.get('Content-Type'), 'text/{0}'.format(f))
 
     def test_export_param_project(self):
-        project = Project.objects.first()
-        report = self.c.get('/reports/export/?project={0}'.format(project.id))
-        lines = DictReader(StringIO(report.content.decode('utf-8')))
-        for line in lines:
-            self.filter_exported_entry(line).delete()
-        self.assertFalse(Entry.objects.filter(project=project.id).exists())
+        self.assert_entries_by_params({'project': Project.objects.first().id})
 
     def test_export_param_client(self):
-        client = Client.objects.first()
-        report = self.c.get('/reports/export/?project__client={0}'
-                            .format(client.id))
-        lines = DictReader(StringIO(report.content.decode('utf-8')))
-        for line in lines:
-            self.filter_exported_entry(line).delete()
-        self.assertFalse(
-            Entry.objects.filter(project__client=client.id).exists())
+        self.assert_entries_by_params(
+            {'project__client': Client.objects.first().id})
+
+    def test_export_param_user(self):
+        self.assert_entries_by_params({'user': User.objects.first().id})
+
+    def test_export_param_date_range(self):
+        dates = sorted([Entry.objects.first().date, Entry.objects.last().date])
+        self.assert_entries_by_params({
+            'date__gte': str(dates[0]),
+            'date__lte': str(dates[1])
+        })
 
 
 class CommandsTestCase(TestCase):
