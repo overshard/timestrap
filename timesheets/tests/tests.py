@@ -192,6 +192,18 @@ class ReportsTestCase(TestCase):
 
         call_command('fake', verbosity=0, iterations=1)
 
+    def filter_exported_entry(self, line):
+        # TODO: Improve this for better reporting when assertions fail.
+        entries = Entry.objects.filter(
+            date=line['date'],
+            duration=parse_duration(line['duration']),
+            note=line['note'],
+            project__name=line['project__name'],
+            user__username=line['user__username']
+        )
+        self.assertEqual(len(entries), 1)
+        return entries[0]
+
     def test_export_response(self):
         report = self.c.get('/reports/export/')
         self.assertEqual(report.status_code, 200)
@@ -202,21 +214,34 @@ class ReportsTestCase(TestCase):
     def test_export_all(self):
         report = self.c.get('/reports/export/')
         lines = DictReader(StringIO(report.content.decode('utf-8')))
-
-        # TODO: Improve this for better reporting when assertions fail.
         for line in lines:
-            entries = Entry.objects.filter(
-                date=line['date'],
-                duration=parse_duration(line['duration']),
-                note=line['note'],
-                project__name=line['project__name'],
-                user__username=line['user__username']
-            )
-            self.assertEqual(len(entries), 1)
-            entries[0].delete()
-
+            self.filter_exported_entry(line).delete()
         # The above should have deleted _all_ entries
-        self.assertEqual(len(list(Entry.objects.all())), 0)
+        self.assertFalse(Entry.objects.all().exists())
+
+    def test_export_formats(self):
+        for f in ['csv', 'xls', 'xlsx', 'tsv', 'ods', 'json', 'yaml', 'html']:
+            report = self.c.get('/reports/export/?export_format={0}'.format(f))
+            self.assertEqual(report.status_code, 200)
+            self.assertEqual(report.get('Content-Type'), 'text/{0}'.format(f))
+
+    def test_export_param_project(self):
+        project = Project.objects.first()
+        report = self.c.get('/reports/export/?project={0}'.format(project.id))
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+        for line in lines:
+            self.filter_exported_entry(line).delete()
+        self.assertFalse(Entry.objects.filter(project=project.id).exists())
+
+    def test_export_param_client(self):
+        client = Client.objects.first()
+        report = self.c.get('/reports/export/?project__client={0}'
+                            .format(client.id))
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+        for line in lines:
+            self.filter_exported_entry(line).delete()
+        self.assertFalse(
+            Entry.objects.filter(project__client=client.id).exists())
 
 
 class CommandsTestCase(TestCase):
