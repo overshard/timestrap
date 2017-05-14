@@ -49,3 +49,17 @@ function durationToString(duration) {
     }
     return duration;
 }
+
+
+function toggleButtonInUse(button) {
+    if (!button.disabled) {
+        button.classList.add('progress-bar-striped');
+        button.classList.add('progress-bar-animated');
+        button.disabled = true;
+    }
+    else {
+        button.classList.remove('progress-bar-striped');
+        button.classList.remove('progress-bar-animated');
+        button.disabled = false;
+    }
+}

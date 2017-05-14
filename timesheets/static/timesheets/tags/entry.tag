@@ -143,6 +143,8 @@
 
         saveEntry(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonInUse(clickedButton);
             let body = {
                 user: this.user,
                 project: this.refs.project.value,
@@ -167,6 +169,7 @@
                 else {
                     this.update();
                 }
+                toggleButtonInUse(clickedButton);
             }.bind(this));
         }
 

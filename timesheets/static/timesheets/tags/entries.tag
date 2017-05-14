@@ -191,6 +191,8 @@
 
         submitEntry(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonInUse(clickedButton);
             let body = {
                 user: userApiUrl,
                 duration: this.refs.duration.value,
@@ -210,6 +212,7 @@
                     this.timerState = 'Start';
                     this.updateTotals(data.duration, 0);
                 }
+                toggleButtonInUse(clickedButton);
             }.bind(this));
         }
 

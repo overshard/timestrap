@@ -95,6 +95,8 @@
 
         saveClient(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonInUse(clickedButton);
             let body = {
                 name: this.refs.name.value
             };
@@ -105,6 +107,7 @@
                 this.name.value = '';
                 this.edit = false;
                 this.update();
+                toggleButtonInUse(clickedButton);
             }.bind(this));
         }
 
