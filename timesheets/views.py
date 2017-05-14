@@ -107,8 +107,28 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 
 @login_required
-def entries_csv_export(request):
-    dataset = EntryResource().export()
-    response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="entries.csv"'
+def reports_export(request):
+    query_dict = request.GET.copy()
+    filters = {}
+    filter_dict = {'min_date': 'date__gte', 'max_date': 'date__lte',
+                   'project': 'project', 'project__client': 'project__client',
+                   'user': 'user'}
+    for key in request.GET:
+        value = request.GET.get(key)
+        if value and key in filter_dict:
+            filters[filter_dict[key]] = value
+
+    if filters:
+        queryset = Entry.objects.filter(**filters)
+        dataset = EntryResource().export(queryset)
+    else:
+        queryset = Entry.objects.all()
+        dataset = EntryResource().export(queryset)
+
+    export_format = query_dict.get('export_format', 'csv')
+    response = HttpResponse(
+        getattr(dataset, export_format),
+        content_type='text/' + export_format)
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
+        'report.' + export_format)
     return response

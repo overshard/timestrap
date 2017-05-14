@@ -13,6 +13,10 @@ from django.core.management import call_command
 from ..models import Client, Project, Entry
 from ..utils import parse_duration, duration_string, duration_decimal
 
+from csv import DictReader
+
+from io import StringIO
+
 from faker import Factory
 
 
@@ -173,6 +177,80 @@ class EntryTestCase(TestCase):
         self.assertAlmostEqual(duration, Decimal(5.25))
         duration = duration_decimal(None)
         self.assertAlmostEqual(duration, Decimal(0))
+
+
+class ReportsTestCase(TestCase):
+    def setUp(self):
+        self.c = HttpClient()
+
+        fake_user = fake.simple_profile()
+        fake_password = fake.password()
+        User.objects.create_user(fake_user['username'], fake_user['mail'],
+                                 fake_password)
+
+        self.c.login(username=fake_user['username'], password=fake_password)
+
+        call_command('fake', verbosity=0, iterations=1)
+
+    def assert_entries_by_params(self, params):
+        url = '/reports/export/?'
+        for param, value in params.items():
+            url += '{0}={1}&'.format(param, value)
+        report = self.c.get(url)
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+        for line in lines:
+            self.filter_exported_entry(line).delete()
+        self.assertFalse(Entry.objects.filter(**params).exists())
+
+    def filter_exported_entry(self, line):
+        # TODO: Improve this for better reporting when assertions fail.
+        entries = Entry.objects.filter(
+            date=line['date'],
+            duration=parse_duration(line['duration']),
+            note=line['note'],
+            project__name=line['project__name'],
+            user__username=line['user__username']
+        )
+        self.assertEqual(len(entries), 1)
+        return entries[0]
+
+    def test_export_response(self):
+        report = self.c.get('/reports/export/')
+        self.assertEqual(report.status_code, 200)
+        self.assertEqual(report.get('Content-Type'), 'text/csv')
+        self.assertEqual(report.get('Content-Disposition'),
+                         'attachment; filename="report.csv"')
+
+    def test_export_all(self):
+        report = self.c.get('/reports/export/')
+        lines = DictReader(StringIO(report.content.decode('utf-8')))
+        for line in lines:
+            self.filter_exported_entry(line).delete()
+        # The above should have deleted _all_ entries
+        self.assertFalse(Entry.objects.all().exists())
+
+    def test_export_formats(self):
+        for f in ['csv', 'xls', 'xlsx', 'tsv', 'ods', 'json', 'yaml', 'html']:
+            report = self.c.get('/reports/export/?export_format={0}'.format(f))
+            self.assertEqual(report.status_code, 200)
+            self.assertEqual(report.get('Content-Type'), 'text/{0}'.format(f))
+
+    def test_export_param_project(self):
+        self.assert_entries_by_params({'project': Project.objects.first().id})
+
+    def test_export_param_client(self):
+        self.assert_entries_by_params(
+            {'project__client': Client.objects.first().id})
+
+    def test_export_param_user(self):
+        self.assert_entries_by_params({'user': User.objects.first().id})
+
+    def test_export_param_date_range(self):
+        dates = sorted([Entry.objects.first().date, Entry.objects.last().date])
+        self.assert_entries_by_params({
+            'date__gte': str(dates[0]),
+            'date__lte': str(dates[1])
+        })
 
 
 class CommandsTestCase(TestCase):
