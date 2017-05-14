@@ -114,6 +114,8 @@
 
         submitProject(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.project_name.value,
                 estimate: this .refs.estimate.value,
@@ -125,6 +127,7 @@
                     this.projects.unshift(data);
                     this.update();
                 }
+                toggleButtonBusy(clickedButton);
             }.bind(this));
         }
 
