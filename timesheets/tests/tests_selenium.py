@@ -114,11 +114,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_clients_add(self):
         self.logIn()
-        self.addPerms(['view_client', 'add_client'])
+        self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
         # The <clients> tag only has two elements when there is no add form.
         self.assertEqual(len(self.find(By.CSS_SELECTOR, 'clients > *')), 2)
+        self.addPerms(['add_client'])
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.CSS_SELECTOR,
