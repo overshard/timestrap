@@ -20,6 +20,8 @@ from faker import Factory
 
 from datetime import timedelta
 
+from time import sleep
+
 from ..models import Client, Project, Entry
 
 
@@ -70,6 +72,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         for codename in perms:
             self.user.user_permissions.add(
                 Permission.objects.get(codename=codename))
+        sleep(0.25)
 
     def waitForPresence(self, element):
         return WebDriverWait(self.selenium, self.wait_time).until(
