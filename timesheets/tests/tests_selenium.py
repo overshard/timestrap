@@ -20,6 +20,8 @@ from faker import Factory
 
 from datetime import timedelta
 
+from time import sleep
+
 from ..models import Client, Project, Entry
 
 
@@ -29,7 +31,7 @@ fake = Factory.create()
 @override_settings(
     STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 )
-class SeleniumTests(StaticLiveServerTestCase):
+class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -44,7 +46,7 @@ class SeleniumTests(StaticLiveServerTestCase):
 
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
-        super(SeleniumTests, cls).setUpClass()
+        super(SeleniumTestCase, cls).setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
         cls.wait_time = 5
@@ -54,10 +56,10 @@ class SeleniumTests(StaticLiveServerTestCase):
         cls.selenium.quit()
         try:
             cls.display.stop()
-        except EasyProcessCheckInstalledError:
+        except AttributeError:
             pass
 
-        super(SeleniumTests, cls).tearDownClass()
+        super(SeleniumTestCase, cls).tearDownClass()
 
     def find(self, by, value):
         elements = self.selenium.find_elements(by, value)
@@ -70,6 +72,7 @@ class SeleniumTests(StaticLiveServerTestCase):
         for codename in perms:
             self.user.user_permissions.add(
                 Permission.objects.get(codename=codename))
+        sleep(0.25)
 
     def waitForPresence(self, element):
         return WebDriverWait(self.selenium, self.wait_time).until(
@@ -114,11 +117,12 @@ class SeleniumTests(StaticLiveServerTestCase):
 
     def test_clients_add(self):
         self.logIn()
-        self.addPerms(['view_client', 'add_client'])
+        self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
         # The <clients> tag only has two elements when there is no add form.
         self.assertEqual(len(self.find(By.CSS_SELECTOR, 'clients > *')), 2)
+        self.addPerms(['add_client'])
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.CSS_SELECTOR,

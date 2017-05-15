@@ -78,6 +78,8 @@
 
         saveProject(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonBusy(clickedButton);
             let body = {
                 client: this.client,
                 name: this.refs.name.value,
@@ -92,6 +94,7 @@
                 this.name.value = '';
                 this.edit = false;
                 this.update();
+                toggleButtonBusy(clickedButton);
             }.bind(this));
         }
     </script>

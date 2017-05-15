@@ -1,7 +1,7 @@
 <reports>
     <div class="row py-2 mb-4 bg-faded rounded">
         <div class="col-12">
-            <button class="btn btn-primary btn-sm" onclick={ exportReport }>
+            <button id="export-report" class="btn btn-primary btn-sm" onclick={ exportReport }>
                 <i class="fa fa-download" aria-hidden="true"></i>
                 Export Report
             </button>
@@ -62,7 +62,7 @@
                        ref="max_date"
                        placeholder="Max Date"/>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm w-100">
+            <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
             </button>
         </div>
@@ -110,6 +110,8 @@
     <script>
         getEntries(url) {
             url = (typeof url !== 'undefined') ? url : entriesApiUrl;
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
 
             quickFetch(url).then(function(data) {
                 let dates = [];
@@ -120,10 +122,10 @@
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }
-                })
+                });
                 $.each(dates, function(i, date) {
                     dateObjects.push({mainDate: date});
-                })
+                });
 
                 this.update({
                     dates: dateObjects,
@@ -133,6 +135,9 @@
                     next: data.next,
                     previous: data.previous
                 });
+
+                toggleButtonBusy($('#generate-report'));
+                toggleButtonBusy($('#export-report'));
             }.bind(this));
         }
 
@@ -145,13 +150,15 @@
                 project__client: this.refs.client.value,
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value
-            }
+            };
             url = entriesApiUrl + '?' + $.param(query);
             this.getEntries(url);
         }
 
 
         exportReport(e) {
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
             query = {
                 user: this.refs.user.value,
                 project: this.refs.project.value,
@@ -159,13 +166,12 @@
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value,
                 export_format: this.refs.export_format.value
-            }
+            };
+
+            // TODO: Use a promise? This doesn't work for button toggling.
             document.location.href = reportsExportUrl + '?' + $.param(query);
-        }
-
-
-        reportsPage(e) {
-            this.getEntries(e.currentTarget.getAttribute('data-url'));
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
         }
 
 
@@ -187,7 +193,7 @@
                     if ($.inArray(project.client_details.name, clients) === -1) {
                         clients.push(project.client_details.name);
                     }
-                })
+                });
 
                 this.update({
                     clients: clients,

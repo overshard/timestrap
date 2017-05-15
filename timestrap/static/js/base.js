@@ -49,3 +49,24 @@ function durationToString(duration) {
     }
     return duration;
 }
+
+
+function toggleButtonBusy(button) {
+    if (typeof button.toggleClass !== 'undefined') {
+        button.toggleClass('progress-bar-striped');
+        button.toggleClass('progress-bar-animated');
+        button.prop( "disabled", function( i, val ) { return !val; });
+    }
+    else {
+        if (!button.disabled) {
+            button.disabled = true;
+            button.classList.add('progress-bar-striped');
+            button.classList.add('progress-bar-animated');
+        }
+        else {
+            button.disabled = false;
+            button.classList.remove('progress-bar-striped');
+            button.classList.remove('progress-bar-animated');
+        }
+    }
+}

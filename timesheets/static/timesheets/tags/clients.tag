@@ -54,6 +54,8 @@
 
         submitClient(e) {
             e.preventDefault();
+            clickedButton = e.explicitOriginalTarget;
+            toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.name.value
             };
@@ -63,6 +65,7 @@
                     this.clients.unshift(data);
                     this.update();
                 }
+                toggleButtonBusy(clickedButton);
             }.bind(this));
         }
 
