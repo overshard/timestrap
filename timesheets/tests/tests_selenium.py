@@ -29,7 +29,7 @@ fake = Factory.create()
 @override_settings(
     STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 )
-class SeleniumTests(StaticLiveServerTestCase):
+class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -44,7 +44,7 @@ class SeleniumTests(StaticLiveServerTestCase):
 
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
-        super(SeleniumTests, cls).setUpClass()
+        super(SeleniumTestCase, cls).setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
         cls.wait_time = 5
@@ -54,10 +54,10 @@ class SeleniumTests(StaticLiveServerTestCase):
         cls.selenium.quit()
         try:
             cls.display.stop()
-        except EasyProcessCheckInstalledError:
+        except AttributeError:
             pass
 
-        super(SeleniumTests, cls).tearDownClass()
+        super(SeleniumTestCase, cls).tearDownClass()
 
     def find(self, by, value):
         elements = self.selenium.find_elements(by, value)
