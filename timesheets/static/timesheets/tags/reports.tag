@@ -33,10 +33,10 @@
             <div class="form-group">
                 <select class="project-select" ref="project">
                     <option><!-- For select2 placeholder to work --></option>
-                    <optgroup each={ c in clients } label={ c.name }>
+                    <optgroup each={ c in clients } label={ c }>
                         <option each={ projects }
                                 value={ id }
-                                if={ c.name === client_details.name }>
+                                if={ c === client_details.name }>
                             { name }
                         </option>
                     </optgroup>
