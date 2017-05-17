@@ -16,7 +16,7 @@ from .models import Client, Project, Entry
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = 'timesheets/dashboard.html'
+    template_name = 'core/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
@@ -79,7 +79,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 class ClientsView(LoginRequiredMixin, TemplateView):
-    template_name = 'timesheets/clients.html'
+    template_name = 'core/clients.html'
 
     def get_context_data(self, **kwargs):
         context = super(ClientsView, self).get_context_data(**kwargs)
@@ -88,7 +88,7 @@ class ClientsView(LoginRequiredMixin, TemplateView):
 
 
 class EntriesView(LoginRequiredMixin, TemplateView):
-    template_name = 'timesheets/entries.html'
+    template_name = 'core/entries.html'
 
     def get_context_data(self, **kwargs):
         context = super(EntriesView, self).get_context_data(**kwargs)
@@ -104,7 +104,7 @@ class EntriesView(LoginRequiredMixin, TemplateView):
 
 
 class ReportsView(LoginRequiredMixin, TemplateView):
-    template_name = 'timesheets/reports.html'
+    template_name = 'core/reports.html'
 
 
 @login_required

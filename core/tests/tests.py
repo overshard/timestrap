@@ -117,7 +117,7 @@ class ProjectTestCase(TestCase):
             project=project,
             user=self.user,
             duration=timedelta(hours=10),
-            note='Creating tests for the timesheets app'
+            note='Creating tests for the core app'
         )
         self.assertEqual(project.get_percent_done(), 20)
 
@@ -132,18 +132,18 @@ class EntryTestCase(TestCase):
             project=self.project,
             user=self.user,
             duration=timedelta(hours=1),
-            note='Creating tests for the timesheets app'
+            note='Creating tests for the core app'
         )
         Entry.objects.create(
             project=self.project,
             user=self.user,
             duration=timedelta(hours=2),
-            note='Continue creating tests for the timesheets app'
+            note='Continue creating tests for the core app'
         )
 
     def test_entry_created(self):
         entry = Entry.objects.get(duration=timedelta(hours=1))
-        self.assertEqual(entry.note, 'Creating tests for the timesheets app')
+        self.assertEqual(entry.note, 'Creating tests for the core app')
         entries = Entry.objects.filter(
             duration__lte=timedelta(hours=1, minutes=30)
         )

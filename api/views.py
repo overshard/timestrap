@@ -6,8 +6,8 @@ from django.contrib.auth.models import User, Permission
 from rest_framework import viewsets, permissions
 import django_filters
 
-from timesheets.models import Client, Project, Entry
-from invoicing.models import Task
+from core.models import Client, Project, Entry
+from core.models import Task
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
                           EntrySerializer, TaskSerializer)

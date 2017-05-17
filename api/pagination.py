@@ -5,7 +5,7 @@ from django.db.models import Sum
 from rest_framework.pagination import LimitOffsetPagination, _get_count
 from rest_framework.response import Response
 
-from timesheets.utils import duration_decimal
+from core.utils import duration_decimal
 
 
 class LimitOffsetPaginationWithTotals(LimitOffsetPagination):

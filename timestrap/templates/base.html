@@ -35,14 +35,14 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
-                            {% if perms.timesheets.view_client %}
+                            {% if perms.core.view_client %}
                                 <li class="nav-item">
                                     {% url 'clients' as url %}
                                     <a class="nav-link {% if request.path == url %}active{% endif %}"
                                        href="{{ url }}">Clients</a>
                                 </li>
                             {% endif %}
-                            {% if perms.timesheets.view_entry %}
+                            {% if perms.core.view_entry %}
                                 <li class="nav-item">
                                     {% url 'entries' as url %}
                                     <a class="nav-link {% if request.path == url %}active{% endif %}"

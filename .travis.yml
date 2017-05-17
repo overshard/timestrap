@@ -16,6 +16,6 @@ install:
 before_script:
     - flake8 --exclude=.venv,migrations .
 script:
-    - coverage run --source=timesheets,api manage.py test
+    - coverage run --source=core,api manage.py test
 after_success:
     - coveralls

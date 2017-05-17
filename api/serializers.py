@@ -5,10 +5,10 @@ from django.contrib.auth.models import User, Permission
 
 from rest_framework import serializers
 
-from timesheets.models import Client, Project, Entry
-from timesheets.fields import DurationField
+from core.models import Client, Project, Entry
+from core.fields import DurationField
 
-from invoicing.models import Task
+from core.models import Task
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

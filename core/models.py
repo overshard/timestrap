@@ -61,9 +61,21 @@ class Project(models.Model):
         return None
 
 
+class Task(models.Model):
+    name = models.CharField(max_length=255)
+    hourly_rate = models.DecimalField(max_digits=10, decimal_places=2,
+                                      blank=True, null=True)
+
+    class Meta:
+        default_permissions = ('view', 'add', 'change', 'delete')
+
+    def __str__(self):
+        return 'Task: ' + self.name
+
+
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')
-    task = models.ForeignKey('invoicing.Task', related_name='entries',
+    task = models.ForeignKey('core.Task', related_name='entries',
                              blank=True, null=True)
     user = models.ForeignKey('auth.User', related_name='entries')
     date = models.DateField(blank=True)
@@ -82,3 +94,31 @@ class Entry(models.Model):
 
     def __str__(self):
         return 'Entry for ' + self.project.name + ' by ' + self.user.username
+
+
+class Invoice(models.Model):
+    client = models.ForeignKey('Client')
+    entries = models.ManyToManyField('Entry')
+    date = models.DateField()
+    hourly_rate = models.DecimalField(max_digits=10, decimal_places=2)
+    transaction_id = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        default_permissions = ('view', 'add', 'change', 'delete')
+
+    def __str__(self):
+        return 'Invoice: ' + self.client.name
+
+    def total_duration(self):
+        total = 0
+        for entry in self.entries:
+            total += entry.duration
+
+    def total_billed(self):
+        total = 0
+        for entry in self.entries:
+            if entry.task.hourly_rate:
+                total += entry.duration * entry.hourly_rate
+            else:
+                total += entry.duration * self.hourly_rate
+        return total

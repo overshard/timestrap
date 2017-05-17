@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from faker import Factory
 
-from timesheets.models import Client, Project, Entry
+from core.models import Client, Project, Entry
 
 
 class Command(BaseCommand):
