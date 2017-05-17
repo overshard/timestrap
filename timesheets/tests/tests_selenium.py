@@ -332,7 +332,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'view-reports'))
 
     def test_reports_filter(self):
-        management.call_command('loaddata', 'test_reports_data.json', verbosity=0)
+        management.call_command(
+            'loaddata', 'test_reports_data.json', verbosity=0)
 
         self.logIn()
         self.addPerms(['view_entry'])
