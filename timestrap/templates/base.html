@@ -83,6 +83,30 @@
         </div>
 
         {# Global javascript #}
+        {% block config_js %}
+            <script>
+                (function(document, window) {
+                    window.timestrapConfig = window.timestrapConfig || {};
+                    timestrapConfig.CORE_URLS = {
+                        DASHBOARD: "{% url 'dashboard' %}",
+                        REPORTS: "{% url 'reports' %}",
+                        REPORTS_EXPORT: "{% url 'reports-export' %}",
+                        CLIENTS: "{% url 'clients' %}",
+                        ENTRIES: "{% url 'entries' %}"
+                    }
+                    timestrapConfig.API_URLS = {
+                        USERS: "{% url 'user-list' %}",
+                        PERMISSIONS: "{% url 'permission-list' %}",
+                        CLIENTS: "{% url 'client-list' %}",
+                        PROJECTS: "{% url 'project-list' %}",
+                        ENTRIES: "{% url 'entry-list' %}",
+                        TASKS: "{% url 'task-list' %}"
+                    }
+                    {# TODO: Add string translations here too #}
+                })(document, window);
+            </script>
+        {% endblock %}
+
         {% compress js %}
             <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
             <script src="{% static 'vendor/moment.js/moment.min.js' %}"></script>
