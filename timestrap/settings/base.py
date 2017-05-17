@@ -20,9 +20,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'invoicing',
     'timesheets',
     'api',
-    'invoicing',
 
     'compressor',
     'widget_tweaks',
