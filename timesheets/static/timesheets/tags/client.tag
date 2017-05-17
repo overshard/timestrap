@@ -2,13 +2,15 @@
     <div class="row py-2 bg-faded rounded">
         <virtual if={ edit && perms.change_client }>
             <div class="col-10">
-                <input type="text"
+                <input name="client-name"
+                       type="text"
                        class="form-control form-control-sm"
                        ref="name"
                        value={ name }/>
             </div>
             <div class="col-2">
-                <button class="btn btn-success btn-sm w-100"
+                <button name="client-save"
+                        class="btn btn-success btn-sm w-100"
                         onclick={ saveClient }>
                     Save
                 </button>
@@ -16,7 +18,7 @@
         </virtual>
         <virtual if={ !edit }>
             <div class="col-6 d-flex align-items-center">
-                <a class="text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
+                <a class="client-view-projects text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
                     <i class="fa fa-chevron-circle-{ chevron } small mr-2" aria-hidden="true"></i>
                     <span class="mb-1">{ name }</span>
                 </a>
@@ -31,7 +33,8 @@
                 <span class="mb-1">{ total_projects }</span>
             </div>
             <div class="col-2">
-                <button class="btn btn-warning btn-sm w-100"
+                <button name="client-change"
+                        class="btn btn-warning btn-sm w-100"
                         onclick={ editClient }
                         disabled={ !perms.change_client }>
                     Edit
@@ -51,14 +54,16 @@
                        required/>
             </div>
             <div class="col-2">
-                <input type="text"
+                <input name="project-estimate"
+                       type="text"
                        class="form-control form-control-sm"
                        placeholder="Estimate"
                        ref="estimate"
                        value={ estimate }/>
             </div>
             <div class="col-2">
-                <button type="submit"
+                <button name="project-add-submit"
+                        type="submit"
                         class="btn btn-success btn-sm w-100">
                     Add
                 </button>
