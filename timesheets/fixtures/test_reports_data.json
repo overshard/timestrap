@@ -1,0 +1,282 @@
+[
+{
+    "model": "timesheets.client",
+    "pk": 1,
+    "fields": {
+        "name": "Client 1",
+        "archive": false,
+        "payment_id": null
+    }
+},
+{
+    "model": "timesheets.client",
+    "pk": 2,
+    "fields": {
+        "name": "Client 2",
+        "archive": false,
+        "payment_id": null
+    }
+},
+{
+    "model": "timesheets.client",
+    "pk": 3,
+    "fields": {
+        "name": "Client 3",
+        "archive": false,
+        "payment_id": null
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 1,
+    "fields": {
+        "client": 1,
+        "name": "Project 1",
+        "archive": false,
+        "estimate": "02:00:00"
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 2,
+    "fields": {
+        "client": 1,
+        "name": "Project 2",
+        "archive": false,
+        "estimate": "05:00:00"
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 3,
+    "fields": {
+        "client": 2,
+        "name": "Project 3",
+        "archive": false,
+        "estimate": "20:00:00"
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 4,
+    "fields": {
+        "client": 3,
+        "name": "Project 4",
+        "archive": false,
+        "estimate": "01:00:00"
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 5,
+    "fields": {
+        "client": 3,
+        "name": "Project 5",
+        "archive": false,
+        "estimate": "01:00:00"
+    }
+},
+{
+    "model": "timesheets.project",
+    "pk": 6,
+    "fields": {
+        "client": 3,
+        "name": "Project 6",
+        "archive": false,
+        "estimate": "05:00:00"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$FmKQ2Qvb3FLs$izhhB7GVvEpzjUPADOyesV30anUajmz1XWH9Fg/jdWM=",
+        "last_login": "2017-05-17T18:16:38.536Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin.admin",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-05-17T18:16:26.831Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$ZWX0AaxW8Lha$34xpMOJF7Qfa81Vn/OBBWl1QrsFYGgeG7BN+9mxhWg0=",
+        "last_login": "2017-05-17T18:17:51.854Z",
+        "is_superuser": false,
+        "username": "tester",
+        "first_name": "Tester",
+        "last_name": "",
+        "email": "tester@tester.tester",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-05-17T18:16:53Z",
+        "groups": [],
+        "user_permissions": [
+            10,
+            11,
+            12,
+            9,
+            18,
+            19,
+            20,
+            17,
+            14,
+            15,
+            16,
+            13
+        ]
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 1,
+    "fields": {
+        "project": 1,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-17",
+        "duration": "00:30:00",
+        "note": "Done!"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 2,
+    "fields": {
+        "project": 1,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-15",
+        "duration": "01:00:00",
+        "note": "Started!"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 3,
+    "fields": {
+        "project": 1,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-16",
+        "duration": "00:15:00",
+        "note": "Almost done..."
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 4,
+    "fields": {
+        "project": 2,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-17",
+        "duration": "00:15:00",
+        "note": "Researched"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 5,
+    "fields": {
+        "project": 4,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-01",
+        "duration": "01:00:00",
+        "note": ""
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 6,
+    "fields": {
+        "project": 4,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-04",
+        "duration": "02:00:00",
+        "note": ""
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 7,
+    "fields": {
+        "project": 4,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-05",
+        "duration": "02:30:00",
+        "note": "Finally done!"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 8,
+    "fields": {
+        "project": 3,
+        "task": null,
+        "user": 2,
+        "date": "2017-05-06",
+        "duration": "02:25:00",
+        "note": "Only one entry"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 9,
+    "fields": {
+        "project": 3,
+        "task": null,
+        "user": 1,
+        "date": "2017-04-03",
+        "duration": "01:00:00",
+        "note": "Researched for tester"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 10,
+    "fields": {
+        "project": 5,
+        "task": null,
+        "user": 1,
+        "date": "2017-04-21",
+        "duration": "01:15:00",
+        "note": "Underway"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 11,
+    "fields": {
+        "project": 5,
+        "task": null,
+        "user": 1,
+        "date": "2017-04-22",
+        "duration": "02:43:00",
+        "note": "Weekend work"
+    }
+},
+{
+    "model": "timesheets.entry",
+    "pk": 12,
+    "fields": {
+        "project": 5,
+        "task": null,
+        "user": 1,
+        "date": "2017-04-23",
+        "duration": "00:23:00",
+        "note": "Finishing up..."
+    }
+}
+]

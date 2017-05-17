@@ -15,29 +15,29 @@
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <virtual if={ perms.change_entry || perms.delete_entry }>
-                    <button class="btn btn-faded btn-sm btn-icon dropdown-toggle"
+                    <button name="entry-menu"
+                            class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                             type="button"
-                            id="entry-edit-menu"
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right"
-                         aria-labelledby="entry-edit-menu">
-                        <a class="dropdown-item"
+                         aria-labelledby="entry-menu">
+                        <a class="dropdown-item entry-menu-restart"
                            href="#"
                            onclick={ restartEntry }
                            if={ perms.change_entry }>
                             Restart
                         </a>
-                        <a class="dropdown-item"
+                        <a class="dropdown-item entry-menu-change"
                            href="#"
                            onclick={ editEntry }
                            if={ perms.change_entry }>
                             Edit
                         </a>
-                        <a class="dropdown-item"
+                        <a class="dropdown-item entry-menu-delete"
                            href="#"
                            onclick={ deleteEntry }
                            if={ perms.delete_entry }>
@@ -49,14 +49,16 @@
         </virtual>
         <virtual if={ runTimer }>
             <div class="col-sm-2">
-                <input type="text"
+                <input name="entry-duration"
+                       type="text"
                        class="form-control form-control-sm text-right font-weight-bold"
                        ref="duration"
                        placeholder="0:00"
                        value="{ timerDuration }"/>
             </div>
             <div class="col-sm-2">
-                <button type="submit"
+                <button name="entry-save"
+                        type="submit"
                         class="btn btn-success btn-sm w-100"
                         onclick={ timer }>
                     { timerState }
@@ -67,7 +69,7 @@
     <virtual if={ edit }>
         <div class="col-sm-3">
             <!-- FIXME: Something is buggy about parent.project_details.id -->
-            <select class="custom-select custom-select-edit" ref="project" required>
+            <select name="entry-project" class="custom-select custom-select-edit" ref="project" required>
                 <optgroup each={ c in parent.clients } label={ c }>
                     <option each={ p in parent.parent.projects }
                             value={ p.url }
@@ -79,21 +81,23 @@
             </select>
         </div>
         <div class="col-sm-5">
-            <input type="text"
+            <input name="entry-note"
+                   type="text"
                    class="form-control form-control-sm"
                    ref="note"
                    placeholder="Note"
                    value={ note }/>
         </div>
         <div class="col-sm-2">
-            <input type="text"
+            <input name="entry-duration"
+                   type="text"
                    class="form-control form-control-sm text-right font-weight-bold"
                    ref="duration"
                    placeholder="0:00"
                    value={ durationToString(duration) }/>
         </div>
         <div class="col-sm-2">
-            <button class="btn btn-success btn-sm w-100"
+            <button name="entry-save" class="btn btn-success btn-sm w-100"
                     onclick={ saveEntry }>
                 Save
             </button>

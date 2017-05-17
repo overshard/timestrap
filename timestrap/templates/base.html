@@ -32,45 +32,45 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mr-auto">
+                <div id="nav" class="collapse navbar-collapse">
+                    <ul id="nav-app" class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
                             {% if perms.core.view_client %}
                                 <li class="nav-item">
                                     {% url 'clients' as url %}
-                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                    <a id="nav-app-clients" class="nav-link {% if request.path == url %}active{% endif %}"
                                        href="{{ url }}">Clients</a>
                                 </li>
                             {% endif %}
                             {% if perms.core.view_entry %}
                                 <li class="nav-item">
                                     {% url 'entries' as url %}
-                                    <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                    <a id="nav-app-entries" class="nav-link {% if request.path == url %}active{% endif %}"
                                        href="{{ url }}">Timesheet</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
                                 {% url 'reports' as url %}
-                                <a class="nav-link {% if request.path == url %}active{% endif %}"
+                                <a id="nav-app-reports" class="nav-link {% if request.path == url %}active{% endif %}"
                                    href="{{ url }}">Reports</a>
                             </li>
                         {% endif %}
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul id="nav-admin" class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">{{ user.username }}</a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="/api/">API Browser</a>
+                                    <a id="nav-admin-api" class="dropdown-item" href="/api/">API Browser</a>
                                     {% if user.is_staff %}
-                                        <a class="dropdown-item" href="/admin/">Admin</a>
+                                        <a id="nav-admin-admin" class="dropdown-item" href="/admin/">Admin</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                    <a id="nav-admin-logout" class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 </div>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                <a id="nav-admin-login" class="nav-link" href="{% url 'login' %}">Login</a>
                             </li>
                         {% endif %}
                     </ul>
