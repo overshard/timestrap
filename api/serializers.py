@@ -8,6 +8,8 @@ from rest_framework import serializers
 from timesheets.models import Client, Project, Entry
 from timesheets.fields import DurationField
 
+from invoicing.models import Task
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -109,3 +111,9 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
         model = Entry
         fields = ('id', 'url', 'project', 'project_details', 'user',
                   'user_details', 'date', 'duration', 'note',)
+
+
+class TaskSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'url', 'name', 'hourly_rate',)

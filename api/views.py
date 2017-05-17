@@ -7,9 +7,10 @@ from rest_framework import viewsets, permissions
 import django_filters
 
 from timesheets.models import Client, Project, Entry
+from invoicing.models import Task
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
-                          EntrySerializer)
+                          EntrySerializer, TaskSerializer)
 from .pagination import LimitOffsetPaginationWithTotals
 
 
@@ -64,3 +65,8 @@ class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     pagination_class = LimitOffsetPaginationWithTotals
     filter_class = EntryFilter
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
