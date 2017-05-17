@@ -132,7 +132,7 @@ def reports_export(request):
     if export_format not in allowed_formats:
         export_format = 'csv'
 
-    filename = 'report-' + slugify(filters) + '.' + export_format
+    filename = 'report' + slugify(filters) + '.' + export_format
 
     response = HttpResponse(
         getattr(dataset, export_format),
