@@ -69,8 +69,7 @@
                    required/>
         </div>
         <div class="col-sm-2">
-            <button name="entry-add-submit"
-                    type="submit"
+            <button name="entry-timer"type="submit"
                     class="btn btn-success btn-sm w-100"
                     onclick={ timer }>
                 { timerState }
@@ -81,7 +80,7 @@
     <div class="mb-4" each={ d in dates }>
         <div class="row inset-row">
             <div class="col-12">
-                <h2 class="display-4 text-muted">{ d }</h5>
+                <h2 class="display-4 text-muted">{ moment(d).format('LL') }</h5>
             </div>
         </div>
         <div class="entry-rows rounded">
@@ -154,7 +153,6 @@
             Promise.all([entries, projects]).then(function(e) {
                 let dates = [];
                 $.each(e[0].results, function(i, entry) {
-                    entry.date = moment(entry.date).format('LL');
                     if ($.inArray(entry.date, dates) === -1) {
                         dates.push(entry.date);
                     }
