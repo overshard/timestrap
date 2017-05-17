@@ -83,10 +83,17 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             ec.text_to_be_present_in_element(element, text))
 
     def waitForClickable(self, element):
+        """An element becomes "clickable" when it is not disabled. This method
+        is useful for waiting on form buttons that have been disabled while
+        javascript is doing work."""
         return WebDriverWait(self.selenium, self.wait_time).until(
             ec.element_to_be_clickable(element))
 
     def select2Select(self, id, value):
+        """Select a value in a select2 menu. The select element *must* have an
+        id attribute in order for this work. Select2 uses the select element id
+        to create its container for selections.
+        """
         self.find(By.CSS_SELECTOR, '#select2-' + id +
                   '-container + .select2-selection__arrow').click()
         field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
@@ -278,7 +285,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'nav-app-reports').click()
         self.waitForPresence((By.ID, 'view-reports'))
 
-    def test_reports_generate(self):
+    def test_reports_filter(self):
         management.call_command('loaddata', 'test_reports_data.json', verbosity=0)
 
         self.logIn()
@@ -286,13 +293,39 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.ID, 'view-reports'))
 
-        # The test data contains 12 fake entries
+        # The test data contains 12 fake entries.
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 12)
 
-        self.select2Select('report-filter-user', 'admin')
-        self.find(By.ID, 'generate-report').click()
+        # The "tester" user entered eight of the entries.
+        self.select2Select('report-filter-user', 'tester')
+        self.find(By.ID, 'generate-report').submit()
         # The "Generate Report" button is disabled while the report is loading.
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 4)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 8)
+
+        # Three entries from Tester for "Client 3".
+        # TODO: Figure out why this doesn't work. No clients appear in list.
+        '''self.select2Select('report-filter-client', '')
+        self.find(By.ID, 'generate-report').click()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)'''
+
+        # TODO: Add tests for Project filter.
+
+        # Five entries from Tester since 2017-05-06.
+        self.find(By.ID, 'report-filter-min-date').click()
+        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
+        self.find(By.CSS_SELECTOR, 'div[data-pick="1494043200000"]')[0].click()
+        self.find(By.ID, 'generate-report').submit()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 5)
+
+        # Two entries from Tester between 2017-05-06 and 2017-05-16
+        self.find(By.ID, 'report-filter-max-date').click()
+        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
+        self.find(By.CSS_SELECTOR, 'div[data-pick="1494820800000"]')[1].click()
+        self.find(By.ID, 'generate-report').submit()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
 
         management.call_command('flush', verbosity=0, interactive=False)
