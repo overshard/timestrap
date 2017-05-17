@@ -69,7 +69,8 @@
                    required/>
         </div>
         <div class="col-sm-2">
-            <button name="entry-timer"type="submit"
+            <button name="entry-add-submit"
+                    type="submit"
                     class="btn btn-success btn-sm w-100"
                     onclick={ timer }>
                 { timerState }
