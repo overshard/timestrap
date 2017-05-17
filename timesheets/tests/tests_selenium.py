@@ -125,7 +125,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.NAME, 'client-add-submit').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'client'))
+        self.waitForPresence((By.TAG_NAME, 'client'))
 
     def test_clients_change(self):
         Client(name='Client', archive=False).save()
@@ -140,7 +140,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
         self.find(By.NAME, 'client-save').click()
-        self.waitForText((By.CSS_SELECTOR, 'client'), 'Client Changed')
+        self.waitForText((By.TAG_NAME, 'client'), 'Client Changed')
 
     def test_projects_access(self):
         Client(name='Client', archive=False).save()
@@ -264,5 +264,5 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     def test_reports_access(self):
         self.logIn()
 
-        self.find(By.CSS_SELECTOR, 'a[href="/reports/"]').click()
+        self.find(By.ID, 'nav-app-reports').click()
         self.waitForPresence((By.ID, 'view-reports'))
