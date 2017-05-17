@@ -21,17 +21,18 @@
         </div>
     </div>
 
-    <form class="row mb-4 pt-3 pb-1 bg-faded rounded"
+    <form name="report-filters"
+          class="row mb-4 pt-3 pb-1 bg-faded rounded"
           onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
-                <select class="user-select" ref="user">
+                <select id="report-filter-user" class="user-select" ref="user">
                     <option><!-- For select2 placeholder to work --></option>
                     <option each={ users } value={ id }>{ username }</option>
                 </select>
             </div>
             <div class="form-group">
-                <select class="project-select" ref="project">
+                <select id="report-filter-project" class="project-select" ref="project">
                     <option><!-- For select2 placeholder to work --></option>
                     <optgroup each={ c in clients } label={ c }>
                         <option each={ projects }
@@ -43,7 +44,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <select class="client-select" ref="client">
+                <select id="report-filter-client" class="client-select" ref="client">
                     <option><!-- For select2 placeholder to work --></option>
                     <option each={ clients } value={ id }>{ name }</option>
                 </select>
@@ -51,13 +52,15 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <input type="text"
+                <input id="report-filter-min-date"
+                       type="text"
                        class="form-control form-control-sm date-input"
                        ref="min_date"
                        placeholder="Min Date"/>
             </div>
             <div class="form-group">
-                <input type="text"
+                <input id="report-filter-max-date"
+                       type="text"
                        class="form-control form-control-sm date-input"
                        ref="max_date"
                        placeholder="Max Date"/>
@@ -68,14 +71,14 @@
         </div>
     </form>
 
-    <div class="mb-4" each={ dates }>
+    <div class="entry-date-group mb-4" each={ dates }>
         <div class="row inset-row">
             <div class="col-12">
                 <h2 class="display-4 text-muted">{ mainDate }</h5>
             </div>
         </div>
         <div class="entry-rows rounded">
-            <div class="row py-2 bg-faded small" each={ entries } if={ mainDate === date }>
+            <div class="entry-row row py-2 bg-faded small" each={ entries } if={ mainDate === date }>
                 <div class="col-sm-3 client-project">
                     <div class="text-muted small">
                         { project_details.client_details.name }

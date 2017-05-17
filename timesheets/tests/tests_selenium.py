@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User, Permission
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.core import management
 from django.test import override_settings
 
 from selenium.webdriver.common.by import By
@@ -10,7 +11,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.firefox.webelement import FirefoxWebElement
 
 from pyvirtualdisplay import Display
 
@@ -81,6 +81,17 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     def waitForText(self, element, text):
         return WebDriverWait(self.selenium, self.wait_time).until(
             ec.text_to_be_present_in_element(element, text))
+
+    def waitForClickable(self, element):
+        return WebDriverWait(self.selenium, self.wait_time).until(
+            ec.element_to_be_clickable(element))
+
+    def select2Select(self, id, value):
+        self.find(By.CSS_SELECTOR, '#select2-' + id +
+                  '-container + .select2-selection__arrow').click()
+        field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
+        field.send_keys(value)
+        field.send_keys(Keys.RETURN)
 
     def logIn(self):
         self.user = User.objects.create_user(self.profile['username'],
@@ -266,3 +277,22 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
         self.find(By.ID, 'nav-app-reports').click()
         self.waitForPresence((By.ID, 'view-reports'))
+
+    def test_reports_generate(self):
+        management.call_command('loaddata', 'test_reports_data.json', verbosity=0)
+
+        self.logIn()
+        self.addPerms(['view_entry'])
+        self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
+        self.waitForPresence((By.ID, 'view-reports'))
+
+        # The test data contains 12 fake entries
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 12)
+
+        self.select2Select('report-filter-user', 'admin')
+        self.find(By.ID, 'generate-report').click()
+        # The "Generate Report" button is disabled while the report is loading.
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 4)
+
+        management.call_command('flush', verbosity=0, interactive=False)
