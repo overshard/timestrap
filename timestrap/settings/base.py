@@ -22,6 +22,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'timesheets',
     'api',
+    'invoicing',
 
     'compressor',
     'widget_tweaks',

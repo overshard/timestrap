@@ -12,6 +12,7 @@ from .utils import duration_string
 class Client(models.Model):
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
+    payment_id = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -62,6 +63,8 @@ class Project(models.Model):
 
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')
+    task = models.ForeignKey('invoicing.Task', related_name='entries',
+                             blank=True, null=True)
     user = models.ForeignKey('auth.User', related_name='entries')
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
