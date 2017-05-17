@@ -252,7 +252,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         project.save()
         Project(name='Project 2', estimate=timedelta(hours=1), client=client,
                 archive=False).save()
-        # Log in first to establish self.user.
+        # Log in to establish self.user.
         self.logIn()
         Entry(project=project, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
@@ -278,6 +278,24 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.selenium.refresh()
         self.assertIn('Client\nProject 2\nChanged note\n1:30',
                       self.find(By.TAG_NAME, 'entry').text)
+
+    def test_entries_delete(self):
+        client = Client(name='Client', archive=False)
+        client.save()
+        project = Project(name='Project 1', estimate=timedelta(hours=1),
+                          client=client, archive=False)
+        project.save()
+        # Log in to establish self.user.
+        self.logIn()
+        Entry(project=project, user=self.user, note='Note',
+              duration=timedelta(minutes=35)).save()
+        self.addPerms(['view_entry', 'delete_entry'])
+        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+
+        self.find(By.NAME, 'entry-menu').click()
+        self.waitForPresence((By.CLASS_NAME, 'entry-menu-delete'))
+        self.find(By.CLASS_NAME, 'entry-menu-delete').click()
+        self.assertNotIn('entry', self.find(By.CLASS_NAME, 'entry-rows').text)
 
     def test_reports_access(self):
         self.logIn()
