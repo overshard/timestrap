@@ -1,5 +1,5 @@
+// TODO: Pull locations from django's url system
 $(document).keypress(function(e) {
-    console.log('keypress');
     if (e.altKey) {
         switch (e.which) {
             case 49:

@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.template.defaultfilters import slugify
 
 from .admin import EntryResource
 from .models import Client, Project, Entry
@@ -125,10 +126,18 @@ def reports_export(request):
         queryset = Entry.objects.all()
         dataset = EntryResource().export(queryset)
 
+    allowed_formats = ['csv', 'xls', 'xlsx', 'tsv', 'ods', 'json', 'yaml',
+                       'html']
     export_format = query_dict.get('export_format', 'csv')
+    if export_format not in allowed_formats:
+        export_format = 'csv'
+
+    filename = 'report-' + slugify(filters) + '.' + export_format
+
     response = HttpResponse(
         getattr(dataset, export_format),
         content_type='text/' + export_format)
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
-        'report.' + export_format)
+        filename
+    )
     return response
