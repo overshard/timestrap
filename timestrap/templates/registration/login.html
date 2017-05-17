@@ -35,13 +35,13 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">{{ form.username.label }}</label>
                 <div class="col-sm-9">
-                    {% render_field form.username class+='form-control' placeholder=form.username.label %}
+                    {% render_field form.username name='username' class+='form-control' placeholder=form.username.label %}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">{{ form.password.label }}</label>
                 <div class="col-sm-9">
-                    {% render_field form.password class+='form-control' placeholder=form.password.label %}
+                    {% render_field form.password name='password' class+='form-control' placeholder=form.password.label %}
                 </div>
             </div>
 

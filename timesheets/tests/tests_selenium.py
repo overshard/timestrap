@@ -109,10 +109,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_clients_access(self):
         self.logIn()
-        self.assertNotIn('Clients', self.find(By.ID, 'navbarNav').text)
+        self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
         self.addPerms(['view_client'])
         self.selenium.get(self.live_server_url)
-        self.find(By.CSS_SELECTOR, 'a[href="/clients/"]').click()
+        self.find(By.ID, 'nav-app-clients').click()
         self.waitForPresence((By.ID, 'view-clients'))
 
     def test_clients_add(self):
@@ -120,14 +120,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        # The <clients> tag only has two elements when there is no add form.
-        self.assertEqual(len(self.find(By.CSS_SELECTOR, 'clients > *')), 2)
+        self.assertNotIn('client-add', self.find(By.ID, 'view-clients').text)
         self.addPerms(['add_client'])
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
-        self.find(By.CSS_SELECTOR,
-                  'form[name="client-add"] button[type="submit"]').click()
-        self.waitForText((By.CSS_SELECTOR, 'client:first-of-type'), 'Client')
+        self.find(By.NAME, 'client-add-submit').click()
+        self.waitForPresence((By.CSS_SELECTOR, 'client'))
 
     def test_clients_change(self):
         Client(name='Client', archive=False).save()
@@ -135,17 +133,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        # The client edit button should be disabled for unprivileged users.
-        self.assertIsInstance(self.find(
-            By.CSS_SELECTOR, 'client button:disabled'), FirefoxWebElement)
+        self.assertFalse(self.find(By.NAME, 'client-change').is_enabled())
         self.addPerms(['change_client'])
         self.selenium.refresh()
-        self.find(By.CSS_SELECTOR, 'client button').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'client input'))
-        self.find(By.CSS_SELECTOR, 'client input').send_keys(' Changed')
-        self.find(By.CSS_SELECTOR, 'client button').click()
-        self.waitForText((By.CSS_SELECTOR, 'client:first-of-type'),
-                         'Client Changed')
+        self.find(By.NAME, 'client-change').click()
+        self.waitForPresence((By.NAME, 'client-name'))
+        self.find(By.NAME, 'client-name').send_keys(' Changed')
+        self.find(By.NAME, 'client-save').click()
+        self.waitForText((By.CSS_SELECTOR, 'client'), 'Client Changed')
 
     def test_projects_access(self):
         Client(name='Client', archive=False).save()

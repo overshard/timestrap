@@ -30,7 +30,10 @@
                    required>
         </div>
         <div class="col-2">
-            <button type="submit" class="btn btn-success btn-sm w-100">
+            <button
+                    name="client-add-submit"
+                    type="submit"
+                    class="btn btn-success btn-sm w-100">
                 Add
             </button>
         </div>
