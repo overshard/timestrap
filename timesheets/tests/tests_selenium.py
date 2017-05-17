@@ -279,6 +279,36 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertIn('Client\nProject 2\nChanged note\n1:30',
                       self.find(By.TAG_NAME, 'entry').text)
 
+    def test_entries_restart(self):
+        client = Client(name='Client', archive=False)
+        client.save()
+        project = Project(name='Project 1', estimate=timedelta(hours=1),
+                          client=client, archive=False)
+        project.save()
+        # Log in to establish self.user.
+        self.logIn()
+        Entry(project=project, user=self.user, note='Note',
+              duration=timedelta(minutes=35)).save()
+        self.addPerms(['view_entry', 'change_entry'])
+        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+
+        self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
+        self.addPerms(['change_entry'])
+        self.selenium.refresh()
+        self.find(By.NAME, 'entry-menu').click()
+        self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
+        self.find(By.CLASS_NAME, 'entry-menu-restart').click()
+        self.waitForPresence((By.NAME, 'entry-duration'))
+        # Click the "Stop" button and wait for the edit form to appear.
+        self.find(By.NAME, 'entry-save').click()
+        self.waitForPresence((By.NAME, 'entry-note'))
+        self.find(By.NAME, 'entry-save').click()
+        self.selenium.refresh()
+        # The actual time should not change because the timer does not run for
+        # more than 60 seconds.
+        self.assertIn('Client\nProject 1\nNote\n0:35',
+                      self.find(By.TAG_NAME, 'entry').text)
+
     def test_entries_delete(self):
         client = Client(name='Client', archive=False)
         client.save()
