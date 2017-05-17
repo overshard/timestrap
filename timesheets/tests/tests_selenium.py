@@ -194,11 +194,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_entries_access(self):
         self.logIn()
-
-        self.assertNotIn('Entries', self.find(By.ID, 'navbarNav').text)
+        self.assertNotIn('nav-app-entries', self.find(By.ID, 'nav-app').text)
         self.addPerms(['view_entry'])
         self.selenium.get(self.live_server_url)
-        self.find(By.CSS_SELECTOR, 'a[href="/entries/"]').click()
+        self.find(By.ID, 'nav-app-entries').click()
         self.waitForPresence((By.ID, 'view-entries'))
 
     def test_entries_add(self):
@@ -212,8 +211,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
 
-        # The <entries> tag only has three elements when there is no add form.
-        self.assertEqual(len(self.find(By.CSS_SELECTOR, 'entries > *')), 3)
+        self.assertNotIn('entry-add', self.find(By.ID, 'view-entries').text)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow').click()
@@ -222,13 +220,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                   'select2-search__field').send_keys('Project 1')
         self.find(By.CLASS_NAME,
                   'select2-search__field').send_keys(Keys.RETURN)
-        self.find(By.CSS_SELECTOR,
-                  'entries form input[placeholder="Note"').send_keys('Note')
-        self.find(By.CSS_SELECTOR,
-                  'entries form input[placeholder="0:00"').send_keys('0:35')
-        self.find(By.CSS_SELECTOR,
-                  'entries form button[type="submit"]').submit()
-        self.waitForText((By.CSS_SELECTOR, 'entry'),
+        self.find(By.NAME, 'entry-note').send_keys('Note')
+        self.find(By.NAME, 'entry-duration').send_keys('0:35')
+        self.find(By.NAME, 'entry-add-submit').submit()
+        self.waitForText((By.TAG_NAME, 'entry'),
                          'Client\nProject 1\nNote\n0:35')
 
     def test_entries_change(self):
@@ -246,35 +241,25 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
 
-        # The <entry> tag does not have an Edit button.
-        self.assertNotIn('Edit', self.find(By.CSS_SELECTOR, 'entry').text)
+        self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
         self.addPerms(['change_entry'])
         self.selenium.refresh()
-        self.find(By.ID, 'entry-edit-menu').click()
-        # The second entry is the "Edit" link option. For some reason there are
-        # two <a> elements for each drop down entry and the real one is the
-        # second one.
-        self.waitForPresence((By.CSS_SELECTOR, '.dropdown-menu a'))
-        self.find(By.CSS_SELECTOR,
-                  '.dropdown-menu a:nth-of-type(2)')[1].click()
-        self.waitForPresence((By.CSS_SELECTOR,
-                              'entry .select2-selection__arrow'))
-        self.find(By.CSS_SELECTOR, 'entry .select2-selection__arrow').click()
-        self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
-        self.find(By.CLASS_NAME,
-                  'select2-search__field').send_keys('Project 2')
-        self.find(By.CLASS_NAME,
-                  'select2-search__field').send_keys(Keys.RETURN)
-        self.find(By.CSS_SELECTOR, 'entry input[value="Note"]').clear()
-        self.find(By.CSS_SELECTOR,
-                  'entry input[value="Note"]').send_keys('Changed note')
-        self.find(By.CSS_SELECTOR, 'entry input[value="0:35"]').clear()
-        self.find(By.CSS_SELECTOR,
-                  'entry input[value="0:35"]').send_keys('1.5')
-        self.find(By.CSS_SELECTOR, 'entry button').click()
+        self.find(By.NAME, 'entry-menu').click()
+        self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
+        self.find(By.CLASS_NAME, 'entry-menu-change').click()
+        self.waitForPresence((By.NAME, 'entry-save'))
+        self.find(By.CSS_SELECTOR, '.select2-selection__arrow').click()
+        field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
+        field.send_keys('Project 2')
+        field.send_keys(Keys.RETURN)
+        self.find(By.NAME, 'entry-note').clear()
+        self.find(By.NAME, 'entry-note').send_keys('Changed note')
+        self.find(By.NAME, 'entry-duration').clear()
+        self.find(By.NAME, 'entry-duration').send_keys('1.5')
+        self.find(By.NAME, 'entry-save').click()
         self.selenium.refresh()
         self.assertIn('Client\nProject 2\nChanged note\n1:30',
-                      self.find(By.CSS_SELECTOR, 'entry').text)
+                      self.find(By.TAG_NAME, 'entry').text)
 
     def test_reports_access(self):
         self.logIn()

@@ -28,17 +28,19 @@
         </div>
     </div>
 
-    <form class="row mb-4 py-2 bg-faded rounded-bottom"
+    <form name="entry-add"
+          class="row mb-4 py-2 bg-faded rounded-bottom"
           onsubmit={ submitEntry }
           if={ perms && perms.add_entry }>
         <div class="col-sm-2">
-            <input type="text"
+            <input name="entry-date"
+                   type="text"
                    class="form-control form-control-sm date-input"
                    ref="date"
                    placeholder="Date"/>
         </div>
         <div class="col-sm-2">
-            <select class="custom-select" ref="project" required>
+            <select name="entry-project" class="custom-select" ref="project" required>
                 <option><!-- For select2 placeholder to work --></option>
                 <optgroup each={ c in clients } label={ c }>
                     <option each={ projects }
@@ -50,13 +52,15 @@
             </select>
         </div>
         <div class="col-sm-4">
-            <input type="text"
+            <input name="entry-note"
+                   type="text"
                    class="form-control form-control-sm"
                    ref="note"
                    placeholder="Note"/>
         </div>
         <div class="col-sm-2">
-            <input type="text"
+            <input name="entry-duration"
+                   type="text"
                    class="form-control form-control-sm text-right font-weight-bold"
                    oninput={ timer }
                    ref="duration"
@@ -65,7 +69,8 @@
                    required/>
         </div>
         <div class="col-sm-2">
-            <button type="submit"
+            <button name="entry-add-submit"
+                    type="submit"
                     class="btn btn-success btn-sm w-100"
                     onclick={ timer }>
                 { timerState }
