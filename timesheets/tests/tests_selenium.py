@@ -148,13 +148,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        # If Projects are not viewable, the client name will be in a <span>
-        # instead of an <a>.
-        self.assertIsInstance(self.find(
-            By.CSS_SELECTOR, 'client span.text-primary'), FirefoxWebElement)
+        self.assertNotIn(
+            'view-projects', self.find(By.ID, 'view-clients').text)
         self.addPerms(['view_project'])
         self.selenium.refresh()
-        self.find(By.CSS_SELECTOR, 'client a.text-primary')
+        self.find(By.ID, 'view-projects')
 
     def test_projects_add(self):
         Client(name='Client', archive=False).save()
@@ -162,19 +160,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        # The <client> tag only has two elements when there is no Project add
-        # form.
-        self.assertEqual(len(self.find(By.CSS_SELECTOR, 'client > *')), 2)
+        self.assertNotIn('project-add', self.find(By.TAG_NAME, 'client').text)
         self.addPerms(['add_project'])
         self.selenium.refresh()
-        self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
-        self.waitForPresence((By.NAME, 'project-name'))
+        self.find(By.CLASS_NAME, 'client-view-projects').click()
+        self.waitForPresence((By.NAME, 'project-add'))
         self.find(By.NAME, 'project-name').send_keys('Project')
-        self.find(By.CSS_SELECTOR,
-                  'client form input[placeholder="Estimate"').send_keys('1')
-        self.find(By.CSS_SELECTOR,
-                  'form[name="project-add"] button[type="submit"]').click()
-        self.waitForText((By.CSS_SELECTOR, 'client project'), 'Project')
+        self.find(By.NAME, 'project-estimate').send_keys('1')
+        self.find(By.NAME, 'project-add-submit').click()
+        self.waitForPresence((By.TAG_NAME, 'project'))
 
     def test_projects_change(self):
         client = Client(name='Client', archive=False)
@@ -185,22 +179,18 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        # The project edit button should be disabled for unprivileged users.
-        self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
-        self.assertIsInstance(self.find(
-            By.CSS_SELECTOR, 'project button:disabled'), FirefoxWebElement)
+        self.find(By.CLASS_NAME, 'client-view-projects').click()
+        self.assertFalse(self.find(By.NAME, 'project-change').is_enabled())
         self.addPerms(['change_project'])
         self.selenium.refresh()
-        self.find(By.CSS_SELECTOR, 'client i.fa-chevron-circle-down').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'project button'))
-        self.find(By.CSS_SELECTOR, 'project button').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'project input'))
-        self.find(By.CSS_SELECTOR,
-                  'project input[value="Project"]').send_keys(' Changed')
-        self.find(By.CSS_SELECTOR, 'project input[value="1"]').send_keys('.5')
-        self.find(By.CSS_SELECTOR, 'project button').click()
-        self.waitForText((By.CSS_SELECTOR, 'project:first-of-type'),
-                         'Project Changed')
+        self.find(By.CLASS_NAME, 'client-view-projects').click()
+        self.waitForPresence((By.NAME, 'project-change'))
+        self.find(By.NAME, 'project-change').click()
+        self.waitForPresence((By.NAME, 'project-name'))
+        self.find(By.NAME, 'project-name').send_keys(' Changed')
+        self.find(By.NAME, 'project-estimate').send_keys('.5')
+        self.find(By.NAME, 'project-save').click()
+        self.waitForText((By.TAG_NAME, 'project'), 'Project Changed')
 
     def test_entries_access(self):
         self.logIn()

@@ -1,20 +1,22 @@
 <project>
     <virtual if={ edit }>
         <div class="col-8">
-            <input type="text"
+            <input name="project-name"
+                   type="text"
                    class="form-control form-control-sm"
                    ref="name"
                    value={ name }/>
         </div>
         <div class="col-2">
-            <input type="text"
+            <input name="project-estimate"
+                   type="text"
                    class="form-control form-control-sm"
                    placeholder="Estimate"
                    ref="estimate"
                    value={ estimate }/>
         </div>
         <div class="col-2">
-            <button class="btn btn-success btn-sm w-100"
+            <button name="project-save" class="btn btn-success btn-sm w-100"
                     onclick={ saveProject }>
                 Save
             </button>
@@ -52,7 +54,8 @@
             </div>
         </virtual>
         <div class="col-2">
-            <button class="btn btn-warning btn-sm w-100"
+            <button name="project-change"
+                    class="btn btn-warning btn-sm w-100"
                     onclick={ editProject }
                     disabled={ !perms.change_project }>
                 Edit

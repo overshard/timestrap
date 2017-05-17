@@ -18,7 +18,7 @@
         </virtual>
         <virtual if={ !edit }>
             <div class="col-6 d-flex align-items-center">
-                <a class="text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
+                <a class="client-view-projects text-primary font-weight-bold" onclick={ showProjects } if={ perms.view_project }>
                     <i class="fa fa-chevron-circle-{ chevron } small mr-2" aria-hidden="true"></i>
                     <span class="mb-1">{ name }</span>
                 </a>
