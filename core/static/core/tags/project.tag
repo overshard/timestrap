@@ -23,10 +23,7 @@
         </div>
     </virtual>
     <virtual if={ !edit }>
-        <a class="text-primary col-6" onclick={ goToEntries }>
-            <i class="fa fa-arrow-right mr-2" aria-hidden="true"></i>
-            <span class="mb-1">{ name }</span>
-        </a>
+        <div class="mb-1 col-6">{ name }</div>
         <virtual if={ percent_done }>
             <div class="col-4 d-flex align-items-center">
                 <div class="progress w-100">
@@ -68,14 +65,6 @@
         editProject(e) {
             this.edit = true;
             this.update();
-        }
-
-
-        goToEntries(e) {
-            let query = {
-                project: e.item.id
-            };
-            document.location.href = entriesUrl + '?' + $.param(query);
         }
 
 

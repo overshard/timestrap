@@ -146,10 +146,11 @@
 
 
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
+            let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
+            url = (typeof url !== 'undefined') ? url : userEntries;
 
             let entries = quickFetch(url);
-            let projects = quickFetch(projectsApiUrl);
+            let projects = quickFetch(timestrapConfig.API_URLS.PROJECTS);
 
             Promise.all([entries, projects]).then(function(e) {
                 let dates = [];
@@ -198,13 +199,13 @@
             clickedButton = e.explicitOriginalTarget;
             toggleButtonBusy(clickedButton);
             let body = {
-                user: userApiUrl,
+                user: timestrapConfig.USER.URL,
                 duration: this.refs.duration.value,
                 note: this.refs.note.value,
                 project: this.refs.project.value,
                 date: this.refs.date.value
             };
-            quickFetch(entriesApiUrl, 'post', body).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(function(data) {
                 this.refs.duration.value = '';
                 this.refs.note.value = '';
                 if (data.id) {

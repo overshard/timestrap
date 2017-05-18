@@ -44,7 +44,7 @@
 
     <script>
         getClients(url) {
-            url = (typeof url !== 'undefined') ? url : clientsApiUrl;
+            url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
             quickFetch(url).then(function(data) {
                 this.update({
                     clients: data.results,
@@ -62,7 +62,7 @@
             let body = {
                 name: this.refs.name.value
             };
-            quickFetch(clientsApiUrl, 'post', body).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(function(data) {
                 this.refs.name.value = '';
                 if (data.id) {
                     this.clients.unshift(data);

@@ -112,7 +112,7 @@
 
     <script>
         getEntries(url) {
-            url = (typeof url !== 'undefined') ? url : entriesApiUrl;
+            url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.ENTRIES;
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
 
@@ -154,7 +154,7 @@
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value
             };
-            url = entriesApiUrl + '?' + $.param(query);
+            url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
             this.getEntries(url);
         }
 
@@ -172,7 +172,7 @@
             };
 
             // TODO: Use a promise? This doesn't work for button toggling.
-            document.location.href = reportsExportUrl + '?' + $.param(query);
+            document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
         }
@@ -181,7 +181,7 @@
         this.on('mount', function() {
             this.getEntries();
 
-            quickFetch(usersApiUrl).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.USERS).then(function(data) {
                 this.update({users: data.results});
                 $('.user-select').select2({
                     placeholder: 'User',
@@ -190,7 +190,7 @@
                 });
             }.bind(this));
 
-            quickFetch(projectsApiUrl).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.PROJECTS).then(function(data) {
                 let clients = [];
                 $.each(data.results, function(i, project) {
                     if ($.inArray(project.client_details.name, clients) === -1) {
@@ -209,7 +209,7 @@
                 });
             }.bind(this));
 
-            quickFetch(clientsApiUrl).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(function(data) {
                 this.update({clients: data.results});
                 $('.client-select').select2({
                     placeholder: 'Client',
