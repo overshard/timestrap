@@ -158,8 +158,7 @@ class EntryTestCase(TestCase):
         self.assertEqual(duration, timedelta(hours=0, minutes=5))
         duration = parse_duration('5')
         self.assertEqual(duration, timedelta(hours=5))
-        with self.assertRaises(ValueError):
-            parse_duration('wut')
+        self.assertEqual(None, parse_duration('wut'))
 
     def test_duration_string(self):
         duration = duration_string(timedelta(hours=1, minutes=30))
