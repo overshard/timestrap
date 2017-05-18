@@ -80,23 +80,25 @@ button {
     border-bottom: 1px solid #eceeef;
 }
 
-.entry-rows .duration.display-4 {
-    font-size: 1.5rem;
-}
+.entry-rows {
+    .duration.display-4 {
+        font-size: 1.5rem;
+    }
 
-.entry-rows .note {
-    line-height: 1.3;
-    margin-bottom: 3px;
-}
+    .note {
+        line-height: 1.3;
+        margin-bottom: 3px;
+    }
 
-.entry-rows .username {
-    overflow-x: hidden;
-}
+    .username {
+        overflow-x: hidden;
+    }
 
-.entry-rows .client-project {
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    .client-project {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .btn-icon::after {

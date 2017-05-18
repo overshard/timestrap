@@ -2,14 +2,21 @@
 *.pyc
 /.venv
 
+# node
+/node_modules
+
 # database
 /db.sqlite3
 
-# static files from compressor
+# static files from gulp and testing
+/media
 /static
 
 # documentation builds
 _build
 
-# geckodriver
+# geckodriver/selenium
 /geckodriver.log
+
+# visual studio code project settings
+/.vscode

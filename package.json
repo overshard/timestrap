@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "heroku-postbuild": "gulp.js"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "chart.js": "^2.5.0",
+    "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-expect-file": "0.0.7",
+    "gulp-riot": "^1.1.1",
+    "gulp-sass": "^3.1.0",
+    "jquery": "^3.2.1",
+    "js-cookie": "^2.1.4",
+    "moment": "^2.18.1",
+    "pickadate": "^3.5.6",
+    "riot": "^3.5.0",
+    "riot-route": "^3.1.1",
+    "select2": "^4.0.3",
+    "tether": "^1.4.0"
+  }
+}

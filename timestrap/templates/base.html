@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static %}
 
 <!DOCTYPE html>
 <html>
@@ -10,20 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
-        {% compress css %}
-            <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"/>
-            <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"/>
-            <link rel="stylesheet" href="{% static 'vendor/tether/css/tether.min.css' %}"/>
-            <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}"/>
-            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.css' %}"/>
-            <link rel="stylesheet" href="{% static 'vendor/pickadate/themes/default.date.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
 
-            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
-        {% endcompress %}
-
-        {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
+        {% block extra_css %}{% endblock %}
     </head>
     <body>
         <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
@@ -86,56 +75,38 @@
         </div>
 
         {# Global javascript #}
-        {% block config_js %}
-            <script>
-                (function(document, window) {
-                    window.timestrapConfig = window.timestrapConfig || {};
-                    timestrapConfig.CORE_URLS = {
-                        DASHBOARD: "{% url 'dashboard' %}",
-                        REPORTS: "{% url 'reports' %}",
-                        REPORTS_EXPORT: "{% url 'reports-export' %}",
-                        CLIENTS: "{% url 'clients' %}",
-                        ENTRIES: "{% url 'entries' %}"
+        <script>
+            (function(document, window) {
+                window.timestrapConfig = window.timestrapConfig || {};
+                timestrapConfig.CORE_URLS = {
+                    DASHBOARD: "{% url 'dashboard' %}",
+                    REPORTS: "{% url 'reports' %}",
+                    REPORTS_EXPORT: "{% url 'reports-export' %}",
+                    CLIENTS: "{% url 'clients' %}",
+                    ENTRIES: "{% url 'entries' %}"
+                }
+                timestrapConfig.API_URLS = {
+                    USERS: "{% url 'user-list' %}",
+                    PERMISSIONS: "{% url 'permission-list' %}",
+                    CLIENTS: "{% url 'client-list' %}",
+                    PROJECTS: "{% url 'project-list' %}",
+                    ENTRIES: "{% url 'entry-list' %}",
+                    TASKS: "{% url 'task-list' %}"
+                }
+                {% if user.is_authenticated %}
+                    timestrapConfig.USER = {
+                        ID: {{ user.id }},
+                        URL: "{% url 'user-detail' user.id %}",
+                        NAME: "{{ user.username }}"
                     }
-                    timestrapConfig.API_URLS = {
-                        USERS: "{% url 'user-list' %}",
-                        PERMISSIONS: "{% url 'permission-list' %}",
-                        CLIENTS: "{% url 'client-list' %}",
-                        PROJECTS: "{% url 'project-list' %}",
-                        ENTRIES: "{% url 'entry-list' %}",
-                        TASKS: "{% url 'task-list' %}"
-                    }
-                    {% if user.is_authenticated %}
-                        timestrapConfig.USER = {
-                            ID: {{ user.id }},
-                            URL: "{% url 'user-detail' user.id %}",
-                            NAME: "{{ user.username }}"
-                        }
-                    {% endif %}
-                    {# TODO: Add string translations here too #}
-                })(document, window);
-            </script>
-        {% endblock %}
+                {% endif %}
+                {# TODO: Add string translations here too #}
+            })(document, window);
+        </script>
 
-        {% compress js %}
-            <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-            <script src="{% static 'vendor/moment.js/moment.min.js' %}"></script>
-            <script src="{% static 'vendor/tether/js/tether.min.js' %}"></script>
-            <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-            <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
-            <script src="{% static 'vendor/pickadate/picker.js' %}"></script>
-            <script src="{% static 'vendor/pickadate/picker.date.js' %}"></script>
-            <script src="{% static 'vendor/js-cookie/js.cookie.js' %}"></script>
-            <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-            <script src="{% static 'vendor/riot/riot+compiler.min.js' %}"></script>
-            <script src="{% static 'vendor/riot/route+tag.min.js' %}"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static 'js/tags.js' %}"></script>
 
-            <script src="{% static 'js/base.js' %}"></script>
-            <script src="{% static 'js/hotkeys.js' %}"></script>
-        {% endcompress %}
-
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        {% block extra_js %}{% endblock %}
     </body>
 </html>

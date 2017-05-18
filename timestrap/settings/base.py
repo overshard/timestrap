@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     'core',
     'api',
 
-    'compressor',
     'widget_tweaks',
     'django_filters',
     'rest_framework',

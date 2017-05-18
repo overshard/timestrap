@@ -64,12 +64,20 @@ base requirements instead of the development or Heroku requirements by running:
 
     pip install -r requirements/base.txt
 
+If you plan on helping with front-end development you will also need Node.js.
+You can then install our Node.js dependencies by running:
+
+    npm install
 
 ### Ubuntu
 
 You can install everything you need from apt.
 
     sudo apt install build-essential python-dev python-virtualenv python-pip
+
+If you are doing front-end development you also need NPM and Node.js:
+
+    sudo apt install npm nodejs
 
 If you want to run tests you will need to install some additional packages,
 these are not required though and if you are working on small changes or
@@ -80,9 +88,10 @@ documentation then you can rely on Travis CI to run tests for you.
     tar zxf geckodriver-v0.16.1-linux64.tar.gz
     sudo mv geckodriver /usr/local/bin/
 
-If you run into issues with the version of geckodriver above, want to make
-sure you have the latest, or get one for your specific processor if you aren't
-running a linux64 environment go to the [geckodriver releases GitHub page](https://github.com/mozilla/geckodriver/releases).
+If you run into issues with the version of geckodriver above, you'll want to
+make sure you have the latest or get one for your specific processor if you
+aren't running a linux64 environment go to the
+[geckodriver releases GitHub page](https://github.com/mozilla/geckodriver/releases).
 
 
 ## Testing
@@ -121,6 +130,20 @@ After this you can run Timestrap and access it from your browser at
 `localhost:8000`.
 
     python manage.py runserver
+
+### Running Timestrap With Gulp
+
+Similar to above you will still need to be in the virtual environment by running
+`source .venv/bin/acivate`. Also make sure you've migrated, created a superuser
+and the other tasks. Once that is done you can then run Timestrap with Gulp:
+
+    node_modules/.bin/gulp
+
+This provides you with live updated static files for working on the files in
+`static_src`. Once you've completed your changes you can stop Gulp, run 
+`node_modules/.bin/gulp build` and commit the changes. We do this to reduce the
+number of dependencies required to install Timestrap for people who don't want
+to update static files source code or dependencies.
 
 
 ## Generate Fake Data
