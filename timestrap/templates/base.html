@@ -39,7 +39,7 @@
                                 <li class="nav-item">
                                     {% url 'clients' as url %}
                                     <a id="nav-app-clients"
-                                       class="nav-link routable {% if request.path == url %}active{% endif %}"
+                                       class="nav-link {% if request.path == url %}active{% endif %}"
                                        href="{{ url }}">Clients</a>
                                 </li>
                             {% endif %}
@@ -47,14 +47,14 @@
                                 <li class="nav-item">
                                     {% url 'entries' as url %}
                                     <a id="nav-app-entries"
-                                       class="nav-link routable {% if request.path == url %}active{% endif %}"
+                                       class="nav-link {% if request.path == url %}active{% endif %}"
                                        href="{{ url }}">Timesheet</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
                                 {% url 'reports' as url %}
                                 <a id="nav-app-reports"
-                                   class="nav-link routable {% if request.path == url %}active{% endif %}"
+                                   class="nav-link {% if request.path == url %}active{% endif %}"
                                    href="{{ url }}">Reports</a>
                             </li>
                         {% endif %}
