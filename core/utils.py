@@ -28,7 +28,7 @@ def parse_duration(duration):
     if hours or minutes:
         return timedelta(hours=hours, minutes=minutes)
     else:
-        raise ValueError('Could not parse duration.')
+        return None
 
 
 def duration_string(duration):

@@ -126,7 +126,7 @@
                 estimate: this .refs.estimate.value,
                 client: this.url
             };
-            quickFetch(timestrapConfig.API_URLS.PROJECT, 'post', body).then(function(data) {
+            quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(function(data) {
                 this.refs.project_name.value = '';
                 if (data.id) {
                     this.projects.unshift(data);
