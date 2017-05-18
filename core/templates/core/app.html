@@ -2,11 +2,11 @@
 {% load static %}
 
 
-{% block meta_title %}Clients{% endblock %}
+{% block meta_title %}Entries{% endblock %}
 
 
 {% block content %}
-    <clients />
+    <div id="main"></div>
 {% endblock %}
 
 
@@ -14,8 +14,13 @@
     <script type="riot/tag" src="{% static 'core/tags/clients.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/client.tag' %}"></script>
     <script type="riot/tag" src="{% static 'core/tags/project.tag' %}"></script>
+
+    <script type="riot/tag" src="{% static 'core/tags/entries.tag' %}"></script>
+    <script type="riot/tag" src="{% static 'core/tags/entry.tag' %}"></script>
+
+    <script type="riot/tag" src="{% static 'core/tags/reports.tag' %}"></script>
+
     <script type="riot/tag" src="{% static 'core/tags/pager.tag' %}"></script>
-    <script>
-        riot.mount('clients');
-    </script>
+
+    <script src="{% static 'core/js/router.js' %}"></script>
 {% endblock %}

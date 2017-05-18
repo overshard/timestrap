@@ -78,33 +78,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ClientsView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/clients.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ClientsView, self).get_context_data(**kwargs)
-        context['clients'] = Client.objects.all()
-        return context
-
-
-class EntriesView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/entries.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(EntriesView, self).get_context_data(**kwargs)
-
-        project = self.request.GET.get('project')
-        client = self.request.GET.get('project__client')
-        if project:
-            context['project'] = Project.objects.get(id=project)
-        if client:
-            context['client'] = Client.objects.get(id=client)
-
-        return context
-
-
-class ReportsView(LoginRequiredMixin, TemplateView):
-    template_name = 'core/reports.html'
+class AppView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/app.html'
 
 
 @login_required
