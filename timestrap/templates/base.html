@@ -102,6 +102,13 @@
                         ENTRIES: "{% url 'entry-list' %}",
                         TASKS: "{% url 'task-list' %}"
                     }
+                    {% if user.is_authenticated %}
+                        timestrapConfig.USER = {
+                            ID: {{ user.id }},
+                            URL: "{% url 'user-detail' user.id %}",
+                            NAME: "{{ user.username }}"
+                        }
+                    {% endif %}
                     {# TODO: Add string translations here too #}
                 })(document, window);
             </script>
