@@ -16,7 +16,7 @@ riot.tag2('client', '<div class="row py-2 bg-faded rounded"> <virtual if="{edit 
 
         this.saveClient = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.name.value
@@ -34,7 +34,7 @@ riot.tag2('client', '<div class="row py-2 bg-faded rounded"> <virtual if="{edit 
 
         this.submitProject = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.project_name.value,
@@ -71,8 +71,7 @@ riot.tag2('clients', '<div class="mb-4 clearfix"> <pager update="{getClients}"><
 
         this.submitClient = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
-            toggleButtonBusy(clickedButton);
+            toggleButtonBusy(e.target);
             let body = {
                 name: this.refs.name.value
             };
@@ -82,7 +81,7 @@ riot.tag2('clients', '<div class="mb-4 clearfix"> <pager update="{getClients}"><
                     this.clients.unshift(data);
                     this.update();
                 }
-                toggleButtonBusy(clickedButton);
+                toggleButtonBusy(e.target);
             }.bind(this));
         }.bind(this)
 
@@ -187,7 +186,7 @@ riot.tag2('entries', '<div class="row py-2 mb-4 bg-faded rounded"> <div class="c
 
         this.submitEntry = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 user: timestrapConfig.USER.URL,
@@ -274,7 +273,7 @@ riot.tag2('entry', '<virtual if="{!edit}"> <div class="col-sm-3 client-project">
 
         this.saveEntry = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 user: this.user,
@@ -331,7 +330,7 @@ riot.tag2('project', '<virtual if="{edit}"> <div class="col-8"> <input name="pro
 
         this.saveProject = function(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 client: this.client,
