@@ -100,7 +100,7 @@
 
         saveClient(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.name.value
@@ -119,7 +119,7 @@
 
         submitProject(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 name: this.refs.project_name.value,

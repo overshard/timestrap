@@ -270,22 +270,47 @@ function durationToString(duration) {
 }
 
 
-function toggleButtonBusy(button) {
-    if (typeof button.toggleClass !== 'undefined') {
-        button.toggleClass('progress-bar-striped');
-        button.toggleClass('progress-bar-animated');
-        button.prop( "disabled", function( i, val ) { return !val; });
+// Toggle disabled/enabled styles on form submit button(s).
+function toggleButtonBusy(target) {
+    let buttons = [];
+
+    // The passed target may be a form object containing elements that include
+    // the clicked submit button.
+    if (typeof target.elements === 'object') {
+        for (var i = 0; i < target.elements.length; i++) {
+            if (target.elements.hasOwnProperty(i)
+                && typeof target.elements[i].type !== 'undefined'
+                && target.elements[i].type == 'submit') {
+                buttons.push(target.elements[i]);
+            }
+        }
     }
     else {
-        if (!button.disabled) {
-            button.disabled = true;
-            button.classList.add('progress-bar-striped');
-            button.classList.add('progress-bar-animated');
-        }
-        else {
-            button.disabled = false;
-            button.classList.remove('progress-bar-striped');
-            button.classList.remove('progress-bar-animated');
+        buttons.push(target)
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons.hasOwnProperty(i)) {
+            button = buttons[i];
+            if (typeof button.toggleClass !== 'undefined') {
+                button.toggleClass('progress-bar-striped');
+                button.toggleClass('progress-bar-animated');
+                button.prop("disabled", function (i, val) {
+                    return !val;
+                });
+            }
+            else {
+                if (!button.disabled) {
+                    button.disabled = true;
+                    button.classList.add('progress-bar-striped');
+                    button.classList.add('progress-bar-animated');
+                }
+                else {
+                    button.disabled = false;
+                    button.classList.remove('progress-bar-striped');
+                    button.classList.remove('progress-bar-animated');
+                }
+            }
         }
     }
 }

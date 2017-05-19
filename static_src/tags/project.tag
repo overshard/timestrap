@@ -70,7 +70,7 @@
 
         saveProject(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 client: this.client,

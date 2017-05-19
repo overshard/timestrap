@@ -196,7 +196,7 @@
 
         submitEntry(e) {
             e.preventDefault();
-            clickedButton = e.explicitOriginalTarget;
+            clickedButton = e.target;
             toggleButtonBusy(clickedButton);
             let body = {
                 user: timestrapConfig.USER.URL,
