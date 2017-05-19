@@ -73,7 +73,7 @@ gulp.task('build', ['styles', 'scripts', 'tags', 'extras']);
 
 gulp.task('watch', function() {
     gulp.watch('static_src/sass/**/*.scss', ['styles']);
-    gulp.watch('static_src/scripts/**/*.js', ['styles']);
+    gulp.watch('static_src/scripts/**/*.js', ['scripts']);
     gulp.watch('static_src/tags/**/*.tag', ['tags']);
 });
 
