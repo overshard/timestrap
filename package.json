@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "babel-core": "^6.24.1",
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^2.5.0",
+    "eslint-plugin-riot": "^0.1.6",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",

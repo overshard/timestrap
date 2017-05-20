@@ -42,8 +42,8 @@
     <client each={ clients } perms={ perms } />
 
 
-    <script>
-        getClients(url) {
+    <script type="es6">
+        this.getClients = function(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
             quickFetch(url).then(function(data) {
                 this.update({
@@ -55,7 +55,7 @@
         }
 
 
-        submitClient(e) {
+        this.submitClient = function(e) {
             e.preventDefault();
             toggleButtonBusy(e.target);
             let body = {
@@ -72,7 +72,7 @@
         }
 
 
-        getPerms() {
+        this.getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
                    let perms = Object;
                    $.each(data.results, function(i, perm) {

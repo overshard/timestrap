@@ -61,14 +61,14 @@
     </virtual>
 
 
-    <script>
-        editProject(e) {
+    <script type="es6">
+        this.editProject = function(e) {
             this.edit = true;
             this.update();
         }
 
 
-        saveProject(e) {
+        this.saveProject = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);

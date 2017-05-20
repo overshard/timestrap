@@ -130,40 +130,55 @@ gulp.task('sasslint', function() {
                 'force-element-nesting': 0
             }
         }))
-        .pipe(sasslint.format());
+        .pipe(sasslint.format())
+        .pipe(sasslint.failOnError());
 });
 
 
 gulp.task('eslint', function() {
-    gulp.src('static_src/scripts/**/*.js')
+    var files = [
+        'Gulpfile.js',
+        'static_src/scripts/**/*.js',
+        'static_src/tags/**/*.tag'
+    ]
+    gulp.src(files)
+        .pipe(expect(files))
         .pipe(eslint({
-            rules: {
-                'indent': [
-                    'error',
+            "rules": {
+                "indent": [
+                    "error",
                     4
                 ],
-                'linebreak-style': [
-                    'error',
-                    'unix'
+                "linebreak-style": [
+                    "error",
+                    "unix"
                 ],
-                'quotes': [
-                    'error',
-                    'single'
+                "quotes": [
+                    "error",
+                    "single"
                 ],
-                'semi': [
-                    'error',
-                    'always'
+                "semi": [
+                    "error",
+                    "always"
                 ]
             },
-            globals: [
-                '$'
+            "globals": [
+                "$",
+                "riot"
             ],
-            env: {
-                'browser': true
+            "env": {
+                "browser": true
             },
-            extends: 'eslint:recommended'
+            "extends": "eslint:recommended",
+            "plugins": [
+                "riot"
+            ],
+            "parserOptions": {
+                "ecmaVersion": 6
+            }
         }))
-        .pipe(eslint.format());
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 

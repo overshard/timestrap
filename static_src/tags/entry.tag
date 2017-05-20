@@ -105,8 +105,8 @@
     </virtual>
 
 
-    <script>
-        editEntry(e) {
+    <script type="es6">
+        this.editEntry = function(e) {
             e.preventDefault();
             this.edit = true;
             this.update();
@@ -117,13 +117,13 @@
         }
 
 
-        restartEntry(e) {
+        this.restartEntry = function(e) {
             this.runTimer = true;
             this.timer(e);
         }
 
 
-        timer(e) {
+        this.timer = function(e) {
             if (!this.timerState) {
                 this.timerState = 'Stop';
                 let hours = Math.floor(this.duration);
@@ -145,7 +145,7 @@
         }
 
 
-        saveEntry(e) {
+        this.saveEntry = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -178,7 +178,7 @@
         }
 
 
-        deleteEntry(e) {
+        this.deleteEntry = function(e) {
             e.preventDefault();
             quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {

@@ -110,8 +110,8 @@
     </div>
 
 
-    <script>
-        getEntries(url) {
+    <script type="es6">
+        this.getEntries = function(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.ENTRIES;
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
@@ -145,7 +145,7 @@
         }
 
 
-        getReport(e) {
+        this.getReport = function(e) {
             e.preventDefault();
             query = {
                 user: this.refs.user.value,
@@ -159,7 +159,7 @@
         }
 
 
-        exportReport(e) {
+        this.exportReport = function(e) {
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
             query = {

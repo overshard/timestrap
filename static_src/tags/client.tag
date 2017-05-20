@@ -80,14 +80,14 @@
     </div>
 
 
-    <script>
-        editClient(e) {
+    <script type="es6">
+        this.editClient = function(e) {
             this.edit = true;
             this.update();
         }
 
 
-        showProjects(e) {
+        this.showProjects = function(e) {
             this.productsShown = !this.productsShown;
             if (this.chevron === 'down') {
                 this.chevron = 'up';
@@ -98,7 +98,7 @@
         }
 
 
-        saveClient(e) {
+        this.saveClient = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -117,7 +117,7 @@
         }
 
 
-        submitProject(e) {
+        this.submitProject = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);

@@ -108,8 +108,8 @@
     </style>
 
 
-    <script>
-        tick(entry) {
+    <script type="es6">
+        this.tick = function(entry) {
             ++entry.totalSeconds;
             let hours = pad(Math.floor(entry.totalSeconds / 3600));
             let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60));
@@ -120,7 +120,7 @@
         }
 
 
-        timer(e) {
+        this.timer = function(e) {
             let duration = this.refs.duration.value;
             if (this.timerState === 'Start' && duration) {
                 this.timerState = 'Add';
@@ -145,7 +145,7 @@
         }
 
 
-        getEntries(url) {
+        this.getEntries = function(url) {
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -194,7 +194,7 @@
         }
 
 
-        submitEntry(e) {
+        this.submitEntry = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -222,14 +222,14 @@
         }
 
 
-        updateTotals(newDuration, oldDuration) {
+        this.updateTotals = function(newDuration, oldDuration) {
             this.totalDuration += newDuration - oldDuration;
             this.subtotalDuration += newDuration - oldDuration;
             this.update();
         }
 
 
-        getPerms() {
+        this.getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
                    let perms = Object;
                    $.each(data.results, function(i, perm) {
