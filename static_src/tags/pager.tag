@@ -17,6 +17,6 @@
     <script type="es6">
         this.loadDataUrl = function(e) {
             this.opts.update(e.currentTarget.getAttribute('data-url'));
-        }
+        };
     </script>
 </pager>

@@ -117,7 +117,7 @@
             entry.update({
                 timerDuration: hours + ':' + minutes + ':' + seconds
             });
-        }
+        };
 
 
         this.timer = function(e) {
@@ -142,7 +142,7 @@
                 this.timerState = 'Start';
                 e.preventDefault();
             }
-        }
+        };
 
 
         this.getEntries = function(url) {
@@ -191,7 +191,7 @@
                     }
                 });
             }.bind(this));
-        }
+        };
 
 
         this.submitEntry = function(e) {
@@ -219,25 +219,25 @@
                 }
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        }
+        };
 
 
         this.updateTotals = function(newDuration, oldDuration) {
             this.totalDuration += newDuration - oldDuration;
             this.subtotalDuration += newDuration - oldDuration;
             this.update();
-        }
+        };
 
 
         this.getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
-                   let perms = Object;
-                   $.each(data.results, function(i, perm) {
-                        perms[perm.codename] = perm;
-                    });
-                   this.perms = perms;
+                let perms = Object;
+                $.each(data.results, function(i, perm) {
+                    perms[perm.codename] = perm;
                 });
-        }
+                this.perms = perms;
+            });
+        };
 
 
         this.on('mount', function() {

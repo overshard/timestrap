@@ -84,7 +84,7 @@
         this.editClient = function(e) {
             this.edit = true;
             this.update();
-        }
+        };
 
 
         this.showProjects = function(e) {
@@ -95,7 +95,7 @@
                 this.chevron = 'down';
             }
             this.update();
-        }
+        };
 
 
         this.saveClient = function(e) {
@@ -114,7 +114,7 @@
                 this.update();
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        }
+        };
 
 
         this.submitProject = function(e) {
@@ -134,7 +134,7 @@
                 }
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        }
+        };
 
         this.on('mount', function() {
             this.chevron = 'down';
