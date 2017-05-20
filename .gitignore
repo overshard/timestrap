@@ -21,3 +21,6 @@ _build
 
 # visual studio code project settings
 /.vscode
+
+# code coverage
+.coverage
