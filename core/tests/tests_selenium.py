@@ -332,11 +332,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'view-reports'))
 
     def test_reports_filter(self):
-        management.call_command(
-            'loaddata', 'test_reports_data.json', verbosity=0)
+        management.call_command('loaddata', 'tests_data.json', verbosity=0)
 
         self.logIn()
-        self.addPerms(['view_entry'])
+        self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.ID, 'view-reports'))
 
@@ -350,14 +349,22 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 8)
 
-        # Three entries from Tester for "Client 3".
-        # TODO: Figure out why this doesn't work. No clients appear in list.
-        '''self.select2Select('report-filter-client', '')
+        # Four entries from Tester for "Client 1".
+        self.select2Select('report-filter-client', 'Client 1')
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)'''
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 4)
 
-        # TODO: Add tests for Project filter.
+        # Three entries from tester for "Project 1"
+        self.select2Select('report-filter-project', 'Project 1')
+        self.find(By.ID, 'generate-report').click()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
+
+        # Clear existing filters
+        self.selenium.refresh()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.select2Select('report-filter-user', 'tester')
 
         # Five entries from Tester since 2017-05-06.
         self.find(By.ID, 'report-filter-min-date').click()
@@ -374,5 +381,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
+
+        management.call_command('flush', verbosity=0, interactive=False)
+
+    def test_dashboard(self):
+        management.call_command('loaddata', 'tests_data.json', verbosity=0)
+
+        self.logIn()
+        self.waitForPresence((By.ID, 'view-dashboard'))
 
         management.call_command('flush', verbosity=0, interactive=False)
