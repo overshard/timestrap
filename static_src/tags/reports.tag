@@ -140,7 +140,7 @@
                 toggleButtonBusy($('#generate-report'));
                 toggleButtonBusy($('#export-report'));
             }.bind(this));
-        }
+        };
 
 
         this.getReport = function(e) {
@@ -154,7 +154,7 @@
             };
             url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
             this.getEntries(url);
-        }
+        };
 
 
         this.exportReport = function(e) {
@@ -173,14 +173,14 @@
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
-        }
+        };
 
 
         this.on('mount', function() {
             this.getEntries();
 
-            users = quickFetch(timestrapConfig.API_URLS.USERS);
-            clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            let users = quickFetch(timestrapConfig.API_URLS.USERS);
+            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
 
             Promise.all([users, clients]).then(function(data) {
                 this.update({
