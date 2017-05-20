@@ -67,6 +67,7 @@ base requirements instead of the development or Heroku requirements by running:
 If you plan on helping with front-end development you will also need Node.js.
 You can then install our Node.js dependencies by running:
 
+    sudo npm install -g gulp-cli
     npm install
 
 ### Ubuntu
@@ -137,11 +138,11 @@ Similar to above you will still need to be in the virtual environment by running
 `source .venv/bin/acivate`. Also make sure you've migrated, created a superuser
 and the other tasks. Once that is done you can then run Timestrap with Gulp:
 
-    node_modules/.bin/gulp
+    gulp
 
 This provides you with live updated static files for working on the files in
 `static_src`. Once you've completed your changes you can stop Gulp, run 
-`node_modules/.bin/gulp build` and commit the changes. We do this to reduce the
+`gulp build` and commit the changes. We do this to reduce the
 number of dependencies required to install Timestrap for people who don't want
 to update static files source code or dependencies.
 
