@@ -34,11 +34,9 @@
             <div class="form-group">
                 <select id="report-filter-project" class="project-select" ref="project">
                     <option><!-- For select2 placeholder to work --></option>
-                    <optgroup each={ c in clients } label={ c }>
-                        <option each={ projects }
-                                value={ id }
-                                if={ c === client_details.name }>
-                            { name }
+                    <optgroup each={ c in clients } label={ c.name }>
+                        <option each={ p in c.projects } value={ p.id }>
+                            { p.name }
                         </option>
                     </optgroup>
                 </select>
@@ -190,17 +188,9 @@
                 });
             }.bind(this));
 
-            quickFetch(timestrapConfig.API_URLS.PROJECTS).then(function(data) {
-                let clients = [];
-                $.each(data.results, function(i, project) {
-                    if ($.inArray(project.client_details.name, clients) === -1) {
-                        clients.push(project.client_details.name);
-                    }
-                });
-
+            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(function(data) {
                 this.update({
-                    clients: clients,
-                    projects: data.results
+                    clients: data.results,
                 });
                 $('.project-select').select2({
                     placeholder: 'Project',
