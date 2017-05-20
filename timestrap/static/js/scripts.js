@@ -236,13 +236,13 @@ function quickFetch(url, method, body) {
     }).then(function(response) {
         let result = null;
         switch (response.status) {
-            case 200:  // HTTP_200_OK
-            case 201:  // HTTP_201_CREATED
-                result = response.json();
-                break;
-            default:
-                result = response;
-                break;
+        case 200:  // HTTP_200_OK
+        case 201:  // HTTP_201_CREATED
+            result = response.json();
+            break;
+        default:
+            result = response;
+            break;
         }
         return result;
     });
@@ -286,7 +286,7 @@ function toggleButtonBusy(target) {
         }
     }
     else {
-        buttons.push(target)
+        buttons.push(target);
     }
 
     for (var i = 0; i < buttons.length; i++) {
@@ -295,7 +295,7 @@ function toggleButtonBusy(target) {
             if (typeof button.toggleClass !== 'undefined') {
                 button.toggleClass('progress-bar-striped');
                 button.toggleClass('progress-bar-animated');
-                button.prop("disabled", function (i, val) {
+                button.prop('disabled', function (i, val) {
                     return !val;
                 });
             }
@@ -320,15 +320,15 @@ function toggleButtonBusy(target) {
 $(document).keypress(function(e) {
     if (e.altKey) {
         switch (e.which) {
-            case 49:
-                window.location = '/clients/';
-                break;
-            case 50:
-                window.location = '/entries/';
-                break;
-            case 51:
-                window.location = '/reports';
-                break;
+        case 49:
+            window.location = '/clients/';
+            break;
+        case 50:
+            window.location = '/entries/';
+            break;
+        case 51:
+            window.location = '/reports';
+            break;
         }
     }
 });

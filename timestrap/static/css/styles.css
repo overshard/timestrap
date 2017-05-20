@@ -10247,23 +10247,19 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .picker__button--today[disabled]:before {
   border-top-color: #aaa; }
 
-/* Fix bootstrap v4 not positioning xs nav bar stuff properly */
 @media (max-width: 576px) {
   .container {
     margin-left: 0;
     margin-right: 0; } }
 
-/* Fix bootstrap v4 not using pointer on some objects */
 a,
 button {
   cursor: pointer; }
 
-/* Login */
 .login-wrapper {
   max-width: 400px;
   margin: 0 auto; }
 
-/* Dashboard */
 .text-absolute-middle {
   position: absolute;
   top: 0;
@@ -10280,30 +10276,32 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* Entries */
 .inset-row {
-  margin-bottom: -0.75rem; }
+  margin-bottom: -.75rem; }
 
 .inset-row .display-4 {
   font-size: 2rem; }
 
-.project-rows .row:nth-of-type(2n),
-.entry-rows .row:nth-of-type(2n+1) {
-  background-color: #fbf3e5; }
+.project-rows .row {
+  border-top: 1px solid #eceeef; }
+  .project-rows .row:nth-of-type(2n) {
+    background-color: #fbf3e5; }
+  .project-rows .row:last-child {
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    border-bottom: 1px solid #eceeef; }
 
-.project-rows .row,
 .entry-rows .row {
   border-top: 1px solid #eceeef; }
-
-.entry-rows .row:first-child {
-  border-top-right-radius: .25rem;
-  border-top-left-radius: .25rem; }
-
-.project-rows .row:last-child,
-.entry-rows .row:last-child {
-  border-bottom-right-radius: .25rem;
-  border-bottom-left-radius: .25rem;
-  border-bottom: 1px solid #eceeef; }
+  .entry-rows .row:first-child {
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem; }
+  .entry-rows .row:nth-of-type(2n+1) {
+    background-color: #fbf3e5; }
+  .entry-rows .row:last-child {
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    border-bottom: 1px solid #eceeef; }
 
 .entry-rows .duration.display-4 {
   font-size: 1.5rem; }
@@ -10323,7 +10321,6 @@ button {
 .btn-icon::after {
   display: none; }
 
-/* Select2 theme */
 .select2-container--default .select2-selection--single {
   border: 1px solid #d2d2d2;
   height: 27px; }
