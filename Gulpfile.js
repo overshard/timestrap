@@ -261,3 +261,17 @@ gulp.task('reset', function() {
         }
     );
 });
+
+// Testing taks
+gulp.task('test', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'test'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
