@@ -1,5 +1,6 @@
 # python
 *.pyc
+/venv
 /.venv
 
 # node

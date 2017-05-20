@@ -1,13 +1,20 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var riot = require('gulp-riot');
-var expect = require('gulp-expect-file');
-var spawn = require('child_process').spawn;
+var gulp       = require('gulp');
+
+var expect       = require('gulp-expect-file');
+var concat       = require('gulp-concat');
+var sass         = require('gulp-sass');
+var sasslint     = require('gulp-sass-lint');
+var autoprefixer = require('gulp-autoprefixer');
+var riot         = require('gulp-riot');
+var eslint       = require('gulp-eslint');
+
+var spawn      = require('child_process').spawn;
+var spawnSync  = require('child_process').spawnSync;
 
 
+// Primary tasks for dealing with static files
 gulp.task('styles', function() {
-    let files = [
+    var files = [
         'node_modules/font-awesome/css/font-awesome.min.css',
         'node_modules/tether/dist/css/tether.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -25,7 +32,7 @@ gulp.task('styles', function() {
 
 
 gulp.task('scripts', function(){
-    let files = [
+    var files = [
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/moment/min/moment.min.js',
         'node_modules/tether/dist/js/tether.min.js',
@@ -47,7 +54,7 @@ gulp.task('scripts', function(){
 
 
 gulp.task('tags', function() {
-    let files = [
+    var files = [
         'static_src/tags/**/*.tag'
     ]
     gulp.src(files)
@@ -78,12 +85,130 @@ gulp.task('watch', function() {
 });
 
 
+// Default to watching for static file changes and running django
 gulp.task('default', ['build', 'watch'], function() {
-    var runserver = spawn(
+    spawn(
         'python',
-        ['manage.py', 'runserver'],
+        [
+            'manage.py',
+            'runserver'
+        ],
         {
             stdio: 'inherit'
         }
     );
 });
+
+
+// Linting
+gulp.task('pythonlint', function() {
+    var pg_dump = spawnSync(
+        'flake8',
+        [
+            '--exclude=venv,node_modules,migrations'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
+
+
+gulp.task('sasslint', function() {
+    gulp.src('static_src/sass/**/*.s+(a|c)ss')
+        .pipe(sasslint({
+            rules: {
+                'no-vendor-prefixes': 2,
+                'no-ids': 0,
+                'indentation': [
+                    1,
+                    {
+                        'size': 4
+                    }
+                ],
+                'property-sort-order': 0,
+                'force-element-nesting': 0
+            }
+        }))
+        .pipe(sasslint.format());
+});
+
+
+gulp.task('eslint', function() {
+    gulp.src('static_src/scripts/**/*.js')
+        .pipe(eslint({
+            rules: {
+                'indent': [
+                    'error',
+                    4
+                ],
+                'linebreak-style': [
+                    'error',
+                    'unix'
+                ],
+                'quotes': [
+                    'error',
+                    'single'
+                ],
+                'semi': [
+                    'error',
+                    'always'
+                ]
+            },
+            globals: [
+                '$'
+            ],
+            env: {
+                'browser': true
+            },
+            extends: 'eslint:recommended'
+        }))
+        .pipe(eslint.format());
+});
+
+
+gulp.task('lint', ['pythonlint', 'sasslint', 'eslint']);
+
+
+// Database management tasks
+gulp.task('makemigrations', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'makemigrations'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    )
+});
+
+
+gulp.task('migrate', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'migrate'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    )
+});
+
+
+gulp.task('createsuperuser', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'createsuperuser'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    )
+});
+
