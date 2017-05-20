@@ -52,7 +52,7 @@
                     previous: data.previous
                 });
             }.bind(this));
-        }
+        };
 
 
         this.submitClient = function(e) {
@@ -69,18 +69,18 @@
                 }
                 toggleButtonBusy(e.target);
             }.bind(this));
-        }
+        };
 
 
         this.getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
-                   let perms = Object;
-                   $.each(data.results, function(i, perm) {
-                        perms[perm.codename] = perm;
-                    });
-                   this.perms = perms;
+                let perms = Object;
+                $.each(data.results, function(i, perm) {
+                    perms[perm.codename] = perm;
                 });
-        }
+                this.perms = perms;
+            });
+        };
 
         this.on('mount', function() {
             this.getPerms();

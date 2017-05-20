@@ -65,7 +65,7 @@
         this.editProject = function(e) {
             this.edit = true;
             this.update();
-        }
+        };
 
 
         this.saveProject = function(e) {
@@ -88,6 +88,6 @@
                 this.update();
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        }
+        };
     </script>
 </project>

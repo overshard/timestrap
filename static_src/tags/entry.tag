@@ -114,13 +114,13 @@
                 width: '100%',
                 dropdownAutoWidth: true
             });
-        }
+        };
 
 
         this.restartEntry = function(e) {
             this.runTimer = true;
             this.timer(e);
-        }
+        };
 
 
         this.timer = function(e) {
@@ -142,7 +142,7 @@
                 this.refs.duration.value = dur.substr(0, dur.lastIndexOf(':'));
                 e.preventDefault();
             }
-        }
+        };
 
 
         this.saveEntry = function(e) {
@@ -175,7 +175,7 @@
                 }
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        }
+        };
 
 
         this.deleteEntry = function(e) {
@@ -188,6 +188,6 @@
                     this.parent.updateTotals(0, this.duration);
                 }
             }.bind(this));
-        }
+        };
     </script>
 </entry>

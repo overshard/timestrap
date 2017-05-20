@@ -1,5 +1,8 @@
-/* Fix bootstrap v4 not positioning xs nav bar stuff properly */
+// Global variables
+$row-border-color: #eceeef;
+$striping-row-color: #fbf3e5;
 
+// Fix bootstrap v4 not positioning xs nav bar stuff properly
 @media (max-width: 576px) {
     .container {
         margin-left: 0;
@@ -8,24 +11,20 @@
 }
 
 
-/* Fix bootstrap v4 not using pointer on some objects */
-
+// Fix bootstrap v4 not using pointer on some objects
 a,
 button {
     cursor: pointer;
 }
 
 
-/* Login */
-
+// Login
 .login-wrapper {
     max-width: 400px;
     margin: 0 auto;
 }
 
-
-/* Dashboard */
-
+// Dashboard
 .text-absolute-middle {
     position: absolute;
     top: 0;
@@ -44,43 +43,51 @@ button {
     white-space: nowrap;
 }
 
-
-/* Entries */
-
+// Entries
 .inset-row {
-    margin-bottom: -0.75rem;
+    margin-bottom: -.75rem;
 }
 
 .inset-row .display-4 {
     font-size: 2rem;
 }
 
+.project-rows {
+    .row {
+        border-top: 1px solid $row-border-color;
 
-.project-rows .row:nth-of-type(2n),
-.entry-rows .row:nth-of-type(2n+1) {
-    background-color: #fbf3e5;
-}
+        &:nth-of-type(2n) {
+            background-color: $striping-row-color;
+        }
 
-.project-rows .row,
-.entry-rows .row {
-    border-top: 1px solid #eceeef;
-}
-
-
-.entry-rows .row:first-child {
-    border-top-right-radius: .25rem;
-    border-top-left-radius: .25rem;
-}
-
-
-.project-rows .row:last-child,
-.entry-rows .row:last-child {
-    border-bottom-right-radius: .25rem;
-    border-bottom-left-radius: .25rem;
-    border-bottom: 1px solid #eceeef;
+        &:last-child {
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+            border-bottom: 1px solid $row-border-color;
+        }
+    }
 }
 
 .entry-rows {
+    .row {
+        border-top: 1px solid $row-border-color;
+
+        &:first-child {
+            border-top-right-radius: .25rem;
+            border-top-left-radius: .25rem;
+        }
+
+        &:nth-of-type(2n+1) {
+            background-color: $striping-row-color;
+        }
+
+        &:last-child {
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+            border-bottom: 1px solid $row-border-color;
+        }
+    }
+
     .duration.display-4 {
         font-size: 1.5rem;
     }
@@ -101,13 +108,14 @@ button {
     }
 }
 
-.btn-icon::after {
-    display: none;
+.btn-icon {
+    &::after {
+        display: none;
+    }
 }
 
 
-/* Select2 theme */
-
+// Select2 theme
 .select2-container--default .select2-selection--single {
     border: 1px solid #d2d2d2;
     height: 27px;

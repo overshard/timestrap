@@ -22,7 +22,7 @@ gulp.task('styles', function() {
         'node_modules/pickadate/lib/compressed/themes/default.css',
         'node_modules/pickadate/lib/compressed/themes/default.date.css',
         'static_src/sass/**/*.scss'
-    ]
+    ];
     gulp.src(files)
         .pipe(expect(files))
         .pipe(sass().on('error', sass.logError))
@@ -45,7 +45,7 @@ gulp.task('scripts', function(){
         'node_modules/riot/riot+compiler.min.js',
         'node_modules/riot-route/dist/route.min.js',
         'static_src/scripts/**/*.js'
-    ]
+    ];
     gulp.src(files)
         .pipe(expect(files))
         .pipe(concat('scripts.js'))
@@ -56,7 +56,7 @@ gulp.task('scripts', function(){
 gulp.task('tags', function() {
     var files = [
         'static_src/tags/**/*.tag'
-    ]
+    ];
     gulp.src(files)
         .pipe(expect(files))
         .pipe(riot())
@@ -68,7 +68,7 @@ gulp.task('tags', function() {
 gulp.task('extras', function() {
     var files = [
         'node_modules/font-awesome/fonts/*'
-    ]
+    ];
     gulp.src(files)
         .pipe(expect(files))
         .pipe(gulp.dest('./timestrap/static/fonts/'));
@@ -140,41 +140,41 @@ gulp.task('eslint', function() {
         'Gulpfile.js',
         'static_src/scripts/**/*.js',
         'static_src/tags/**/*.tag'
-    ]
+    ];
     gulp.src(files)
         .pipe(expect(files))
         .pipe(eslint({
-            "rules": {
-                "indent": [
-                    "error",
+            'rules': {
+                'indent': [
+                    'error',
                     4
                 ],
-                "linebreak-style": [
-                    "error",
-                    "unix"
+                'linebreak-style': [
+                    'error',
+                    'unix'
                 ],
-                "quotes": [
-                    "error",
-                    "single"
+                'quotes': [
+                    'error',
+                    'single'
                 ],
-                "semi": [
-                    "error",
-                    "always"
+                'semi': [
+                    'error',
+                    'always'
                 ]
             },
-            "globals": [
-                "$",
-                "riot"
+            'globals': [
+                '$',
+                'riot'
             ],
-            "env": {
-                "browser": true
+            'env': {
+                'browser': true
             },
-            "extends": "eslint:recommended",
-            "plugins": [
-                "riot"
+            'extends': 'eslint:recommended',
+            'plugins': [
+                'riot'
             ],
-            "parserOptions": {
-                "ecmaVersion": 6
+            'parserOptions': {
+                'ecmaVersion': 6
             }
         }))
         .pipe(eslint.format())
@@ -262,3 +262,16 @@ gulp.task('reset', function() {
     );
 });
 
+// Testing tasks
+gulp.task('test', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'test'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
