@@ -26,13 +26,13 @@
           onsubmit={ getReport }>
         <div class="col-sm-6">
             <div class="form-group">
-                <select id="report-filter-user" class="user-select" ref="user">
+                <select id="report-filter-user" ref="user">
                     <option><!-- For select2 placeholder to work --></option>
                     <option each={ users } value={ id }>{ username }</option>
                 </select>
             </div>
             <div class="form-group">
-                <select id="report-filter-project" class="project-select" ref="project">
+                <select id="report-filter-project" ref="project">
                     <option><!-- For select2 placeholder to work --></option>
                     <optgroup each={ c in clients } label={ c.name }>
                         <option each={ p in c.projects } value={ p.id }>
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <select id="report-filter-client" class="client-select" ref="client">
+                <select id="report-filter-client" ref="client">
                     <option><!-- For select2 placeholder to work --></option>
                     <option each={ clients } value={ id }>{ name }</option>
                 </select>
@@ -179,30 +179,26 @@
         this.on('mount', function() {
             this.getEntries();
 
-            quickFetch(timestrapConfig.API_URLS.USERS).then(function(data) {
-                this.update({users: data.results});
-                $('.user-select').select2({
+            users = quickFetch(timestrapConfig.API_URLS.USERS);
+            clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+
+            Promise.all([users, clients]).then(function(data) {
+                this.update({
+                    users: data[0].results,
+                    clients: data[1].results,
+                });
+                $('#report-filter-user').select2({
                     placeholder: 'User',
                     width: '100%',
                     allowClear: true
                 });
-            }.bind(this));
-
-            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(function(data) {
-                this.update({
-                    clients: data.results,
-                });
-                $('.project-select').select2({
-                    placeholder: 'Project',
+                $('#report-filter-client').select2({
+                    placeholder: 'Client',
                     width: '100%',
                     allowClear: true
                 });
-            }.bind(this));
-
-            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(function(data) {
-                this.update({clients: data.results});
-                $('.client-select').select2({
-                    placeholder: 'Client',
+                $('#report-filter-project').select2({
+                    placeholder: 'Project',
                     width: '100%',
                     allowClear: true
                 });
