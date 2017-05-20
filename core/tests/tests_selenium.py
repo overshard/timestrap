@@ -349,14 +349,17 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 8)
 
-        # Three entries from Tester for "Client 3".
-        # TODO: Figure out why this doesn't work. No clients appear in list.
-        '''self.select2Select('report-filter-client', '')
+        # Four entries from Tester for "Client 1".
+        self.select2Select('report-filter-client', 'Client 1')
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)'''
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 4)
 
-        # TODO: Add tests for Project filter.
+        # Three entries from tester for "Project 1"
+        self.select2Select('report-filter-project', 'Project 1')
+        self.find(By.ID, 'generate-report').click()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
 
         # Five entries from Tester since 2017-05-06.
         self.find(By.ID, 'report-filter-min-date').click()
