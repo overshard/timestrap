@@ -262,7 +262,7 @@ gulp.task('reset', function() {
     );
 });
 
-// Testing taks
+// Testing tasks
 gulp.task('test', function() {
     spawnSync(
         'python',
