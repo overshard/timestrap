@@ -181,7 +181,7 @@ gulp.task('makemigrations', function() {
         {
             stdio: 'inherit'
         }
-    )
+    );
 });
 
 
@@ -195,7 +195,7 @@ gulp.task('migrate', function() {
         {
             stdio: 'inherit'
         }
-    )
+    );
 });
 
 
@@ -209,6 +209,41 @@ gulp.task('createsuperuser', function() {
         {
             stdio: 'inherit'
         }
-    )
+    );
+});
+
+
+gulp.task('reset', function() {
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'flush',
+            '--noinput'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'heroku'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+    spawnSync(
+        'python',
+        [
+            'manage.py',
+            'fake'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
 });
 
