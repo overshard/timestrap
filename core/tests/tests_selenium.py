@@ -335,7 +335,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
 
         self.logIn()
-        self.addPerms(['view_entry'])
+        self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.ID, 'view-reports'))
 
@@ -360,6 +360,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
+
+        # Clear existing filters
+        self.selenium.refresh()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.select2Select('report-filter-user', 'tester')
 
         # Five entries from Tester since 2017-05-06.
         self.find(By.ID, 'report-filter-min-date').click()
