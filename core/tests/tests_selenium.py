@@ -332,8 +332,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'view-reports'))
 
     def test_reports_filter(self):
-        management.call_command(
-            'loaddata', 'test_reports_data.json', verbosity=0)
+        management.call_command('loaddata', 'tests_data.json', verbosity=0)
 
         self.logIn()
         self.addPerms(['view_entry'])
@@ -374,5 +373,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
+
+        management.call_command('flush', verbosity=0, interactive=False)
+
+    def test_dashboard(self):
+        management.call_command('loaddata', 'tests_data.json', verbosity=0)
+
+        self.logIn()
+        self.waitForPresence((By.ID, 'view-dashboard'))
 
         management.call_command('flush', verbosity=0, interactive=False)
