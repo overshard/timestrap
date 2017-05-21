@@ -29,7 +29,7 @@
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-                <span class="mb-1">{ hourly_rate }</span>
+                <span class="mb-1">${ hourly_rate }</span>
             </div>
             <div class="col-2">
                 <button name="task-change"

@@ -102,18 +102,20 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         return obj.get_percent_done()
 
 
-class EntrySerializer(serializers.HyperlinkedModelSerializer):
-    duration = DurationField()
-    project_details = ProjectSerializer(source='project', read_only=True)
-    user_details = UserSerializer(source='user', read_only=True)
-
-    class Meta:
-        model = Entry
-        fields = ('id', 'url', 'project', 'project_details', 'user',
-                  'user_details', 'date', 'duration', 'note',)
-
-
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
         fields = ('id', 'url', 'name', 'hourly_rate',)
+
+
+class EntrySerializer(serializers.HyperlinkedModelSerializer):
+    duration = DurationField()
+    project_details = ProjectSerializer(source='project', read_only=True)
+    user_details = UserSerializer(source='user', read_only=True)
+    task_details = TaskSerializer(source='task', read_only=True)
+
+    class Meta:
+        model = Entry
+        fields = ('id', 'url', 'project', 'project_details', 'task',
+                  'task_details', 'user', 'user_details', 'date', 'duration',
+                  'note',)
