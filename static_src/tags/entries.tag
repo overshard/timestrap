@@ -45,7 +45,7 @@
                    placeholder="Date" />
         </div>
         <div class="col-sm-3">
-            <select name="entry-task" class="task-select" ref="task" required>
+            <select name="entry-task" class="task-select" ref="task">
                 <option><!-- For select2 placeholder to work --></option>
                 <option each={ tasks }
                         value={ url }>
