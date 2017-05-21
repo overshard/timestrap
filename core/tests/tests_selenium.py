@@ -232,7 +232,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertNotIn('entry-add', self.find(By.ID, 'view-entries').text)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
-        self.find(By.CLASS_NAME, 'select2-selection__arrow').click()
+        self.find(By.CLASS_NAME, 'select2-selection__arrow')[1].click()
         self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
         self.find(By.CLASS_NAME,
                   'select2-search__field').send_keys('Project 1')
