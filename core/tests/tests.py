@@ -37,20 +37,6 @@ class ViewsTestCase(TestCase):
 
         self.c.login(username=fake_user['username'], password=fake_password)
 
-    # TODO: Uncomment once verbosity is fixed
-    # Forcing verbosity to 0 doesn't seem to work here, disabing till fixed
-    # def test_compress(self):
-    #     call_command('compress', verbosity=0, force=True)
-
-    def test_dashboard_view(self):
-        # Test with and without data in the database
-        page = self.c.get('/')
-        self.assertEqual(page.status_code, 200)
-
-        call_command('fake', verbosity=0, iterations=1)
-        page = self.c.get('/')
-        self.assertEqual(page.status_code, 200)
-
     def test_clients_view(self):
         # Test with and without data in the database
         page = self.c.get('/clients/')
