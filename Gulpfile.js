@@ -262,6 +262,7 @@ gulp.task('reset', function() {
     );
 });
 
+
 // Testing tasks
 gulp.task('test', function() {
     spawnSync(
@@ -269,6 +270,32 @@ gulp.task('test', function() {
         [
             'manage.py',
             'test'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
+
+
+gulp.task('coverage', function() {
+    spawnSync(
+        'coverage',
+        [
+            'run',
+            '--source=core,api',
+            'manage.py',
+            'test'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+    spawnSync(
+        'coverage',
+        [
+            'report',
+            '-m'
         ],
         {
             stdio: 'inherit'
