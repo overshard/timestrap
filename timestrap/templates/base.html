@@ -15,68 +15,7 @@
         {% block extra_css %}{% endblock %}
     </head>
     <body>
-        <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
-            <div class="container">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'timesheet' %}">Timestrap</a>
-                <div id="nav" class="collapse navbar-collapse">
-                    <ul id="nav-app" class="navbar-nav mr-auto">
-                        {% if user.is_authenticated %}
-                            {% if perms.core.view_entry %}
-                                <li class="nav-item">
-                                    {% url 'timesheet' as url %}
-                                    <a id="nav-app-entries"
-                                       class="nav-link"
-                                       href="{{ url }}">Timesheet</a>
-                                </li>
-                            {% endif %}
-                            {% if perms.core.view_client %}
-                                <li class="nav-item">
-                                    {% url 'clients' as url %}
-                                    <a id="nav-app-clients"
-                                       class="nav-link"
-                                       href="{{ url }}">Clients</a>
-                                </li>
-                            {% endif %}
-                            {% if perms.core.view_task %}
-                                <li class="nav-item">
-                                    {% url 'tasks' as url %}
-                                    <a id="nav-app-tasks"
-                                       class="nav-link"
-                                       href="{{ url }}">Tasks</a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                {% url 'reports' as url %}
-                                <a id="nav-app-reports"
-                                   class="nav-link"
-                                   href="{{ url }}">Reports</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <ul id="nav-admin" class="navbar-nav">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="{% url 'admin:index' %}"  data-toggle="dropdown">{{ user.username }}</a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a id="nav-admin-api" class="dropdown-item" href="{% url 'api-root' %}">API Browser</a>
-                                    {% if user.is_staff %}
-                                        <a id="nav-admin-admin" class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
-                                    {% endif %}
-                                    <a id="nav-admin-logout" class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                                </div>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a id="nav-admin-login" class="nav-link" href="{% url 'login' %}">Login</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <navigation></navigation>
 
         <div id="view-{{ request.resolver_match.view_name }}" class="container">
             {% block content %}{% endblock %}
@@ -118,6 +57,10 @@
 
         <script src="{% static 'js/scripts.js' %}"></script>
         <script src="{% static 'js/tags.js' %}"></script>
+        <script>
+            // Mount our initial navigation
+            riot.mount('navigation');
+        </script>
 
         {% block extra_js %}{% endblock %}
     </body>
