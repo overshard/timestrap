@@ -39,6 +39,10 @@ gulp.task('styles', function() {
     gulp.src(files)
         .pipe(expect(files))
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe(concat('styles.css'))
         .pipe(gulp.dest('./timestrap/static/css/'));
 });

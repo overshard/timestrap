@@ -1,4 +1,12 @@
+#view-login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .login-wrapper {
     max-width: 400px;
     margin: 0 auto;
+    background-color: $white;
 }
