@@ -81,13 +81,13 @@
 
 
     <script type="es6">
-        this.editClient = function(e) {
+        editClient = function(e) {
             this.edit = true;
             this.update();
         };
 
 
-        this.showProjects = function(e) {
+        showProjects = function(e) {
             this.productsShown = !this.productsShown;
             if (this.chevron === 'down') {
                 this.chevron = 'up';
@@ -98,7 +98,7 @@
         };
 
 
-        this.saveClient = function(e) {
+        saveClient = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -117,7 +117,7 @@
         };
 
 
-        this.submitProject = function(e) {
+        submitProject = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);

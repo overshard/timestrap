@@ -62,13 +62,13 @@
 
 
     <script type="es6">
-        this.editProject = function(e) {
+        editProject = function(e) {
             this.edit = true;
             this.update();
         };
 
 
-        this.saveProject = function(e) {
+        saveProject = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);

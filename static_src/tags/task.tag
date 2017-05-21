@@ -44,13 +44,13 @@
 
 
     <script type="es6">
-        this.editTask = function(e) {
+        editTask = function(e) {
             this.edit = true;
             this.update();
         };
 
 
-        this.saveTask = function(e) {
+        saveTask = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);

@@ -43,7 +43,7 @@
 
 
     <script type="es6">
-        this.getClients = function(url) {
+        getClients = function(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
             quickFetch(url).then(function(data) {
                 this.update({
@@ -52,10 +52,10 @@
                     previous: data.previous
                 });
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.submitClient = function(e) {
+        submitClient = function(e) {
             e.preventDefault();
             toggleButtonBusy(e.target);
             let body = {
@@ -69,10 +69,10 @@
                 }
                 toggleButtonBusy(e.target);
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.getPerms = function() {
+        getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
                 let perms = Object;
                 $.each(data.results, function(i, perm) {
@@ -80,11 +80,11 @@
                 });
                 this.perms = perms;
             });
-        };
+        }.bind(this);
 
         this.on('mount', function() {
-            this.getPerms();
-            this.getClients();
+            getPerms();
+            getClients();
         }.bind(this));
     </script>
 </clients>
