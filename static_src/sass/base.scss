@@ -1,6 +1,9 @@
 // Global variables
 $row-border-color: #eceeef;
 $striping-row-color: #fbf3e5;
+$form-border-color: #d2d2d2;
+$placeholder-font-color: #636c72;
+
 
 // Fix bootstrap v4 not positioning xs nav bar stuff properly
 @media (max-width: 576px) {
@@ -116,20 +119,20 @@ button {
 
 
 // Select2 theme
-.select2-container--default .select2-selection--single {
-    border: 1px solid #d2d2d2;
+.select2-container--default .select2-selection--single {  // sass-lint:disable-line class-name-format
+    border: 1px solid $form-border-color;
     height: 27px;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+.select2-container--default .select2-selection--single .select2-selection__rendered {  // sass-lint:disable-line class-name-format
     line-height: 23px;
     font-size: .875rem;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__placeholder {
-    color: #636c72;
+.select2-container--default .select2-selection--single .select2-selection__placeholder {  // sass-lint:disable-line class-name-format
+    color: $placeholder-font-color;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
+.select2-container--default .select2-selection--single .select2-selection__arrow {  // sass-lint:disable-line class-name-format
     height: 25px;
 }
