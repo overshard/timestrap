@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import hashlib
+
 from django.contrib.auth.models import User, Permission
 
 from rest_framework import serializers
@@ -12,9 +14,15 @@ from core.models import Task
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    gravatar_url = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('id', 'url', 'username')
+        fields = ('id', 'url', 'username', 'gravatar_url')
+
+    def get_gravatar_url(self, obj):
+        email_hash = hashlib.md5(obj.email.lower()).hexdigest()
+        return "https://www.gravatar.com/avatar/" + email_hash
 
 
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
