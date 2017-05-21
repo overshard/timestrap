@@ -1,0 +1,15 @@
+// Fix bootstrap v4 not positioning xs nav bar stuff properly
+// TODO: Learned that bootstrap 4 is not at fault here it's the classes I used
+@media (max-width: 576px) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+
+// Fix bootstrap v4 not using pointer on some objects
+a,
+button {
+    cursor: pointer;
+}
