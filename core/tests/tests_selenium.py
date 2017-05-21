@@ -227,7 +227,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project', 'view_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-add', self.find(By.ID, 'view-entries').text)
         self.addPerms(['add_entry'])
@@ -257,7 +257,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Entry(project=project, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_client', 'view_project', 'view_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
         self.addPerms(['change_entry'])
@@ -289,7 +289,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Entry(project=project, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'change_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
         self.addPerms(['change_entry'])
@@ -318,7 +318,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Entry(project=project, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'delete_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/entries/'))
+        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-delete'))

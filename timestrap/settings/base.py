@@ -72,11 +72,11 @@ WSGI_APPLICATION = 'timestrap.wsgi.application'
 # Authentication
 # https://docs.djangoproject.com/en/1.11/topics/auth/default/
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/timesheet/'
 
 LOGIN_URL = '/login/'
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 
 # Internationalization

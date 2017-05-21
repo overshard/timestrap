@@ -20,15 +20,23 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'dashboard' %}">Timestrap</a>
+                <a class="navbar-brand" href="{% url 'timesheet' %}">Timestrap</a>
                 <div id="nav" class="collapse navbar-collapse">
                     <ul id="nav-app" class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
+                            {% if perms.core.view_entry %}
+                                <li class="nav-item">
+                                    {% url 'timesheet' as url %}
+                                    <a id="nav-app-entries"
+                                       class="nav-link"
+                                       href="{{ url }}">Timesheet</a>
+                                </li>
+                            {% endif %}
                             {% if perms.core.view_client %}
                                 <li class="nav-item">
                                     {% url 'clients' as url %}
                                     <a id="nav-app-clients"
-                                       class="nav-link {% if request.path == url %}active{% endif %}"
+                                       class="nav-link"
                                        href="{{ url }}">Clients</a>
                                 </li>
                             {% endif %}
@@ -36,22 +44,14 @@
                                 <li class="nav-item">
                                     {% url 'tasks' as url %}
                                     <a id="nav-app-tasks"
-                                       class="nav-link {% if request.path == url %}active{% endif %}"
+                                       class="nav-link"
                                        href="{{ url }}">Tasks</a>
-                                </li>
-                            {% endif %}
-                            {% if perms.core.view_entry %}
-                                <li class="nav-item">
-                                    {% url 'entries' as url %}
-                                    <a id="nav-app-entries"
-                                       class="nav-link {% if request.path == url %}active{% endif %}"
-                                       href="{{ url }}">Timesheet</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
                                 {% url 'reports' as url %}
                                 <a id="nav-app-reports"
-                                   class="nav-link {% if request.path == url %}active{% endif %}"
+                                   class="nav-link"
                                    href="{{ url }}">Reports</a>
                             </li>
                         {% endif %}
@@ -59,11 +59,11 @@
                     <ul id="nav-admin" class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="/admin/"  data-toggle="dropdown">{{ user.username }}</a>
+                                <a class="nav-link dropdown-toggle" href="{% url 'admin:index' %}"  data-toggle="dropdown">{{ user.username }}</a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a id="nav-admin-api" class="dropdown-item" href="/api/">API Browser</a>
+                                    <a id="nav-admin-api" class="dropdown-item" href="{% url 'api-root' %}">API Browser</a>
                                     {% if user.is_staff %}
-                                        <a id="nav-admin-admin" class="dropdown-item" href="/admin/">Admin</a>
+                                        <a id="nav-admin-admin" class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
                                     {% endif %}
                                     <a id="nav-admin-logout" class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 </div>
@@ -87,11 +87,14 @@
             (function(document, window) {
                 window.timestrapConfig = window.timestrapConfig || {};
                 timestrapConfig.CORE_URLS = {
-                    DASHBOARD: "{% url 'dashboard' %}",
+                    LOGIN: "{% url 'login' %}",
+                    LOGOUT: "{% url 'logout' %}",
+                    API: "{% url 'api-root' %}",
+                    ADMIN: "{% url 'admin:index' %}",
                     REPORTS: "{% url 'reports' %}",
                     REPORTS_EXPORT: "{% url 'reports-export' %}",
                     CLIENTS: "{% url 'clients' %}",
-                    ENTRIES: "{% url 'entries' %}",
+                    ENTRIES: "{% url 'timesheet' %}",
                     TASKS: "{% url 'tasks' %}"
                 }
                 timestrapConfig.API_URLS = {
