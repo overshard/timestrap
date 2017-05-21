@@ -73,7 +73,7 @@
 
 
         getPerms = function() {
-            quickFetch('/api/permissions/').then(function(data) {
+            prefetch.PERMISSIONS.then(function(data) {
                 let perms = Object;
                 $.each(data.results, function(i, perm) {
                     perms[perm.codename] = perm;

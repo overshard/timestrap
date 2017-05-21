@@ -97,7 +97,7 @@
 
     <script type="es6">
         getPerms = function() {
-            quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(function(data) {
+            prefetch.PERMISSIONS.then(function(data) {
                 let perms = Object;
                 $.each(data.results, function(i, perm) {
                     perms[perm.codename] = perm;
@@ -110,7 +110,7 @@
 
 
         getUser = function() {
-            quickFetch(timestrapConfig.USER.URL).then(function(data) {
+            prefetch.USER.then(function(data) {
                 this.update({
                     user: data
                 });
