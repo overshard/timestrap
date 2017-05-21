@@ -10,5 +10,6 @@ urlpatterns = [
 
     url(r'^entries/$', AppView.as_view(), name='entries'),
     url(r'^clients/$', AppView.as_view(), name='clients'),
+    url(r'^tasks/$', AppView.as_view(), name='tasks'),
     url(r'^reports/$', AppView.as_view(), name='reports'),
 ]

@@ -32,6 +32,14 @@
                                        href="{{ url }}">Clients</a>
                                 </li>
                             {% endif %}
+                            {% if perms.core.view_task %}
+                                <li class="nav-item">
+                                    {% url 'tasks' as url %}
+                                    <a id="nav-app-tasks"
+                                       class="nav-link {% if request.path == url %}active{% endif %}"
+                                       href="{{ url }}">Tasks</a>
+                                </li>
+                            {% endif %}
                             {% if perms.core.view_entry %}
                                 <li class="nav-item">
                                     {% url 'entries' as url %}
@@ -83,7 +91,8 @@
                     REPORTS: "{% url 'reports' %}",
                     REPORTS_EXPORT: "{% url 'reports-export' %}",
                     CLIENTS: "{% url 'clients' %}",
-                    ENTRIES: "{% url 'entries' %}"
+                    ENTRIES: "{% url 'entries' %}",
+                    TASKS: "{% url 'tasks' %}"
                 }
                 timestrapConfig.API_URLS = {
                     USERS: "{% url 'user-list' %}",

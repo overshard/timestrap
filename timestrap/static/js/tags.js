@@ -448,3 +448,81 @@ this.on('mount', function () {
     });
 }.bind(this));
 });
+
+riot.tag2('task', '<div class="row py-2 bg-faded rounded mb-2"> <virtual if="{edit && perms.change_task}"> <div class="col-8"> <input name="task-name" type="text" class="form-control form-control-sm" ref="name" riot-value="{name}"> </div> <div class="col-2"> <input name="task-rate" type="text" class="form-control form-control-sm" ref="hourly_rate" riot-value="{hourly_rate}"> </div> <div class="col-2"> <button name="task-save" class="btn btn-success btn-sm w-100" onclick="{saveTask}"> Save </button> </div> </virtual> <virtual if="{!edit}"> <div class="col-8 d-flex align-items-center"> <span class="font-weight-bold">{name}</span> </div> <div class="col-2 d-flex align-items-center"> <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i> <span class="mb-1">{hourly_rate}</span> </div> <div class="col-2"> <button name="task-change" class="btn btn-warning btn-sm w-100" onclick="{editTask}" disabled="{!perms.change_task}"> Edit </button> </div> </virtual> </div>', '', '', function(opts) {
+this.editTask = function (e) {
+    this.edit = true;
+    this.update();
+};
+
+this.saveTask = function (e) {
+    e.preventDefault();
+    clickedButton = e.target;
+    toggleButtonBusy(clickedButton);
+    let body = {
+        name: this.refs.name.value,
+        hourly_rate: this.refs.hourly_rate.value
+    };
+    quickFetch(this.url, 'put', body).then(function (data) {
+        if (data.id) {
+            this.name = body.name;
+            this.hourly_rate = body.hourly_rate;
+        }
+        this.name.value = '';
+        this.hourly_rate.value = '';
+        this.edit = false;
+        this.update();
+        toggleButtonBusy(clickedButton);
+    }.bind(this));
+};
+
+this.on('mount', function () {
+    this.update();
+}.bind(this));
+});
+
+riot.tag2('tasks', '<div class="mb-4 clearfix"> <pager update="{getTasks}"></pager> </div> <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top"> <div class="col-sm-8"> Task </div> <div class="col-sm-2"> Hourly Rate </div> <div class="col-sm-2"> </div> </div> <form name="task-add" class="row mb-4 py-2 bg-faded rounded-bottom" onsubmit="{submitTask}" if="{perms && perms.add_task}"> <div class="col-8"> <input name="task-name" type="text" class="form-control form-control-sm" ref="name" placeholder="New Task Name" required> </div> <div class="col-2"> <input name="task-hourly-rate" type="text" class="form-control form-control-sm" ref="hourly_rate" placeholder="Hourly Rate" required> </div> <div class="col-2"> <button name="client-add-submit" type="submit" class="btn btn-success btn-sm w-100"> Add </button> </div> </form> <task each="{tasks}" perms="{perms}"></task>', '', '', function(opts) {
+this.getTasks = function (url) {
+    url = typeof url !== 'undefined' ? url : timestrapConfig.API_URLS.TASKS;
+    quickFetch(url).then(function (data) {
+        this.update({
+            tasks: data.results,
+            next: data.next,
+            previous: data.previous
+        });
+    }.bind(this));
+};
+
+this.submitTask = function (e) {
+    e.preventDefault();
+    toggleButtonBusy(e.target);
+    let body = {
+        name: this.refs.name.value,
+        hourly_rate: this.refs.hourly_rate.value
+    };
+    quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(function (data) {
+        this.refs.name.value = '';
+        this.refs.hourly_rate.value = '';
+        if (data.id) {
+            this.tasks.unshift(data);
+            this.update();
+        }
+        toggleButtonBusy(e.target);
+    }.bind(this));
+};
+
+this.getPerms = function () {
+    quickFetch('/api/permissions/').then(function (data) {
+        let perms = Object;
+        $.each(data.results, function (i, perm) {
+            perms[perm.codename] = perm;
+        });
+        this.perms = perms;
+    });
+};
+
+this.on('mount', function () {
+    this.getPerms();
+    this.getTasks();
+}.bind(this));
+});
