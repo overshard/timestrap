@@ -1,4 +1,4 @@
-var gulp       = require('gulp');
+var gulp         = require('gulp');
 
 var expect       = require('gulp-expect-file');
 var concat       = require('gulp-concat');
@@ -8,8 +8,21 @@ var autoprefixer = require('gulp-autoprefixer');
 var riot         = require('gulp-riot');
 var eslint       = require('gulp-eslint');
 
-var spawn      = require('child_process').spawn;
-var spawnSync  = require('child_process').spawnSync;
+var spawn        = require('child_process').spawn;
+var spawnSync    = require('child_process').spawnSync;
+
+
+// Helpers
+function manageSync(command) {
+    var fullCommand = ['manage.py'].concat(command);
+    spawnSync(
+        'python',
+        fullCommand,
+        {
+            stdio: 'inherit'
+        }
+    );
+}
 
 
 // Primary tasks for dealing with static files
@@ -187,94 +200,30 @@ gulp.task('lint', ['pythonlint', 'sasslint', 'eslint']);
 
 // Database management tasks
 gulp.task('makemigrations', function() {
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'makemigrations'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
+    manageSync(['makemigrations']);
 });
 
 
 gulp.task('migrate', function() {
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'migrate'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
+    manageSync(['migrate']);
 });
 
 
 gulp.task('createsuperuser', function() {
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'createsuperuser'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
+    manageSync(['createsuperuser']);
 });
 
 
 gulp.task('reset', function() {
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'flush',
-            '--noinput'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'heroku'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'fake'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
+    manageSync(['flush', '--noinput']);
+    manageSync(['heroku']);
+    manageSync(['fake']);
 });
 
 
 // Testing tasks
 gulp.task('test', function() {
-    spawnSync(
-        'python',
-        [
-            'manage.py',
-            'test'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    );
+    manageSync(['test']);
 });
 
 
