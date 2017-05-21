@@ -97,10 +97,10 @@ class Entry(models.Model):
 
 
 class Invoice(models.Model):
-    client = models.ForeignKey('Client')
+    client = models.ForeignKey('Client')  # Redundant with entries?
     entries = models.ManyToManyField('Entry')
-    date = models.DateField()
-    hourly_rate = models.DecimalField(max_digits=10, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True)
+    paid = models.DateTimeField()
     transaction_id = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -119,6 +119,4 @@ class Invoice(models.Model):
         for entry in self.entries:
             if entry.task.hourly_rate:
                 total += entry.duration * entry.hourly_rate
-            else:
-                total += entry.duration * self.hourly_rate
         return total
