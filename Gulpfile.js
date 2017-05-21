@@ -102,7 +102,7 @@ gulp.task('default', ['build', 'watch'], function() {
 
 // Linting
 gulp.task('pythonlint', function() {
-    var pg_dump = spawnSync(
+    var pg_dump = spawn(
         'flake8',
         [
             '--exclude=venv,node_modules,migrations'
