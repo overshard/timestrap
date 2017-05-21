@@ -88,7 +88,7 @@ def reports_export(request):
     filters = {}
     filter_dict = {'min_date': 'date__gte', 'max_date': 'date__lte',
                    'project': 'project', 'project__client': 'project__client',
-                   'user': 'user'}
+                   'user': 'user', 'task': 'task'}
     for key in request.GET:
         value = request.GET.get(key)
         if value and key in filter_dict:

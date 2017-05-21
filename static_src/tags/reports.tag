@@ -50,18 +50,28 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <input id="report-filter-min-date"
-                       type="text"
-                       class="form-control form-control-sm date-input"
-                       ref="min_date"
-                       placeholder="Min Date"/>
+                <select id="report-filter-task" ref="task">
+                    <option><!-- For select2 placeholder to work --></option>
+                    <option each={ tasks } value={ id }>{ name }</option>
+                </select>
             </div>
             <div class="form-group">
-                <input id="report-filter-max-date"
-                       type="text"
-                       class="form-control form-control-sm date-input"
-                       ref="max_date"
-                       placeholder="Max Date"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input id="report-filter-min-date"
+                            type="text"
+                            class="form-control form-control-sm date-input"
+                            ref="min_date"
+                            placeholder="Min Date"/>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="report-filter-max-date"
+                            type="text"
+                            class="form-control form-control-sm date-input"
+                            ref="max_date"
+                            placeholder="Max Date"/>
+                    </div>
+                </div>
             </div>
             <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
@@ -152,6 +162,7 @@
             query = {
                 user: this.refs.user.value,
                 project: this.refs.project.value,
+                task: this.refs.task.value,
                 project__client: this.refs.client.value,
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value
@@ -170,6 +181,7 @@
                 project__client: this.refs.client.value,
                 min_date: this.refs.min_date.value,
                 max_date: this.refs.max_date.value,
+                task: this.refs.task.value,
                 export_format: this.refs.export_format.value
             };
 
@@ -185,11 +197,13 @@
 
             let users = quickFetch(timestrapConfig.API_URLS.USERS);
             let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
 
-            Promise.all([users, clients]).then(function(data) {
+            Promise.all([users, clients, tasks]).then(function(data) {
                 this.update({
                     users: data[0].results,
                     clients: data[1].results,
+                    tasks: data[2].results,
                 });
                 $('#report-filter-user').select2({
                     placeholder: 'User',
@@ -203,6 +217,11 @@
                 });
                 $('#report-filter-project').select2({
                     placeholder: 'Project',
+                    width: '100%',
+                    allowClear: true
+                });
+                $('#report-filter-task').select2({
+                    placeholder: 'Tasks',
                     width: '100%',
                     allowClear: true
                 });

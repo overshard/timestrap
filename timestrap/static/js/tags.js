@@ -359,7 +359,7 @@ this.saveProject = function (e) {
 };
 });
 
-riot.tag2('reports', '<div class="row py-2 mb-4 bg-faded rounded"> <div class="col-12"> <button id="export-report" class="btn btn-primary btn-sm" onclick="{exportReport}"> <i class="fa fa-download" aria-hidden="true"></i> Export Report </button> <select class="custom-select form-control-sm" ref="export_format"> <option value="csv">csv</option> <option value="xls">xls</option> <option value="xlsx">xlsx</option> <option value="tsv">tsv</option> <option value="ods">ods</option> <option value="json">json</option> <option value="yaml">yaml</option> <option value="html">html</option> </select> <pager update="{getEntries}"></pager> </div> </div> <form name="report-filters" class="row mb-4 pt-3 pb-1 bg-faded rounded" onsubmit="{getReport}"> <div class="col-sm-6"> <div class="form-group"> <select id="report-filter-user" ref="user"> <option></option> <option each="{users}" riot-value="{id}">{username}</option> </select> </div> <div class="form-group"> <select id="report-filter-project" ref="project"> <option></option> <optgroup each="{c in clients}" label="{c.name}"> <option each="{p in c.projects}" riot-value="{p.id}"> {p.name} </option> </optgroup> </select> </div> <div class="form-group"> <select id="report-filter-client" ref="client"> <option></option> <option each="{clients}" riot-value="{id}">{name}</option> </select> </div> </div> <div class="col-sm-6"> <div class="form-group"> <input id="report-filter-min-date" type="text" class="form-control form-control-sm date-input" ref="min_date" placeholder="Min Date"> </div> <div class="form-group"> <input id="report-filter-max-date" type="text" class="form-control form-control-sm date-input" ref="max_date" placeholder="Max Date"> </div> <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100"> Generate Report </button> </div> </form> <div class="entry-date-group mb-4" each="{dates}"> <div class="row inset-row"> <div class="col-12"> <h2 class="display-4 text-muted">{mainDate}</h5> </div> </div> <div class="entry-rows rounded"> <div class="entry-row row py-2 bg-faded small" each="{entries}" if="{mainDate === date}"> <div class="col-sm-3 client-project"> <div class="text-muted small"> {project_details.client_details.name} </div> {project_details.name} </div> <div class="col-sm-5 d-flex flex-column align-self-end note"> <div class="text-muted small" if="{task}"> {task_details.name} </div> {note} </div> <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration"> {durationToString(duration)} </div> <div class="col-sm-2 d-flex align-self-end username"> {user_details.username} </div> </div> </div> </div> <div class="row bg-success text-white py-2 mb-4 rounded"> <div class="offset-sm-6 col-sm-2 text-right"> Subtotal<br> <strong>Total</strong> </div> <div class="col-sm-2 text-right"> {durationToString(subtotalDuration)}<br> <strong>{durationToString(totalDuration)}</strong> </div> </div>', '', '', function(opts) {
+riot.tag2('reports', '<div class="row py-2 mb-4 bg-faded rounded"> <div class="col-12"> <button id="export-report" class="btn btn-primary btn-sm" onclick="{exportReport}"> <i class="fa fa-download" aria-hidden="true"></i> Export Report </button> <select class="custom-select form-control-sm" ref="export_format"> <option value="csv">csv</option> <option value="xls">xls</option> <option value="xlsx">xlsx</option> <option value="tsv">tsv</option> <option value="ods">ods</option> <option value="json">json</option> <option value="yaml">yaml</option> <option value="html">html</option> </select> <pager update="{getEntries}"></pager> </div> </div> <form name="report-filters" class="row mb-4 pt-3 pb-1 bg-faded rounded" onsubmit="{getReport}"> <div class="col-sm-6"> <div class="form-group"> <select id="report-filter-user" ref="user"> <option></option> <option each="{users}" riot-value="{id}">{username}</option> </select> </div> <div class="form-group"> <select id="report-filter-project" ref="project"> <option></option> <optgroup each="{c in clients}" label="{c.name}"> <option each="{p in c.projects}" riot-value="{p.id}"> {p.name} </option> </optgroup> </select> </div> <div class="form-group"> <select id="report-filter-client" ref="client"> <option></option> <option each="{clients}" riot-value="{id}">{name}</option> </select> </div> </div> <div class="col-sm-6"> <div class="form-group"> <select id="report-filter-task" ref="task"> <option></option> <option each="{tasks}" riot-value="{id}">{name}</option> </select> </div> <div class="form-group"> <div class="row"> <div class="col-md-6"> <input id="report-filter-min-date" type="text" class="form-control form-control-sm date-input" ref="min_date" placeholder="Min Date"> </div> <div class="col-md-6"> <input id="report-filter-max-date" type="text" class="form-control form-control-sm date-input" ref="max_date" placeholder="Max Date"> </div> </div> </div> <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100"> Generate Report </button> </div> </form> <div class="entry-date-group mb-4" each="{dates}"> <div class="row inset-row"> <div class="col-12"> <h2 class="display-4 text-muted">{mainDate}</h5> </div> </div> <div class="entry-rows rounded"> <div class="entry-row row py-2 bg-faded small" each="{entries}" if="{mainDate === date}"> <div class="col-sm-3 client-project"> <div class="text-muted small"> {project_details.client_details.name} </div> {project_details.name} </div> <div class="col-sm-5 d-flex flex-column align-self-end note"> <div class="text-muted small" if="{task}"> {task_details.name} </div> {note} </div> <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration"> {durationToString(duration)} </div> <div class="col-sm-2 d-flex align-self-end username"> {user_details.username} </div> </div> </div> </div> <div class="row bg-success text-white py-2 mb-4 rounded"> <div class="offset-sm-6 col-sm-2 text-right"> Subtotal<br> <strong>Total</strong> </div> <div class="col-sm-2 text-right"> {durationToString(subtotalDuration)}<br> <strong>{durationToString(totalDuration)}</strong> </div> </div>', '', '', function(opts) {
 this.getEntries = function (url) {
     url = typeof url !== 'undefined' ? url : timestrapConfig.API_URLS.ENTRIES;
     toggleButtonBusy($('#generate-report'));
@@ -398,6 +398,7 @@ this.getReport = function (e) {
     query = {
         user: this.refs.user.value,
         project: this.refs.project.value,
+        task: this.refs.task.value,
         project__client: this.refs.client.value,
         min_date: this.refs.min_date.value,
         max_date: this.refs.max_date.value
@@ -415,6 +416,7 @@ this.exportReport = function (e) {
         project__client: this.refs.client.value,
         min_date: this.refs.min_date.value,
         max_date: this.refs.max_date.value,
+        task: this.refs.task.value,
         export_format: this.refs.export_format.value
     };
 
@@ -429,11 +431,13 @@ this.on('mount', function () {
 
     let users = quickFetch(timestrapConfig.API_URLS.USERS);
     let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+    let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
 
-    Promise.all([users, clients]).then(function (data) {
+    Promise.all([users, clients, tasks]).then(function (data) {
         this.update({
             users: data[0].results,
-            clients: data[1].results
+            clients: data[1].results,
+            tasks: data[2].results
         });
         $('#report-filter-user').select2({
             placeholder: 'User',
@@ -447,6 +451,11 @@ this.on('mount', function () {
         });
         $('#report-filter-project').select2({
             placeholder: 'Project',
+            width: '100%',
+            allowClear: true
+        });
+        $('#report-filter-task').select2({
+            placeholder: 'Tasks',
             width: '100%',
             allowClear: true
         });

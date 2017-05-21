@@ -57,7 +57,7 @@ class EntryFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Entry
-        fields = ('id', 'date', 'user', 'project', 'project__client',)
+        fields = ('id', 'date', 'user', 'task', 'project', 'project__client',)
 
 
 class EntryViewSet(viewsets.ModelViewSet):
