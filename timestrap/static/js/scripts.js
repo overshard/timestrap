@@ -383,10 +383,7 @@ route(getRiotUrl('reports'), function() {
 skipRouter('admin');
 skipRouter('api');
 skipRouter('logout');
-// Fix for login redirect since it's not in the SPA but loads router.js
-if (window.location.path !== timestrapConfig.CORE_URLS['login']) {
-    skipRouter('login');
-}
+skipRouter('login');
 
 
 // Routing start
