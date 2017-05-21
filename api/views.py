@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User, Permission
 
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
 import django_filters
 
 from core.models import Client, Project, Entry
@@ -65,6 +65,9 @@ class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     pagination_class = LimitOffsetPaginationWithTotals
     filter_class = EntryFilter
+    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend,)
+    search_fields = ('id', 'date', 'note', 'user__username', 'task__name',
+                     'project__name', 'project__client__name',)
 
 
 class TaskViewSet(viewsets.ModelViewSet):
