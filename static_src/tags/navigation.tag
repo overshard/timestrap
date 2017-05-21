@@ -74,7 +74,7 @@
                                 </a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" if={ user }>
                             <img src={ user.gravatar_url }
                                  width="32"
                                  height="32"
