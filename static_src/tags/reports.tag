@@ -83,7 +83,11 @@
                     </div>
                     { project_details.name }
                 </div>
-                <div class="col-sm-5 d-flex align-self-end note">
+                <div class="col-sm-5 d-flex flex-column align-self-end note">
+                    <div class="text-muted small"
+                        if={ task }>
+                        { task_details.name }
+                    </div>
                     { note }
                 </div>
                 <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
