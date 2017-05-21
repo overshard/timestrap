@@ -31,7 +31,7 @@
                          aria-labelledby="entry-menu">
                         <a class="dropdown-item entry-menu-restart"
                            href="#"
-                           onclick={ restartEntry }
+                           onclick={ entryTimer }
                            if={ perms.change_entry }>
                             Restart
                         </a>
@@ -64,7 +64,7 @@
                 <button name="entry-save"
                         type="submit"
                         class="btn btn-success btn-sm w-100"
-                        onclick={ timer }>
+                        onclick={ entryTimer }>
                     { timerState }
             </div>
             </button>
@@ -110,7 +110,7 @@
 
 
     <script type="es6">
-        this.editEntry = function(e) {
+        editEntry = function(e) {
             e.preventDefault();
             this.edit = true;
             this.update();
@@ -121,24 +121,19 @@
         };
 
 
-        this.restartEntry = function(e) {
-            this.runTimer = true;
-            this.timer(e);
-        };
-
-
-        this.timer = function(e) {
+        entryTimer = function(e) {
             if (!this.timerState) {
+                this.runTimer = true;
                 this.timerState = 'Stop';
                 let hours = Math.floor(this.duration);
                 let minutes = (this.duration - hours) * 60;
                 this.totalSeconds = (hours * 3600) + (minutes * 60);
-                this.parent.tick(this);
-                interval = setInterval(this.parent.tick, 1000, this);
+                tickTimer(this);
+                this.interval = setInterval(tickTimer, 1000, this);
                 e.preventDefault();
             } else {
                 this.timerState = undefined;
-                clearInterval(interval);
+                clearInterval(this.interval);
                 let dur = this.timerDuration;
                 this.runTimer = false;
                 this.edit = true;
@@ -149,7 +144,7 @@
         };
 
 
-        this.saveEntry = function(e) {
+        saveEntry = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -172,7 +167,7 @@
                     let oldDuration = this.duration;
                     this.duration = data.duration;
                     this.update();
-                    this.parent.updateTotals(this.duration, oldDuration);
+                    updateTotals(this.duration, oldDuration);
                 }
                 else {
                     this.update();
@@ -182,14 +177,14 @@
         };
 
 
-        this.deleteEntry = function(e) {
+        deleteEntry = function(e) {
             e.preventDefault();
             quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {
                     let index = this.parent.entries.indexOf(e.item);
                     this.parent.entries.splice(index, 1);
                     // updateTotals executes parent update.
-                    this.parent.updateTotals(0, this.duration);
+                    updateTotals(0, this.duration);
                 }
             }.bind(this));
         };

@@ -48,7 +48,7 @@
 
 
     <script type="es6">
-        this.getTasks = function(url) {
+        getTasks = function(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
             quickFetch(url).then(function(data) {
                 this.update({
@@ -57,10 +57,10 @@
                     previous: data.previous
                 });
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.submitTask = function(e) {
+        submitTask = function(e) {
             e.preventDefault();
             toggleButtonBusy(e.target);
             let body = {
@@ -76,10 +76,10 @@
                 }
                 toggleButtonBusy(e.target);
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.getPerms = function() {
+        getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
                 let perms = Object;
                 $.each(data.results, function(i, perm) {
@@ -87,12 +87,12 @@
                 });
                 this.perms = perms;
             });
-        };
+        }.bind(this);
 
 
         this.on('mount', function() {
-            this.getPerms();
-            this.getTasks();
+            getPerms();
+            getTasks();
         }.bind(this));
     </script>
 </tasks>

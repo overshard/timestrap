@@ -123,7 +123,7 @@
 
 
     <script type="es6">
-        this.getEntries = function(url) {
+        getEntries = function(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.ENTRIES;
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
@@ -154,10 +154,10 @@
                 toggleButtonBusy($('#generate-report'));
                 toggleButtonBusy($('#export-report'));
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.getReport = function(e) {
+        getReport = function(e) {
             e.preventDefault();
             query = {
                 user: this.refs.user.value,
@@ -168,11 +168,11 @@
                 max_date: this.refs.max_date.value
             };
             url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
-            this.getEntries(url);
-        };
+            getEntries(url);
+        }.bind(this);
 
 
-        this.exportReport = function(e) {
+        exportReport = function(e) {
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
             query = {
@@ -189,11 +189,11 @@
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
-        };
+        }.bind(this);
 
 
         this.on('mount', function() {
-            this.getEntries();
+            getEntries();
 
             let users = quickFetch(timestrapConfig.API_URLS.USERS);
             let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);

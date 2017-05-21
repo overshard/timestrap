@@ -125,7 +125,7 @@
 
 
     <script type="es6">
-        this.tick = function(entry) {
+        tickTimer = function(entry) {
             ++entry.totalSeconds;
             let hours = pad(Math.floor(entry.totalSeconds / 3600));
             let minutes = pad(Math.floor(entry.totalSeconds % 3600 / 60));
@@ -133,10 +133,10 @@
             entry.update({
                 timerDuration: hours + ':' + minutes + ':' + seconds
             });
-        };
+        }.bind(this);
 
 
-        this.timer = function(e) {
+        timer = function(e) {
             let duration = this.refs.duration.value;
             if (this.timerState === 'Start' && duration) {
                 this.timerState = 'Add';
@@ -144,12 +144,12 @@
                 this.timerState = 'Stop';
                 this.timerDuration = '00:00:00';
                 this.totalSeconds = 0;
-                interval = setInterval(this.tick, 1000, this);
+                this.interval = setInterval(tickTimer, 1000, this);
                 e.preventDefault();
             } else if (this.timerState === 'Stop') {
                 this.timerState = 'Add';
                 this.totalSeconds = 0;
-                clearInterval(interval);
+                clearInterval(this.interval);
                 let dur = this.timerDuration;
                 this.timerDuration = dur.substr(0, dur.lastIndexOf(':'));
                 this.totalSeconds = 0;
@@ -158,10 +158,10 @@
                 this.timerState = 'Start';
                 e.preventDefault();
             }
-        };
+        }.bind(this);
 
 
-        this.getEntries = function(url) {
+        getEntries = function(url) {
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -215,10 +215,10 @@
                     }
                 });
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.submitEntry = function(e) {
+        submitEntry = function(e) {
             e.preventDefault();
             clickedButton = e.target;
             toggleButtonBusy(clickedButton);
@@ -244,17 +244,17 @@
                 }
                 toggleButtonBusy(clickedButton);
             }.bind(this));
-        };
+        }.bind(this);
 
 
-        this.updateTotals = function(newDuration, oldDuration) {
+        updateTotals = function(newDuration, oldDuration) {
             this.totalDuration += newDuration - oldDuration;
             this.subtotalDuration += newDuration - oldDuration;
             this.update();
-        };
+        }.bind(this);
 
 
-        this.getPerms = function() {
+        getPerms = function() {
             quickFetch('/api/permissions/').then(function(data) {
                 let perms = Object;
                 $.each(data.results, function(i, perm) {
@@ -262,13 +262,13 @@
                 });
                 this.perms = perms;
             });
-        };
+        }.bind(this);
 
 
         this.on('mount', function() {
             this.timerState = 'Start';
-            this.getPerms();
-            this.getEntries();
+            getPerms();
+            getEntries();
         }.bind(this));
     </script>
 </entries>
