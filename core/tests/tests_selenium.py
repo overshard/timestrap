@@ -113,7 +113,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         password_input.clear()
         password_input.send_keys(self.profile['password'])
         self.find(By.NAME, 'login').click()
-        self.waitForPresence((By.ID, 'navigation'))
+        self.waitForPresence((By.TAG_NAME, 'navigation'))
 
     def test_login_failure(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
@@ -131,14 +131,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get(self.live_server_url)
         self.find(By.ID, 'nav-app-clients').click()
-        self.waitForPresence((By.ID, 'view-clients'))
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="clients"]'))
 
     def test_clients_add(self):
         self.logIn()
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-add', self.find(By.ID, 'view-clients').text)
+        self.assertNotIn('client-add', self.find(
+            By.CSS_SELECTOR, 'div#main[data-is="clients"]').text)
         self.addPerms(['add_client'])
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
@@ -167,7 +168,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
         self.assertNotIn(
-            'view-projects', self.find(By.ID, 'view-clients').text)
+            'view-projects', self.find(By.CSS_SELECTOR,
+                                       'div#main[data-is="clients"]').text)
         self.addPerms(['view_project'])
         self.selenium.refresh()
         self.find(By.ID, 'view-projects')
@@ -216,7 +218,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry'])
         self.selenium.get(self.live_server_url)
         self.find(By.ID, 'nav-app-entries').click()
-        self.waitForPresence((By.ID, 'view-entries'))
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="timesheet"]'))
 
     def test_entries_add(self):
         client = Client(name='Client', archive=False)
@@ -229,7 +231,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-add', self.find(By.ID, 'view-entries').text)
+        self.assertNotIn('entry-add', self.find(
+            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow')[1].click()
@@ -259,7 +262,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
+        self.assertNotIn('entry-menu', self.find(
+            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
         self.addPerms(['change_entry'])
         self.selenium.refresh()
         self.find(By.NAME, 'entry-menu').click()
@@ -291,7 +295,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry', 'change_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.find(By.ID, 'view-entries').text)
+        self.assertNotIn('entry-menu', self.find(
+            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
         self.addPerms(['change_entry'])
         self.selenium.refresh()
         self.find(By.NAME, 'entry-menu').click()
@@ -329,7 +334,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
 
         self.find(By.ID, 'nav-app-reports').click()
-        self.waitForPresence((By.ID, 'view-reports'))
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
 
     def test_reports_filter(self):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
@@ -337,7 +342,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
-        self.waitForPresence((By.ID, 'view-reports'))
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
 
         # The test data contains 12 fake entries.
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 12)
