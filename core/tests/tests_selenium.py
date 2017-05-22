@@ -263,24 +263,23 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 archive=False).save()
         Project(name='Project 2', estimate=timedelta(hours=1), client=client,
                 archive=False).save()
+        Task(name='Task 1', hourly_rate=130).save()
+        Task(name='Task 2', hourly_rate=80).save()
         self.logIn()
-        self.addPerms(['view_client', 'view_project', 'view_entry'])
+        self.addPerms(['view_client', 'view_entry',
+                       'view_project', 'view_task'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-add', self.selenium.page_source)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
-        self.find(By.CLASS_NAME, 'select2-selection__arrow')[1].click()
-        self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
-        self.find(By.CLASS_NAME,
-                  'select2-search__field').send_keys('Project 1')
-        self.find(By.CLASS_NAME,
-                  'select2-search__field').send_keys(Keys.RETURN)
+        self.select2Select('entry-task', 'Task 2')
+        self.select2Select('entry-project', 'Project 1')
         self.find(By.NAME, 'entry-note').send_keys('Note')
         self.find(By.NAME, 'entry-duration').send_keys('0:35')
         self.find(By.NAME, 'entry-add-submit').submit()
-        self.waitForText((By.TAG_NAME, 'entry'),
-                         'Client\nProject 1\nNote\n0:35')
+        self.assertIn('Client\nProject 1\nTask 2\nNote\n0:35',
+                      self.find(By.TAG_NAME, 'entry').text)
 
     def test_timesheet_entry_change(self):
         client = Client(name='Client', archive=False)
@@ -290,11 +289,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         project.save()
         Project(name='Project 2', estimate=timedelta(hours=1), client=client,
                 archive=False).save()
+        task = Task(name='Task 1', hourly_rate=130)
+        task.save()
+        Task(name='Task 2', hourly_rate=80).save()
         # Log in to establish self.user.
         self.logIn()
-        Entry(project=project, user=self.user, note='Note',
+        Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
-        self.addPerms(['view_client', 'view_project', 'view_entry'])
+        self.addPerms(['view_client', 'view_entry',
+                       'view_project', 'view_task'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-menu', self.selenium.page_source)
@@ -304,17 +307,16 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
         self.find(By.CLASS_NAME, 'entry-menu-change').click()
         self.waitForPresence((By.NAME, 'entry-save'))
-        self.find(By.CSS_SELECTOR, '.select2-selection__arrow').click()
-        field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
-        field.send_keys('Project 2')
-        field.send_keys(Keys.RETURN)
+        # self.select2Select('entry-task', 'Task 2')
+        self.select2Select('entry-project', 'Project 2')
         self.find(By.NAME, 'entry-note').clear()
         self.find(By.NAME, 'entry-note').send_keys('Changed note')
         self.find(By.NAME, 'entry-duration').clear()
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
-        self.waitForText((By.TAG_NAME, 'entry'),
-                         'Client\nProject 2\nChanged note\n1:30')
+        self.selenium.save_screenshot('test.png')
+        self.assertIn('Client\nProject 2\nTask 1\nChanged note\n1:30',
+                      self.find(By.TAG_NAME, 'entry').text)
 
     def test_timesheet_entry_restart(self):
         client = Client(name='Client', archive=False)
@@ -322,9 +324,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         project = Project(name='Project 1', estimate=timedelta(hours=1),
                           client=client, archive=False)
         project.save()
+        task = Task(name='Task 1', hourly_rate=130)
+        task.save()
         # Log in to establish self.user.
         self.logIn()
-        Entry(project=project, user=self.user, note='Note',
+        Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'change_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
@@ -342,8 +346,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
-        self.waitForText((By.TAG_NAME, 'entry'),
-                         'Client\nProject 1\nNote\n0:35')
+        self.assertIn('Client\nProject 1\nTask 1\nNote\n0:35',
+                      self.find(By.TAG_NAME, 'entry').text)
 
     def test_timesheet_entry_delete(self):
         client = Client(name='Client', archive=False)
@@ -351,9 +355,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         project = Project(name='Project 1', estimate=timedelta(hours=1),
                           client=client, archive=False)
         project.save()
+        task = Task(name='Task 1', hourly_rate=130)
+        task.save()
         # Log in to establish self.user.
         self.logIn()
-        Entry(project=project, user=self.user, note='Note',
+        Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'delete_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
