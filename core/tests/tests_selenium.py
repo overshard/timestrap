@@ -113,7 +113,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         password_input.clear()
         password_input.send_keys(self.profile['password'])
         self.find(By.NAME, 'login').click()
-        self.waitForPresence((By.ID, 'view-dashboard'))
+        self.waitForPresence((By.ID, 'navigation'))
 
     def test_login_failure(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
