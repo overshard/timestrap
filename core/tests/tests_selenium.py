@@ -314,7 +314,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-duration').clear()
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
-        self.selenium.save_screenshot('test.png')
         self.assertIn('Client\nProject 2\nTask 1\nChanged note\n1:30',
                       self.find(By.TAG_NAME, 'entry').text)
 
