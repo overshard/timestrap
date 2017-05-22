@@ -167,12 +167,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn(
-            'view-projects', self.find(By.CSS_SELECTOR,
-                                       'div#main[data-is="clients"]').text)
+        self.assertNotIn('client-view-projects', self.selenium.page_source)
         self.addPerms(['view_project'])
         self.selenium.refresh()
-        self.find(By.ID, 'view-projects')
+        self.waitForPresence((By.CLASS_NAME, 'client-view-projects'))
 
     def test_projects_add(self):
         Client(name='Client', archive=False).save()
@@ -212,15 +210,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-save').click()
         self.waitForText((By.TAG_NAME, 'project'), 'Project Changed')
 
-    def test_entries_access(self):
+    def test_timesheet_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-entries', self.find(By.ID, 'nav-app').text)
+        self.assertNotIn('nav-app-timesheet', self.selenium.page_source)
         self.addPerms(['view_entry'])
         self.selenium.get(self.live_server_url)
-        self.find(By.ID, 'nav-app-entries').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="timesheet"]'))
+        self.find(By.ID, 'nav-app-timesheet').click()
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="entries"]'))
 
-    def test_entries_add(self):
+    def test_timesheet_entry_add(self):
         client = Client(name='Client', archive=False)
         client.save()
         Project(name='Project 1', estimate=timedelta(hours=1), client=client,
@@ -232,7 +230,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-add', self.find(
-            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
+            By.CSS_SELECTOR, 'div#main[data-is="entries"]').text)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow')[1].click()
@@ -247,7 +245,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.TAG_NAME, 'entry'),
                          'Client\nProject 1\nNote\n0:35')
 
-    def test_entries_change(self):
+    def test_timesheet_entry_change(self):
         client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
@@ -282,7 +280,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.TAG_NAME, 'entry'),
                          'Client\nProject 2\nChanged note\n1:30')
 
-    def test_entries_restart(self):
+    def test_timesheet_entry_restart(self):
         client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
@@ -312,7 +310,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.TAG_NAME, 'entry'),
                          'Client\nProject 1\nNote\n0:35')
 
-    def test_entries_delete(self):
+    def test_timesheet_entry_delete(self):
         client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
