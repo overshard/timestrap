@@ -379,7 +379,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
 
         self.logIn()
-        self.addPerms(['view_client', 'view_project', 'view_entry'])
+        self.addPerms(['view_client', 'view_entry',
+                       'view_project', 'view_task'])
         self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
 
@@ -404,6 +405,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
+
+        # Two entries from tester for "Task 1"
+        self.select2Select('report-filter-task', 'Task 1')
+        self.find(By.ID, 'generate-report').click()
+        self.waitForClickable((By.ID, 'generate-report'))
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
 
         # Clear existing filters
         self.selenium.refresh()

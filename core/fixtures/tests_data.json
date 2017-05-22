@@ -1,5 +1,54 @@
 [
 {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$FmKQ2Qvb3FLs$izhhB7GVvEpzjUPADOyesV30anUajmz1XWH9Fg/jdWM=",
+        "last_login": "2017-05-17T18:16:38.536Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin.admin",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-05-17T18:16:26.831Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$ZWX0AaxW8Lha$34xpMOJF7Qfa81Vn/OBBWl1QrsFYGgeG7BN+9mxhWg0=",
+        "last_login": "2017-05-17T18:17:51.854Z",
+        "is_superuser": false,
+        "username": "tester",
+        "first_name": "Tester",
+        "last_name": "",
+        "email": "tester@tester.tester",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-05-17T18:16:53Z",
+        "groups": [],
+        "user_permissions": [
+            10,
+            11,
+            12,
+            9,
+            18,
+            19,
+            20,
+            17,
+            14,
+            15,
+            16,
+            13
+        ]
+    }
+},
+{
     "model": "core.client",
     "pk": 1,
     "fields": {
@@ -24,6 +73,30 @@
         "name": "Client 3",
         "archive": false,
         "payment_id": null
+    }
+},
+{
+    "model": "core.task",
+    "pk": 1,
+    "fields": {
+        "name": "Task 1",
+        "hourly_rate": 125
+    }
+},
+{
+    "model": "core.task",
+    "pk": 2,
+    "fields": {
+        "name": "Task 2",
+        "hourly_rate": 80
+    }
+},
+{
+    "model": "core.task",
+    "pk": 3,
+    "fields": {
+        "name": "Task 3",
+        "hourly_rate": 110
     }
 },
 {
@@ -87,60 +160,11 @@
     }
 },
 {
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-        "password": "pbkdf2_sha256$36000$FmKQ2Qvb3FLs$izhhB7GVvEpzjUPADOyesV30anUajmz1XWH9Fg/jdWM=",
-        "last_login": "2017-05-17T18:16:38.536Z",
-        "is_superuser": true,
-        "username": "admin",
-        "first_name": "",
-        "last_name": "",
-        "email": "admin@admin.admin",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2017-05-17T18:16:26.831Z",
-        "groups": [],
-        "user_permissions": []
-    }
-},
-{
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-        "password": "pbkdf2_sha256$36000$ZWX0AaxW8Lha$34xpMOJF7Qfa81Vn/OBBWl1QrsFYGgeG7BN+9mxhWg0=",
-        "last_login": "2017-05-17T18:17:51.854Z",
-        "is_superuser": false,
-        "username": "tester",
-        "first_name": "Tester",
-        "last_name": "",
-        "email": "tester@tester.tester",
-        "is_staff": false,
-        "is_active": true,
-        "date_joined": "2017-05-17T18:16:53Z",
-        "groups": [],
-        "user_permissions": [
-            10,
-            11,
-            12,
-            9,
-            18,
-            19,
-            20,
-            17,
-            14,
-            15,
-            16,
-            13
-        ]
-    }
-},
-{
     "model": "core.entry",
     "pk": 1,
     "fields": {
         "project": 1,
-        "task": null,
+        "task": 3,
         "user": 2,
         "date": "2017-05-17",
         "duration": "00:30:00",
@@ -152,7 +176,7 @@
     "pk": 2,
     "fields": {
         "project": 1,
-        "task": null,
+        "task": 1,
         "user": 2,
         "date": "2017-05-15",
         "duration": "01:00:00",
@@ -164,7 +188,7 @@
     "pk": 3,
     "fields": {
         "project": 1,
-        "task": null,
+        "task": 1,
         "user": 2,
         "date": "2017-05-16",
         "duration": "00:15:00",
@@ -176,7 +200,7 @@
     "pk": 4,
     "fields": {
         "project": 2,
-        "task": null,
+        "task": 2,
         "user": 2,
         "date": "2017-05-17",
         "duration": "00:15:00",
@@ -188,7 +212,7 @@
     "pk": 5,
     "fields": {
         "project": 4,
-        "task": null,
+        "task": 2,
         "user": 2,
         "date": "2017-05-01",
         "duration": "01:00:00",
@@ -200,7 +224,7 @@
     "pk": 6,
     "fields": {
         "project": 4,
-        "task": null,
+        "task": 2,
         "user": 2,
         "date": "2017-05-04",
         "duration": "02:00:00",
@@ -212,7 +236,7 @@
     "pk": 7,
     "fields": {
         "project": 4,
-        "task": null,
+        "task": 2,
         "user": 2,
         "date": "2017-05-05",
         "duration": "02:30:00",
@@ -224,7 +248,7 @@
     "pk": 8,
     "fields": {
         "project": 3,
-        "task": null,
+        "task": 1,
         "user": 2,
         "date": "2017-05-06",
         "duration": "02:25:00",
@@ -236,7 +260,7 @@
     "pk": 9,
     "fields": {
         "project": 3,
-        "task": null,
+        "task": 3,
         "user": 1,
         "date": "2017-04-03",
         "duration": "01:00:00",
@@ -248,7 +272,7 @@
     "pk": 10,
     "fields": {
         "project": 5,
-        "task": null,
+        "task": 3,
         "user": 1,
         "date": "2017-04-21",
         "duration": "01:15:00",
@@ -260,7 +284,7 @@
     "pk": 11,
     "fields": {
         "project": 5,
-        "task": null,
+        "task": 3,
         "user": 1,
         "date": "2017-04-22",
         "duration": "02:43:00",
@@ -272,7 +296,7 @@
     "pk": 12,
     "fields": {
         "project": 5,
-        "task": null,
+        "task": 1,
         "user": 1,
         "date": "2017-04-23",
         "duration": "00:23:00",
