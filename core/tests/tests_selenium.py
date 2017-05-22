@@ -22,7 +22,7 @@ from datetime import timedelta
 
 from time import sleep
 
-from ..models import Client, Project, Entry
+from ..models import Client, Project, Entry, Task
 
 
 fake = Factory.create()
@@ -138,8 +138,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-add', self.find(
-            By.CSS_SELECTOR, 'div#main[data-is="clients"]').text)
+        self.assertNotIn('client-add', self.selenium.page_source)
         self.addPerms(['add_client'])
         self.selenium.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
@@ -178,7 +177,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project'])
         self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('project-add', self.find(By.TAG_NAME, 'client').text)
+        self.assertNotIn('project-add', self.selenium.page_source)
         self.addPerms(['add_project'])
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'client-view-projects').click()
@@ -210,6 +209,45 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-save').click()
         self.waitForText((By.TAG_NAME, 'project'), 'Project Changed')
 
+    def test_tasks_access(self):
+        self.logIn()
+        self.assertNotIn('nav-app-tasks', self.selenium.page_source)
+        self.addPerms(['view_task'])
+        self.selenium.get(self.live_server_url)
+        self.find(By.ID, 'nav-app-tasks').click()
+        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="tasks"]'))
+
+    def test_tasks_add(self):
+        self.logIn()
+        self.addPerms(['view_task'])
+        self.selenium.get('%s%s' % (self.live_server_url, '/tasks/'))
+
+        self.assertNotIn('task-add', self.selenium.page_source)
+        self.addPerms(['add_task'])
+        self.selenium.refresh()
+        self.waitForPresence((By.NAME, 'task-add'))
+        self.find(By.NAME, 'task-name').send_keys('Task')
+        self.find(By.NAME, 'task-hourly-rate').send_keys('25')
+        self.find(By.NAME, 'task-add-submit').click()
+        self.waitForPresence((By.TAG_NAME, 'task'))
+
+    def test_tasks_change(self):
+        Task(name='Task', hourly_rate=25).save()
+        self.logIn()
+        self.addPerms(['view_task'])
+        self.selenium.get('%s%s' % (self.live_server_url, '/tasks/'))
+
+        self.assertFalse(self.find(By.NAME, 'task-change').is_enabled())
+        self.addPerms(['change_task'])
+        self.selenium.refresh()
+        self.find(By.NAME, 'task-change').click()
+        self.waitForPresence((By.NAME, 'task-name'))
+        self.find(By.NAME, 'task-name').send_keys(' Changed')
+        self.find(By.NAME, 'task-hourly-rate').clear()
+        self.find(By.NAME, 'task-hourly-rate').send_keys('125')
+        self.find(By.NAME, 'task-save').click()
+        self.assertIn('Task Changed\n$125', self.find(By.TAG_NAME, 'task').text)
+
     def test_timesheet_access(self):
         self.logIn()
         self.assertNotIn('nav-app-timesheet', self.selenium.page_source)
@@ -229,8 +267,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-add', self.find(
-            By.CSS_SELECTOR, 'div#main[data-is="entries"]').text)
+        self.assertNotIn('entry-add', self.selenium.page_source)
         self.addPerms(['add_entry'])
         self.selenium.refresh()
         self.find(By.CLASS_NAME, 'select2-selection__arrow')[1].click()
@@ -260,8 +297,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project', 'view_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.find(
-            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
+        self.assertNotIn('entry-menu', self.selenium.page_source)
         self.addPerms(['change_entry'])
         self.selenium.refresh()
         self.find(By.NAME, 'entry-menu').click()
@@ -293,8 +329,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry', 'change_entry'])
         self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.find(
-            By.CSS_SELECTOR, 'div#main[data-is="timesheet"]').text)
+        self.assertNotIn('entry-menu', self.selenium.page_source)
         self.addPerms(['change_entry'])
         self.selenium.refresh()
         self.find(By.NAME, 'entry-menu').click()
