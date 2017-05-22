@@ -9926,6 +9926,8 @@ button {
   max-width: 400px;
   margin: 0 auto;
   background-color: #fff; }
+  .login-wrapper .bg-faded {
+    border-top: 1px solid #eaeaea; }
 
 .text-absolute-middle {
   position: absolute;
