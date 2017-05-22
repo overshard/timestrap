@@ -47,13 +47,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
+        cls.driver = WebDriver()
+        cls.driver.implicitly_wait(10)
         cls.wait_time = 5
 
     @classmethod
     def tearDownClass(cls):
-        cls.selenium.quit()
+        cls.driver.quit()
         try:
             cls.display.stop()
         except AttributeError:
@@ -62,7 +62,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         super(SeleniumTestCase, cls).tearDownClass()
 
     def find(self, by, value):
-        elements = self.selenium.find_elements(by, value)
+        elements = self.driver.find_elements(by, value)
         if len(elements) is 1:
             return elements[0]
         else:
@@ -75,18 +75,18 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         sleep(0.25)
 
     def waitForPresence(self, element):
-        return WebDriverWait(self.selenium, self.wait_time).until(
+        return WebDriverWait(self.driver, self.wait_time).until(
             ec.presence_of_element_located(element))
 
     def waitForText(self, element, text):
-        return WebDriverWait(self.selenium, self.wait_time).until(
+        return WebDriverWait(self.driver, self.wait_time).until(
             ec.text_to_be_present_in_element(element, text))
 
     def waitForClickable(self, element):
         """An element becomes "clickable" when it is not disabled. This method
         is useful for waiting on form buttons that have been disabled while
         javascript is doing work."""
-        return WebDriverWait(self.selenium, self.wait_time).until(
+        return WebDriverWait(self.driver, self.wait_time).until(
             ec.element_to_be_clickable(element))
 
     def select2Select(self, id, value):
@@ -105,7 +105,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                                              self.profile['mail'],
                                              self.profile['password'])
 
-        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
         username_input.clear()
         username_input.send_keys(self.profile['username'])
@@ -116,7 +116,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.TAG_NAME, 'navigation'))
 
     def test_login_failure(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
         username_input.send_keys(self.profile['username'])
         password_input = self.find(By.NAME, 'password')
@@ -129,18 +129,18 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
         self.addPerms(['view_client'])
-        self.selenium.get(self.live_server_url)
+        self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-clients').click()
         self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="clients"]'))
 
     def test_clients_add(self):
         self.logIn()
         self.addPerms(['view_client'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-add', self.selenium.page_source)
+        self.assertNotIn('client-add', self.driver.page_source)
         self.addPerms(['add_client'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.NAME, 'client-add-submit').click()
         self.waitForPresence((By.TAG_NAME, 'client'))
@@ -149,11 +149,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Client(name='Client', archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
         self.assertFalse(self.find(By.NAME, 'client-change').is_enabled())
         self.addPerms(['change_client'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.NAME, 'client-change').click()
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
@@ -164,22 +164,22 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Client(name='Client', archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-view-projects', self.selenium.page_source)
+        self.assertNotIn('client-view-projects', self.driver.page_source)
         self.addPerms(['view_project'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.waitForPresence((By.CLASS_NAME, 'client-view-projects'))
 
     def test_projects_add(self):
         Client(name='Client', archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('project-add', self.selenium.page_source)
+        self.assertNotIn('project-add', self.driver.page_source)
         self.addPerms(['add_project'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.CLASS_NAME, 'client-view-projects').click()
         self.waitForPresence((By.NAME, 'project-add'))
         self.find(By.NAME, 'project-name').send_keys('Project')
@@ -194,12 +194,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/clients/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
         self.find(By.CLASS_NAME, 'client-view-projects').click()
         self.assertFalse(self.find(By.NAME, 'project-change').is_enabled())
         self.addPerms(['change_project'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.CLASS_NAME, 'client-view-projects').click()
         self.waitForPresence((By.NAME, 'project-change'))
         self.find(By.NAME, 'project-change').click()
@@ -211,20 +211,20 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_tasks_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-tasks', self.selenium.page_source)
+        self.assertNotIn('nav-app-tasks', self.driver.page_source)
         self.addPerms(['view_task'])
-        self.selenium.get(self.live_server_url)
+        self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-tasks').click()
         self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="tasks"]'))
 
     def test_tasks_add(self):
         self.logIn()
         self.addPerms(['view_task'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/tasks/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/tasks/'))
 
-        self.assertNotIn('task-add', self.selenium.page_source)
+        self.assertNotIn('task-add', self.driver.page_source)
         self.addPerms(['add_task'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.waitForPresence((By.NAME, 'task-add'))
         self.find(By.NAME, 'task-name').send_keys('Task')
         self.find(By.NAME, 'task-hourly-rate').send_keys('25')
@@ -235,11 +235,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Task(name='Task', hourly_rate=25).save()
         self.logIn()
         self.addPerms(['view_task'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/tasks/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/tasks/'))
 
         self.assertFalse(self.find(By.NAME, 'task-change').is_enabled())
         self.addPerms(['change_task'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.NAME, 'task-change').click()
         self.waitForPresence((By.NAME, 'task-name'))
         self.find(By.NAME, 'task-name').send_keys(' Changed')
@@ -250,9 +250,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_timesheet_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-timesheet', self.selenium.page_source)
+        self.assertNotIn('nav-app-timesheet', self.driver.page_source)
         self.addPerms(['view_entry'])
-        self.selenium.get(self.live_server_url)
+        self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-timesheet').click()
         self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="entries"]'))
 
@@ -268,11 +268,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         self.addPerms(['view_client', 'view_entry',
                        'view_project', 'view_task'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-add', self.selenium.page_source)
+        self.assertNotIn('entry-add', self.driver.page_source)
         self.addPerms(['add_entry'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.select2Select('entry-task', 'Task 2')
         self.select2Select('entry-project', 'Project 1')
         self.find(By.NAME, 'entry-note').send_keys('Note')
@@ -298,11 +298,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_client', 'view_entry',
                        'view_project', 'view_task'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.selenium.page_source)
+        self.assertNotIn('entry-menu', self.driver.page_source)
         self.addPerms(['change_entry'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
         self.find(By.CLASS_NAME, 'entry-menu-change').click()
@@ -330,11 +330,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'change_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.selenium.page_source)
+        self.assertNotIn('entry-menu', self.driver.page_source)
         self.addPerms(['change_entry'])
-        self.selenium.refresh()
+        self.driver.refresh()
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
         self.find(By.CLASS_NAME, 'entry-menu-restart').click()
@@ -361,7 +361,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
         self.addPerms(['view_entry', 'delete_entry'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/timesheet/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-delete'))
@@ -380,7 +380,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         self.addPerms(['view_client', 'view_entry',
                        'view_project', 'view_task'])
-        self.selenium.get('%s%s' % (self.live_server_url, '/reports/'))
+        self.driver.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
 
         # The test data contains 12 fake entries.
@@ -412,7 +412,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
 
         # Clear existing filters
-        self.selenium.refresh()
+        self.driver.refresh()
         self.waitForClickable((By.ID, 'generate-report'))
         self.select2Select('report-filter-user', 'tester')
 
