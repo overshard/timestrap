@@ -47,10 +47,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         options.add_argument('--window-size=1280,720')
 
         cls.driver = WebDriver(chrome_options=options)
-        cls.driver.implicitly_wait(20)
-        cls.driver.set_page_load_timeout(30)
-        cls.driver.set_script_timeout(30)
-        cls.wait_time = 10
+        cls.driver.implicitly_wait(10)
+        cls.wait_time = 5
 
     @classmethod
     def tearDownClass(cls):
@@ -72,13 +70,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         sleep(0.25)
 
     def waitForPresence(self, element):
-        try:
-            WebDriverWait(self.driver, self.wait_time).until(
-                ec.presence_of_element_located(element))
-        except TimeoutException:
-            self.driver.refresh()
-            WebDriverWait(self.driver, self.wait_time).until(
-                ec.presence_of_element_located(element))
+        return WebDriverWait(self.driver, self.wait_time).until(
+            ec.presence_of_element_located(element))
 
     def waitForText(self, element, text):
         try:
