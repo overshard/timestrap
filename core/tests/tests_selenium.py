@@ -44,16 +44,20 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             sauce_access_key = os.environ['SAUCE_ACCESS_KEY']
             sauce_url = 'http://' + sauce_username + ':' + sauce_access_key + \
                         '@ondemand.saucelabs.com/wd/hub'
-            cls.driver = webdriver.Remote(
-                command_executor=sauce_url,
-                desired_capabilities={
-                    'browserName': 'chrome',
-                    'version': '58',
-                    'platform': 'ANY',
+            desired_capabilities = {
+                'browserName': 'chrome',
+                'version': '58',
+                'platform': 'ANY',
+            }
+            if os.environ.get('TRAVIS_JOB_NUMBER', None):
+                desired_capabilities += {
                     'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER'],
                     'build': os.environ['TRAVIS_BUILD_NUMBER'],
                     'tags': [os.environ['TRAVIS_PYTHON_VERSION'], 'CI']
                 }
+            cls.driver = webdriver.Remote(
+                command_executor=sauce_url,
+                desired_capabilities=desired_capabilities
             )
         else:
             options = Options()
