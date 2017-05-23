@@ -7,8 +7,8 @@ python:
     - 3.5
     - 3.6
 env:
-    - TRAVIS_NODE_VERSION="4" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta"
-    - TRAVIS_NODE_VERSION="6" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta"
+    - TRAVIS_NODE_VERSION="4" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta" DISPLAY=:99.0
+    - TRAVIS_NODE_VERSION="6" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta" DISPLAY=:99.0
 addons:
     apt:
         packages:
@@ -17,6 +17,7 @@ before_install:
     - wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
     - unzip chromedriver_linux64.zip -d chromedriver
     - export PATH=$PATH:$PWD/chromedriver
+    - sh -e /etc/init.d/xvfb start
 install: 
     - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
     - npm install -g gulp-cli && npm install
