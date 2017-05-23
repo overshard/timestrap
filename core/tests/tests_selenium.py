@@ -445,19 +445,27 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.select2Select('report-filter-user', 'tester')
 
         # Five entries from Tester since 2017-05-06.
-        self.find(By.ID, 'report-filter-min-date').click()
-        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
-        self.find(By.CSS_SELECTOR, 'div[data-pick="1494043200000"]')[0].click()
+        self.find(By.ID, 'report-filter-min-date')
+
+        # Execute Javascript directly using pickadate's odd syntax. Simulated
+        # steps to load and click a date on the calendar here would be
+        # difficult because the calendar view defaults to the current month.
+        self.driver.execute_script(
+            "p = $('#report-filter-min-date').pickadate('picker');"
+            "p.set('select', [2017, 4, 6]);"
+        )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 5)
 
-        # Two entries from Tester between 2017-05-06 and 2017-05-16
-        self.find(By.ID, 'report-filter-max-date').click()
-        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
-        self.find(By.CSS_SELECTOR, 'div[data-pick="1494820800000"]')[1].click()
+        # Three entries from Tester between 2017-05-06 and 2017-05-16
+        self.find(By.ID, 'report-filter-max-date')
+        self.driver.execute_script(
+            "p = $('#report-filter-max-date').pickadate('picker');"
+            "p.set('select', [2017, 4, 16]);"
+        )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
 
         management.call_command('flush', verbosity=0, interactive=False)
