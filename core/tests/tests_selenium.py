@@ -6,6 +6,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core import management
 from django.test import override_settings
 
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -79,8 +80,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             ec.presence_of_element_located(element))
 
     def waitForText(self, element, text):
-        return WebDriverWait(self.driver, self.wait_time).until(
-            ec.text_to_be_present_in_element(element, text))
+        try:
+            WebDriverWait(self.driver, self.wait_time).until(
+                ec.text_to_be_present_in_element(element, text))
+        except TimeoutException:
+            # assertIn produces more verbose failure text.
+            self.assertIn(text, self.find(*element).text)
 
     def waitForClickable(self, element):
         """An element becomes "clickable" when it is not disabled. This method
@@ -246,7 +251,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-hourly-rate').clear()
         self.find(By.NAME, 'task-hourly-rate').send_keys('125')
         self.find(By.NAME, 'task-save').click()
-        self.assertIn('Task Changed\n$125', self.find(By.TAG_NAME, 'task').text)
+        self.waitForText((By.TAG_NAME, 'task'), 'Task Changed\n$125')
 
     def test_timesheet_access(self):
         self.logIn()
@@ -278,8 +283,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-note').send_keys('Note')
         self.find(By.NAME, 'entry-duration').send_keys('0:35')
         self.find(By.NAME, 'entry-add-submit').submit()
-        self.assertIn('Client\nProject 1\nTask 2\nNote\n0:35',
-                      self.find(By.TAG_NAME, 'entry').text)
+        self.waitForPresence((By.TAG_NAME, 'entry'))
+        self.waitForText((By.TAG_NAME, 'entry'),
+                         'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
         client = Client(name='Client', archive=False)
@@ -314,8 +320,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-duration').clear()
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
-        self.assertIn('Client\nProject 2\nTask 1\nChanged note\n1:30',
-                      self.find(By.TAG_NAME, 'entry').text)
+        self.waitForPresence((By.TAG_NAME, 'entry'))
+        self.waitForText((By.TAG_NAME, 'entry'),
+                         'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_restart(self):
         client = Client(name='Client', archive=False)
@@ -345,8 +352,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
-        self.assertIn('Client\nProject 1\nTask 1\nNote\n0:35',
-                      self.find(By.TAG_NAME, 'entry').text)
+        self.waitForText((By.TAG_NAME, 'entry'),
+                         'Client\nProject 1\nTask 1\nNote\n0:35')
 
     def test_timesheet_entry_delete(self):
         client = Client(name='Client', archive=False)
