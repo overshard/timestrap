@@ -49,6 +49,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         cls.driver = WebDriver(chrome_options=options)
         cls.driver.implicitly_wait(20)
         cls.driver.set_page_load_timeout(30)
+        cls.driver.set_script_timeout(30)
         cls.wait_time = 10
 
     @classmethod
