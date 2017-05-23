@@ -73,7 +73,10 @@
     <virtual if={ edit }>
         <div class="col-sm-3">
             <!-- FIXME: Something is buggy about parent.project_details.id -->
-            <select name="entry-project" class="custom-select custom-select-edit" ref="project" required>
+            <select id="entry-project"
+                    class="custom-select custom-select-edit"
+                    ref="project"
+                    required>
                 <optgroup each={ c in parent.clients } label={ c }>
                     <option each={ p in parent.parent.projects }
                             value={ p.url }

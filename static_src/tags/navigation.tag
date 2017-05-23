@@ -15,7 +15,7 @@
                     <virtual if={ timestrapConfig.USER }>
                         <virtual if={ perms && perms.view_entry }>
                             <li class="nav-item">
-                                <a id="nav-app-entries"
+                                <a id="nav-app-timesheet"
                                    class="nav-link"
                                    href={ timestrapConfig.CORE_URLS.ENTRIES }>
                                     Timesheet

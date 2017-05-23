@@ -21,7 +21,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username', 'gravatar_url')
 
     def get_gravatar_url(self, obj):
-        email_hash = hashlib.md5(obj.email.lower()).hexdigest()
+        email_hash = hashlib.md5(obj.email.lower().encode()).hexdigest()
         return "https://www.gravatar.com/avatar/" + email_hash
 
 

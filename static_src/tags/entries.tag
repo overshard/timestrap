@@ -45,7 +45,7 @@
                    placeholder="Date" />
         </div>
         <div class="col-sm-3">
-            <select name="entry-task" class="task-select" ref="task">
+            <select id="entry-task" class="task-select" ref="task">
                 <option><!-- For select2 placeholder to work --></option>
                 <option each={ tasks }
                         value={ url }>
@@ -56,7 +56,10 @@
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <select name="entry-project" class="project-select" ref="project" required>
+            <select id="entry-project"
+                    class="project-select"
+                    ref="project"
+                    required>
                 <option><!-- For select2 placeholder to work --></option>
                 <optgroup each={ c in clients } label={ c }>
                     <option each={ projects }
@@ -240,7 +243,7 @@
                         this.dates.unshift(data.date);
                     }
                     this.timerState = 'Start';
-                    this.updateTotals(data.duration, 0);
+                    updateTotals(data.duration, 0);
                 }
                 toggleButtonBusy(clickedButton);
             }.bind(this));

@@ -36,7 +36,7 @@
         </div>
         <div class="col-2">
             <button
-                    name="client-add-submit"
+                    name="task-add-submit"
                     type="submit"
                     class="btn btn-success btn-sm w-100">
                 Add

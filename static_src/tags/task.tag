@@ -9,7 +9,7 @@
                        value={ name } />
             </div>
             <div class="col-2">
-                <input name="task-rate"
+                <input name="task-hourly-rate"
                        type="text"
                        class="form-control form-control-sm"
                        ref="hourly_rate"
