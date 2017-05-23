@@ -53,7 +53,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-
+        sleep(5)
         super(SeleniumTestCase, cls).tearDownClass()
 
     def find(self, by, value):
