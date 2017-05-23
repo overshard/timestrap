@@ -11,11 +11,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.firefox.webdriver import WebDriver
-
-from pyvirtualdisplay import Display
-
-from easyprocess import EasyProcessCheckInstalledError
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.chrome.options import Options
 
 from faker import Factory
 
@@ -36,29 +33,24 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        try:
-            cls.display = Display(visible=0, size=(1280, 720))
-            cls.display.start()
-        except EasyProcessCheckInstalledError:
-            # Fall back to geckodriver without headless if Xvfb is not
-            # available (as is the case on Windows).
-            # TODO: Implement a cross-platform headless solution.
-            pass
-
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()
-        cls.driver = WebDriver()
+
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--log-level=3')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--window-size=1280,720')
+
+        cls.driver = WebDriver(chrome_options=options)
         cls.driver.implicitly_wait(10)
         cls.wait_time = 5
 
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-        try:
-            cls.display.stop()
-        except AttributeError:
-            pass
 
         super(SeleniumTestCase, cls).tearDownClass()
 

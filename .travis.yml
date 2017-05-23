@@ -5,15 +5,16 @@ python:
     - 3.5
     - 3.6
 env:
-    - TRAVIS_NODE_VERSION="4"
-    - TRAVIS_NODE_VERSION="6"
+    - TRAVIS_NODE_VERSION="4" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta"
+    - TRAVIS_NODE_VERSION="6" GOOGLE_CHROME_BINARY="/usr/bin/google-chrome-beta"
 addons:
-    firefox: 53.0
+    apt:
+        packages:
+            - google-chrome-beta
 before_install:
-    - wget https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz
-    - mkdir geckodriver
-    - tar -xzf geckodriver-v0.16.1-linux64.tar.gz -C geckodriver
-    - export PATH=$PATH:$PWD/geckodriver
+    - wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
+    - unzip chromedriver_linux64.zip -d chromedriver
+    - export PATH=$PATH:$PWD/chromedriver
 install: 
     - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
     - npm install -g gulp-cli && npm install
