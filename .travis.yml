@@ -10,13 +10,10 @@ python:
     - 3.4
     - 3.5
     - 3.6
-env:
-    - TRAVIS_NODE_VERSION="4" 
-    - TRAVIS_NODE_VERSION="6"
 addons:
     sauce_connect: true
 install: 
-    - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+    - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 6
     - npm install -g gulp-cli && npm install
     - pip install -r requirements/development.txt
 before_script:

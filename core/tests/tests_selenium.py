@@ -17,7 +17,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from faker import Factory
 
@@ -47,7 +46,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                         '@ondemand.saucelabs.com/wd/hub'
             cls.driver = webdriver.Remote(
                 command_executor=sauce_url,
-                desired_capabilities=DesiredCapabilities.CHROME
+                desired_capabilities={
+                    'name': desired_capabilities['name'] = self.id()
+                    'browserName': 'chrome',
+                    'version': '58',
+                    'platform': 'ANY',
+                    'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER'],
+                    'build': os.environ['TRAVIS_BUILD_NUMBER'],
+                    'tags': [os.environ['TRAVIS_PYTHON_VERSION'], 'CI']
+                }
             )
         else:
             options = Options()
