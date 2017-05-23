@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
+from datetime import timedelta
+from time import sleep
+
 from django.contrib.auth.models import User, Permission
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core import management
@@ -15,10 +19,6 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.chrome.options import Options
 
 from faker import Factory
-
-from datetime import timedelta
-
-from time import sleep
 
 from ..models import Client, Project, Entry, Task
 
@@ -38,6 +38,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         super(SeleniumTestCase, cls).setUpClass()
 
         options = Options()
+        if os.environ.get('GOOGLE_CHROME_BINARY', None):
+            options.binary_location = os.environ.get['GOOGLE_CHROME_BINARY']
         options.add_argument('--headless')
         options.add_argument('--log-level=3')
         options.add_argument('--disable-gpu')
