@@ -47,7 +47,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         options.add_argument('--window-size=1280,720')
 
         cls.driver = WebDriver(chrome_options=options)
-        cls.driver.implicitly_wait(10)
+        cls.driver.implicitly_wait(20)
         cls.driver.set_page_load_timeout(30)
         cls.wait_time = 5
 
