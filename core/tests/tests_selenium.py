@@ -15,8 +15,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from faker import Factory
 
@@ -37,16 +38,29 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()
 
-        options = Options()
-        if os.environ.get('GOOGLE_CHROME_BINARY', None):
-            options.binary_location = os.environ['GOOGLE_CHROME_BINARY']
-        options.add_argument('--headless')
-        options.add_argument('--log-level=3')
-        options.add_argument('--disable-gpu')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--window-size=1280,720')
+        # Using saucelabs for CI testing since travis CI is inconsistent while
+        # using selenium.
+        if os.environ.get('SAUCE_USERNAME', None):
+            sauce_username = os.environ['SAUCE_USERNAME']
+            sauce_access_key = os.environ['SAUCE_ACCESS_KEY']
+            sauce_url = 'http://' + sauce_username + ':' + sauce_access_key + \
+                        '@ondemand.saucelabs.com/wd/hub'
+            cls.driver = webdriver.Remote(
+                command_executor=sauce_url,
+                desired_capabilities=DesiredCapabilities.CHROME
+            )
+        else:
+            options = Options()
+            if os.environ.get('GOOGLE_CHROME_BINARY', None):
+                options.binary_location = os.environ['GOOGLE_CHROME_BINARY']
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--log-level=3')
+            options.add_argument('--window-size=1280,720')
 
-        cls.driver = WebDriver(chrome_options=options)
+            cls.driver = webdriver.Chrome(chrome_options=options)
+
         cls.driver.implicitly_wait(10)
         cls.wait_time = 5
 
