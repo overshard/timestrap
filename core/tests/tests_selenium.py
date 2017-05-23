@@ -72,8 +72,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         sleep(0.25)
 
     def waitForPresence(self, element):
-        return WebDriverWait(self.driver, self.wait_time).until(
-            ec.presence_of_element_located(element))
+        try:
+            WebDriverWait(self.driver, self.wait_time).until(
+                ec.presence_of_element_located(element))
+        except TimeoutException:
+            self.driver.refresh()
+            WebDriverWait(self.driver, self.wait_time).until(
+                ec.presence_of_element_located(element))
 
     def waitForText(self, element, text):
         try:
