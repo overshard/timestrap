@@ -309,6 +309,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertNotIn('entry-menu', self.driver.page_source)
         self.addPerms(['change_entry'])
         self.driver.refresh()
+        self.waitForPresence((By.NAME, 'entry-menu'))
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
         self.find(By.CLASS_NAME, 'entry-menu-change').click()
@@ -342,6 +343,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertNotIn('entry-menu', self.driver.page_source)
         self.addPerms(['change_entry'])
         self.driver.refresh()
+        self.waitForPresence((By.NAME, 'entry-menu'))
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
         self.find(By.CLASS_NAME, 'entry-menu-restart').click()
@@ -370,6 +372,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry', 'delete_entry'])
         self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
+        self.waitForPresence((By.NAME, 'entry-menu'))
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-delete'))
         self.find(By.CLASS_NAME, 'entry-menu-delete').click()
