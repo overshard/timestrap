@@ -47,7 +47,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             cls.driver = webdriver.Remote(
                 command_executor=sauce_url,
                 desired_capabilities={
-                    'name': desired_capabilities['name'] = self.id()
+                    'name': self.id(),
                     'browserName': 'chrome',
                     'version': '58',
                     'platform': 'ANY',
