@@ -355,7 +355,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
-        self.addPerms(['view_entry', 'change_entry'])
+        self.addPerms(['view_entry'])
         self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-menu', self.driver.page_source)
