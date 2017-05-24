@@ -44,16 +44,20 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             sauce_access_key = os.environ['SAUCE_ACCESS_KEY']
             sauce_url = 'http://' + sauce_username + ':' + sauce_access_key + \
                         '@ondemand.saucelabs.com/wd/hub'
-            cls.driver = webdriver.Remote(
-                command_executor=sauce_url,
-                desired_capabilities={
-                    'browserName': 'chrome',
-                    'version': '58',
-                    'platform': 'ANY',
+            desired_capabilities = {
+                'browserName': 'chrome',
+                'version': '58',
+                'platform': 'ANY',
+            }
+            if os.environ.get('TRAVIS_JOB_NUMBER', None):
+                desired_capabilities += {
                     'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER'],
                     'build': os.environ['TRAVIS_BUILD_NUMBER'],
                     'tags': [os.environ['TRAVIS_PYTHON_VERSION'], 'CI']
                 }
+            cls.driver = webdriver.Remote(
+                command_executor=sauce_url,
+                desired_capabilities=desired_capabilities
             )
         else:
             options = Options()
@@ -75,6 +79,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         cls.driver.quit()
 
         super(SeleniumTestCase, cls).tearDownClass()
+
+    def setUp(self):
+        if type(self.driver) is webdriver.Remote:
+            # Provide context to appear in the saucelabs log.
+            self.driver.execute_script(
+                'sauce:context={0}'.format(self._testMethodName))
 
     def find(self, by, value):
         elements = self.driver.find_elements(by, value)
@@ -351,7 +361,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         Entry(project=project, task=task, user=self.user, note='Note',
               duration=timedelta(minutes=35)).save()
-        self.addPerms(['view_entry', 'change_entry'])
+        self.addPerms(['view_entry'])
         self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-menu', self.driver.page_source)
@@ -441,19 +451,27 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.select2Select('report-filter-user', 'tester')
 
         # Five entries from Tester since 2017-05-06.
-        self.find(By.ID, 'report-filter-min-date').click()
-        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
-        self.find(By.CSS_SELECTOR, 'div[data-pick="1494043200000"]')[0].click()
+        self.find(By.ID, 'report-filter-min-date')
+
+        # Execute Javascript directly using pickadate's odd syntax. Simulated
+        # steps to load and click a date on the calendar here would be
+        # difficult because the calendar view defaults to the current month.
+        self.driver.execute_script(
+            "p = $('#report-filter-min-date').pickadate('picker');"
+            "p.set('select', [2017, 4, 6]);"
+        )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 5)
 
-        # Two entries from Tester between 2017-05-06 and 2017-05-16
-        self.find(By.ID, 'report-filter-max-date').click()
-        self.waitForPresence((By.CLASS_NAME, 'picker--focused'))
-        self.find(By.CSS_SELECTOR, 'div[data-pick="1494820800000"]')[1].click()
+        # Three entries from Tester between 2017-05-06 and 2017-05-16
+        self.find(By.ID, 'report-filter-max-date')
+        self.driver.execute_script(
+            "p = $('#report-filter-max-date').pickadate('picker');"
+            "p.set('select', [2017, 4, 16]);"
+        )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
 
         management.call_command('flush', verbosity=0, interactive=False)
