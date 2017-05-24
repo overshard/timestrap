@@ -39,7 +39,43 @@ After a successful push, create a super user to allow login:
 
     heroku run python manage.py createsuperuser
 
-## Installation
+## Manual Installation
+
+Follow the steps below to install Timestrap locally or on any server. This 
+process installs the minimal requirements to *run* Timestrap. For development
+requirements and procedures, see [Development](#development).
+
+1. Install the requirements:
+    - Python 2.7, 3.4, 3.5, or 3.6
+    - Python virtualenv
+    - Python pip
+1. Initiate a virtual environment
+
+        virtualenv .venv
+        source .venv/bin/activate
+        pip install -r requirements/base.txt
+1. Bootstrap the database
+
+        python manage.py migrate
+1. Create a super user:
+
+        python manage.py createsuperuser
+1. Run the server!
+
+        python manage.py runserver
+        
+The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
+If it is not, feel free to [create an issue](issue) to seek assistance or 
+report a bug!
+
+:construction: :construction: :construction: :construction: :construction:
+ 
+**Everything below could be moved to the more extensive RTD, with the exception
+of perhaps a small note about development and licensing?**
+
+:construction: :construction: :construction: :construction: :construction:
+
+## Development
 
 **Important Note:** Installing Node/NPM and Chrome/Selenium are not required by
 this project, Node/NPM are used for building our static files and improving our
@@ -181,26 +217,6 @@ From within the virtual environment
 After "Sauce Connect is up, you may start your tests."
 
     python manage.py test
-
-
-## Running Timestrap
-
-Always make sure you are in the virtual environment before running additional
-commands by first running `source .venv/bin/activate`. If you have already done
-this from the previous step and have not left the environment continue on!
-
-If you have not yet migrated your database do so by running:
-
-    python manage.py migrate
-
-You'll need to create your first user too:
-
-    python manage.py createsuperuser
-
-After this you can run Timestrap and access it from your browser at
-`localhost:8000`.
-
-    python manage.py runserver
 
 ### Running Timestrap With Gulp
 
