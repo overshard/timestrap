@@ -46,11 +46,17 @@ Heroku instance.
 
 ## Installation
 
+**Important Note:** Installing Node/NPM and Chrome/Selenium are not required by
+this project, Node/NPM are used for building our static files and improving our
+workflow, if you aren't going to make changes to static files you don't need
+them. Chrome/Selenium are specifically used for testing, if you don't want to
+run all our tests you can exclude this too. All you need is any version of
+Python with the virtualenv and pip packages.
+
 For all systems you are going to need:
 
 - Python 2.7, 3.4, 3.5, or 3.6
 - Python virtualenv and pip packages
-- Ability to compile python native extensions
 
 Once you have all of that you can run the following and move onto Testing
 and/or Running Timestrap:
@@ -70,37 +76,82 @@ You can then install our Node.js dependencies by running:
     sudo npm install -g gulp-cli
     npm install
 
+### Windows
+
+The easiest way to develop on Windows now days is using the WSL. We'll let you
+figure out how to get that setup for your machine however once it is installed
+most of the instructions are the exact same as the Ubuntu install instructions
+after that with the exception of Google Chrome and Chromedriver.
+
+Download and install the latest version of Google Chrome Beta and Chromedriver.
+put the Chromedriver in a reasonable location, I tend to put apps that don't
+come with an installer in `%LOCALAPPDATA%`. For Chromedriver I copied
+`chromedriver.exe` into `%LOCALAPPDATA%\chromedriver\`.
+
+Open up Bash on Ubuntu on Windows and run the following to make chromedriver
+accessible to our tests:
+
+    sudo mkdir -p /usr/local/bin/ && cd /usr/local/bin/
+    sudo ln -s /c/mnt/Users/<YOUR USERNAME HERE>/AppData/Local/chromedriver/chromedriver.exe chromedriver
+
+Continue on to the Ubuntu instructions to finish up and ignore the Chrome and
+Chromedriver installation there.
+
 ### Ubuntu
 
-You can install everything you need from apt.
+You can install everything you need from apt, which is just virtualenv:
 
-    sudo apt install build-essential python-dev python-virtualenv python-pip
+    sudo apt install python-virtualenv
 
 If you are doing front-end development you also need NPM and Node.js:
 
-    sudo apt install npm nodejs
+    sudo apt install npm
 
 If you want to run tests you will need to install some additional packages,
 these are not required though and if you are working on small changes or
 documentation then you can rely on Travis CI to run tests for you.
 
-    sudo apt install firefox xvfb
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz
-    tar zxf geckodriver-v0.16.1-linux64.tar.gz
-    sudo mv geckodriver /usr/local/bin/
+We've found that google-chrome-beta (Chrome 59+) is best for testing since they
+have added a ton of improvements that allow for things like headless testing. We
+originally used geckodriver and Firefox but Chrome finished all our tests in a
+fraction of the time. So to install Chrome on Ubuntu follow the steps below.
 
-If you run into issues with the version of geckodriver above, you'll want to
-make sure you have the latest or get one for your specific processor if you
-aren't running a linux64 environment go to the
-[geckodriver releases GitHub page](https://github.com/mozilla/geckodriver/releases).
+    curl -L https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    sudo apt update
+    sudo apt install google-chrome-beta
+    curl -L https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip -o chromedriver.zip
+    sudo mkdir -p /usr/local/bin/
+    sudo unzip chromedriver.zip -d /usr/local/bin/
+    sudo chmod +x /usr/local/bin/chromedriver
+    echo "GOOGLE_CHROME_BINARY=/usr/bin/google-chrome-beta" >> ~/.bashrc
+
+Go to the top of Installation and make sure you have virtualenv and npm all set
+then continue to running and testing.
+
+### OS X
+
+Homebrew, get it if you don't have it and run:
+
+    brew install node python
+
+Make sure you have virtualenv installed after this with:
+
+    pip install virtualenv
+
+If you want to test with selenium install the latest Google Chrome Beta and run:
+
+    brew install chromedriver
+
+Go to the top of Installation and make sure you have virtualenv and npm all set
+then continue to running and testing.
 
 
 ## Testing
 
-We use selenium with the geckodriver for testing. If you wish to run tests you
-will need to make sure you have Firefox installed and on a headless Linux
-machine you'll need xvfb. For installation instructions on those see the above
-documentation
+We use selenium with the chromedriver for testing. If you wish to run tests you
+will need to make sure you have Chrome installed. For installation instructions
+on those see the above documentation
 
 I'm trying to push for 100% code coverage on this project! If you want to add
 or change something and test that everything still works you can do so easily
@@ -112,28 +163,30 @@ If you push code to our primary repository we test for style adherence and code
 coverage. If you get a failed build to either of these we won't accept your
 code till it's fixed.
 
-#### Sauce Labs
+### Sauce Labs
 
 In order to run Selenium tests in a consistent environment, this project makes
-use of [SauceLabs](https://saucelabs.com/) for browser testing. To run tests in
+use of [SauceLabs](https://saucelabs.com/) for browser testing. To run tests on
 SauceLabs, you will need to first create an account. Once you have your 
 username and access key, follow the steps below:
 
-    # Install the sc proxy client
+Install the sc proxy client
+
     wget https://saucelabs.com/downloads/sc-4.4.6-linux.tar.gz
     tar zxf sc-4.4.6-linux.tar.gz
     mv sc-4.4.6-linux/bin/sc /usr/local/bin
-    
-    # From within the virtual environment
+
+From within the virtual environment
+
     pip install sauceclient
-    
     export SAUCE_USERNAME=[YOUR USERNAME]
     export SAUCE_ACCESS_KEY=[YOUR ACCESS KEY]
-    
     sc &
-    
-    # After "Sauce Connect is up, you may start your tests."
+
+After "Sauce Connect is up, you may start your tests."
+
     python manage.py test
+
 
 ## Running Timestrap
 
