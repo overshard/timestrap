@@ -3,6 +3,8 @@
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
+![Timestrap](screenshot.png)
+
 ### :warning: Warning
 
 This app is currently very unstable. Everything may, and probably will, change.
