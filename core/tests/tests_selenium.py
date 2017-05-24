@@ -50,11 +50,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 'platform': 'ANY',
             }
             if os.environ.get('TRAVIS_JOB_NUMBER', None):
-                desired_capabilities += {
+                desired_capabilities.update({
                     'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER'],
                     'build': os.environ['TRAVIS_BUILD_NUMBER'],
                     'tags': [os.environ['TRAVIS_PYTHON_VERSION'], 'CI']
-                }
+                })
             cls.driver = webdriver.Remote(
                 command_executor=sauce_url,
                 desired_capabilities=desired_capabilities
