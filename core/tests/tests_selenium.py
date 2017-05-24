@@ -80,6 +80,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
         super(SeleniumTestCase, cls).tearDownClass()
 
+    def setUp(self):
+        if type(self.driver) is webdriver.Remote:
+            # Provide context to appear in the saucelabs log.
+            self.driver.execute_script(
+                'sauce:context={0}'.format(self._testMethodName))
+
     def find(self, by, value):
         elements = self.driver.find_elements(by, value)
         if len(elements) is 1:
