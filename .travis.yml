@@ -18,7 +18,7 @@ addons:
         secure: Y1tcX6TNwA3Ds5NkDCNMfJSo8wAgG5TxRJL2XtGcqLWaHc1h0M255y+qomoIjzW7ZQWPSvMszjUMGna8N6yOCk528jFMKG/EC2aEJpwDlTbxf1JL4E4s6XhBaRs0nmV6xngZf8PFeqqpwC0/UiO7s7KnLw+Nsfp/fawUbHLcv4zbD7MRirGCwz/Uzp1HgXGwXZmrL+zFF9nLq1MTIp/o4ulM8CBO74C0L2JqUnhxTh1k1sQVkH5FEg1Xc/O4qExKsDMtM4MUqpe9syECj7xVFIxJOg0YwxAi2p5HXJHyUpdv9mj53G/3/VRcGFFDK3+57Ud53cmt2o+Wc0bKZ/Ubj0nVLl58DKf/PRAL6e77eVPvaDdray8AhVEwXV6xxz912rJ7OT+LWRHVEyv7g/13tocq+v2t9V65azcbdCTXe8ZZ+3h9/rH0JI8d0enrQv3Nz9E+6ds/D9hFv7qZZ9nEtuM+lrMKcQpjTqB85j47xEFSTH0A78YtbSwy0ncj6ihBJ4hrR9pLuB0IJOHXZVClcWVUgXasBbgKubHzd65lqRf8RaV4AUCh/WHDj5L2IXPdwfekQxbaprdOypXrjf1g+JucYpkx45Anb6UrTKTvJD0mSalUeaatyaPzUImnChw/xvVQguCIqWlEXqnCZ8KQ+RXwTFPInCe8BBv/1kGFYhM=
 install:
     - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 6
-    - npm install -g gulp-cli && npm install
+    - sudo npm install -g gulp-cli yarn && yarn
     - pip install -r requirements/development.txt
 before_script:
     - gulp lint
