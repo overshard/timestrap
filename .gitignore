@@ -21,7 +21,7 @@
 /timestrap/static
 
 # documentation builds
-_build
+/docs/_build
 
 # geckodriver/selenium
 /geckodriver.log
