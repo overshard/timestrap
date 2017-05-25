@@ -1,9 +1,15 @@
+.. attention::
+
+    This app is currently very unstable. Everything may, and probably will, change.
+
 =========
 Timestrap
 =========
 
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
+
+.. image:: ../screenshot.png
 
 .. toctree::
    :caption: Project Info
