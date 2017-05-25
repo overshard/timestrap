@@ -8,3 +8,4 @@ selenium>=3.4,<3.5
 # documentation
 Sphinx>=1.5,<1.6
 recommonmark>=0.4,<0.5
+sphinx_rtd_theme>=0.2.4,<0.3
