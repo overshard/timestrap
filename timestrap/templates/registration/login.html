@@ -8,7 +8,7 @@
         <title>Login - Timestrap</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/bundle.css' %}"/>
     </head>
     <body class="bg-primary">
         <div id="view-{{ request.resolver_match.view_name }}" class="container">
@@ -47,7 +47,7 @@
                         <label class="sr-only" for="username-input-group">
                             {{ form.username.label }}
                         </label>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 fade-in">
                             <div class="input-group-addon">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </div>
@@ -57,14 +57,14 @@
                         <label class="sr-only" for="password-input-group">
                             {{ form.password.label }}
                         </label>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 fade-in">
                             <div class="input-group-addon">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </div>
                             {% render_field form.password name='password' class+='form-control' id='password-input-group' placeholder=form.password.label %}
                         </div>
 
-                        <button class="btn btn-primary w-100" type="submit" name="login">
+                        <button class="btn btn-primary w-100 fade-in" type="submit" name="login">
                             Login
                         </button>
                     </form>

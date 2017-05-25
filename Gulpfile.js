@@ -1,6 +1,5 @@
 var gulp         = require('gulp');
 
-var expect       = require('gulp-expect-file');
 var concat       = require('gulp-concat');
 var sass         = require('gulp-sass');
 var sasslint     = require('gulp-sass-lint');
@@ -34,17 +33,16 @@ gulp.task('styles', function() {
         'node_modules/select2/dist/css/select2.min.css',
         'node_modules/pickadate/lib/compressed/themes/default.css',
         'node_modules/pickadate/lib/compressed/themes/default.date.css',
-        'static_src/sass/**/*.scss'
+        'timestrap/static_src/sass/**/*.scss'
     ];
     gulp.src(files)
-        .pipe(expect(files))
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(concat('styles.css'))
-        .pipe(gulp.dest('./timestrap/static/css/'));
+        .pipe(concat('bundle.css'))
+        .pipe(gulp.dest('timestrap/static/css/'));
 });
 
 
@@ -58,26 +56,23 @@ gulp.task('scripts', function(){
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/chart.js/dist/Chart.min.js',
         'node_modules/riot/riot.min.js',
         'node_modules/riot-route/dist/route.min.js',
-        'static_src/scripts/**/*.js'
+        'timestrap/static_src/scripts/**/*.js'
     ];
     gulp.src(files)
-        .pipe(expect(files))
-        .pipe(concat('scripts.js'))
-        .pipe(gulp.dest('./timestrap/static/js/'));
+        .pipe(concat('bundle.js'))
+        .pipe(gulp.dest('timestrap/static/js/'));
 });
 
 
 gulp.task('tags', function() {
     var files = [
-        'static_src/tags/**/*.tag'
+        'timestrap/static_src/tags/**/*.tag'
     ];
     gulp.src(files)
-        .pipe(expect(files))
         .pipe(riot())
-        .pipe(concat('tags.js'))
+        .pipe(concat('bundle-tags.js'))
         .pipe(gulp.dest('./timestrap/static/js/'));
 });
 
@@ -87,8 +82,7 @@ gulp.task('extras', function() {
         'node_modules/font-awesome/fonts/*'
     ];
     gulp.src(files)
-        .pipe(expect(files))
-        .pipe(gulp.dest('./timestrap/static/fonts/'));
+        .pipe(gulp.dest('timestrap/static/fonts/'));
 });
 
 
@@ -96,9 +90,9 @@ gulp.task('build', ['styles', 'scripts', 'tags', 'extras']);
 
 
 gulp.task('watch', function() {
-    gulp.watch('static_src/sass/**/*.scss', ['styles']);
-    gulp.watch('static_src/scripts/**/*.js', ['scripts']);
-    gulp.watch('static_src/tags/**/*.tag', ['tags']);
+    gulp.watch('timestrap/static_src/sass/**/*.scss', ['styles']);
+    gulp.watch('timestrap/static_src/scripts/**/*.js', ['scripts']);
+    gulp.watch('timestrap/static_src/tags/**/*.tag', ['tags']);
 });
 
 
@@ -155,11 +149,10 @@ gulp.task('sasslint', function() {
 gulp.task('eslint', function() {
     var files = [
         'Gulpfile.js',
-        'static_src/scripts/**/*.js',
-        'static_src/tags/**/*.tag'
+        'timestrap/static_src/scripts/**/*.js',
+        'timestrap/static_src/tags/**/*.tag'
     ];
     gulp.src(files)
-        .pipe(expect(files))
         .pipe(eslint({
             'rules': {
                 'indent': [
@@ -249,6 +242,21 @@ gulp.task('coverage', function() {
         [
             'report',
             '-m'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
+
+
+// Documentation tasks
+gulp.task('docs', function() {
+    spawnSync(
+        'sphinx-build',
+        [
+            'docs',
+            'docs/_build'
         ],
         {
             stdio: 'inherit'

@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         {# Global stylesheets #}
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/bundle.css' %}"/>
 
         {% block extra_css %}{% endblock %}
     </head>
@@ -54,8 +54,8 @@
             })(document, window);
         </script>
 
-        <script src="{% static 'js/scripts.js' %}"></script>
-        <script src="{% static 'js/tags.js' %}"></script>
+        <script src="{% static 'js/bundle.js' %}"></script>
+        <script src="{% static 'js/bundle-tags.js' %}"></script>
 
         <script>
             riot.mount('navigation');
