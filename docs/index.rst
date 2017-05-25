@@ -20,6 +20,13 @@ multiple formats and easily extensible.
    Development Installation <installation/development>
 
 .. toctree::
+   :caption: Configuration
+   :maxdepth: 2
+
+   Password Resets & Email <configuration/email>
+   Localization <configuration/localization>
+
+.. toctree::
    :caption: Development
    :maxdepth: 2
 
