@@ -35,7 +35,7 @@ create two settings before pushing using `heroku config:set`:
     heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
     heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
 
-After a successful push, create a super user  :closed_lock_with_key: to allow login:
+:lock: After a successful push, create a super user to allow login:
 
     heroku run python manage.py createsuperuser
 
@@ -57,7 +57,7 @@ requirements and procedures, see [Development Installation](#development-install
 1. Bootstrap the database.
 
         python manage.py migrate
-1. Create a super user.  :closed_lock_with_key:
+1. :lock: Create a super user.
 
         python manage.py createsuperuser
 1. Run the server!
@@ -92,7 +92,7 @@ static files.
 1. Bootstrap the database.
 
         python manage.py migrate
-1. Create a super user.  :closed_lock_with_key:
+1. :lock: Create a super user.
 
         python manage.py createsuperuser
 1. Run the server!
