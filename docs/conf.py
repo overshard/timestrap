@@ -4,7 +4,6 @@ from recommonmark.transform import AutoStructify
 
 
 # Taken from sphinx_rtd_theme docs
-import os
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 if not on_rtd:
     import sphinx_rtd_theme
