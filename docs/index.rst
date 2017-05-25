@@ -17,4 +17,12 @@ multiple formats and easily extensible.
    :maxdepth: 2
 
    Manual Installation <installation/manual>
-   Development Installations <installation/development>
+   Development Installation <installation/development>
+
+.. toctree::
+   :caption: Development
+   :maxdepth: 2
+
+   Windows <development/windows>
+   Ubuntu <development/ubuntu>
+   OS X <development/osx>

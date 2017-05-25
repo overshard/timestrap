@@ -256,6 +256,7 @@ gulp.task('docs-github', function() {
             'docs/introduction/demo.md',
             'docs/introduction/quickstart.md',
             'docs/installation/manual.md',
+            'docs/installation/development.md',
             'docs/introduction/further_reading.md'])
         .pipe(concat('README.md'))
         .pipe(gulp.dest('.'));
