@@ -4,8 +4,12 @@
     "repository": "https://github.com/overshard/timestrap",
     "keywords": [
         "python",
-        "django"
+        "django",
+        "web",
+        "timetracking",
+        "invoicing"
     ],
+    "version": "1.0.0",
     "buildpacks": [
         {
             "url": "heroku/node"

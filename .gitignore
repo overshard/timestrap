@@ -18,6 +18,7 @@
 # static files from gulp and testing
 /media
 /static
+/timestrap/static
 
 # documentation builds
 _build
