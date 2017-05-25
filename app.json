@@ -9,7 +9,7 @@
         "timetracking",
         "invoicing"
     ],
-    "version": "1.0.0",
+    "version": "1.0.0-alpha",
     "buildpacks": [
         {
             "url": "heroku/node"
