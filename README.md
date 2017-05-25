@@ -19,7 +19,7 @@ Heroku that resets every 10 minutes. The default credentials are:
 
 ## Quickstart
 
-Want to get up and running quickly?
+Want to get up and running quickly? :rocket:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/overshard/timestrap)
 
@@ -65,12 +65,12 @@ requirements and procedures, see [Development Installation](#development-install
         python manage.py runserver
         
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
-If it is not, feel free to [create an issue](issue) to seek assistance or 
-report a bug!
+If it is not, feel free to [create an issue](https://github.com/overshard/timestrap/issues)
+to seek assistance or report a bug! :bug:
 
 ## Development Installation
 
-**Important Note:** Node is not required for Timestrap to function. Node is 
+**:exclamation: Important Note:** Node is not required for Timestrap to function. Node is 
 used for building Timestrap's static files and improving the development 
 workflow. This installation procedure is only necessary for making changes to 
 static files.
@@ -86,7 +86,7 @@ static files.
         virtualenv .venv
         source .venv/bin/activate
         pip install -r requirements/development.txt
-1. Install Node dependencies
+1. Install Node dependencies.
 
         npm install        
 1. Bootstrap the database.
@@ -102,7 +102,8 @@ static files.
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
-the application.
+the application. [Pull requests](https://github.com/overshard/timestrap/pulls)
+are welcome and encouraged!
 
 ## Further Reading
 
