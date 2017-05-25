@@ -56,7 +56,6 @@ gulp.task('scripts', function(){
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/chart.js/dist/Chart.min.js',
         'node_modules/riot/riot.min.js',
         'node_modules/riot-route/dist/route.min.js',
         'timestrap/static_src/scripts/**/*.js'
