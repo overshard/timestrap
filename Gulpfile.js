@@ -277,7 +277,7 @@ gulp.task('docs-rtd', function() {
 
 
 gulp.task('docs-watch', function() {
-    gulp.watch('docs/**/*.md', ['docs-github', 'docs-rtd']);
+    gulp.watch(['docs/**/*.md', 'docs/**/*.rst'], ['docs-github', 'docs-rtd']);
 });
 
 
