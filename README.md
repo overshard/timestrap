@@ -35,7 +35,7 @@ create two settings before pushing using `heroku config:set`:
     heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
     heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
 
-After a successful push, create a super user to allow login:
+After a successful push, create a super user  :closed_lock_with_key: to allow login:
 
     heroku run python manage.py createsuperuser
 
@@ -57,7 +57,7 @@ requirements and procedures, see [Development Installation](#development-install
 1. Bootstrap the database.
 
         python manage.py migrate
-1. Create a super user.
+1. Create a super user.  :closed_lock_with_key:
 
         python manage.py createsuperuser
 1. Run the server!
@@ -92,7 +92,7 @@ static files.
 1. Bootstrap the database.
 
         python manage.py migrate
-1. Create a super user.
+1. Create a super user.  :closed_lock_with_key:
 
         python manage.py createsuperuser
 1. Run the server!
@@ -103,7 +103,7 @@ The Timestrap application should now be running at [http://localhost:8000](http:
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
 the application. [Pull requests](https://github.com/overshard/timestrap/pulls)
-are welcome and encouraged!
+are :+1: welcome and :clap: encouraged!
 
 ## Further Reading
 
@@ -116,31 +116,6 @@ For additional documentation on [configuration options](RTD), [installing requir
 of perhaps a small note about development and licensing?**
 
 :construction: :construction: :construction: :construction: :construction:
-
-## Development
-
-For all systems you are going to need:
-
-- Python 2.7, 3.4, 3.5, or 3.6
-- Python virtualenv and pip packages
-
-Once you have all of that you can run the following and move onto Testing
-and/or Running Timestrap:
-
-    virtualenv .venv
-    source .venv/bin/activate
-    pip install -r requirements/development.txt
-
-If you'd prefer to have a minimal installation of Timestrap you can use our
-base requirements instead of the development or Heroku requirements by running:
-
-    pip install -r requirements/base.txt
-
-If you plan on helping with front-end development you will also need Node.js.
-You can then install our Node.js dependencies by running:
-
-    sudo npm install -g gulp-cli
-    npm install
 
 ### Windows
 
