@@ -34,6 +34,6 @@
         "tether": "1.4.x"
     },
     "scripts": {
-        "heroku-postbuild": "gulp build"
+        "heroku-postbuild": "npm rebuild node-sass && gulp build"
     }
 }
