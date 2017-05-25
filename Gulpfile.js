@@ -249,3 +249,18 @@ gulp.task('coverage', function() {
         }
     );
 });
+
+
+// Documentation tasks
+gulp.task('docs', function() {
+    spawnSync(
+        'sphinx-build',
+        [
+            'docs',
+            'docs/_build'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    );
+});
