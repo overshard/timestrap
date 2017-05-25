@@ -251,7 +251,7 @@ gulp.task('coverage', function() {
 
 
 // Documentation tasks
-gulp.task('docs', function() {
+gulp.task('docs-build', function() {
     spawnSync(
         'sphinx-build',
         [
@@ -263,3 +263,10 @@ gulp.task('docs', function() {
         }
     );
 });
+
+
+gulp.task('docs-watch', function() {
+    gulp.watch('docs/**/*.md', ['docs-build']);
+});
+
+gulp.task('docs', ['docs-build', 'docs-watch']);
