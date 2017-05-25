@@ -1,6 +1,6 @@
 -r ./base.txt
 
 # heroku
-dj-database-url<0.5,>=0.4
-psycopg2<2.7,>=2.6
-gunicorn<19.7,>=19.6
+dj-database-url>=0.4,<0.5
+psycopg2>=2.6,<2.7
+gunicorn>=19.6,<19.7
