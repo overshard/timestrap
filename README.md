@@ -43,21 +43,21 @@ After a successful push, create a super user to allow login:
 
 Follow the steps below to install Timestrap locally or on any server. This 
 process installs the minimal requirements to *run* Timestrap. For development
-requirements and procedures, see [Development](#development).
+requirements and procedures, see [Development Installation](#development-installation).
 
 1. Install the requirements:
     - Python 2.7, 3.4, 3.5, or 3.6
     - Python virtualenv
     - Python pip
-1. Initiate a virtual environment
+1. Initiate a virtual environment.
 
         virtualenv .venv
         source .venv/bin/activate
         pip install -r requirements/base.txt
-1. Bootstrap the database
+1. Bootstrap the database.
 
         python manage.py migrate
-1. Create a super user:
+1. Create a super user.
 
         python manage.py createsuperuser
 1. Run the server!
@@ -68,6 +68,47 @@ The Timestrap application should now be running at [http://localhost:8000](http:
 If it is not, feel free to [create an issue](issue) to seek assistance or 
 report a bug!
 
+## Development Installation
+
+**Important Note:** Node is not required for Timestrap to function. Node is 
+used for building Timestrap's static files and improving the development 
+workflow. This installation procedure is only necessary for making changes to 
+static files.
+
+1. Install the requirements:
+    - Python 2.7, 3.4, 3.5, or 3.6
+    - Python virtualenv
+    - Python pip
+    - Node/NPM
+    - Gulp
+1. Initiate a virtual environment with the development requirements.
+
+        virtualenv .venv
+        source .venv/bin/activate
+        pip install -r requirements/development.txt
+1. Install Node dependencies
+
+        npm install        
+1. Bootstrap the database.
+
+        python manage.py migrate
+1. Create a super user.
+
+        python manage.py createsuperuser
+1. Run the server!
+
+        gulp
+        
+The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
+Gulp will automatically recognize and recompile changes to any static
+files, allowing quick modification and review without starting and stopping
+the application.
+
+## Further Reading
+
+For additional documentation on [configuration options](RTD), [installing requirements](RTD), 
+[testing](RTD) and more, please see [https://timestrap.readthedocs.io/](https://timestrap.readthedocs.io/).
+
 :construction: :construction: :construction: :construction: :construction:
  
 **Everything below could be moved to the more extensive RTD, with the exception
@@ -76,13 +117,6 @@ of perhaps a small note about development and licensing?**
 :construction: :construction: :construction: :construction: :construction:
 
 ## Development
-
-**Important Note:** Installing Node/NPM and Chrome/Selenium are not required by
-this project, Node/NPM are used for building our static files and improving our
-workflow, if you aren't going to make changes to static files you don't need
-them. Chrome/Selenium are specifically used for testing, if you don't want to
-run all our tests you can exclude this too. All you need is any version of
-Python with the virtualenv and pip packages.
 
 For all systems you are going to need:
 
