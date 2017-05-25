@@ -30,6 +30,7 @@ multiple formats and easily extensible.
    :caption: Development
    :maxdepth: 2
 
-   Windows <development/windows>
-   Ubuntu <development/ubuntu>
-   OS X <development/osx>
+   Requirements <development/requirements>
+   Running Timestrap With Gulp <development/gulp>
+   Generating Fake Data <development/fake>
+   Testing <development/testing>
