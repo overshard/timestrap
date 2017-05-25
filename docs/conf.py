@@ -1,6 +1,14 @@
+import os
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+
+# Taken from sphinx_rtd_theme docs
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+if not on_rtd:
+    import sphinx_rtd_theme
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Add markdown parser
 source_parsers = {
@@ -8,7 +16,7 @@ source_parsers = {
 }
 
 # The suffix(es) of source filenames.
-source_suffix = '.md'
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -37,9 +45,6 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
-
-# The theme to use for HTML and HTML Help pages.
-html_theme = 'default'
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Timestrapdoc'

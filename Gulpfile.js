@@ -251,7 +251,19 @@ gulp.task('coverage', function() {
 
 
 // Documentation tasks
-gulp.task('docs', function() {
+gulp.task('docs-github', function() {
+    gulp.src(['docs/introduction/lead.md',
+            'docs/introduction/demo.md',
+            'docs/introduction/quickstart.md',
+            'docs/installation/manual.md',
+            'docs/installation/development.md',
+            'docs/introduction/further_reading.md'])
+        .pipe(concat('README.md'))
+        .pipe(gulp.dest('.'));
+});
+
+
+gulp.task('docs-rtd', function() {
     spawnSync(
         'sphinx-build',
         [
@@ -263,3 +275,11 @@ gulp.task('docs', function() {
         }
     );
 });
+
+
+gulp.task('docs-watch', function() {
+    gulp.watch(['docs/**/*.md', 'docs/**/*.rst'], ['docs-github', 'docs-rtd']);
+});
+
+
+gulp.task('docs', ['docs-github', 'docs-rtd', 'docs-watch']);
