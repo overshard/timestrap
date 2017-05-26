@@ -11,17 +11,9 @@
 
         <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
         <link rel="stylesheet" href="{% static 'css/bundle-scss.css' %}" />
-
-        {% block extra_css %}{% endblock %}
     </head>
     <body>
-        <navigation></navigation>
-
-
-        <div class="container">
-            <div id="main"></div>
-        </div>
-
+        <div id="app"></div>
 
         <script>
             (function(document, window) {
@@ -34,7 +26,7 @@
                     REPORTS: "{% url 'reports' %}",
                     REPORTS_EXPORT: "{% url 'reports-export' %}",
                     CLIENTS: "{% url 'clients' %}",
-                    ENTRIES: "{% url 'timesheet' %}",
+                    TIMESHEET: "{% url 'timesheet' %}",
                     TASKS: "{% url 'tasks' %}"
                 }
                 timestrapConfig.API_URLS = {
@@ -55,11 +47,5 @@
 
         <script src="{% static 'js/bundle.js' %}"></script>
         <script src="{% static 'js/bundle-tags.js' %}"></script>
-
-        <script>
-            riot.mount('navigation');
-        </script>
-
-        {% block extra_js %}{% endblock %}
     </body>
 </html>

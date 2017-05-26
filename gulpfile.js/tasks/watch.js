@@ -10,10 +10,10 @@ gulp.task('watch:styles', function() {
 
 
 gulp.task('watch:scripts', function() {
-    return gulp.watch('timestrap/static_src/sass/**/*.scss', ['styles']);
+    return gulp.watch('timestrap/static_src/js/**/*.js', ['scripts']);
 });
 
 
 gulp.task('watch:tags', function() {
-    return gulp.watch('timestrap/static_src/tags/**/*.tag', ['tags']);
+    return gulp.watch('timestrap/static_src/tags/**/*', ['tags']);
 });
