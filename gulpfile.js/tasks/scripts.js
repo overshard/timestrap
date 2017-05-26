@@ -18,7 +18,7 @@ gulp.task('scripts', function(){
         'node_modules/riot-route/dist/route.min.js',
         'timestrap/static_src/scripts/**/*.js'
     ];
-    gulp.src(files)
+    return gulp.src(files)
         .pipe(concat('bundle.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });
@@ -28,7 +28,7 @@ gulp.task('tags', function() {
     var files = [
         'timestrap/static_src/tags/**/*.tag'
     ];
-    gulp.src(files)
+    return gulp.src(files)
         .pipe(riot())
         .pipe(concat('bundle-tags.js'))
         .pipe(gulp.dest('timestrap/static/js/'));

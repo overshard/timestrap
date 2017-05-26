@@ -5,7 +5,7 @@ var sass         = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
 
-gulp.task('styles', ['styles:vendor', 'styles:scss']);
+gulp.task('styles', ['styles:vendor', 'styles:sass']);
 
 
 gulp.task('styles:vendor', function() {
@@ -17,17 +17,17 @@ gulp.task('styles:vendor', function() {
         'node_modules/pickadate/lib/compressed/themes/default.css',
         'node_modules/pickadate/lib/compressed/themes/default.date.css',
     ];
-    gulp.src(files)
+    return gulp.src(files)
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });
 
 
-gulp.task('styles:scss', function() {
+gulp.task('styles:sass', function() {
     var files = [
         'timestrap/static_src/sass/**/*.scss'
     ];
-    gulp.src(files)
+    return gulp.src(files)
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],

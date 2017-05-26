@@ -8,7 +8,8 @@ var spawnSync = require('child_process').spawnSync;
 
 gulp.task('docs', ['docs:build', 'docs:watch']);
 
-gulp.task('docs:build', ['docs:github', 'docs:rtd'])
+
+gulp.task('docs:build', ['docs:github', 'docs:rtd']);
 
 
 gulp.task('docs:watch', function() {

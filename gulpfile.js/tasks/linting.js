@@ -6,11 +6,11 @@ var sasslint     = require('gulp-sass-lint');
 var spawn        = require('child_process').spawn;
 
 
-gulp.task('lint', ['pythonlint', 'sasslint', 'eslint']);
+gulp.task('lint', ['lint:python', 'lint:sass', 'lint:es']);
 
 
-gulp.task('pythonlint', function() {
-    spawn(
+gulp.task('lint:python', function(cb) {
+    var flake8 = spawn(
         'flake8',
         [
             '--exclude=venv,.venv,node_modules,migrations'
@@ -19,11 +19,12 @@ gulp.task('pythonlint', function() {
             stdio: 'inherit'
         }
     );
+    flake8.on('exit', cb);
 });
 
 
-gulp.task('sasslint', function() {
-    gulp.src('static_src/sass/**/*.s+(a|c)ss')
+gulp.task('lint:sass', function() {
+    return gulp.src('static_src/sass/**/*.s+(a|c)ss')
         .pipe(sasslint({
             rules: {
                 'no-vendor-prefixes': 2,
@@ -43,13 +44,13 @@ gulp.task('sasslint', function() {
 });
 
 
-gulp.task('eslint', function() {
+gulp.task('lint:es', function() {
     var files = [
         'gulpfile.js/**/*.js',
         'timestrap/static_src/scripts/**/*.js',
         'timestrap/static_src/tags/**/*.tag'
     ];
-    gulp.src(files)
+    return gulp.src(files)
         .pipe(eslint({
             'rules': {
                 'indent': [

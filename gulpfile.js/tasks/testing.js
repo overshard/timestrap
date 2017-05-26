@@ -2,20 +2,19 @@ var gulp         = require('gulp');
 
 
 var spawn        = require('child_process').spawn;
-var spawnSync    = require('child_process').spawnSync;
 
 
-gulp.task('test', function() {
-    spawnSync(
-        'python',
+gulp.task('test', function(cb) {
+    var test = spawn(
+        './manage.py',
         [
-            'manage.py',
             'test'
         ],
         {
             stdio: 'inherit'
         }
     );
+    test.on('exit', cb);
 });
 
 
