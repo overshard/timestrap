@@ -1,10 +1,65 @@
-{% extends "base.html" %}
 {% load static %}
 
 
-{% block meta_title %}Application{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Application - Timestrap</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/bundle-scss.css' %}" />
+
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+        <navigation></navigation>
 
 
-{% block content %}
-    <div id="main"></div>
-{% endblock %}
+        <div class="container">
+            <div id="main"></div>
+        </div>
+
+
+        <script>
+            (function(document, window) {
+                window.timestrapConfig = window.timestrapConfig || {};
+                timestrapConfig.CORE_URLS = {
+                    LOGIN: "{% url 'login' %}",
+                    LOGOUT: "{% url 'logout' %}",
+                    API: "{% url 'api-root' %}",
+                    ADMIN: "{% url 'admin:index' %}",
+                    REPORTS: "{% url 'reports' %}",
+                    REPORTS_EXPORT: "{% url 'reports-export' %}",
+                    CLIENTS: "{% url 'clients' %}",
+                    ENTRIES: "{% url 'timesheet' %}",
+                    TASKS: "{% url 'tasks' %}"
+                }
+                timestrapConfig.API_URLS = {
+                    USERS: "{% url 'user-list' %}",
+                    PERMISSIONS: "{% url 'permission-list' %}",
+                    CLIENTS: "{% url 'client-list' %}",
+                    PROJECTS: "{% url 'project-list' %}",
+                    ENTRIES: "{% url 'entry-list' %}",
+                    TASKS: "{% url 'task-list' %}"
+                }
+                timestrapConfig.USER = {
+                    ID: {{ user.id }},
+                    URL: "{% url 'user-detail' user.id %}",
+                    NAME: "{{ user.username }}"
+                }
+            })(document, window);
+        </script>
+
+        <script src="{% static 'js/bundle.js' %}"></script>
+        <script src="{% static 'js/bundle-tags.js' %}"></script>
+
+        <script>
+            riot.mount('navigation');
+        </script>
+
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

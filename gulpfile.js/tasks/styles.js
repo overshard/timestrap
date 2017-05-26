@@ -5,6 +5,9 @@ var sass         = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
 
+gulp.task('styles', ['styles:vendor', 'styles:scss']);
+
+
 gulp.task('styles:vendor', function() {
     var files = [
         'node_modules/font-awesome/css/font-awesome.min.css',
