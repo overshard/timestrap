@@ -252,12 +252,15 @@ gulp.task('coverage', function() {
 
 // Documentation tasks
 gulp.task('docs-github', function() {
-    gulp.src(['docs/introduction/lead.md',
-            'docs/introduction/demo.md',
-            'docs/introduction/quickstart.md',
-            'docs/installation/manual.md',
-            'docs/installation/development.md',
-            'docs/introduction/further_reading.md'])
+    var files = [
+        'docs/introduction/lead.md',
+        'docs/introduction/demo.md',
+        'docs/introduction/quickstart.md',
+        'docs/installation/manual.md',
+        'docs/installation/development.md',
+        'docs/introduction/further_reading.md'
+    ];
+    gulp.src(files)
         .pipe(concat('README.md'))
         .pipe(gulp.dest('.'));
 });
