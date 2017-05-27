@@ -18,8 +18,6 @@ gulp.task('scripts', function(){
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/vue/dist/vue.min.js',
-        'node_modules/vue-router/dist/vue-router.min.js',
         'timestrap/static_src/scripts/**/*.js'
     ];
     return gulp.src(files)
