@@ -48,7 +48,8 @@ gulp.task('lint:es', function() {
     var files = [
         'gulpfile.js/**/*.js',
         'timestrap/static_src/scripts/**/*.js',
-        'timestrap/static_src/tags/**/*.tag'
+        'timestrap/static_src/tags/**/*.js',
+        'timestrap/static_src/tags/**/*.vue'
     ];
     return gulp.src(files)
         .pipe(eslint({
@@ -71,18 +72,18 @@ gulp.task('lint:es', function() {
                 ]
             },
             'globals': [
-                '$',
-                'riot'
+                '$'
             ],
             'env': {
                 'browser': true
             },
             'extends': 'eslint:recommended',
             'plugins': [
-                'riot'
+                'html'
             ],
             'parserOptions': {
-                'ecmaVersion': 6
+                'ecmaVersion': 6,
+                'sourceType': 'module'
             }
         }))
         .pipe(eslint.format())

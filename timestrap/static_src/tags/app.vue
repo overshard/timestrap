@@ -74,7 +74,7 @@ export default {
             tasks: timestrapConfig.CORE_URLS.TASKS,
             reports: timestrapConfig.CORE_URLS.REPORTS,
             username: timestrapConfig.USER.NAME
-        }
+        };
     }
-}
+};
 </script>

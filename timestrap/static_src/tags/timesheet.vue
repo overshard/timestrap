@@ -128,7 +128,7 @@ export default {
             entries: null,
             subtotal: null,
             total: null
-        }
+        };
     },
     methods: {
         getEntries(url) {
@@ -160,5 +160,5 @@ export default {
     mounted() {
         return this.getEntries();
     }
-}
+};
 </script>
