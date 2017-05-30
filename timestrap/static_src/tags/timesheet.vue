@@ -47,6 +47,9 @@
             <select id="entry-task"
                     class="task-select"
                     v-model="task">
+                <option v-for="task in tasks" :value="task.url">
+                    {{ task.name }}
+                </option>
             </select>
         </div>
         <div class="col-sm-6">
@@ -56,6 +59,12 @@
                     class="project-select"
                     v-model="project"
                     required>
+                <option><!-- select2 placeholder --></option>
+                <optgroup v-for="client in clients" :label="client.name">
+                    <option v-for="project in client.projects" :url="project.url">
+                        {{ project.name }}
+                    </option>
+                </optgroup>
             </select>
         </div>
         <div class="col-sm-5">
@@ -126,38 +135,84 @@ export default {
     data() {
         return {
             entries: null,
+            tasks: null,
+            clients: null,
             subtotal: null,
             total: null
         };
     },
     methods: {
+        getTasks() {
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            return tasks.then(data => {
+                this.tasks = data.results;
+                $('.task-select').select2({
+                    placeholder: 'Task',
+                    width: '100%',
+                    dropdownAutoWidth: true
+                }).on('change', () => {
+                    this.task = $('.task-select').val();
+                });
+                return this.tasks;
+            });
+        },
+        getClients() {
+            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            return clients.then(data => {
+                this.clients = data.results;
+                $('.project-select').select2({
+                    placeholder: 'Project',
+                    width: '100%',
+                    dropdownAutoWidth: true
+                }).on('change', () => {
+                    this.project = $('.project-select').val();
+                });;
+                return this.clients;
+            });
+        },
+        setupDatepicker() {
+            let vm = this;
+            $('.date-input').pickadate({
+                format: 'yyyy-mm-dd',
+                onStart: function() {
+                    let currentDate = new Date();
+                    this.set('select', currentDate);
+                    vm.date = moment(currentDate).format('YYYY-MM-DD');
+                },
+                onSet: function() {
+                    vm.date = $('.date-input').val();
+                }
+            });
+        },
         getEntries(url) {
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
             let entries = quickFetch(url);
 
-            entries.then(data => {
+            return entries.then(data => {
                 let entries = data.results.map(entry => {
                     entry.duration = durationToString(entry.duration);
                     return entry;
                 });
 
-                this.entries = entries;
                 this.subtotal = durationToString(data.subtotal_duration);
                 this.total = durationToString(data.total_duration);
+                return this.entries = entries;
             });
-
-            return this.entries;
         },
         submitEntry() {
             console.log(this.note);
+            console.log(this.task);
             console.log(this.date);
             console.log(this.project);
             console.log(this.duration);
         }
     },
     mounted() {
+        this.getTasks();
+        this.getClients();
+        this.setupDatepicker();
         return this.getEntries();
     }
 };
