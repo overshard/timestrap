@@ -17,6 +17,7 @@ from .pagination import LimitOffsetPaginationWithTotals
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    pagination_class = None
 
     def get_permissions(self):
         # Prevent rest_framework from checking for the "view" perm.
@@ -26,6 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
+    pagination_class = None
 
     def get_permissions(self):
         # Prevent rest_framework from checking for the "view" perm.
@@ -42,12 +44,14 @@ class PermissionViewSet(viewsets.ModelViewSet):
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    pagination_class = None
     filter_fields = ('id',)
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    pagination_class = None
     filter_fields = ('id', 'client',)
 
 
@@ -73,3 +77,4 @@ class EntryViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    pagination_class = None

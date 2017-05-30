@@ -6,6 +6,10 @@
                 <i class="fa fa-book" aria-hidden="true"></i>
                 Create Reports
             </router-link>
+            <pager :next="next"
+                   :previous="previous"
+                   @next-page="getEntries(next)"
+                   @previous-page="getEntries(previous)"></pager>
         </div>
     </div>
 
@@ -37,35 +41,15 @@
           v-on:submit.prevent="onSubmit"
           v-on:submit="submitEntry">
         <div class="col-sm-3 mb-2">
-            <input name="entry-date"
-                   type="text"
-                   class="form-control form-control-sm date-input"
-                   v-model="date"
-                   placeholder="Date" />
+            <datepicker-input @date-select="dateSelect"></datepicker-input>
         </div>
         <div class="col-sm-3">
-            <select id="entry-task"
-                    class="task-select"
-                    v-model="task">
-                <option v-for="task in tasks" :value="task.url">
-                    {{ task.name }}
-                </option>
-            </select>
+            <tasks-select @task-select="taskSelect"></tasks-select>
         </div>
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <select id="entry-project"
-                    class="project-select"
-                    v-model="project"
-                    required>
-                <option><!-- select2 placeholder --></option>
-                <optgroup v-for="client in clients" :label="client.name">
-                    <option v-for="project in client.projects" :url="project.url">
-                        {{ project.name }}
-                    </option>
-                </optgroup>
-            </select>
+            <projects-select @project-select="projectSelect"></projects-select>
         </div>
         <div class="col-sm-5">
             <input name="entry-note"
@@ -92,10 +76,16 @@
         </div>
     </form>
 
-
-    <div class="mb-4">
+    <div class="mb-4" v-for="entryBlock in entries">
+        <div class="row inset-row">
+            <div class="col-12">
+                <h2 class="display-4 text-muted">
+                    {{ entryBlock.date }}
+                </h2>
+            </div>
+        </div>
         <div class="entry-rows rounded">
-            <div v-for="entry in entries" class="row py-2 bg-faded small">
+            <div v-for="entry in entryBlock.entries" class="row py-2 bg-faded small">
                 <div class="col-sm-3 client-project">
                     <div class="text-muted small">
                         {{ entry.project_details.client_details.name }}
@@ -131,74 +121,58 @@
 
 
 <script>
+const Pager = require('./pager.vue');
+const TasksSelect = require('./tasks-select.vue');
+const ProjectsSelect = require('./projects-select.vue');
+const DatepickerInput = require('./datepicker-input.vue');
+
 export default {
     data() {
         return {
             entries: null,
-            tasks: null,
             clients: null,
             subtotal: null,
-            total: null
+            total: null,
+            next: null,
+            previous: null
         };
     },
     methods: {
-        getTasks() {
-            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
-            return tasks.then(data => {
-                this.tasks = data.results;
-                $('.task-select').select2({
-                    placeholder: 'Task',
-                    width: '100%',
-                    dropdownAutoWidth: true
-                }).on('change', () => {
-                    this.task = $('.task-select').val();
-                });
-                return this.tasks;
-            });
-        },
-        getClients() {
-            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
-            return clients.then(data => {
-                this.clients = data.results;
-                $('.project-select').select2({
-                    placeholder: 'Project',
-                    width: '100%',
-                    dropdownAutoWidth: true
-                }).on('change', () => {
-                    this.project = $('.project-select').val();
-                });;
-                return this.clients;
-            });
-        },
-        setupDatepicker() {
-            let vm = this;
-            $('.date-input').pickadate({
-                format: 'yyyy-mm-dd',
-                onStart: function() {
-                    let currentDate = new Date();
-                    this.set('select', currentDate);
-                    vm.date = moment(currentDate).format('YYYY-MM-DD');
-                },
-                onSet: function() {
-                    vm.date = $('.date-input').val();
-                }
-            });
-        },
         getEntries(url) {
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
-            let entries = quickFetch(url);
+            let entriesFetch = quickFetch(url);
 
-            return entries.then(data => {
-                let entries = data.results.map(entry => {
+            entriesFetch.then(data => {
+                this.next = data.next;
+                this.previous = data.previous;
+
+                let uniqueDates = [];
+                $.each(data.results, function(i, entry) {
+                    if ($.inArray(entry.date, uniqueDates) === -1) {
+                        uniqueDates.push(entry.date);
+                    }
+                });
+
+                let viewableEntries = data.results.map(entry => {
                     entry.duration = durationToString(entry.duration);
                     return entry;
                 });
 
+                this.entries = [];
+                uniqueDates.forEach(date => {
+                    let entryBlock = Object;
+                    this.entries.push({
+                        date: date,
+                        entries: viewableEntries.filter(entry => {
+                            return entry.date === date;
+                        })
+                    });
+                });
+
                 this.subtotal = durationToString(data.subtotal_duration);
                 this.total = durationToString(data.total_duration);
-                return this.entries = entries;
             });
         },
         submitEntry() {
@@ -207,13 +181,25 @@ export default {
             console.log(this.date);
             console.log(this.project);
             console.log(this.duration);
+        },
+        taskSelect(task) {
+            this.task = task;
+        },
+        projectSelect(project) {
+            this.project = project;
+        },
+        dateSelect(date) {
+            this.date = date;
         }
     },
     mounted() {
-        this.getTasks();
-        this.getClients();
-        this.setupDatepicker();
         return this.getEntries();
+    },
+    components: {
+        Pager,
+        TasksSelect,
+        ProjectsSelect,
+        DatepickerInput
     }
 };
 </script>
