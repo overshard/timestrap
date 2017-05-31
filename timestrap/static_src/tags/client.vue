@@ -3,7 +3,8 @@
     <div class="col-6 d-flex align-items-center">
         <a class="client-view-projects text-primary font-weight-bold"
            v-on:click="showProjects">
-            <i class="fa fa-chevron-circle-up small mr-2" aria-hidden="true"></i>
+            <i v-bind:class="['fa', 'small', 'mr-2', [showProjects ? 'fa-chevron-circle-down' : 'fa-chevron-circle-up']]"
+               aria-hidden="true"></i>
             <span class="mb-1">{{ client.name }}</span>
         </a>
         <!--<span class="text-primary font-weight-bold">{{ client.name }}</span>-->
@@ -30,6 +31,7 @@ export default {
     props: ['client'],
     data() {
         return {
+            showProjects: false
         };
     },
     methods: {
