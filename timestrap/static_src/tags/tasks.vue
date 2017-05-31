@@ -1,0 +1,87 @@
+<template>
+<div class="container">
+    <div class="mb-4 clearfix">
+        <pager :next="next"
+               :previous="previous"
+               @next-page="getTasks(next)"
+               @previous-page="getTasks(previous)"></pager>
+    </div>
+
+    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
+        <div class="col-sm-8">
+            Task
+        </div>
+        <div class="col-sm-2">
+            Hourly Rate
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+
+    <form name="task-add"
+          class="row mb-4 py-2 bg-faded rounded-bottom"
+          v-on:submit.prevent="onSubmit"
+          v-on:submit="submitTask">
+        <div class="col-8">
+            <input name="task-name"
+                   type="text"
+                   class="form-control form-control-sm"
+                   v-model="name"
+                   placeholder="New Task Name"
+                   required>
+        </div>
+        <div class="col-2">
+            <input name="task-hourly-rate"
+                   type="text"
+                   class="form-control form-control-sm"
+                   v-model="hourly_rate"
+                   placeholder="Hourly Rate"
+                   required>
+        </div>
+        <div class="col-2">
+            <button
+                    name="task-add-submit"
+                    type="submit"
+                    class="btn btn-success btn-sm w-100"
+                    v-on:click="submitTask">
+                Add
+            </button>
+        </div>
+    </form>
+</div>
+</template>
+
+
+<script>
+const Pager = require('./pager.vue');
+
+export default {
+    data() {
+        return {
+            tasks: null,
+            next: null,
+            previous: null
+        };
+    },
+    methods: {
+        getTasks(url) {
+            url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
+
+            quickFetch(url).then(data => {
+                this.tasks = data.results;
+                this.next = data.next;
+                this.previous = data.previous;
+            }).catch(error => console.log(error));
+        },
+        submitTask() {
+            console.log(this);
+        },
+    },
+    mounted() {
+        return this.getTasks();
+    },
+    components: {
+        Pager
+    }
+};
+</script>
