@@ -1,12 +1,13 @@
 from random import randint, choice
 from datetime import timedelta
+from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
 from faker import Factory
 
-from core.models import Client, Project, Entry
+from core.models import Client, Entry, Project, Task
 
 
 class Command(BaseCommand):
@@ -26,6 +27,13 @@ class Command(BaseCommand):
         iterations = kwargs['iterations']
         if not iterations:
             iterations = 5
+
+        for i in range(randint(iterations, iterations*2)):
+            Task.objects.create(
+                name=fake.sentence(),
+                hourly_rate=Decimal(
+                    '%d.%d' % (randint(0, 200), randint(0, 99)))
+            )
 
         for i in range(iterations):
             Client.objects.create(name=fake.company())

@@ -24,10 +24,9 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a id="nav-app-tasks"
-                            class="nav-link">
+                        <router-link class="nav-link" :to="tasks">
                             Tasks
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
                         <a id="nav-app-reports"
