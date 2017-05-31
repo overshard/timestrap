@@ -1,12 +1,5 @@
 <template>
 <div class="container">
-    <div class="mb-4 clearfix">
-        <pager :next="next"
-               :previous="previous"
-               @next-page="getTasks(next)"
-               @previous-page="getTasks(previous)"></pager>
-    </div>
-
     <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
         <div class="col-sm-8">
             Task
@@ -71,8 +64,6 @@
 
 
 <script>
-const Pager = require('./pager.vue');
-
 export default {
     data() {
         return {
@@ -93,9 +84,6 @@ export default {
     },
     mounted() {
         return this.getTasks();
-    },
-    components: {
-        Pager
     }
 };
 </script>
