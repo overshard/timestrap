@@ -48,6 +48,24 @@
             </button>
         </div>
     </form>
+
+    <div class="task-rows rounded">
+        <div v-for="task in tasks" class="row py-2 bg-faded rounded mb-2">
+            <div class="col-8 d-flex align-items-center">
+                <span class="font-weight-bold">{{ task.name }}</span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
+                <span class="mb-1">${{ task.hourly_rate }}</span>
+            </div>
+            <div class="col-2">
+                <button name="task-change"
+                        class="btn btn-warning btn-sm w-100">
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -58,9 +76,7 @@ const Pager = require('./pager.vue');
 export default {
     data() {
         return {
-            tasks: null,
-            next: null,
-            previous: null
+            tasks: null
         };
     },
     methods: {
@@ -68,9 +84,7 @@ export default {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
 
             quickFetch(url).then(data => {
-                this.tasks = data.results;
-                this.next = data.next;
-                this.previous = data.previous;
+                this.tasks = data;
             }).catch(error => console.log(error));
         },
         submitTask() {
