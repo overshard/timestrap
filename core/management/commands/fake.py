@@ -31,7 +31,8 @@ class Command(BaseCommand):
         for i in range(randint(iterations, iterations*2)):
             Task.objects.create(
                 name=fake.sentence(),
-                hourly_rate=Decimal('%d.%d' % (randint(0, 200), randint(0, 99)))
+                hourly_rate=Decimal(
+                    '%d.%d' % (randint(0, 200), randint(0, 99)))
             )
 
         for i in range(iterations):

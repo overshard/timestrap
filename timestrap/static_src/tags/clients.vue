@@ -73,5 +73,5 @@ export default {
     components: {
         Client
     }
-}
+};
 </script>

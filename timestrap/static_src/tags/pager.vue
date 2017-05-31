@@ -21,5 +21,5 @@ export default {
         'next',
         'previous'
     ]
-}
+};
 </script>
