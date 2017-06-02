@@ -43,7 +43,6 @@
             v-bind:key="client.id">
     </client>
 
-    </div>
 </div>
 </template>
 

@@ -54,11 +54,20 @@
                 </div>
             </div>
         </form>
+
+        <project v-for="(project, index) in client.projects"
+                v-bind:project="project"
+                v-bind:index="index"
+                v-bind:key="client.projects.id">
+        </project>
+
     </div>
 </div>
 </template>
 
 <script>
+const Project = require('./project.vue');
+
 export default {
     props: ['client'],
     data() {
@@ -74,7 +83,8 @@ export default {
             console.log(this);
         }
     },
-    mounted() {
+    components: {
+        Project
     }
 };
 </script>
