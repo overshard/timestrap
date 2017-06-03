@@ -39,9 +39,9 @@ const global = {
     }).catch(error => console.log(error))
 };
 global.install = function() {
-  Object.defineProperty(Vue.prototype, 'global', {
-    get() { return global; }
-  });
+    Object.defineProperty(Vue.prototype, 'global', {
+        get() { return global; }
+    });
 };
 Vue.use(global);
 
