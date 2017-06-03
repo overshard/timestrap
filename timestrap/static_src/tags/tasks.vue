@@ -13,30 +13,29 @@
 
     <form name="task-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-on:submit.prevent="onSubmit"
+          v-on:submit.prevent
           v-on:submit="submitTask">
         <div class="col-8">
             <input name="task-name"
                    type="text"
                    class="form-control form-control-sm"
-                   v-model="name"
+                   v-model.trim="name"
                    placeholder="New Task Name"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <input name="task-hourly-rate"
                    type="text"
                    class="form-control form-control-sm"
-                   v-model="hourly_rate"
+                   v-model.number="hourly_rate"
                    placeholder="Hourly Rate"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <button
                     name="task-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-on:click="submitTask">
+                    class="btn btn-success btn-sm w-100">
                 Add
             </button>
         </div>
@@ -71,7 +70,15 @@ export default {
             }).catch(error => console.log(error));
         },
         submitTask() {
-            console.log(this);
+            let body = {
+                name: this.name,
+                hourly_rate: this.hourly_rate
+            };
+            quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
+                this.name = '';
+                this.hourly_rate = '';
+                this.tasks.unshift(data)
+            }).catch(error => console.log(error));
         },
     },
     mounted() {
