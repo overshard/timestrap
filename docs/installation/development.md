@@ -6,29 +6,29 @@ workflow. This installation procedure is only necessary for making changes to
 static files.
 
 1. Install the requirements:
-    - Python 2.7, 3.4, 3.5, or 3.6
-    - Python virtualenv
-    - Python pip
-    - Node/NPM
-    - Gulp
+    - Python 2.7+
+    - Node 6+
+
 1. Initiate a virtual environment with the development requirements.
 
-        virtualenv .venv
-        source .venv/bin/activate
-        pip install -r requirements/development.txt
+        pip install pipenv && pipenv install --dev
+
 1. Install Node dependencies.
 
-        npm install        
+        npm install -g yarn && yarn install
+
 1. Bootstrap the database.
 
-        python manage.py migrate
+        gulp migrate
+
 1. :lock: Create a super user.
 
-        python manage.py createsuperuser
+        gulp createsuperuser
+
 1. Run the server!
 
         gulp
-        
+
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
