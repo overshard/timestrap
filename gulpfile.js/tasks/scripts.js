@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var tap = require('gulp-tap');
 var buffer = require('gulp-buffer');
 
+var pump = require('pump');
 var vueify = require('vueify');
 var browserify = require('browserify');
 
@@ -26,17 +27,21 @@ gulp.task('scripts', function(){
 });
 
 
-gulp.task('tags', function() {
-    var files = [
-        'timestrap/static_src/tags/app.js'
-    ];
-    return gulp.src(files, {read: false})
-        .pipe(tap(function(file) {
-            file.contents = browserify(file.path, {debug: true})
+gulp.task('tags', function(cb) {
+    function handleError(err) {
+        console.log(err.toString());
+        this.emit('end');
+    }
+    pump([
+        gulp.src('timestrap/static_src/tags/app.js', { read: false }),
+        tap(function(file) {
+            file.contents = browserify(file.path, { debug: true })
                 .transform(vueify)
-                .bundle();
-        }))
-        .pipe(buffer())
-        .pipe(concat('bundle-tags.js'))
-        .pipe(gulp.dest('timestrap/static/js/'));
+                .bundle()
+                .on('error', handleError);
+        }),
+        buffer(),
+        concat('bundle-tags.js'),
+        gulp.dest('timestrap/static/js/')
+    ], cb);
 });

@@ -32,6 +32,7 @@
         "js-cookie": "2.1.x",
         "moment": "2.18.x",
         "pickadate": "3.5.x",
+        "pump": "^1.0.2",
         "require-dir": "0.3.x",
         "select2": "4.0.x",
         "tether": "1.4.x",
