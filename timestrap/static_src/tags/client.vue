@@ -1,5 +1,24 @@
 <template>
 <div class="row py-2 bg-faded rounded mb-2">
+
+    <template v-if="edit">
+    <div class="col-10">
+        <input name="client-name"
+               type="text"
+               class="form-control form-control-sm"
+               v-model.trim="name"
+               v-on:keyup.enter="saveClient"/>
+    </div>
+    <div class="col-2">
+        <button name="client-save"
+                class="btn btn-success btn-sm w-100"
+                v-on:click="saveClient">
+            Save
+        </button>
+    </div>
+    </template>
+
+    <template v-else>
     <div class="col-6 d-flex align-items-center">
         <a class="client-view-projects text-primary font-weight-bold"
            v-on:click="toggleProjects">
@@ -19,15 +38,17 @@
     </div>
     <div class="col-2">
         <button name="client-change"
-                class="btn btn-warning btn-sm w-100">
+                class="btn btn-warning btn-sm w-100"
+                v-on:click="editClient">
             Edit
         </button>
     </div>
+    </template>
 
     <div class="col-12" v-if="showProjects">
         <form name="project-add"
               v-if="showProjects"
-              v-on:submit.prevent="onSubmit"
+              v-on:submit.prevent
               v-on:submit="submitProject">
             <div class="row bg-faded py-2">
                 <div class="col-8">
@@ -72,10 +93,26 @@ export default {
     props: ['client'],
     data() {
         return {
+            edit: false,
+            name: this.client.name,
             showProjects: false
         };
     },
     methods: {
+        editClient() {
+            this.edit = true
+        },
+        saveClient() {
+            let body = {
+                name: this.name
+            };
+            quickFetch(this.client.url, 'put', body).then(data => {
+                if (data.id) {
+                    this.client.name = data.name;
+                    this.edit = false;
+                }
+            }).catch(error => console.log(error));
+        },
         toggleProjects() {
             this.showProjects = !this.showProjects;
         },
