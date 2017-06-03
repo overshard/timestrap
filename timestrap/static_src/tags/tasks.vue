@@ -13,6 +13,7 @@
 
     <form name="task-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
+          v-if="global.perms.add_task"
           v-on:submit.prevent
           v-on:submit="submitTask">
         <div class="col-8">

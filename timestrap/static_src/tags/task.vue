@@ -1,7 +1,7 @@
 <template>
 <div class="row py-2 bg-faded rounded mb-2">
 
-    <template v-if="edit">
+    <template v-if="edit && global.perms.change_task">
     <div class="col-8">
         <input name="task-name"
                type="text"
@@ -28,14 +28,14 @@
     </template>
 
     <template v-else>
-    <div class="col-8 d-flex align-items-center">
+    <div v-bind:class="[[global.perms.change_task ? 'col-8' : 'col-10'], 'd-flex', 'align-items-center']">
         <span class="font-weight-bold">{{ task.name }}</span>
     </div>
     <div class="col-2 d-flex align-items-center">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">${{ task.hourly_rate }}</span>
     </div>
-    <div class="col-2">
+    <div class="col-2" v-if="global.perms.change_task">
         <button name="task-change"
                 class="btn btn-warning btn-sm w-100"
                 v-on:click="editTask">

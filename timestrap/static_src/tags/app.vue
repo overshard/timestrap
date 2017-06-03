@@ -24,7 +24,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="tasks">
+                        <router-link class="nav-link" :to="tasks" v-if="global.perms.view_task">
                             Tasks
                         </router-link>
                     </li>
