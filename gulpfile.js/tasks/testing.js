@@ -1,6 +1,7 @@
-var gulp         = require('gulp');
+var gulp = require('gulp');
 
-var spawn        = require('child_process').spawn;
+var spawn = require('child_process').spawn;
+var spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
@@ -19,8 +20,10 @@ gulp.task('test', function(cb) {
 
 gulp.task('coverage', function() {
     spawnSync(
-        'coverage',
+        'pipenv',
         [
+            'run',
+            'coverage',
             'run',
             '--source=core,api',
             'manage.py',
@@ -31,8 +34,10 @@ gulp.task('coverage', function() {
         }
     );
     spawnSync(
-        'coverage',
+        'pipenv',
         [
+            'run',
+            'coverage',
             'report',
             '-m'
         ],

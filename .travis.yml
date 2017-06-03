@@ -24,6 +24,6 @@ before_script:
     - gulp lint
     - gulp build
 script:
-    - coverage run --source=core,api manage.py test
+    - gulp coverage
 after_success:
-    - coveralls
+    - pipenv run coveralls
