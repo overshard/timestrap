@@ -43,27 +43,19 @@
     </form>
 
     <div class="task-rows rounded">
-        <div v-for="task in tasks" class="row py-2 bg-faded rounded mb-2">
-            <div class="col-8 d-flex align-items-center">
-                <span class="font-weight-bold">{{ task.name }}</span>
-            </div>
-            <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-                <span class="mb-1">${{ task.hourly_rate }}</span>
-            </div>
-            <div class="col-2">
-                <button name="task-change"
-                        class="btn btn-warning btn-sm w-100">
-                    Edit
-                </button>
-            </div>
-        </div>
+        <task v-for="(task, index) in tasks"
+            v-bind:task="task"
+            v-bind:index="index"
+            v-bind:key="task.id">
+        </task>
     </div>
 </div>
 </template>
 
 
 <script>
+const Task = require('./task.vue');
+
 export default {
     data() {
         return {
@@ -84,6 +76,9 @@ export default {
     },
     mounted() {
         return this.getTasks();
+    },
+    components: {
+        Task
     }
 };
 </script>
