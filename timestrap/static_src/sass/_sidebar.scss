@@ -1,0 +1,37 @@
+.sidebar-row {
+    min-height: 100vh;
+}
+
+.sidebar {
+    min-height: 100vh;
+    position: fixed;
+
+    .display-4 {
+        line-height: 1.5;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .nav {
+        margin-top: 2rem;
+    }
+
+    .nav-link,
+    .display-4 {
+        color: #fff !important;
+    }
+
+    .nav-item.dropup {
+        position: fixed;
+        bottom: 0;
+        width: 25%;
+        margin-left: -15px;
+        background: rgba(0, 0, 0, 0.2);
+
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
+}

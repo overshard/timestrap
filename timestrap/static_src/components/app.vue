@@ -1,18 +1,12 @@
 <template>
-<div id="app">
-    <div class="navbar sticky-top navbar-toggleable-sm navbar-inverse bg-primary mb-4">
-        <div class="container">
-            <button class="navbar-toggler navbar-toggler-right"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <router-link class="navbar-brand" :to="timesheet">
-                Timestrap
-            </router-link>
-            <div id="nav" class="collapse navbar-collapse">
-                <ul id="nav-app" class="navbar-nav mr-auto">
+<div id="app" class="container-fluid">
+    <div class="row">
+        <div class="sidebar-row bg-primary col-3">
+            <div class="sidebar">
+                <router-link class="display-4" :to="timesheet">
+                    Timestrap
+                </router-link>
+                <ul id="nav-app" class="nav flex-column">
                     <li class="nav-item">
                         <router-link class="nav-link" :to="timesheet">
                             Timesheet
@@ -34,14 +28,12 @@
                             Reports
                         </a>
                     </li>
-                </ul>
-                <ul id="nav-admin" class="navbar-nav">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropup">
                         <a class="nav-link dropdown-toggle"
                             data-toggle="dropdown">
                             {{ username }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-menu">
                             <a id="nav-admin-api"
                                 class="dropdown-item"
                                 :href="api">
@@ -62,8 +54,10 @@
                 </ul>
             </div>
         </div>
+        <div class="col-9 my-3">
+            <router-view class="view"></router-view>
+        </div>
     </div>
-    <router-view class="view"></router-view>
 </div>
 </template>
 
