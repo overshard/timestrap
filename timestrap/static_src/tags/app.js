@@ -25,6 +25,18 @@ const router = new VueRouter({
 });
 
 
+const global = {
+  user: quickFetch(timestrapConfig.USER.URL),
+  perms: quickFetch(timestrapConfig.API_URLS.PERMISSIONS)
+};
+global.install = function() {
+  Object.defineProperty(Vue.prototype, 'global', {
+    get() { return global; }
+  });
+};
+Vue.use(global);
+
+
 const app = new Vue({
     router,
     el: '#app',
