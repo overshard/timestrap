@@ -38,7 +38,7 @@
 
     <form name="entry-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-on:submit.prevent="onSubmit"
+          v-on:submit.prevent
           v-on:submit="submitEntry">
         <div class="col-sm-3 mb-2">
             <datepicker-input @date-select="dateSelect"></datepicker-input>
@@ -69,8 +69,7 @@
         <div class="col-sm-2">
             <button name="entry-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-on:click="submitEntry">
+                    class="btn btn-success btn-sm w-100">
                 Add
             </button>
         </div>
@@ -95,12 +94,12 @@
                 <div class="col-sm-5 d-flex flex-column align-self-end tasks">
                     <div class="text-muted small"
                          v-if="entry.task">
-                        {{ task_details.name }}
+                        {{ entry.task_details.name }}
                     </div>
                     {{ entry.note }}
                 </div>
                 <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
-                    {{ entry.duration }}
+                    {{ durationToString(entry.duration) }}
                 </div>
             </div>
         </div>
@@ -155,17 +154,12 @@ export default {
                     }
                 });
 
-                let viewableEntries = data.results.map(entry => {
-                    entry.duration = durationToString(entry.duration);
-                    return entry;
-                });
-
                 this.entries = [];
                 uniqueDates.forEach(date => {
                     let entryBlock = Object;
                     this.entries.push({
                         date: date,
-                        entries: viewableEntries.filter(entry => {
+                        entries: data.results.filter(entry => {
                             return entry.date === date;
                         })
                     });
@@ -176,11 +170,24 @@ export default {
             });
         },
         submitEntry() {
-            console.log(this.note);
-            console.log(this.task);
-            console.log(this.date);
-            console.log(this.project);
-            console.log(this.duration);
+            let body = {
+                date: this.date,
+                task: this.task,
+                project: this.project,
+                note: this.note,
+                duration: this.duration,
+                user: timestrapConfig.USER.URL
+            };
+            quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
+                this.entries.map(entryBlock => {
+                    if (entryBlock.date === data.date) {
+                        entryBlock.entries.unshift(data);
+                    }
+                    return entryBlock;
+                });
+                this.note = '';
+                this.duration = '';
+            }).catch(error => console.log(error));
         },
         taskSelect(task) {
             this.task = task;
@@ -190,6 +197,14 @@ export default {
         },
         dateSelect(date) {
             this.date = date;
+        },
+        durationToString(duration) {
+            if (typeof(duration) === 'number') {
+                let hours = Math.floor(duration);
+                let minutes = Math.round((duration - hours) * 60);
+                duration = hours + ':' + pad(minutes);
+            }
+            return duration;
         }
     },
     mounted() {
