@@ -1,11 +1,11 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
 
-var concat = require('gulp-concat');
-var tap = require('gulp-tap');
-var buffer = require('gulp-buffer');
+const concat = require('gulp-concat');
+const tap = require('gulp-tap');
+const buffer = require('gulp-buffer');
 
-var vueify = require('vueify');
-var browserify = require('browserify');
+const vueify = require('vueify');
+const browserify = require('browserify');
 
 
 gulp.task('scripts', ['scripts:vendor', 'scripts:app']);
@@ -21,8 +21,7 @@ gulp.task('scripts:vendor', function(){
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'timestrap/static_src/scripts/**/*.js'
-    ])
+        'timestrap/static_src/scripts/**/*.js'])
         .pipe(concat('bundle-vendor.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });

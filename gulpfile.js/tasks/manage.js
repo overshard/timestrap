@@ -1,10 +1,10 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var spawn        = require('child_process').spawn;
+const spawn = require('child_process').spawn;
 
 
 gulp.task('makemigrations', function(cb) {
-    var makemigrations = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -15,13 +15,12 @@ gulp.task('makemigrations', function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    makemigrations.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
 gulp.task('migrate', function(cb) {
-    var migrate = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -32,13 +31,12 @@ gulp.task('migrate', function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    migrate.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
 gulp.task('createsuperuser', function(cb) {
-    var createsuperuser = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -49,13 +47,15 @@ gulp.task('createsuperuser', function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    createsuperuser.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
+gulp.task('reset', ['reset:flush', 'reset:heroku', 'reset:fake']);
+
+
 gulp.task('reset:flush', function(cb) {
-    var flush = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -67,13 +67,12 @@ gulp.task('reset:flush', function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    flush.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
 gulp.task('reset:heroku', ['reset:flush'], function(cb) {
-    var heroku = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -84,13 +83,12 @@ gulp.task('reset:heroku', ['reset:flush'], function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    heroku.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
 gulp.task('reset:fake', ['reset:heroku'], function(cb) {
-    var fake = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -101,9 +99,5 @@ gulp.task('reset:fake', ['reset:heroku'], function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    fake.on('exit', cb);
+    ).on('exit', cb);
 });
-
-
-gulp.task('reset', ['reset:flush', 'reset:heroku', 'reset:fake']);

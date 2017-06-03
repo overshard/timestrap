@@ -1,8 +1,8 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var concat       = require('gulp-concat');
-var sass         = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
+const concat = require('gulp-concat');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
 
 
 gulp.task('styles', ['styles:vendor', 'styles:sass']);
@@ -15,8 +15,7 @@ gulp.task('styles:vendor', function() {
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'node_modules/select2/dist/css/select2.min.css',
         'node_modules/pickadate/lib/compressed/themes/default.css',
-        'node_modules/pickadate/lib/compressed/themes/default.date.css',
-    ])
+        'node_modules/pickadate/lib/compressed/themes/default.date.css'])
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });

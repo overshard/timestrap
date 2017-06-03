@@ -1,11 +1,11 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
 
-var spawn = require('child_process').spawn;
-var spawnSync = require('child_process').spawnSync;
+const spawn = require('child_process').spawn;
+const spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
-    var test = spawn(
+    spawn(
         './manage.py',
         [
             'test'
@@ -13,8 +13,7 @@ gulp.task('test', function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    test.on('exit', cb);
+    ).on('exit', cb);
 });
 
 

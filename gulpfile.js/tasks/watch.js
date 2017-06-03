@@ -1,4 +1,4 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
 
 gulp.task('watch', ['watch:sass', 'watch:scripts', 'watch:app', 'watch:components']);

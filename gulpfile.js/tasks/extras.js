@@ -1,10 +1,7 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
 
 gulp.task('extras', function() {
-    var files = [
-        'node_modules/font-awesome/fonts/*'
-    ];
-    return gulp.src(files)
+    return gulp.src('node_modules/font-awesome/fonts/*')
         .pipe(gulp.dest('timestrap/static/fonts/'));
 });

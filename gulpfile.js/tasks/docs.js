@@ -1,9 +1,8 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
 
-var concat = require('gulp-concat');
+const concat = require('gulp-concat');
 
-var spawn = require('child_process').spawn;
-var spawnSync = require('child_process').spawnSync;
+const spawn = require('child_process').spawn;
 
 
 gulp.task('docs', ['docs:build', 'docs:watch']);
@@ -18,29 +17,29 @@ gulp.task('docs:watch', function() {
 
 
 gulp.task('docs:github', function() {
-    var files = [
+    gulp.src([
         'docs/introduction/lead.md',
         'docs/introduction/demo.md',
         'docs/introduction/quickstart.md',
         'docs/installation/manual.md',
         'docs/installation/development.md',
-        'docs/introduction/further_reading.md'
-    ];
-    gulp.src(files)
+        'docs/introduction/further_reading.md'])
         .pipe(concat('README.md'))
         .pipe(gulp.dest('.'));
 });
 
 
-gulp.task('docs:rtd', function() {
-    spawnSync(
-        'sphinx-build',
+gulp.task('docs:rtd', function(cb) {
+    spawn(
+        'pipenv',
         [
+            'run',
+            'sphinx-build',
             'docs',
             'docs/_build'
         ],
         {
             stdio: 'inherit'
         }
-    );
+    ).on('exit', cb);
 });

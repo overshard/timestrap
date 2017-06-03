@@ -1,25 +1,26 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var eslint       = require('gulp-eslint');
-var sasslint     = require('gulp-sass-lint');
+const eslint = require('gulp-eslint');
+const sasslint = require('gulp-sass-lint');
 
-var spawn        = require('child_process').spawn;
+const spawn  = require('child_process').spawn;
 
 
 gulp.task('lint', ['lint:python', 'lint:sass', 'lint:es']);
 
 
 gulp.task('lint:python', function(cb) {
-    var flake8 = spawn(
-        'flake8',
+    spawn(
+        'pipenv',
         [
+            'run',
+            'flake8',
             '--exclude=venv,.venv,node_modules,migrations'
         ],
         {
             stdio: 'inherit'
         }
-    );
-    flake8.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
@@ -49,8 +50,7 @@ gulp.task('lint:es', function() {
         'gulpfile.js/**/*.js',
         'timestrap/static_src/scripts/**/*.js',
         'timestrap/static_src/app.js',
-        'timestrap/static_src/components/**/*.vue'
-    ])
+        'timestrap/static_src/components/**/*.vue'])
         .pipe(eslint({
             'rules': {
                 'indent': [

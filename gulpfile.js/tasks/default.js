@@ -1,10 +1,10 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var spawn        = require('child_process').spawn;
+const spawn = require('child_process').spawn;
 
 
 gulp.task('default', ['build', 'watch'], function(cb) {
-    var runserver = spawn(
+    spawn(
         'pipenv',
         [
             'run',
@@ -15,6 +15,5 @@ gulp.task('default', ['build', 'watch'], function(cb) {
         {
             stdio: 'inherit'
         }
-    );
-    runserver.on('exit', cb);
+    ).on('exit', cb);
 });
