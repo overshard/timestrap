@@ -24,7 +24,7 @@
                    class="form-control form-control-sm"
                    v-model.trim="name"
                    placeholder="New Client Name"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <button

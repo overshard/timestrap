@@ -7,7 +7,8 @@
                type="text"
                class="form-control form-control-sm"
                v-model.trim="name"
-               v-on:keyup.enter="saveClient"/>
+               v-on:keyup.enter="saveClient"
+               required/>
     </div>
     <div class="col-2">
         <button name="client-save"
@@ -55,7 +56,7 @@
                     <input name="project-name"
                            type="text"
                            class="form-control form-control-sm"
-                           v-model="project_name"
+                           v-model.trim="project_name"
                            placeholder="New Project Name"
                            required/>
                 </div>
@@ -64,7 +65,7 @@
                            type="text"
                            class="form-control form-control-sm"
                            placeholder="Estimate"
-                           v-model="estimate"/>
+                           v-model.number="project_estimate"/>
                 </div>
                 <div class="col-2">
                     <button name="project-add-submit"
@@ -117,7 +118,18 @@ export default {
             this.showProjects = !this.showProjects;
         },
         submitProject() {
-            console.log(this);
+            let body = {
+                name: this.project_name,
+                estimate: this.project_estimate,
+                client: this.client.url
+            };
+            quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
+                if (data.id) {
+                    this.project_name = '';
+                    this.project_estimate = '';
+                    this.client.projects.unshift(data)
+                }
+            }).catch(error => console.log(error));
         }
     },
     components: {
