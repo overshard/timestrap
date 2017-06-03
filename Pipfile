@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "<3.4"
+coveralls = "<1.2"
+selenium = "<3.5"
+Sphinx = "<1.6"
+recommonmark = "<0.5"
+sphinx_rtd_theme = "<0.3"
+
+
+[packages]
+django = "<1.12"
+django-widget-tweaks = "<1.5"
+whitenoise = "<3.4"
+djangorestframework = "<3.7"
+django-filter = "<1.1"
+django-import-export = "<0.6"
+faker = "<0.8"
+dj-database-url = "<0.5"
+psycopg2 = "<2.7"
+gunicorn = "<19.7"

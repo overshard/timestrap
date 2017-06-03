@@ -1,2 +1,0 @@
-# assumes heroku install
--r ./requirements/heroku.txt
