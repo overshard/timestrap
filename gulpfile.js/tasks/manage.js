@@ -5,8 +5,11 @@ var spawn        = require('child_process').spawn;
 
 gulp.task('makemigrations', function(cb) {
     var makemigrations = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'makemigrations'
         ],
         {
@@ -19,8 +22,11 @@ gulp.task('makemigrations', function(cb) {
 
 gulp.task('migrate', function(cb) {
     var migrate = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'migrate'
         ],
         {
@@ -33,8 +39,11 @@ gulp.task('migrate', function(cb) {
 
 gulp.task('createsuperuser', function(cb) {
     var createsuperuser = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'createsuperuser'
         ],
         {
@@ -47,8 +56,11 @@ gulp.task('createsuperuser', function(cb) {
 
 gulp.task('reset:flush', function(cb) {
     var flush = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'flush',
             '--noinput'
         ],
@@ -62,8 +74,11 @@ gulp.task('reset:flush', function(cb) {
 
 gulp.task('reset:heroku', ['reset:flush'], function(cb) {
     var heroku = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'heroku'
         ],
         {
@@ -76,8 +91,11 @@ gulp.task('reset:heroku', ['reset:flush'], function(cb) {
 
 gulp.task('reset:fake', ['reset:heroku'], function(cb) {
     var fake = spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'fake'
         ],
         {

@@ -5,8 +5,10 @@ var spawn        = require('child_process').spawn;
 
 gulp.task('default', ['build', 'watch'], function(cb) {
     var runserver = spawn(
-        'python',
+        'pipenv',
         [
+            'run',
+            'python',
             'manage.py',
             'runserver'
         ],
