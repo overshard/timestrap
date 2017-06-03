@@ -1,7 +1,7 @@
 <template>
 <div id="app" class="container-fluid">
     <div class="row">
-        <div class="sidebar-row bg-primary col-3">
+        <div class="sidebar-row bg-primary col-xl-2 col-lg-3 col-md-4 col-sm-12">
             <div class="sidebar">
                 <router-link class="display-4" :to="timesheet">
                     Timestrap
@@ -28,7 +28,7 @@
                             Reports
                         </a>
                     </li>
-                    <li class="nav-item dropup">
+                    <li class="nav-item dropup col-xl-2 col-lg-3 col-md-4 col-sm-12">
                         <a class="nav-link dropdown-toggle"
                             data-toggle="dropdown">
                             {{ username }}
@@ -54,7 +54,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-9 my-3">
+        <div class="my-3 col-9 col-xl-10 col-lg-9 col-md-8 col-sm-12">
             <router-view class="view"></router-view>
         </div>
     </div>
