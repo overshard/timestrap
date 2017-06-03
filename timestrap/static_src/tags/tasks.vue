@@ -77,7 +77,7 @@ export default {
             quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
                 this.name = '';
                 this.hourly_rate = '';
-                this.tasks.unshift(data)
+                this.tasks.unshift(data);
             }).catch(error => console.log(error));
         },
     },

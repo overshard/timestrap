@@ -67,7 +67,7 @@ export default {
             };
             quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 this.name = '';
-                this.clients.unshift(data)
+                this.clients.unshift(data);
             }).catch(error => console.log(error));
         }
     },

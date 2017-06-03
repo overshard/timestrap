@@ -101,7 +101,7 @@ export default {
     },
     methods: {
         editClient() {
-            this.edit = true
+            this.edit = true;
         },
         saveClient() {
             let body = {
@@ -127,7 +127,7 @@ export default {
                 if (data.id) {
                     this.project_name = '';
                     this.project_estimate = '';
-                    this.client.projects.unshift(data)
+                    this.client.projects.unshift(data);
                 }
             }).catch(error => console.log(error));
         }
