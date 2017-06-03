@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="my-3 col-9 col-xl-10 col-lg-9 col-md-8 col-sm-12">
-            <router-view class="view"></router-view>
+            <router-view :id="['component-' + $route.name]" class="view"></router-view>
         </div>
     </div>
 </div>
