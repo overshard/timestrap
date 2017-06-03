@@ -28,7 +28,7 @@ gulp.task('scripts', function(){
 
 gulp.task('tags', function() {
     var files = [
-        'timestrap/static_src/tags/router.js'
+        'timestrap/static_src/tags/app.js'
     ];
     return gulp.src(files, {read: false})
         .pipe(tap(function(file) {

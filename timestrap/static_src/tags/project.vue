@@ -1,5 +1,34 @@
 <template>
 <div class="row py-2 bg-faded">
+
+    <template v-if="edit">
+    <div class="col-8">
+        <input name="project-name"
+               type="text"
+               class="form-control form-control-sm"
+               v-model.trim="name"
+               v-on:keyup.enter="saveProject"
+               required/>
+    </div>
+    <div class="col-2">
+        <input name="project-estimate"
+               type="text"
+               class="form-control form-control-sm"
+               placeholder="Estimate"
+               v-model.number="estimate"
+               v-on:keyup.enter="saveProject"
+               required/>
+    </div>
+    <div class="col-2">
+        <button name="project-save"
+                class="btn btn-success btn-sm w-100"
+                v-on:click="saveProject">
+            Save
+        </button>
+    </div>
+    </template>
+
+    <template v-else>
     <div class="mb-1 col-6">{{ project.name }}</div>
     <div class="col-4 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
@@ -20,10 +49,12 @@
     </div>
     <div class="col-2">
         <button name="project-change"
-                class="btn btn-warning btn-sm w-100">
+                class="btn btn-warning btn-sm w-100"
+                v-on:click="editProject">
             Edit
         </button>
     </div>
+    </template>
 </div>
 </template>
 
@@ -31,14 +62,30 @@
 export default {
     props: ['project'],
     data() {
-        return {};
+        return {
+            edit: false,
+            estimate: this.project.estimate,
+            name: this.project.name
+        };
     },
     methods: {
         editProject() {
-            console.log(this);
+            this.edit = true;
         },
         saveProject() {
-            console.log(this);
+            let body = {
+                client: this.project.client,
+                estimate: this.estimate,
+                name: this.name
+            };
+            quickFetch(this.project.url, 'put', body).then(data => {
+                if (data.id) {
+                    this.project.name = data.name;
+                    this.project.estimate = data.estimate;
+                    this.project.percent_done = data.percent_done;
+                    this.edit = false;
+                }
+            }).catch(error => console.log(error));
         }
     }
 };

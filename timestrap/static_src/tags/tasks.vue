@@ -13,57 +13,49 @@
 
     <form name="task-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-on:submit.prevent="onSubmit"
+          v-if="global.perms.add_task"
+          v-on:submit.prevent
           v-on:submit="submitTask">
         <div class="col-8">
             <input name="task-name"
                    type="text"
                    class="form-control form-control-sm"
-                   v-model="name"
+                   v-model.trim="name"
                    placeholder="New Task Name"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <input name="task-hourly-rate"
                    type="text"
                    class="form-control form-control-sm"
-                   v-model="hourly_rate"
+                   v-model.number="hourly_rate"
                    placeholder="Hourly Rate"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <button
                     name="task-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-on:click="submitTask">
+                    class="btn btn-success btn-sm w-100">
                 Add
             </button>
         </div>
     </form>
 
     <div class="task-rows rounded">
-        <div v-for="task in tasks" class="row py-2 bg-faded rounded mb-2">
-            <div class="col-8 d-flex align-items-center">
-                <span class="font-weight-bold">{{ task.name }}</span>
-            </div>
-            <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-                <span class="mb-1">${{ task.hourly_rate }}</span>
-            </div>
-            <div class="col-2">
-                <button name="task-change"
-                        class="btn btn-warning btn-sm w-100">
-                    Edit
-                </button>
-            </div>
-        </div>
+        <task v-for="(task, index) in tasks"
+            v-bind:task="task"
+            v-bind:index="index"
+            v-bind:key="task.id">
+        </task>
     </div>
 </div>
 </template>
 
 
 <script>
+const Task = require('./task.vue');
+
 export default {
     data() {
         return {
@@ -79,11 +71,22 @@ export default {
             }).catch(error => console.log(error));
         },
         submitTask() {
-            console.log(this);
+            let body = {
+                name: this.name,
+                hourly_rate: this.hourly_rate
+            };
+            quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
+                this.name = '';
+                this.hourly_rate = '';
+                this.tasks.unshift(data);
+            }).catch(error => console.log(error));
         },
     },
     mounted() {
         return this.getTasks();
+    },
+    components: {
+        Task
     }
 };
 </script>

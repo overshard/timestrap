@@ -16,22 +16,21 @@
 
     <form name="client-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-on:submit.prevent="onSubmit"
+          v-on:submit.prevent
           v-on:submit="submitClient">
         <div class="col-10">
             <input name="client-name"
                    type="text"
                    class="form-control form-control-sm"
-                   v-model="name"
+                   v-model.trim="name"
                    placeholder="New Client Name"
-                   required>
+                   required/>
         </div>
         <div class="col-2">
             <button
                     name="client-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-on:click="submitClient">
+                    class="btn btn-success btn-sm w-100">
                 Add
             </button>
         </div>
@@ -63,7 +62,13 @@ export default {
             }).catch(error => console.log(error));
         },
         submitClient() {
-            console.log(this);
+            let body = {
+                name: this.name
+            };
+            quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
+                this.name = '';
+                this.clients.unshift(data);
+            }).catch(error => console.log(error));
         }
     },
     mounted() {
