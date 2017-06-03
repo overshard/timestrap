@@ -2,6 +2,29 @@
 <div class="row py-2 bg-faded rounded mb-2">
 
     <template v-if="edit">
+    <div class="col-8">
+        <input name="task-name"
+               type="text"
+               class="form-control form-control-sm"
+               v-model.trim="name"
+               v-on:keyup.enter="saveTask"
+               required/>
+    </div>
+    <div class="col-2">
+        <input name="task-hourly-rate"
+               type="text"
+               class="form-control form-control-sm"
+               v-model.number="hourly_rate"
+               v-on:keyup.enter="saveTask"
+               required/>
+    </div>
+    <div class="col-2">
+        <button name="task-save"
+                class="btn btn-success btn-sm w-100"
+                v-on:click="saveTask">
+            Save
+        </button>
+    </div>
     </template>
 
     <template v-else>
@@ -38,7 +61,17 @@ export default {
             this.edit = true;
         },
         saveTask() {
-            console.log(this);
+            let body = {
+                name: this.name,
+                hourly_rate: this.hourly_rate
+            };
+            quickFetch(this.task.url, 'put', body).then(data => {
+                if (data.id) {
+                    this.task.name = data.name;
+                    this.task.hourly_rate = data.hourly_rate;
+                    this.edit = false;
+                }
+            }).catch(error => console.log(error));
         },
     }
 };
