@@ -84,24 +84,11 @@
             </div>
         </div>
         <div class="entry-rows rounded">
-            <div v-for="entry in entryBlock.entries" class="row py-2 bg-faded small">
-                <div class="col-sm-3 client-project">
-                    <div class="text-muted small">
-                        {{ entry.project_details.client_details.name }}
-                    </div>
-                    {{ entry.project_details.name }}
-                </div>
-                <div class="col-sm-5 d-flex flex-column align-self-end tasks">
-                    <div class="text-muted small"
-                         v-if="entry.task">
-                        {{ entry.task_details.name }}
-                    </div>
-                    {{ entry.note }}
-                </div>
-                <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
-                    {{ durationToString(entry.duration) }}
-                </div>
-            </div>
+            <entry v-for="(entry, index) in entryBlock.entries"
+                v-bind:entry="entry"
+                v-bind:index="index"
+                v-bind:key="entry.id">
+            </entry>
         </div>
     </div>
 
@@ -121,6 +108,7 @@
 
 <script>
 const Pager = require('./pager.vue');
+const Entry = require('./entry.vue');
 const TasksSelect = require('./tasks-select.vue');
 const ProjectsSelect = require('./projects-select.vue');
 const DatepickerInput = require('./datepicker-input.vue');
@@ -197,14 +185,6 @@ export default {
         },
         dateSelect(date) {
             this.date = date;
-        },
-        durationToString(duration) {
-            if (typeof(duration) === 'number') {
-                let hours = Math.floor(duration);
-                let minutes = Math.round((duration - hours) * 60);
-                duration = hours + ':' + pad(minutes);
-            }
-            return duration;
         }
     },
     mounted() {
@@ -214,6 +194,7 @@ export default {
         Pager,
         TasksSelect,
         ProjectsSelect,
+        Entry,
         DatepickerInput
     }
 };
