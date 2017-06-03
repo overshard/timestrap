@@ -9,25 +9,21 @@ gulp.task('styles', ['styles:vendor', 'styles:sass']);
 
 
 gulp.task('styles:vendor', function() {
-    var files = [
+    return gulp.src([
         'node_modules/font-awesome/css/font-awesome.min.css',
         'node_modules/tether/dist/css/tether.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'node_modules/select2/dist/css/select2.min.css',
         'node_modules/pickadate/lib/compressed/themes/default.css',
         'node_modules/pickadate/lib/compressed/themes/default.date.css',
-    ];
-    return gulp.src(files)
+    ])
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });
 
 
 gulp.task('styles:sass', function() {
-    var files = [
-        'timestrap/static_src/sass/**/*.scss'
-    ];
-    return gulp.src(files)
+    return gulp.src('timestrap/static_src/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],

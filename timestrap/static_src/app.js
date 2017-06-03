@@ -1,10 +1,16 @@
 const Vue = require('vue');
 const VueRouter = require('vue-router');
 
-const App = require('./app.vue');
-const Clients = require('./clients.vue');
-const Tasks = require('./tasks.vue');
-const Timesheet = require('./timesheet.vue');
+const App = require('./components/app.vue');
+const Clients = require('./components/clients.vue');
+const Tasks = require('./components/tasks.vue');
+const Timesheet = require('./components/timesheet.vue');
+
+
+// TODO: Figure out why this isn't working...
+Vue.config.devtools = false;
+Vue.config.debug = false;
+Vue.config.silent = true;
 
 
 Vue.use(VueRouter);

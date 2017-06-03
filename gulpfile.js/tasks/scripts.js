@@ -8,8 +8,11 @@ var vueify = require('vueify');
 var browserify = require('browserify');
 
 
-gulp.task('scripts', function(){
-    var files = [
+gulp.task('scripts', ['scripts:vendor', 'scripts:app']);
+
+
+gulp.task('scripts:vendor', function(){
+    return gulp.src([
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/tether/dist/js/tether.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
@@ -19,17 +22,16 @@ gulp.task('scripts', function(){
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
         'timestrap/static_src/scripts/**/*.js'
-    ];
-    return gulp.src(files)
-        .pipe(concat('bundle.js'))
+    ])
+        .pipe(concat('bundle-vendor.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });
 
 
-gulp.task('tags', function() {
-    gulp.src('timestrap/static_src/tags/app.js', { read: false })
+gulp.task('scripts:app', function() {
+    gulp.src('timestrap/static_src/app.js', { read: false })
         .pipe(tap(function(file) {
-            file.contents = browserify(file.path, { debug: true })
+            file.contents = browserify(file.path)
                 .transform(vueify)
                 .bundle()
                 .on('error', function(err) {
@@ -38,6 +40,6 @@ gulp.task('tags', function() {
                 });
         }))
         .pipe(buffer())
-        .pipe(concat('bundle-tags.js'))
+        .pipe(concat('bundle-app.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });
