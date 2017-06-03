@@ -43,15 +43,18 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a id="nav-admin-api"
-                                class="dropdown-item">
+                                class="dropdown-item"
+                                :href="api">
                                 API Browser
                             </a>
                             <a id="nav-admin-admin"
-                                class="dropdown-item">
+                                class="dropdown-item"
+                                :href="admin">
                                 Admin
                             </a>
                             <a id="nav-admin-logout"
-                                class="dropdown-item">
+                                class="dropdown-item"
+                                :href="logout">
                                 Logout
                             </a>
                         </div>
@@ -72,7 +75,10 @@ export default {
             clients: timestrapConfig.CORE_URLS.CLIENTS,
             tasks: timestrapConfig.CORE_URLS.TASKS,
             reports: timestrapConfig.CORE_URLS.REPORTS,
-            username: timestrapConfig.USER.NAME
+            username: timestrapConfig.USER.NAME,
+            api: timestrapConfig.CORE_URLS.API,
+            admin: timestrapConfig.CORE_URLS.ADMIN,
+            logout: timestrapConfig.CORE_URLS.LOGOUT
         };
     }
 };
