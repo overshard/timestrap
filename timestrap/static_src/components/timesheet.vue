@@ -167,6 +167,7 @@ export default {
                 user: timestrapConfig.USER.URL
             };
             quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
+                $.growl.notice({ message: "New entry added!" });
                 this.entries.map(entryBlock => {
                     if (entryBlock.date === data.date) {
                         entryBlock.entries.unshift(data);

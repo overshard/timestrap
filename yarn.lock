@@ -2501,6 +2501,10 @@ jquery-mousewheel@~3.1.13:
   version "3.1.13"
   resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
 
+jquery.growl@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/jquery.growl/-/jquery.growl-1.3.1.tgz#25bc970e27884a97728c75ce84ab9c4c7eba6fb8"
+
 jquery@3.2.x, jquery@>=1.7, jquery@>=1.9.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"

@@ -15,7 +15,8 @@ gulp.task('styles:vendor', function() {
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'node_modules/select2/dist/css/select2.min.css',
         'node_modules/pickadate/lib/compressed/themes/default.css',
-        'node_modules/pickadate/lib/compressed/themes/default.date.css'])
+        'node_modules/pickadate/lib/compressed/themes/default.date.css',
+        'node_modules/jquery.growl/stylesheets/jquery.growl.css'])
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });
