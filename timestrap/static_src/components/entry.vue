@@ -120,12 +120,12 @@ export default {
                 }
             }).catch(error => console.log(error));
         },
-        deleteEntry(e) {
+        deleteEntry() {
             quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {
-                    console.log('got em');
                 }
             });
+            this.$emit('delete-entry');
         },
         projectSelect(project) {
             this.project = project;

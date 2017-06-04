@@ -76,7 +76,7 @@
         </div>
     </form>
 
-    <div class="mb-4" v-for="entryBlock in entries">
+    <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
         <div class="row inset-row">
             <div class="col-12">
                 <h2 class="display-4 text-muted">
@@ -85,11 +85,12 @@
             </div>
         </div>
         <div class="entry-rows rounded">
-            <entry v-for="(entry, index) in entryBlock.entries"
-                v-bind:entry="entry"
-                v-bind:index="index"
-                v-bind:key="entry.id"
-                v-bind:editable="editable">
+            <entry v-for="(entry, entryIndex) in entryBlock.entries"
+                   v-on:delete-entry="deleteEntry(blockIndex, entryIndex)"
+                   v-bind:entry="entry"
+                   v-bind:index="entryIndex"
+                   v-bind:key="entry.id"
+                   v-bind:editable="editable">
             </entry>
         </div>
     </div>
@@ -188,6 +189,9 @@ export default {
                 this.note = '';
                 this.duration = '';
             }).catch(error => console.log(error));
+        },
+        deleteEntry: function(blockIndex, entryIndex) {
+            this.entries[blockIndex].entries.splice(entryIndex, 1);
         },
         taskSelect(task) {
             this.task = task;
