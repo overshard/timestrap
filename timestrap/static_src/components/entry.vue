@@ -48,7 +48,7 @@
         </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
-                <template v-if="global.perms.change_entry">
+                <template v-if="global.perms.change_entry || global.perms.delete_entry">
                     <button name="entry-menu"
                             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                             type="button"
@@ -61,12 +61,14 @@
                          aria-labelledby="entry-menu">
                         <a class="dropdown-item entry-menu-change"
                            href="#"
+                           v-if="global.perms.change_entry"
                            v-on:click.prevent
                            v-on:click="editEntry">
                             Edit
                         </a>
                         <a class="dropdown-item entry-menu-delete"
                            href="#"
+                           v-if="global.perms.delete_entry"
                            v-on:click.prevent
                            v-on:click="deleteEntry">
                             Delete
