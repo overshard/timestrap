@@ -171,12 +171,20 @@ export default {
             };
             quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
                 $.growl.notice({ message: 'New entry added!' });
+                let entryAdded = false;
                 this.entries.map(entryBlock => {
                     if (entryBlock.date === data.date) {
                         entryBlock.entries.unshift(data);
+                        entryAdded = true;
                     }
                     return entryBlock;
                 });
+                if (!entryAdded) {
+                    this.entries.unshift({
+                        date: data.date,
+                        entries: [data]
+                    });
+                }
                 this.note = '';
                 this.duration = '';
             }).catch(error => console.log(error));
