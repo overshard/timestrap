@@ -345,8 +345,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-duration').clear()
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
-        self.waitForPresence((By.TAG_NAME, 'entry'))
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForPresence((By.CLASS_NAME, 'entry'))
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_restart(self):
@@ -378,7 +378,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 1\nTask 1\nNote\n0:35')
 
     def test_timesheet_entry_delete(self):
