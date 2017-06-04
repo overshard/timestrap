@@ -214,7 +214,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-name').send_keys('Project')
         self.find(By.NAME, 'project-estimate').send_keys('1')
         self.find(By.NAME, 'project-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'project'))
+        self.waitForPresence((By.CLASS_NAME, 'project'))
 
     def test_projects_change(self):
         client = Client(name='Client', archive=False)
@@ -226,7 +226,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
         self.find(By.CLASS_NAME, 'client-view-projects').click()
-        self.assertFalse(self.find(By.NAME, 'project-change').is_enabled())
+        self.assertNotIn('project-change', self.driver.page_source)
         self.addPerms(['change_project'])
         self.driver.refresh()
         self.find(By.CLASS_NAME, 'client-view-projects').click()
@@ -236,7 +236,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-name').send_keys(' Changed')
         self.find(By.NAME, 'project-estimate').send_keys('.5')
         self.find(By.NAME, 'project-save').click()
-        self.waitForText((By.TAG_NAME, 'project'), 'Project Changed')
+        self.waitForText((By.CLASS_NAME, 'project'), 'Project Changed')
 
     def test_tasks_access(self):
         self.logIn()

@@ -22,12 +22,13 @@
     <template v-else>
     <div :class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
         <a class="client-view-projects text-primary font-weight-bold"
+           v-if="global.perms.view_project"
            v-on:click="toggleProjects">
             <i v-bind:class="['fa', 'small', 'mr-2', 'fa-chevron-circle-' + [showProjects ? 'down' : 'up']]"
                aria-hidden="true"></i>
             <span class="mb-1">{{ client.name }}</span>
         </a>
-        <!--<span class="text-primary font-weight-bold">{{ client.name }}</span>-->
+        <span class="text-primary font-weight-bold" v-else>{{ client.name }}</span>
     </div>
     <div class="col-2 d-flex align-items-center">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
@@ -48,7 +49,7 @@
 
     <div class="col-12" v-if="showProjects">
         <form name="project-add"
-              v-if="showProjects"
+              v-if="global.perms.add_project"
               v-on:submit.prevent
               v-on:submit="submitProject">
             <div class="row bg-faded py-2">
