@@ -8,19 +8,19 @@
                 </router-link>
                 <ul id="nav-app" class="nav flex-column">
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="timesheet">
+                        <router-link id="nav-app-timesheet" class="nav-link" :to="timesheet">
                             <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
                             Timesheet
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="clients">
+                        <router-link id="nav-app-clients" class="nav-link" :to="clients">
                             <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
                             Clients
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="tasks">
+                        <router-link id="nav-app-tasks" class="nav-link" :to="tasks">
                             <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
                             Tasks
                         </router-link>
