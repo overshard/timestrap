@@ -43,16 +43,19 @@
                         <div class="dropdown-menu">
                             <a id="nav-admin-api"
                                 class="dropdown-item"
+                                target="_blank"
                                 :href="api">
                                 API Browser
                             </a>
                             <a id="nav-admin-admin"
                                 class="dropdown-item"
+                                target="_blank"
                                 :href="admin">
                                 Admin
                             </a>
                             <a id="nav-admin-logout"
                                 class="dropdown-item"
+                                target="_blank"
                                 :href="logout">
                                 Logout
                             </a>
