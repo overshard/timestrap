@@ -29,8 +29,12 @@ class Command(BaseCommand):
             iterations = 5
 
         for i in range(randint(iterations, iterations*2)):
+            task_name = (fake
+                         .sentence(nb_words=3, variable_nb_words=True)
+                         .replace('.', '')
+                         .capitalize())
             Task.objects.create(
-                name=fake.sentence(),
+                name=task_name,
                 hourly_rate=Decimal(
                     '%d.%d' % (randint(0, 200), randint(0, 99)))
             )
@@ -45,10 +49,14 @@ class Command(BaseCommand):
                 estimate = None
                 if estimated:
                     estimate = timedelta(hours=randint(5, 150))
+                project_name = (fake
+                            .sentence(nb_words=3, variable_nb_words=True)
+                            .replace('.', '')
+                            .capitalize())
                 Project.objects.create(
                     client=client,
                     estimate=estimate,
-                    name=fake.job()
+                    name=project_name
                 )
 
         for i in range(iterations):
