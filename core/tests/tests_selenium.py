@@ -172,7 +172,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.driver.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.NAME, 'client-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'client'))
+        self.waitForPresence((By.CLASS_NAME, 'client'))
 
     def test_clients_change(self):
         Client(name='Client', archive=False).save()
@@ -180,14 +180,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertFalse(self.find(By.NAME, 'client-change').is_enabled())
+        self.assertNotIn('client-change', self.driver.page_source)
         self.addPerms(['change_client'])
         self.driver.refresh()
         self.find(By.NAME, 'client-change').click()
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
         self.find(By.NAME, 'client-save').click()
-        self.waitForText((By.TAG_NAME, 'client'), 'Client Changed')
+        self.waitForText((By.CLASS_NAME, 'client'), 'Client Changed')
 
     def test_projects_access(self):
         Client(name='Client', archive=False).save()
