@@ -1,6 +1,35 @@
 <template>
-<div class="row py-2 bg-faded small">
-    <template v-if="edit">
+<div class="entry row py-2 bg-faded small">
+    <template v-if="edit && global.perms.change_entry">
+        <div class="col-sm-3">
+            <projects-select :selected="project_details.url" @project-select="projectSelect"></projects-select>
+        </div>
+        <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
+            <input name="entry-note"
+                   type="text"
+                   class="form-control form-control-sm"
+                   ref="note"
+                   placeholder="Note"
+                   v-model="note" />
+        </div>
+        <div class="col-sm-2">
+            <input name="entry-duration"
+                   type="text"
+                   class="form-control form-control-sm text-right font-weight-bold"
+                   ref="duration"
+                   placeholder="0:00"
+                   v-model="duration" />
+        </div>
+        <div class="col-sm-2" v-if="global.perms.change_entry">
+            <button name="entry-save"
+                    class="btn btn-success btn-sm w-100"
+                    v-on:click="saveEntry">
+                Save
+            </button>
+        </div>
+    </template>
+
+    <template v-else>
         <div class="col-sm-3 client-project">
             <div class="text-muted small">
                 {{ project_details.client_details.name }}
@@ -19,7 +48,7 @@
         </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
-                <template v-if="global.perms.change_entry">
+                <template v-if="global.perms.change_entry || global.perms.delete_entry">
                     <button name="entry-menu"
                             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                             type="button"
@@ -29,52 +58,25 @@
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right"
-                        aria-labelledby="entry-menu">
+                         aria-labelledby="entry-menu">
                         <a class="dropdown-item entry-menu-change"
-                        href="#"
-                        v-on:click.prevent
-                        v-on:click="editEntry">
+                           href="#"
+                           v-if="global.perms.change_entry"
+                           v-on:click.prevent
+                           v-on:click="editEntry">
                             Edit
                         </a>
                         <a class="dropdown-item entry-menu-delete"
-                        href="#"
-                        v-on:click.prevent
-                        v-on:click="deleteEntry">
+                           href="#"
+                           v-if="global.perms.delete_entry"
+                           v-on:click.prevent
+                           v-on:click="deleteEntry">
                             Delete
                         </a>
                     </div>
                 </template>
             </div>
         </template>
-    </template>
-
-    <template v-else>
-        <div class="col-sm-3">
-            <projects-select :selected="project_details.url" @project-select="projectSelect"></projects-select>
-        </div>
-        <div class="col-sm-5">
-            <input name="entry-note"
-                   type="text"
-                   class="form-control form-control-sm"
-                   ref="note"
-                   placeholder="Note"
-                   v-model="note" />
-        </div>
-        <div class="col-sm-2">
-            <input name="entry-duration"
-                   type="text"
-                   class="form-control form-control-sm text-right font-weight-bold"
-                   ref="duration"
-                   placeholder="0:00"
-                   v-model="duration" />
-        </div>
-        <div class="col-sm-2">
-            <button name="entry-save"
-                    class="btn btn-success btn-sm w-100"
-                    v-on:click="saveEntry">
-                Save
-            </button>
-        </div>
     </template>
 </div>
 </template>
@@ -87,7 +89,7 @@ export default {
     props: ['entry', 'editable'],
     data() {
         return {
-            edit: true,
+            edit: false,
             url: this.entry.url,
             user: this.entry.user,
             project: this.entry.project,
@@ -100,7 +102,7 @@ export default {
     },
     methods: {
         editEntry() {
-            this.edit = false;
+            this.edit = true;
         },
         saveEntry() {
             let body = {
@@ -111,18 +113,21 @@ export default {
             };
             quickFetch(this.url, 'put', body).then((data) => {
                 if (data.id) {
-                    this.edit = true;
+                    this.edit = false;
+                    this.project = data.project;
                     this.project_details = data.project_details;
-                    this.task_details = data.task;
+                    this.task = data.task;
+                    this.task_details = data.task_details;
+                    this.duration = durationToString(data.duration);
                 }
             }).catch(error => console.log(error));
         },
-        deleteEntry(e) {
+        deleteEntry() {
             quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {
-                    console.log('got em');
                 }
             });
+            this.$emit('delete-entry');
         },
         projectSelect(project) {
             this.project = project;

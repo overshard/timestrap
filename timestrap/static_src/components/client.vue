@@ -1,5 +1,5 @@
 <template>
-<div class="row py-2 bg-faded rounded mb-2">
+<div class="client row py-2 bg-faded rounded mb-2">
 
     <template v-if="edit">
     <div class="col-10">
@@ -20,14 +20,15 @@
     </template>
 
     <template v-else>
-    <div class="col-6 d-flex align-items-center">
+    <div :class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
         <a class="client-view-projects text-primary font-weight-bold"
+           v-if="global.perms.view_project"
            v-on:click="toggleProjects">
-            <i v-bind:class="['fa', 'small', 'mr-2', [showProjects ? 'fa-chevron-circle-down' : 'fa-chevron-circle-up']]"
+            <i v-bind:class="['fa', 'small', 'mr-2', 'fa-chevron-circle-' + [showProjects ? 'down' : 'up']]"
                aria-hidden="true"></i>
             <span class="mb-1">{{ client.name }}</span>
         </a>
-        <!--<span class="text-primary font-weight-bold">{{ client.name }}</span>-->
+        <span class="text-primary font-weight-bold" v-else>{{ client.name }}</span>
     </div>
     <div class="col-2 d-flex align-items-center">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
@@ -37,7 +38,7 @@
         <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ client.total_projects }}</span>
     </div>
-    <div class="col-2">
+    <div class="col-2" v-if="global.perms.change_client">
         <button name="client-change"
                 class="btn btn-warning btn-sm w-100"
                 v-on:click="editClient">
@@ -48,7 +49,7 @@
 
     <div class="col-12" v-if="showProjects">
         <form name="project-add"
-              v-if="showProjects"
+              v-if="global.perms.add_project"
               v-on:submit.prevent
               v-on:submit="submitProject">
             <div class="row bg-faded py-2">

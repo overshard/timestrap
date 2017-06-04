@@ -142,7 +142,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         password_input.clear()
         password_input.send_keys(self.profile['password'])
         self.find(By.NAME, 'login').click()
-        self.waitForPresence((By.TAG_NAME, 'navigation'))
+        self.waitForPresence((By.ID, 'nav-app'))
 
     def test_login_failure(self):
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
@@ -156,11 +156,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_clients_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
+        # self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
         self.addPerms(['view_client'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-clients').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="clients"]'))
+        self.waitForPresence((By.ID, 'component-clients'))
 
     def test_clients_add(self):
         self.logIn()
@@ -172,7 +172,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.driver.refresh()
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.NAME, 'client-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'client'))
+        self.waitForPresence((By.CLASS_NAME, 'client'))
 
     def test_clients_change(self):
         Client(name='Client', archive=False).save()
@@ -180,14 +180,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertFalse(self.find(By.NAME, 'client-change').is_enabled())
+        self.assertNotIn('client-change', self.driver.page_source)
         self.addPerms(['change_client'])
         self.driver.refresh()
         self.find(By.NAME, 'client-change').click()
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
         self.find(By.NAME, 'client-save').click()
-        self.waitForText((By.TAG_NAME, 'client'), 'Client Changed')
+        self.waitForText((By.CLASS_NAME, 'client'), 'Client Changed')
 
     def test_projects_access(self):
         Client(name='Client', archive=False).save()
@@ -214,7 +214,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-name').send_keys('Project')
         self.find(By.NAME, 'project-estimate').send_keys('1')
         self.find(By.NAME, 'project-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'project'))
+        self.waitForPresence((By.CLASS_NAME, 'project'))
 
     def test_projects_change(self):
         client = Client(name='Client', archive=False)
@@ -226,7 +226,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
         self.find(By.CLASS_NAME, 'client-view-projects').click()
-        self.assertFalse(self.find(By.NAME, 'project-change').is_enabled())
+        self.assertNotIn('project-change', self.driver.page_source)
         self.addPerms(['change_project'])
         self.driver.refresh()
         self.find(By.CLASS_NAME, 'client-view-projects').click()
@@ -236,15 +236,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'project-name').send_keys(' Changed')
         self.find(By.NAME, 'project-estimate').send_keys('.5')
         self.find(By.NAME, 'project-save').click()
-        self.waitForText((By.TAG_NAME, 'project'), 'Project Changed')
+        self.waitForText((By.CLASS_NAME, 'project'), 'Project Changed')
 
     def test_tasks_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-tasks', self.driver.page_source)
+        # self.assertNotIn('nav-app-tasks', self.driver.page_source)
         self.addPerms(['view_task'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-tasks').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="tasks"]'))
+        self.waitForPresence((By.ID, 'component-tasks'))
 
     def test_tasks_add(self):
         self.logIn()
@@ -258,7 +258,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-name').send_keys('Task')
         self.find(By.NAME, 'task-hourly-rate').send_keys('25')
         self.find(By.NAME, 'task-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'task'))
+        self.waitForPresence((By.CLASS_NAME, 'task'))
 
     def test_tasks_change(self):
         Task(name='Task', hourly_rate=25).save()
@@ -266,7 +266,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_task'])
         self.driver.get('%s%s' % (self.live_server_url, '/tasks/'))
 
-        self.assertFalse(self.find(By.NAME, 'task-change').is_enabled())
+        self.assertNotIn('task-change', self.driver.page_source)
         self.addPerms(['change_task'])
         self.driver.refresh()
         self.find(By.NAME, 'task-change').click()
@@ -275,15 +275,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-hourly-rate').clear()
         self.find(By.NAME, 'task-hourly-rate').send_keys('125')
         self.find(By.NAME, 'task-save').click()
-        self.waitForText((By.TAG_NAME, 'task'), 'Task Changed\n$125')
+        self.waitForText((By.CLASS_NAME, 'task'), 'Task Changed\n$125')
 
     def test_timesheet_access(self):
         self.logIn()
-        self.assertNotIn('nav-app-timesheet', self.driver.page_source)
+        # self.assertNotIn('nav-app-timesheet', self.driver.page_source)
         self.addPerms(['view_entry'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-timesheet').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="entries"]'))
+        self.waitForPresence((By.ID, 'component-timesheet'))
 
     def test_timesheet_entry_add(self):
         client = Client(name='Client', archive=False)
@@ -307,8 +307,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-note').send_keys('Note')
         self.find(By.NAME, 'entry-duration').send_keys('0:35')
         self.find(By.NAME, 'entry-add-submit').submit()
-        self.waitForPresence((By.TAG_NAME, 'entry'))
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForPresence((By.CLASS_NAME, 'entry'))
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
@@ -345,8 +345,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-duration').clear()
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
-        self.waitForPresence((By.TAG_NAME, 'entry'))
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForPresence((By.CLASS_NAME, 'entry'))
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_restart(self):
@@ -378,7 +378,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 1\nTask 1\nNote\n0:35')
 
     def test_timesheet_entry_delete(self):
@@ -406,7 +406,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
 
         self.find(By.ID, 'nav-app-reports').click()
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
+        self.waitForPresence((By.ID, 'component-reports'))
 
     def test_reports_filter(self):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
@@ -415,7 +415,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_entry',
                        'view_project', 'view_task'])
         self.driver.get('%s%s' % (self.live_server_url, '/reports/'))
-        self.waitForPresence((By.CSS_SELECTOR, 'div#main[data-is="reports"]'))
+        self.waitForPresence((By.ID, 'component-reports'))
 
         # The test data contains 12 fake entries.
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 12)

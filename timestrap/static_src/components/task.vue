@@ -1,5 +1,5 @@
 <template>
-<div class="row py-2 bg-faded rounded mb-2">
+<div class="task row py-2 bg-faded rounded mb-2">
 
     <template v-if="edit && global.perms.change_task">
     <div class="col-8">

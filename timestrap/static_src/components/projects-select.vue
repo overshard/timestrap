@@ -47,6 +47,9 @@ export default {
     },
     mounted() {
         this.getClients();
+    },
+    destroyed: function () {
+        $(this.$el).off().select2('destroy')
     }
 };
 </script>
