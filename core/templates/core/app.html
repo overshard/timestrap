@@ -28,7 +28,7 @@
                     CLIENTS: "{% url 'clients' %}",
                     TIMESHEET: "{% url 'timesheet' %}",
                     TASKS: "{% url 'tasks' %}"
-                }
+                };
                 timestrapConfig.API_URLS = {
                     USERS: "{% url 'user-list' %}",
                     PERMISSIONS: "{% url 'permission-list' %}",
@@ -36,12 +36,12 @@
                     PROJECTS: "{% url 'project-list' %}",
                     ENTRIES: "{% url 'entry-list' %}",
                     TASKS: "{% url 'task-list' %}"
-                }
+                };
                 timestrapConfig.USER = {
                     ID: {{ user.id }},
                     URL: "{% url 'user-detail' user.id %}",
                     NAME: "{{ user.username }}"
-                }
+                };
             })(document, window);
         </script>
 

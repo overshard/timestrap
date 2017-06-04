@@ -31,6 +31,10 @@
                     <li class="nav-item dropup col-xl-2 col-lg-3 col-md-4 col-sm-12">
                         <a class="nav-link dropdown-toggle"
                             data-toggle="dropdown">
+                            <img :src="global.user.gravatar_url"
+                                width="30"
+                                height="30"
+                                class="mr-1" />
                             {{ username }}
                         </a>
                         <div class="dropdown-menu">
