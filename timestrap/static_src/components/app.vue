@@ -26,7 +26,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="reports">
+                        <router-link id="nav-app-reports" class="nav-link" :to="reports">
                             <i class="fa fa-book mr-1" aria-hidden="true"></i>
                             Reports
                         </router-link>

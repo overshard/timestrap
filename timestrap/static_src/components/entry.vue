@@ -125,9 +125,13 @@ export default {
         deleteEntry() {
             quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {
+                    $.growl.notice({ message: 'Entry deleted!' });
+                    this.$emit('delete-entry');
                 }
-            });
-            this.$emit('delete-entry');
+                else {
+                    $.growl.error({ message: 'Entry delete failed ):' });
+                }
+            }.bind(this));
         },
         projectSelect(project) {
             this.project = project;

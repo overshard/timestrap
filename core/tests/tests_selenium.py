@@ -48,6 +48,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 'browserName': 'chrome',
                 'version': '58',
                 'platform': 'ANY',
+                'chromeOptions': {
+                    'prefs': {
+                        'credentials_enable_service': False,
+                        'profile': {
+                            'password_manager_enabled': False
+                        }
+                    }
+                }
             }
             if os.environ.get('TRAVIS_JOB_NUMBER', None):
                 desired_capabilities.update({
@@ -272,6 +280,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-change').click()
         self.waitForPresence((By.NAME, 'task-name'))
         self.find(By.NAME, 'task-name').send_keys(' Changed')
+        self.find(By.NAME, 'task-hourly-rate').click()
         self.find(By.NAME, 'task-hourly-rate').clear()
         self.find(By.NAME, 'task-hourly-rate').send_keys('125')
         self.find(By.NAME, 'task-save').click()
