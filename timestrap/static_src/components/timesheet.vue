@@ -79,7 +79,7 @@
         <div class="row inset-row">
             <div class="col-12">
                 <h2 class="display-4 text-muted">
-                    {{ entryBlock.date }}
+                    {{ moment(entryBlock.date) }}
                 </h2>
             </div>
         </div>
@@ -186,6 +186,9 @@ export default {
         },
         dateSelect(date) {
             this.date = date;
+        },
+        moment(date) {
+            return moment(date).format('LL');
         }
     },
     mounted() {
