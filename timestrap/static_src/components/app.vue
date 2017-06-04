@@ -26,10 +26,10 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a id="nav-app-reports" class="nav-link">
+                        <router-link class="nav-link" :to="reports">
                             <i class="fa fa-book mr-1" aria-hidden="true"></i>
                             Reports
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item dropup col-xl-2 col-lg-3 col-md-4 col-sm-12">
                         <a class="nav-link dropdown-toggle"

@@ -5,6 +5,7 @@ const App = require('./components/app.vue');
 const Clients = require('./components/clients.vue');
 const Tasks = require('./components/tasks.vue');
 const Timesheet = require('./components/timesheet.vue');
+const Reports = require('./components/reports.vue');
 
 
 // TODO: Figure out why this isn't working...
@@ -19,7 +20,8 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/clients/', component: Clients },
     { path: '/tasks/', component: Tasks },
-    { path: '/timesheet/', component: Timesheet }
+    { path: '/timesheet/', component: Timesheet },
+    { path: '/reports/', component: Reports }
 ];
 
 

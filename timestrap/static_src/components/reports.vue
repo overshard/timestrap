@@ -2,10 +2,22 @@
 <div class="container">
     <div class="row py-2 mb-4 bg-faded rounded">
         <div class="col-12">
-            <router-link to="/reports/" class="btn btn-primary btn-sm">
-                <i class="fa fa-book" aria-hidden="true"></i>
-                Create Reports
-            </router-link>
+            <button id="export-report" class="btn btn-primary btn-sm" v-on:click="exportReport">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                Export Report
+            </button>
+
+            <select class="custom-select form-control-sm" v-model="exportFormat">
+                <option value="csv">csv</option>
+                <option value="xls">xls</option>
+                <option value="xlsx">xlsx</option>
+                <option value="tsv">tsv</option>
+                <option value="ods">ods</option>
+                <option value="json">json</option>
+                <option value="yaml">yaml</option>
+                <option value="html">html</option>
+            </select>
+
             <pager :next="next"
                    :previous="previous"
                    @next-page="getEntries(next)"
@@ -13,64 +25,37 @@
         </div>
     </div>
 
-    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
-        <div class="col-sm-3 mb-2">
-            Date
-        </div>
-        <div class="col-sm-3 mb-2">
-            Task
-        </div>
-        <div class="col-sm-6">
-        </div>
-        <div class="col-sm-3">
-            Project
-        </div>
-        <div class="col-sm-5">
-            Note
-        </div>
-        <div class="col-sm-2">
-            Duration
-        </div>
-        <div class="col-sm-2">
-        </div>
-    </div>
-
-
-    <form name="entry-add"
-          class="row mb-4 py-2 bg-faded rounded-bottom"
+    <form name="report-filters"
+          class="row mb-4 pt-3 pb-1 bg-faded rounded"
           v-on:submit.prevent
-          v-on:submit="submitEntry">
-        <div class="col-sm-3 mb-2">
-            <datepicker-input @date-select="dateSelect"></datepicker-input>
-        </div>
-        <div class="col-sm-3">
-            <tasks-select @task-select="taskSelect"></tasks-select>
+          v-on:submit="getReport">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <!-- TODO: userSelect -->
+            </div>
+            <div class="form-group">
+                <!-- TODO: projectSelect -->
+            </div>
+            <div class="form-group">
+                <!-- TODO: clientSelect -->
+            </div>
         </div>
         <div class="col-sm-6">
-        </div>
-        <div class="col-sm-3">
-            <projects-select @project-select="projectSelect"></projects-select>
-        </div>
-        <div class="col-sm-5">
-            <input name="entry-note"
-                   type="text"
-                   class="form-control form-control-sm"
-                   v-model="note"
-                   placeholder="Note" />
-        </div>
-        <div class="col-sm-2">
-            <input name="entry-duration"
-                   type="text"
-                   class="form-control form-control-sm text-right font-weight-bold"
-                   v-model="duration"
-                   placeholder="0:00"
-                   required />
-        </div>
-        <div class="col-sm-2">
-            <button name="entry-add-submit"
-                    type="submit"
-                    class="btn btn-success btn-sm w-100">
-                Add
+            <div class="form-group">
+                <!-- TODO: taskSelect -->
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- TODO: minDateInput -->
+                    </div>
+                    <div class="col-md-6">
+                        <!-- TODO: maxDateInput -->
+                    </div>
+                </div>
+            </div>
+            <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
+                Generate Report
             </button>
         </div>
     </form>
@@ -118,17 +103,23 @@ export default {
     data() {
         return {
             entries: null,
-            clients: null,
             subtotal: null,
             total: null,
             next: null,
             previous: null,
-            editable: true
+            exportFormat: 'csv',
+            user: null,
+            project: null,
+            project__client: null,
+            min_date: null,
+            max_date: null,
+            task: null,
+            editable: false
         };
     },
     methods: {
         getEntries(url) {
-            let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
+            let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
             let entriesFetch = quickFetch(url);
@@ -159,26 +150,29 @@ export default {
                 this.total = durationToString(data.total_duration);
             });
         },
-        submitEntry() {
-            let body = {
-                date: this.date,
-                task: this.task,
+        getReport() {
+            const query = {
+                user: this.user,
                 project: this.project,
-                note: this.note,
-                duration: this.duration,
-                user: timestrapConfig.USER.URL
+                project__client: this.client,
+                min_date: this.min_date,
+                max_date: this.max_date,
+                task: this.task
             };
-            quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
-                $.growl.notice({ message: "New entry added!" });
-                this.entries.map(entryBlock => {
-                    if (entryBlock.date === data.date) {
-                        entryBlock.entries.unshift(data);
-                    }
-                    return entryBlock;
-                });
-                this.note = '';
-                this.duration = '';
-            }).catch(error => console.log(error));
+            const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
+            this.getEntries(url);
+        },
+        exportReport() {
+            const query = {
+                user: this.user,
+                project: this.project,
+                project__client: this.client,
+                min_date: this.min_date,
+                max_date: this.max_date,
+                task: this.task,
+                exportFormat: this.exportFormat
+            };
+            document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
         taskSelect(task) {
             this.task = task;
