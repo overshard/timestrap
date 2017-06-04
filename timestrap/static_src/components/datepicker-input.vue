@@ -11,7 +11,7 @@
 export default {
     mounted() {
         let vm = this;
-        $('.date-input').pickadate({
+        $(this.$el).pickadate({
             format: 'yyyy-mm-dd',
             onStart: function() {
                 let currentDate = new Date();
@@ -19,7 +19,7 @@ export default {
                 vm.$emit('date-select', moment(currentDate).format('YYYY-MM-DD'));
             },
             onSet: function() {
-                vm.$emit('date-select', $('.date-input').val());
+                vm.$emit('date-select', $(vm.$el).val());
             }
         });
     }
