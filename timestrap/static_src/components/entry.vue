@@ -116,6 +116,7 @@ export default {
                     this.project_details = data.project_details;
                     this.task = data.task;
                     this.task_details = data.task_details;
+                    this.duration = durationToString(data.duration);
                 }
             }).catch(error => console.log(error));
         },
