@@ -50,9 +50,9 @@ class Command(BaseCommand):
                 if estimated:
                     estimate = timedelta(hours=randint(5, 150))
                 project_name = (fake
-                            .sentence(nb_words=3, variable_nb_words=True)
-                            .replace('.', '')
-                            .capitalize())
+                                .sentence(nb_words=3, variable_nb_words=True)
+                                .replace('.', '')
+                                .capitalize())
                 Project.objects.create(
                     client=client,
                     estimate=estimate,
