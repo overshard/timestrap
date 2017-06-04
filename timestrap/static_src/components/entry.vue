@@ -1,5 +1,5 @@
 <template>
-<div class="row py-2 bg-faded small">
+<div class="entry row py-2 bg-faded small">
     <template v-if="edit">
         <div class="col-sm-3 client-project">
             <div class="text-muted small">

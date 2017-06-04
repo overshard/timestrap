@@ -283,7 +283,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-timesheet').click()
-        self.waitForPresence((By.ID, 'component-entries'))
+        self.waitForPresence((By.ID, 'component-timesheet'))
 
     def test_timesheet_entry_add(self):
         client = Client(name='Client', archive=False)
@@ -307,8 +307,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-note').send_keys('Note')
         self.find(By.NAME, 'entry-duration').send_keys('0:35')
         self.find(By.NAME, 'entry-add-submit').submit()
-        self.waitForPresence((By.TAG_NAME, 'entry'))
-        self.waitForText((By.TAG_NAME, 'entry'),
+        self.waitForPresence((By.CLASS_NAME, 'entry'))
+        self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
