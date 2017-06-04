@@ -6,8 +6,11 @@ const spawnSync = require('child_process').spawnSync;
 
 gulp.task('test', function(cb) {
     spawn(
-        './manage.py',
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'test'
         ],
         {
