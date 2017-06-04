@@ -258,7 +258,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-name').send_keys('Task')
         self.find(By.NAME, 'task-hourly-rate').send_keys('25')
         self.find(By.NAME, 'task-add-submit').click()
-        self.waitForPresence((By.TAG_NAME, 'task'))
+        self.waitForPresence((By.CLASS_NAME, 'task'))
 
     def test_tasks_change(self):
         Task(name='Task', hourly_rate=25).save()
@@ -266,7 +266,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_task'])
         self.driver.get('%s%s' % (self.live_server_url, '/tasks/'))
 
-        self.assertFalse(self.find(By.NAME, 'task-change').is_enabled())
+        self.assertNotIn('task-change', self.driver.page_source)
         self.addPerms(['change_task'])
         self.driver.refresh()
         self.find(By.NAME, 'task-change').click()
@@ -275,7 +275,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-hourly-rate').clear()
         self.find(By.NAME, 'task-hourly-rate').send_keys('125')
         self.find(By.NAME, 'task-save').click()
-        self.waitForText((By.TAG_NAME, 'task'), 'Task Changed\n$125')
+        self.waitForText((By.CLASS_NAME, 'task'), 'Task Changed\n$125')
 
     def test_timesheet_access(self):
         self.logIn()
