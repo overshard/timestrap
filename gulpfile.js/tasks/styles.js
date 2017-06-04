@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const strip = require('gulp-strip-css-comments');
 
 
 gulp.task('styles', ['styles:vendor', 'styles:sass']);
@@ -17,6 +18,7 @@ gulp.task('styles:vendor', function() {
         'node_modules/pickadate/lib/compressed/themes/default.css',
         'node_modules/pickadate/lib/compressed/themes/default.date.css',
         'node_modules/jquery.growl/stylesheets/jquery.growl.css'])
+        .pipe(strip())
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });
