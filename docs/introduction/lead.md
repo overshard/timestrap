@@ -2,7 +2,9 @@
 [//]: # (DO NOT modify it directly!)
 [//]: # (See gulp configuration and the `docs` folder for more.)
 
-# Timestrap [![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=flat-square)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=flat-square)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square)](https://github.com/overshard/timestrap/blob/master/LICENSE.md)
+# Timestrap
+
+[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=flat-square)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=flat-square)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square)](https://github.com/overshard/timestrap/blob/master/LICENSE.md) [![Join the chat at https://gitter.im/overshard/timestrap](https://badges.gitter.im/overshard/timestrap.svg)](https://gitter.im/overshard/timestrap?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Time tracking and invoicing you can host anywhere. Full export support in
 multiple formats and easily extensible.
