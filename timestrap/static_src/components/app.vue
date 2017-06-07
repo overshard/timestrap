@@ -31,6 +31,7 @@
                             Reports
                         </router-link>
                     </li>
+                    <timer />
                     <li class="nav-item dropup col-xl-2 col-lg-3 col-md-4 col-sm-12">
                         <a class="nav-link dropdown-toggle"
                             data-toggle="dropdown">
@@ -72,6 +73,8 @@
 </template>
 
 <script>
+const Timer = require('./timer.vue');
+
 export default {
     data () {
         return {
@@ -84,6 +87,9 @@ export default {
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT
         };
+    },
+    components: {
+        Timer
     }
 };
 </script>
