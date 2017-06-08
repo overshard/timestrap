@@ -20,7 +20,7 @@
     </template>
 
     <template v-else>
-    <div :class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
+    <div v-bind:class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
         <a class="client-view-projects text-primary font-weight-bold"
            v-if="global.perms.view_project"
            v-on:click="toggleProjects">

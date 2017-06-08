@@ -4,11 +4,11 @@
         <div class="col-sm-3">
             <select2 name="entry-project"
                      v-model="project"
-                     :options="projects"
-                     :selected="project"
+                     v-bind:options="projects"
+                     v-bind:selected="project"
                      @select2-select="selectProjectOption"></select2>
         </div>
-        <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
+        <div v-bind:class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
                    type="text"
                    class="form-control form-control-sm"

@@ -18,8 +18,8 @@
                 <option value="html">html</option>
             </select>
 
-            <pager :next="next"
-                   :previous="previous"
+            <pager v-bind:next="next"
+                   v-bind:previous="previous"
                    @next-page="getEntries(next)"
                    @previous-page="getEntries(previous)"></pager>
         </div>

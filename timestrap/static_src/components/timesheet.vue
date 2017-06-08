@@ -6,8 +6,8 @@
                 <i class="fa fa-book" aria-hidden="true"></i>
                 Create Reports
             </router-link>
-            <pager :next="next"
-                   :previous="previous"
+            <pager v-bind:next="next"
+                   v-bind:previous="previous"
                    @next-page="getEntries(next)"
                    @previous-page="getEntries(previous)"></pager>
         </div>
@@ -47,7 +47,7 @@
         <div class="col-sm-3">
             <select2 name="entry-task"
                      v-model="task"
-                     :options="tasks"
+                     v-bind:options="tasks"
                      placeholder="Tasks"
                      @select2-select="selectTaskOption"></select2>
         </div>
@@ -56,7 +56,7 @@
         <div class="col-sm-3">
             <select2 name="entry-project"
                      v-model="project"
-                     :options="projects"
+                     v-bind:options="projects"
                      placeholder="Projects"
                      @select2-select="selectProjectOption"></select2>
         </div>
