@@ -22,11 +22,11 @@ export default {
     },
     watch: {
         options: function (options) {
-            $(this.$el).select2({ data: options })
+            $(this.$el).select2({ data: options });
         }
     },
     destroyed: function () {
-        $(this.$el).off().select2('destroy')
+        $(this.$el).off().select2('destroy');
     }
 };
 </script>

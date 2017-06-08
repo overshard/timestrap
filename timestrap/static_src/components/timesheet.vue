@@ -203,13 +203,13 @@ export default {
             let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
             Promise.all([tasks, clients]).then(data => {
                 this.tasks = data[0].map(function(task) {
-                   return {id: task.url, text: task.name}
+                    return { id: task.url, text: task.name };
                 });
                 this.projects = data[1].map(function(client) {
                     let projects = client.projects.map(function(project) {
-                        return {id: project.url, text: project.name}
+                        return { id: project.url, text: project.name };
                     });
-                    return {text: client.name, children: projects}
+                    return { text: client.name, children: projects };
                 });
             });
         },

@@ -116,7 +116,7 @@ export default {
                 note: this.note,
                 duration: this.duration
             };
-            quickFetch(this.url, 'put', body).then((data) => {
+            quickFetch(this.url, 'put', body).then(data => {
                 if (data.id) {
                     this.edit = false;
                     this.project = data.project;
@@ -142,9 +142,9 @@ export default {
             quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
                 this.projects = data.map(function(client) {
                     let projects = client.projects.map(function(project) {
-                        return {id: project.url, text: project.name}
+                        return { id: project.url, text: project.name };
                     });
-                    return {text: client.name, children: projects}
+                    return { text: client.name, children: projects };
                 });
             }).catch(error => console.log(error));
         },
