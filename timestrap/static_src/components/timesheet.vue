@@ -51,7 +51,7 @@
                         @datepicker-select="dateSelect"></datepicker>
         </div>
         <div class="col-sm-3">
-            <select2 name="entry-task"
+            <select2 id="entry-task"
                      v-model="task"
                      v-bind:options="tasks"
                      placeholder="Tasks"
@@ -60,7 +60,7 @@
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <select2 name="entry-project"
+            <select2 id="entry-project"
                      v-model="project"
                      v-bind:options="projects"
                      placeholder="Projects"

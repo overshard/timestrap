@@ -2,7 +2,7 @@
 <div class="entry row py-2 bg-faded small">
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
-            <select2 name="entry-project"
+            <select2 id="entry-project"
                      v-model="project"
                      v-bind:options="projects"
                      v-bind:selected="project"
