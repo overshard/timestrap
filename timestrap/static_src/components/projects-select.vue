@@ -49,7 +49,7 @@ export default {
         this.getClients();
     },
     destroyed: function () {
-        $(this.$el).off().select2('destroy')
+        $(this.$el).off().select2('destroy');
     }
 };
 </script>

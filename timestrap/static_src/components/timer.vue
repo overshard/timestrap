@@ -63,5 +63,5 @@ export default {
             this.toggle(offset);
         }.bind(this));
     }
-}
+};
 </script>
