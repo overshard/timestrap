@@ -48,7 +48,7 @@
             <select2 name="entry-task"
                      v-model="task"
                      :options="tasks"
-                     :placeholder="Tasks"
+                     placeholder="Tasks"
                      @select2-select="selectTaskOption"></select2>
         </div>
         <div class="col-sm-6">
@@ -57,7 +57,7 @@
             <select2 name="entry-project"
                      v-model="project"
                      :options="projects"
-                     :placeholder="Projects"
+                     placeholder="Projects"
                      @select2-select="selectProjectOption"></select2>
         </div>
         <div class="col-sm-5">
