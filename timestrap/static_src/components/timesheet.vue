@@ -45,7 +45,8 @@
             <datepicker-input @date-select="dateSelect"></datepicker-input>
         </div>
         <div class="col-sm-3">
-            <tasks-select @task-select="taskSelect"></tasks-select>
+            <select2 :options="tasks"
+                     @select2-select="taskSelectOption"></select2>
         </div>
         <div class="col-sm-6">
         </div>
@@ -115,6 +116,7 @@ const Entry = require('./entry.vue');
 const TasksSelect = require('./tasks-select.vue');
 const ProjectsSelect = require('./projects-select.vue');
 const DatepickerInput = require('./datepicker-input.vue');
+const Select2 = require('./select2.vue');
 
 export default {
     data() {
@@ -125,7 +127,8 @@ export default {
             total: null,
             next: null,
             previous: null,
-            editable: true
+            editable: true,
+            tasks: {}
         };
     },
     methods: {
@@ -193,7 +196,14 @@ export default {
         deleteEntry: function(blockIndex, entryIndex) {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
         },
-        taskSelect(task) {
+        loadTaskOptions() {
+            quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
+                this.tasks = data.map(function(task){
+                   return {id: task.url, text: task.name}
+                });
+            });
+        },
+        taskSelectOption(task) {
             this.task = task;
         },
         projectSelect(project) {
@@ -207,6 +217,7 @@ export default {
         }
     },
     mounted() {
+        this.loadTaskOptions();
         return this.getEntries();
     },
     components: {
@@ -214,7 +225,8 @@ export default {
         TasksSelect,
         ProjectsSelect,
         Entry,
-        DatepickerInput
+        DatepickerInput,
+        Select2
     }
 };
 </script>
