@@ -34,7 +34,11 @@
                 <!-- TODO: userSelect -->
             </div>
             <div class="form-group">
-                <!-- TODO: projectSelect -->
+                <select2 name="entry-project"
+                         v-model="project"
+                         v-bind:options="projects"
+                         placeholder="Projects"
+                         @select2-select="selectProjectOption"></select2>
             </div>
             <div class="form-group">
                 <!-- TODO: clientSelect -->
@@ -42,7 +46,11 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <!-- TODO: taskSelect -->
+                <select2 name="entry-task"
+                         v-model="task"
+                         v-bind:options="tasks"
+                         placeholder="Tasks"
+                         @select2-select="selectTaskOption"></select2>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -113,7 +121,9 @@ export default {
             min_date: null,
             max_date: null,
             task: null,
-            editable: false
+            editable: false,
+            tasks: {},
+            projects: {}
         };
     },
     methods: {
@@ -173,10 +183,25 @@ export default {
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
-        taskSelect(task) {
+        loadSelect2Options() {
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            Promise.all([tasks, clients]).then(data => {
+                this.tasks = data[0].map(function(task) {
+                    return { id: task.id, text: task.name };
+                });
+                this.projects = data[1].map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return { id: project.id, text: project.name };
+                    });
+                    return { text: client.name, children: projects };
+                });
+            });
+        },
+        selectTaskOption(task) {
             this.task = task;
         },
-        projectSelect(project) {
+        selectProjectOption(project) {
             this.project = project;
         },
         dateSelect(date) {
@@ -187,6 +212,7 @@ export default {
         }
     },
     mounted() {
+        this.loadSelect2Options();
         return this.getEntries();
     },
     components: {
