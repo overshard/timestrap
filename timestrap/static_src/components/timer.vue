@@ -1,9 +1,8 @@
 <template>
-<div id="timer">
-    <span id="timer-hours">{{ hours }}</span> :
-    <span id="timer-minutes">{{ minutes }}</span> :
-    <span id="timer-seconds">{{ seconds }}</span>
-
+<div id="timer" class="text-center">
+    <div v-bind:class="['h2', [this.running ? 'text-success' : '']]">
+        {{ hours }}:{{ minutes }}:{{ seconds }}
+    </div>
     <div class="btn-group btn-group-sm" role="group">
         <button id="timer-start"
                 class="btn btn-success"
