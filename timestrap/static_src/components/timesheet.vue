@@ -42,7 +42,12 @@
           v-on:submit.prevent
           v-on:submit="submitEntry">
         <div class="col-sm-3 mb-2">
-            <datepicker-input @date-select="dateSelect"></datepicker-input>
+            <datepicker name="entry-date"
+                        type="text"
+                        class="form-control form-control-sm date-input"
+                        v-model="date"
+                        placeholder="Date"
+                        @datepicker-select="dateSelect"></datepicker>
         </div>
         <div class="col-sm-3">
             <select2 name="entry-task"
@@ -119,6 +124,7 @@
 
 <script>
 const DatepickerInput = require('./datepicker-input.vue');
+const Datepicker = require('./datepicker.vue');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
@@ -236,6 +242,7 @@ export default {
     },
     components: {
         DatepickerInput,
+        Datepicker,
         Entry,
         Pager,
         Select2
