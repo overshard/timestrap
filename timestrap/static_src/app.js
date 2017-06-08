@@ -13,18 +13,14 @@ Vue.config.devtools = false;
 Vue.config.debug = false;
 Vue.config.silent = true;
 
-
+// Set up router.
 Vue.use(VueRouter);
-
-
 const routes = [
     { path: '/clients/', name: 'clients', component: Clients },
     { path: '/tasks/', name: 'tasks', component: Tasks },
     { path: '/timesheet/', name: 'timesheet', component: Timesheet },
     { path: '/reports/', name: 'reports', component: Reports }
 ];
-
-
 const router = new VueRouter({
     mode: 'history',
     hasbang: false,
@@ -33,6 +29,7 @@ const router = new VueRouter({
 });
 
 
+// Set up "global" plugin with user and permissions data.
 const global = {
     user: quickFetch(timestrapConfig.USER.URL).then(data => {
         global.user = data;
@@ -52,6 +49,11 @@ global.install = function() {
     });
 };
 Vue.use(global);
+
+
+// Set up event bus for app-wide communication.
+// @see: https://vuejs.org/v2/guide/components.html#Non-Parent-Child-Communication
+Vue.prototype.bus = new Vue();
 
 
 const app = new Vue({

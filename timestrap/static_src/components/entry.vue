@@ -2,7 +2,11 @@
 <div class="entry row py-2 bg-faded small">
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
-            <projects-select :selected="project_details.url" @project-select="projectSelect"></projects-select>
+            <select2 name="entry-project"
+                     v-model="project"
+                     :options="projects"
+                     :selected="project"
+                     @select2-select="selectProjectOption"></select2>
         </div>
         <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
@@ -83,7 +87,7 @@
 
 
 <script>
-const ProjectsSelect = require('./projects-select.vue');
+const Select2 = require('./select2.vue');
 
 export default {
     props: ['entry', 'editable'],
@@ -97,12 +101,21 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            duration: durationToString(this.entry.duration)
+            duration: durationToString(this.entry.duration),
+            projects: {}
         };
     },
     methods: {
         editEntry() {
-            this.edit = true;
+            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+                this.projects = data.map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return { id: project.url, text: project.name };
+                    });
+                    return { text: client.name, children: projects };
+                });
+                this.edit = true;
+            }).catch(error => console.log(error));
         },
         saveEntry() {
             let body = {
@@ -111,7 +124,7 @@ export default {
                 note: this.note,
                 duration: this.duration
             };
-            quickFetch(this.url, 'put', body).then((data) => {
+            quickFetch(this.url, 'put', body).then(data => {
                 if (data.id) {
                     this.edit = false;
                     this.project = data.project;
@@ -133,12 +146,12 @@ export default {
                 }
             }.bind(this));
         },
-        projectSelect(project) {
+        selectProjectOption(project) {
             this.project = project;
-        },
+        }
     },
     components: {
-        ProjectsSelect
+        Select2
     }
 };
 </script>

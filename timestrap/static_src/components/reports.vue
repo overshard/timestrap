@@ -93,11 +93,10 @@
 
 
 <script>
-const Pager = require('./pager.vue');
-const Entry = require('./entry.vue');
-const TasksSelect = require('./tasks-select.vue');
-const ProjectsSelect = require('./projects-select.vue');
 const DatepickerInput = require('./datepicker-input.vue');
+const Entry = require('./entry.vue');
+const Pager = require('./pager.vue');
+const Select2 = require('./select2.vue');
 
 export default {
     data() {
@@ -191,11 +190,10 @@ export default {
         return this.getEntries();
     },
     components: {
-        Pager,
-        TasksSelect,
-        ProjectsSelect,
+        DatepickerInput,
         Entry,
-        DatepickerInput
+        Pager,
+        Select2
     }
 };
 </script>

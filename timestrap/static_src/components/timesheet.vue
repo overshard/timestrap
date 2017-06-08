@@ -45,12 +45,20 @@
             <datepicker-input @date-select="dateSelect"></datepicker-input>
         </div>
         <div class="col-sm-3">
-            <tasks-select @task-select="taskSelect"></tasks-select>
+            <select2 name="entry-task"
+                     v-model="task"
+                     :options="tasks"
+                     :placeholder="Tasks"
+                     @select2-select="selectTaskOption"></select2>
         </div>
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <projects-select @project-select="projectSelect"></projects-select>
+            <select2 name="entry-project"
+                     v-model="project"
+                     :options="projects"
+                     :placeholder="Projects"
+                     @select2-select="selectProjectOption"></select2>
         </div>
         <div class="col-sm-5">
             <input name="entry-note"
@@ -110,11 +118,10 @@
 
 
 <script>
-const Pager = require('./pager.vue');
-const Entry = require('./entry.vue');
-const TasksSelect = require('./tasks-select.vue');
-const ProjectsSelect = require('./projects-select.vue');
 const DatepickerInput = require('./datepicker-input.vue');
+const Entry = require('./entry.vue');
+const Pager = require('./pager.vue');
+const Select2 = require('./select2.vue');
 
 export default {
     data() {
@@ -125,7 +132,9 @@ export default {
             total: null,
             next: null,
             previous: null,
-            editable: true
+            editable: true,
+            tasks: {},
+            projects: {}
         };
     },
     methods: {
@@ -193,10 +202,25 @@ export default {
         deleteEntry: function(blockIndex, entryIndex) {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
         },
-        taskSelect(task) {
+        loadSelect2Options() {
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            Promise.all([tasks, clients]).then(data => {
+                this.tasks = data[0].map(function(task) {
+                    return { id: task.url, text: task.name };
+                });
+                this.projects = data[1].map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return { id: project.url, text: project.name };
+                    });
+                    return { text: client.name, children: projects };
+                });
+            });
+        },
+        selectTaskOption(task) {
             this.task = task;
         },
-        projectSelect(project) {
+        selectProjectOption(project) {
             this.project = project;
         },
         dateSelect(date) {
@@ -207,14 +231,14 @@ export default {
         }
     },
     mounted() {
+        this.loadSelect2Options();
         return this.getEntries();
     },
     components: {
-        Pager,
-        TasksSelect,
-        ProjectsSelect,
+        DatepickerInput,
         Entry,
-        DatepickerInput
+        Pager,
+        Select2
     }
 };
 </script>
