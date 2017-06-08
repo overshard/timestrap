@@ -46,6 +46,7 @@
                         type="text"
                         class="form-control form-control-sm date-input"
                         v-model="date"
+                        v-bind:default="new Date()"
                         placeholder="Date"
                         @datepicker-select="dateSelect"></datepicker>
         </div>

@@ -11,12 +11,10 @@ export default {
         $(this.$el).pickadate({
             format: 'yyyy-mm-dd',
             onStart: function() {
-                let defaultDate = new Date();
                 if (vm.default) {
-                    defaultDate = vm.default;
+                    this.set('select', vm.default);
+                    vm.$emit('datepicker-select', moment(vm.default).format('YYYY-MM-DD'));
                 }
-                this.set('select', defaultDate);
-                vm.$emit('datepicker-select', moment(defaultDate).format('YYYY-MM-DD'));
             },
             onSet: function() {
                 vm.$emit('datepicker-select', $(vm.$el).val());
