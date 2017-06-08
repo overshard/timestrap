@@ -31,22 +31,30 @@
           v-on:submit="getReport">
         <div class="col-sm-6">
             <div class="form-group">
-                <!-- TODO: userSelect -->
+                <select2 id="report-filter-user"
+                         v-model="user"
+                         v-bind:options="users"
+                         placeholder="Users"
+                         @select2-select="selectUserOption"></select2>
             </div>
             <div class="form-group">
-                <select2 name="entry-project"
+                <select2 id="report-filter-project"
                          v-model="project"
                          v-bind:options="projects"
                          placeholder="Projects"
                          @select2-select="selectProjectOption"></select2>
             </div>
             <div class="form-group">
-                <!-- TODO: clientSelect -->
+                <select2 id="report-filter-client"
+                         v-model="client"
+                         v-bind:options="clients"
+                         placeholder="Clients"
+                         @select2-select="selectClientOption"></select2>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <select2 name="entry-task"
+                <select2 id="report-filter-task"
                          v-model="task"
                          v-bind:options="tasks"
                          placeholder="Tasks"
@@ -115,15 +123,18 @@ export default {
             next: null,
             previous: null,
             exportFormat: 'csv',
-            user: null,
-            project: null,
             project__client: null,
             min_date: null,
             max_date: null,
-            task: null,
             editable: false,
-            tasks: {},
-            projects: {}
+            user: null,
+            users: {},
+            client: null,
+            clients: {},
+            project: null,
+            projects: {},
+            task: null,
+            tasks: {}
         };
     },
     methods: {
@@ -146,7 +157,6 @@ export default {
 
                 this.entries = [];
                 uniqueDates.forEach(date => {
-                    let entryBlock = Object;
                     this.entries.push({
                         date: date,
                         entries: data.results.filter(entry => {
@@ -184,11 +194,15 @@ export default {
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
         loadSelect2Options() {
-            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            let users = quickFetch(timestrapConfig.API_URLS.USERS);
             let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
-            Promise.all([tasks, clients]).then(data => {
-                this.tasks = data[0].map(function(task) {
-                    return { id: task.id, text: task.name };
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            Promise.all([users, clients, tasks]).then(data => {
+                this.users = data[0].map(function(user) {
+                    return { id: user.id, text: user.username };
+                });
+                this.clients = data[1].map(function(client) {
+                    return { id: client.id, text: client.name };
                 });
                 this.projects = data[1].map(function(client) {
                     let projects = client.projects.map(function(project) {
@@ -196,13 +210,22 @@ export default {
                     });
                     return { text: client.name, children: projects };
                 });
+                this.tasks = data[2].map(function(task) {
+                    return { id: task.id, text: task.name };
+                });
             });
         },
-        selectTaskOption(task) {
-            this.task = task;
+        selectUserOption(user) {
+            this.user = user;
+        },
+        selectClientOption(client) {
+            this.client = client;
         },
         selectProjectOption(project) {
             this.project = project;
+        },
+        selectTaskOption(task) {
+            this.task = task;
         },
         dateSelect(date) {
             this.date = date;
