@@ -176,7 +176,8 @@ export default {
                 this.total = durationToString(data.total_duration);
             });
         },
-        submitEntry() {
+        submitEntry(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 date: this.date,
                 task: this.task,
@@ -203,6 +204,7 @@ export default {
                 }
                 this.note = '';
                 this.duration = '';
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry: function(blockIndex, entryIndex) {

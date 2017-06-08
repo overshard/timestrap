@@ -117,7 +117,8 @@ export default {
                 this.edit = true;
             }).catch(error => console.log(error));
         },
-        saveEntry() {
+        saveEntry(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 user: this.user,
                 project: this.project,
@@ -133,6 +134,7 @@ export default {
                     this.task_details = data.task_details;
                     this.duration = durationToString(data.duration);
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry() {

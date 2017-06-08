@@ -72,7 +72,8 @@ export default {
         editProject() {
             this.edit = true;
         },
-        saveProject() {
+        saveProject(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 client: this.project.client,
                 estimate: this.estimate,
@@ -85,6 +86,7 @@ export default {
                     this.project.percent_done = data.percent_done;
                     this.edit = false;
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         }
     }

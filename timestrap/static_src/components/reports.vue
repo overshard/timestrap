@@ -149,6 +149,9 @@ export default {
     },
     methods: {
         getEntries(url) {
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
+
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -177,6 +180,9 @@ export default {
 
                 this.subtotal = durationToString(data.subtotal_duration);
                 this.total = durationToString(data.total_duration);
+
+                toggleButtonBusy($('#generate-report'));
+                toggleButtonBusy($('#export-report'));
             });
         },
         getReport() {
