@@ -63,10 +63,20 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- TODO: minDateInput -->
+                        <datepicker id="report-filter-min-date"
+                                    type="text"
+                                    class="form-control form-control-sm date-input"
+                                    v-model="dateMin"
+                                    placeholder="Min. date"
+                                    @datepicker-select="dateMinSelect"></datepicker>
                     </div>
                     <div class="col-md-6">
-                        <!-- TODO: maxDateInput -->
+                        <datepicker id="report-filter-max-date"
+                                    type="text"
+                                    class="form-control form-control-sm date-input"
+                                    v-model="dateMax"
+                                    placeholder="Max. date"
+                                    @datepicker-select="dateMaxSelect"></datepicker>
                     </div>
                 </div>
             </div>
@@ -109,7 +119,7 @@
 
 
 <script>
-const DatepickerInput = require('./datepicker-input.vue');
+const Datepicker = require('./datepicker.vue');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
@@ -124,8 +134,8 @@ export default {
             previous: null,
             exportFormat: 'csv',
             project__client: null,
-            min_date: null,
-            max_date: null,
+            dateMin: null,
+            dateMax: null,
             editable: false,
             user: null,
             users: {},
@@ -174,8 +184,8 @@ export default {
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
-                min_date: this.min_date,
-                max_date: this.max_date,
+                min_date: this.dateMin,
+                max_date: this.dateMax,
                 task: this.task
             };
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
@@ -186,8 +196,8 @@ export default {
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
-                min_date: this.min_date,
-                max_date: this.max_date,
+                min_date: this.dateMin,
+                max_date: this.dateMax,
                 task: this.task,
                 exportFormat: this.exportFormat
             };
@@ -227,8 +237,11 @@ export default {
         selectTaskOption(task) {
             this.task = task;
         },
-        dateSelect(date) {
-            this.date = date;
+        dateMinSelect(date) {
+            this.dateMin = date;
+        },
+        dateMaxSelect(date) {
+            this.dateMax = date;
         },
         moment(date) {
             return moment(date).format('LL');
@@ -239,7 +252,7 @@ export default {
         return this.getEntries();
     },
     components: {
-        DatepickerInput,
+        Datepicker,
         Entry,
         Pager,
         Select2

@@ -123,7 +123,6 @@
 
 
 <script>
-const DatepickerInput = require('./datepicker-input.vue');
 const Datepicker = require('./datepicker.vue');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
@@ -241,7 +240,6 @@ export default {
         return this.getEntries();
     },
     components: {
-        DatepickerInput,
         Datepicker,
         Entry,
         Pager,
