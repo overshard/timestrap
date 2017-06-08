@@ -3,9 +3,9 @@
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
             <select2 name="entry-project"
+                     v-model="project"
                      :options="projects"
                      :selected="project"
-                     v-model="project"
                      @select2-select="selectProjectOption"></select2>
         </div>
         <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
@@ -107,8 +107,15 @@ export default {
     },
     methods: {
         editEntry() {
-            this.loadProjectOptions();
-            this.edit = true;
+            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+                this.projects = data.map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return { id: project.url, text: project.name };
+                    });
+                    return { text: client.name, children: projects };
+                });
+                this.edit = true;
+            }).catch(error => console.log(error));
         },
         saveEntry() {
             let body = {
@@ -138,16 +145,6 @@ export default {
                     $.growl.error({ message: 'Entry delete failed ):' });
                 }
             }.bind(this));
-        },
-        loadProjectOptions() {
-            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
-                this.projects = data.map(function(client) {
-                    let projects = client.projects.map(function(project) {
-                        return { id: project.url, text: project.name };
-                    });
-                    return { text: client.name, children: projects };
-                });
-            }).catch(error => console.log(error));
         },
         selectProjectOption(project) {
             this.project = project;
