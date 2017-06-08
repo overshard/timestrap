@@ -6,18 +6,19 @@
 
 <script>
 export default {
-    props: ['options'],
+    props: ['options', 'selected'],
     mounted: function () {
         $(this.$el)
-        // init select2
             .select2({
                 data: this.options,
+                width: '100%',
+                dropdownAutoWidth: true
             })
-            .val(this.value)
+            .val(this.selected)
             .trigger('change')
             .on('change', function (e) {
                 this.$emit('select2-select', e.target.value);
-            }.bind(this))
+            }.bind(this));
     },
     watch: {
         options: function (options) {

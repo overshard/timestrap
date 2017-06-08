@@ -2,7 +2,10 @@
 <div class="entry row py-2 bg-faded small">
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
-            <projects-select :selected="project_details.url" @project-select="projectSelect"></projects-select>
+            <select2 id="entry-project"
+                     :options="projects"
+                     :selected="project_details.url"
+                     @select2-select="selectProjectOption"></select2>
         </div>
         <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
@@ -83,7 +86,7 @@
 
 
 <script>
-const ProjectsSelect = require('./projects-select.vue');
+const Select2 = require('./select2.vue');
 
 export default {
     props: ['entry', 'editable'],
@@ -97,11 +100,13 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            duration: durationToString(this.entry.duration)
+            duration: durationToString(this.entry.duration),
+            projects: {}
         };
     },
     methods: {
         editEntry() {
+            this.loadProjectOptions();
             this.edit = true;
         },
         saveEntry() {
@@ -133,12 +138,22 @@ export default {
                 }
             }.bind(this));
         },
-        projectSelect(project) {
-            this.project = project;
+        loadProjectOptions() {
+            quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+                this.projects = data.map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return {id: project.url, text: project.name}
+                    });
+                    return {text: client.name, children: projects}
+                });
+            }).catch(error => console.log(error));
         },
+        selectProjectOption(project) {
+            this.project = project;
+        }
     },
     components: {
-        ProjectsSelect
+        Select2
     }
 };
 </script>
