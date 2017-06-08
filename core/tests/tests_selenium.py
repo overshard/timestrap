@@ -427,32 +427,32 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'component-reports'))
 
         # The test data contains 12 fake entries.
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 12)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 12)
 
         # The "tester" user entered eight of the entries.
         self.select2Select('report-filter-user', 'tester')
         self.find(By.ID, 'generate-report').submit()
         # The "Generate Report" button is disabled while the report is loading.
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 8)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 8)
 
         # Four entries from Tester for "Client 1".
         self.select2Select('report-filter-client', 'Client 1')
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 4)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 4)
 
         # Three entries from tester for "Project 1"
         self.select2Select('report-filter-project', 'Project 1')
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 3)
 
         # Two entries from tester for "Task 1"
         self.select2Select('report-filter-task', 'Task 1')
         self.find(By.ID, 'generate-report').click()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 2)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 2)
 
         # Clear existing filters
         self.driver.refresh()
@@ -471,7 +471,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 5)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 5)
 
         # Three entries from Tester between 2017-05-06 and 2017-05-16
         self.find(By.ID, 'report-filter-max-date')
@@ -481,6 +481,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         )
         self.find(By.ID, 'generate-report').submit()
         self.waitForClickable((By.ID, 'generate-report'))
-        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry-row')), 3)
+        self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 3)
 
         management.call_command('flush', verbosity=0, interactive=False)
