@@ -32,11 +32,6 @@ export default {
             seconds: '00',
         };
     },
-    mounted() {
-        this.bus.$on('toggleTimer', () => {
-            this.toggle();
-        });
-    },
     methods: {
         tick: function () {
             ++this.total;
@@ -44,8 +39,11 @@ export default {
             this.minutes = pad(Math.floor(this.total % 3600 / 60));
             this.seconds = pad(this.total % 3600 % 60);
         },
-        toggle: function () {
+        toggle: function (offset) {
             this.running = !this.running;
+            if (typeof offset === 'number') {
+                this.total = offset;
+            }
             if (this.running) {
                 this.interval = setInterval(this.tick, 1000, this);
             }
@@ -59,6 +57,11 @@ export default {
             this.minutes = '00';
             this.seconds = '00';
         }
+    },
+    mounted() {
+        this.bus.$on('timerToggle', function(offset) {
+            this.toggle(offset);
+        }.bind(this));
     }
 }
 </script>
