@@ -45,15 +45,19 @@
             <datepicker-input @date-select="dateSelect"></datepicker-input>
         </div>
         <div class="col-sm-3">
-            <select2 id="entry-task"
+            <select2 name="entry-task"
+                     v-model="task"
                      :options="tasks"
+                     :placeholder="Tasks"
                      @select2-select="selectTaskOption"></select2>
         </div>
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <select2 id="entry-project"
+            <select2 name="entry-project"
+                     v-model="project"
                      :options="projects"
+                     :placeholder="Projects"
                      @select2-select="selectProjectOption"></select2>
         </div>
         <div class="col-sm-5">

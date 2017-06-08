@@ -2,9 +2,10 @@
 <div class="entry row py-2 bg-faded small">
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
-            <select2 id="entry-project"
+            <select2 name="entry-project"
                      :options="projects"
-                     :selected="project_details.url"
+                     :selected="project"
+                     v-model="project"
                      @select2-select="selectProjectOption"></select2>
         </div>
         <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">

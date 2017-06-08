@@ -1,16 +1,18 @@
 <template>
 <select class="select2">
+    <slot></slot>
 </select>
 </template>
 
 
 <script>
 export default {
-    props: ['options', 'selected'],
+    props: ['options', 'selected', 'placeholder'],
     mounted: function () {
         $(this.$el)
             .select2({
                 data: this.options,
+                placeholder: this.placeholder,
                 width: '100%',
                 dropdownAutoWidth: true
             })
