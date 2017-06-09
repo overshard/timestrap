@@ -2,13 +2,13 @@
 <div class="entry row py-2 bg-faded small">
     <template v-if="edit && global.perms.change_entry">
         <div class="col-sm-3">
-            <select2 name="entry-project"
+            <select2 id="entry-project"
                      v-model="project"
-                     :options="projects"
-                     :selected="project"
+                     v-bind:options="projects"
+                     v-bind:selected="project"
                      @select2-select="selectProjectOption"></select2>
         </div>
-        <div :class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
+        <div v-bind:class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
                    type="text"
                    class="form-control form-control-sm"
@@ -117,7 +117,8 @@ export default {
                 this.edit = true;
             }).catch(error => console.log(error));
         },
-        saveEntry() {
+        saveEntry(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 user: this.user,
                 project: this.project,
@@ -133,6 +134,7 @@ export default {
                     this.task_details = data.task_details;
                     this.duration = durationToString(data.duration);
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry() {

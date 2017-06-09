@@ -3,30 +3,30 @@
     <div class="row">
         <div class="sidebar-row bg-primary col-xl-2 col-lg-3 col-md-4 col-sm-12">
             <div class="sidebar">
-                <router-link class="display-4" :to="timesheet">
+                <router-link class="display-4" v-bind:to="timesheet">
                     Timestrap
                 </router-link>
                 <ul id="nav-app" class="nav flex-column">
                     <li class="nav-item">
-                        <router-link id="nav-app-timesheet" class="nav-link" :to="timesheet">
+                        <router-link id="nav-app-timesheet" class="nav-link" v-bind:to="timesheet">
                             <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
                             Timesheet
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link id="nav-app-clients" class="nav-link" :to="clients">
+                        <router-link id="nav-app-clients" class="nav-link" v-bind:to="clients">
                             <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
                             Clients
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link id="nav-app-tasks" class="nav-link" :to="tasks">
+                        <router-link id="nav-app-tasks" class="nav-link" v-bind:to="tasks">
                             <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
                             Tasks
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link id="nav-app-reports" class="nav-link" :to="reports">
+                        <router-link id="nav-app-reports" class="nav-link" v-bind:to="reports">
                             <i class="fa fa-book mr-1" aria-hidden="true"></i>
                             Reports
                         </router-link>
@@ -35,7 +35,7 @@
                     <li class="nav-item dropup col-xl-2 col-lg-3 col-md-4 col-sm-12">
                         <a class="nav-link dropdown-toggle"
                             data-toggle="dropdown">
-                            <img :src="global.user.gravatar_url"
+                            <img v-bind:src="global.user.gravatar_url"
                                 width="30"
                                 height="30"
                                 class="mr-1" />
@@ -43,30 +43,25 @@
                         </a>
                         <div class="dropdown-menu">
                             <a id="nav-admin-api"
-                                class="dropdown-item"
-                                target="_blank"
-                                :href="api">
-                                API Browser
-                            </a>
+                               class="dropdown-item"
+                               target="_blank"
+                               v-bind:href="api">API Browser</a>
                             <a id="nav-admin-admin"
-                                class="dropdown-item"
-                                target="_blank"
-                                :href="admin">
-                                Admin
-                            </a>
+                               class="dropdown-item"
+                               target="_blank"
+                               v-bind:href="admin">Admin</a>
                             <a id="nav-admin-logout"
-                                class="dropdown-item"
-                                target="_blank"
-                                :href="logout">
-                                Logout
-                            </a>
+                               class="dropdown-item"
+                               target="_blank"
+                               v-bind:href="logout">Logout</a>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="my-3 col-9 col-xl-10 col-lg-9 col-md-8 col-sm-12">
-            <router-view :id="['component-' + $route.name]" class="view"></router-view>
+            <router-view v-bind:id="['component-' + $route.name]"
+                         class="view"></router-view>
         </div>
     </div>
 </div>

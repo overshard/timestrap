@@ -20,7 +20,7 @@
     </template>
 
     <template v-else>
-    <div :class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
+    <div v-bind:class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
         <a class="client-view-projects text-primary font-weight-bold"
            v-if="global.perms.view_project"
            v-on:click="toggleProjects">
@@ -104,7 +104,8 @@ export default {
         editClient() {
             this.edit = true;
         },
-        saveClient() {
+        saveClient(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 name: this.name
             };
@@ -113,12 +114,14 @@ export default {
                     this.client.name = data.name;
                     this.edit = false;
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         toggleProjects() {
             this.showProjects = !this.showProjects;
         },
-        submitProject() {
+        submitProject(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 name: this.project_name,
                 estimate: this.project_estimate,
@@ -130,6 +133,7 @@ export default {
                     this.project_estimate = '';
                     this.client.projects.unshift(data);
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         }
     },

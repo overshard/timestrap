@@ -60,7 +60,8 @@ export default {
         editTask() {
             this.edit = true;
         },
-        saveTask() {
+        saveTask(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 name: this.name,
                 hourly_rate: this.hourly_rate
@@ -71,6 +72,7 @@ export default {
                     this.task.hourly_rate = data.hourly_rate;
                     this.edit = false;
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
     }

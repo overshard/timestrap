@@ -8,26 +8,31 @@
 <script>
 export default {
     props: ['options', 'selected', 'placeholder'],
-    mounted: function () {
-        $(this.$el)
-            .select2({
-                data: this.options,
-                placeholder: this.placeholder,
-                width: '100%',
-                dropdownAutoWidth: true
-            })
-            .val(this.selected)
-            .trigger('change')
-            .on('change', function (e) {
-                this.$emit('select2-select', e.target.value);
-            }.bind(this));
+    mounted() {
+        this.update();
     },
     watch: {
-        options: function (options) {
-            $(this.$el).select2({ data: options });
+        options: function () {
+            this.update();
+        },
+    },
+    methods: {
+        update() {
+            $(this.$el)
+                .select2({
+                    data: this.options,
+                    placeholder: this.placeholder,
+                    width: '100%',
+                    dropdownAutoWidth: true
+                })
+                .val(this.selected)
+                .trigger('change')
+                .on('change', function (e) {
+                    this.$emit('select2-select', e.target.value);
+                }.bind(this));
         }
     },
-    destroyed: function () {
+    destroyed() {
         $(this.$el).off().select2('destroy');
     }
 };

@@ -18,8 +18,8 @@
                 <option value="html">html</option>
             </select>
 
-            <pager :next="next"
-                   :previous="previous"
+            <pager v-bind:next="next"
+                   v-bind:previous="previous"
                    @next-page="getEntries(next)"
                    @previous-page="getEntries(previous)"></pager>
         </div>
@@ -31,26 +31,52 @@
           v-on:submit="getReport">
         <div class="col-sm-6">
             <div class="form-group">
-                <!-- TODO: userSelect -->
+                <select2 id="report-filter-user"
+                         v-model="user"
+                         v-bind:options="users"
+                         placeholder="Users"
+                         @select2-select="selectUserOption"></select2>
             </div>
             <div class="form-group">
-                <!-- TODO: projectSelect -->
+                <select2 id="report-filter-project"
+                         v-model="project"
+                         v-bind:options="projects"
+                         placeholder="Projects"
+                         @select2-select="selectProjectOption"></select2>
             </div>
             <div class="form-group">
-                <!-- TODO: clientSelect -->
+                <select2 id="report-filter-client"
+                         v-model="client"
+                         v-bind:options="clients"
+                         placeholder="Clients"
+                         @select2-select="selectClientOption"></select2>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <!-- TODO: taskSelect -->
+                <select2 id="report-filter-task"
+                         v-model="task"
+                         v-bind:options="tasks"
+                         placeholder="Tasks"
+                         @select2-select="selectTaskOption"></select2>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- TODO: minDateInput -->
+                        <datepicker id="report-filter-min-date"
+                                    type="text"
+                                    class="form-control form-control-sm date-input"
+                                    v-model="dateMin"
+                                    placeholder="Min. date"
+                                    @datepicker-select="dateMinSelect"></datepicker>
                     </div>
                     <div class="col-md-6">
-                        <!-- TODO: maxDateInput -->
+                        <datepicker id="report-filter-max-date"
+                                    type="text"
+                                    class="form-control form-control-sm date-input"
+                                    v-model="dateMax"
+                                    placeholder="Max. date"
+                                    @datepicker-select="dateMaxSelect"></datepicker>
                     </div>
                 </div>
             </div>
@@ -93,7 +119,7 @@
 
 
 <script>
-const DatepickerInput = require('./datepicker-input.vue');
+const Datepicker = require('./datepicker.vue');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
@@ -107,17 +133,25 @@ export default {
             next: null,
             previous: null,
             exportFormat: 'csv',
-            user: null,
-            project: null,
             project__client: null,
-            min_date: null,
-            max_date: null,
+            dateMin: null,
+            dateMax: null,
+            editable: false,
+            user: null,
+            users: {},
+            client: null,
+            clients: {},
+            project: null,
+            projects: {},
             task: null,
-            editable: false
+            tasks: {}
         };
     },
     methods: {
         getEntries(url) {
+            toggleButtonBusy($('#generate-report'));
+            toggleButtonBusy($('#export-report'));
+
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -136,7 +170,6 @@ export default {
 
                 this.entries = [];
                 uniqueDates.forEach(date => {
-                    let entryBlock = Object;
                     this.entries.push({
                         date: date,
                         entries: data.results.filter(entry => {
@@ -147,6 +180,9 @@ export default {
 
                 this.subtotal = durationToString(data.subtotal_duration);
                 this.total = durationToString(data.total_duration);
+
+                toggleButtonBusy($('#generate-report'));
+                toggleButtonBusy($('#export-report'));
             });
         },
         getReport() {
@@ -154,8 +190,8 @@ export default {
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
-                min_date: this.min_date,
-                max_date: this.max_date,
+                min_date: this.dateMin,
+                max_date: this.dateMax,
                 task: this.task
             };
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
@@ -166,31 +202,63 @@ export default {
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
-                min_date: this.min_date,
-                max_date: this.max_date,
+                min_date: this.dateMin,
+                max_date: this.dateMax,
                 task: this.task,
                 exportFormat: this.exportFormat
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
-        taskSelect(task) {
-            this.task = task;
+        loadSelect2Options() {
+            let users = quickFetch(timestrapConfig.API_URLS.USERS);
+            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            Promise.all([users, clients, tasks]).then(data => {
+                this.users = data[0].map(function(user) {
+                    return { id: user.id, text: user.username };
+                });
+                this.clients = data[1].map(function(client) {
+                    return { id: client.id, text: client.name };
+                });
+                this.projects = data[1].map(function(client) {
+                    let projects = client.projects.map(function(project) {
+                        return { id: project.id, text: project.name };
+                    });
+                    return { text: client.name, children: projects };
+                });
+                this.tasks = data[2].map(function(task) {
+                    return { id: task.id, text: task.name };
+                });
+            });
         },
-        projectSelect(project) {
+        selectUserOption(user) {
+            this.user = user;
+        },
+        selectClientOption(client) {
+            this.client = client;
+        },
+        selectProjectOption(project) {
             this.project = project;
         },
-        dateSelect(date) {
-            this.date = date;
+        selectTaskOption(task) {
+            this.task = task;
+        },
+        dateMinSelect(date) {
+            this.dateMin = date;
+        },
+        dateMaxSelect(date) {
+            this.dateMax = date;
         },
         moment(date) {
             return moment(date).format('LL');
         }
     },
     mounted() {
+        this.loadSelect2Options();
         return this.getEntries();
     },
     components: {
-        DatepickerInput,
+        Datepicker,
         Entry,
         Pager,
         Select2

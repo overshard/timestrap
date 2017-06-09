@@ -6,8 +6,8 @@
                 <i class="fa fa-book" aria-hidden="true"></i>
                 Create Reports
             </router-link>
-            <pager :next="next"
-                   :previous="previous"
+            <pager v-bind:next="next"
+                   v-bind:previous="previous"
                    @next-page="getEntries(next)"
                    @previous-page="getEntries(previous)"></pager>
         </div>
@@ -42,22 +42,28 @@
           v-on:submit.prevent
           v-on:submit="submitEntry">
         <div class="col-sm-3 mb-2">
-            <datepicker-input @date-select="dateSelect"></datepicker-input>
+            <datepicker name="entry-date"
+                        type="text"
+                        class="form-control form-control-sm date-input"
+                        v-model="date"
+                        v-bind:default="new Date()"
+                        placeholder="Date"
+                        @datepicker-select="dateSelect"></datepicker>
         </div>
         <div class="col-sm-3">
-            <select2 name="entry-task"
+            <select2 id="entry-task"
                      v-model="task"
-                     :options="tasks"
-                     :placeholder="Tasks"
+                     v-bind:options="tasks"
+                     placeholder="Tasks"
                      @select2-select="selectTaskOption"></select2>
         </div>
         <div class="col-sm-6">
         </div>
         <div class="col-sm-3">
-            <select2 name="entry-project"
+            <select2 id="entry-project"
                      v-model="project"
-                     :options="projects"
-                     :placeholder="Projects"
+                     v-bind:options="projects"
+                     placeholder="Projects"
                      @select2-select="selectProjectOption"></select2>
         </div>
         <div class="col-sm-5">
@@ -118,7 +124,7 @@
 
 
 <script>
-const DatepickerInput = require('./datepicker-input.vue');
+const Datepicker = require('./datepicker.vue');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
@@ -170,7 +176,8 @@ export default {
                 this.total = durationToString(data.total_duration);
             });
         },
-        submitEntry() {
+        submitEntry(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 date: this.date,
                 task: this.task,
@@ -197,6 +204,7 @@ export default {
                 }
                 this.note = '';
                 this.duration = '';
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry: function(blockIndex, entryIndex) {
@@ -235,7 +243,7 @@ export default {
         return this.getEntries();
     },
     components: {
-        DatepickerInput,
+        Datepicker,
         Entry,
         Pager,
         Select2

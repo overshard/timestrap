@@ -29,7 +29,7 @@
     </template>
 
     <template v-else>
-    <div :class="['col-' + [global.perms.change_project ? '6' : '8'], 'mb-1']">{{ project.name }}</div>
+    <div v-bind:class="['col-' + [global.perms.change_project ? '6' : '8'], 'mb-1']">{{ project.name }}</div>
     <div class="col-4 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
             <div v-if="project.percent_done"
@@ -72,7 +72,8 @@ export default {
         editProject() {
             this.edit = true;
         },
-        saveProject() {
+        saveProject(e) {
+            toggleButtonBusy(e.target);
             let body = {
                 client: this.project.client,
                 estimate: this.estimate,
@@ -85,6 +86,7 @@ export default {
                     this.project.percent_done = data.percent_done;
                     this.edit = false;
                 }
+                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         }
     }
