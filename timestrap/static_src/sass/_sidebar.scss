@@ -1,13 +1,15 @@
-.sidebar-row {
-    min-height: 100vh;
-}
-
 .sidebar {
     min-height: 100vh;
     position: fixed;
+    width: 250px;
+
+    .branding {
+        text-align: center;
+        width: 100%;
+    }
 
     .display-4 {
-        line-height: 1.5;
+        line-height: 2;
         font-size: 3rem;
 
         &:hover {
@@ -15,8 +17,13 @@
         }
     }
 
-    .nav {
-        margin-top: 2rem;
+    .nav-item {
+        padding-left: .9em;
+        padding-right: .9em;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
     }
 
     .nav-link,
@@ -28,10 +35,25 @@
         position: fixed;
         bottom: 0;
         margin-left: -15px;
+        padding-left: 15px;
+        padding-right: 15px;
         background: rgba(0, 0, 0, 0.2);
+        width: 265px;
 
         .dropdown-menu {
             width: 100%;
+            border-radius: 0;
+            border: 0;
+            background: rgba(255, 255, 255, .9);
+            margin-bottom: 0;
         }
     }
+}
+
+.content {
+    width: calc(100% - 275px);
+    margin-left: 275px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 25px;
 }
