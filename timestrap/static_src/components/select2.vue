@@ -23,7 +23,8 @@ export default {
                     data: this.options,
                     placeholder: this.placeholder,
                     width: '100%',
-                    dropdownAutoWidth: true
+                    dropdownAutoWidth: true,
+                    allowClear: true
                 })
                 .val(this.selected)
                 .trigger('change')
