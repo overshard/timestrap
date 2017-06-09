@@ -152,8 +152,15 @@ export default {
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
 
+            // FIXME: This is a mess
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
+            if (url === userEntries && this.$route.query.search) {
+                const params = {
+                    search: this.$route.query.search
+                }
+                url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(params);
+            }
 
             let entriesFetch = quickFetch(url);
 

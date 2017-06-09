@@ -6,6 +6,17 @@
                 Timestrap
             </router-link>
         </div>
+        <div class="search">
+            <div class="form-group">
+                <form v-on:submit.prevent
+                      v-on:submit="submitSearch">
+                    <input v-model="search"
+                           class="form-control rounded-0 border-0"
+                           type="text"
+                           placeholder="Search" />
+                </form>
+            </div>
+        </div>
         <ul id="nav-app" class="nav flex-column">
             <li class="nav-item">
                 <router-link id="nav-app-timesheet" class="nav-link" v-bind:to="timesheet">
@@ -80,6 +91,17 @@ export default {
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT
         };
+    },
+    methods: {
+        submitSearch() {
+            // Use .push instead of .go to not reload entire page
+            this.$router.go({
+                name: 'reports',
+                query: {
+                    search: this.search
+                }
+            })
+        }
     },
     components: {
         Timer

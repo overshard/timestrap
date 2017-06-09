@@ -17,6 +17,15 @@
         }
     }
 
+    .search {
+        margin-left: 15px;
+        margin-right: 15px;
+
+        .form-control {
+            background: rgba(255, 255, 255, .9);
+        }
+    }
+
     .nav-item {
         padding-left: .9em;
         padding-right: .9em;
