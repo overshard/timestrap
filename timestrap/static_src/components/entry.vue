@@ -5,8 +5,7 @@
             <select2 id="entry-project"
                      v-model="project"
                      v-bind:options="projects"
-                     v-bind:selected="project"
-                     @select2-select="selectProjectOption"></select2>
+                     v-bind:selected="project"></select2>
         </div>
         <div v-bind:class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
@@ -157,9 +156,6 @@ export default {
         },
         restartEntry() {
             this.bus.$emit('timerToggle', this.entry);
-        },
-        selectProjectOption(project) {
-            this.project = project;
         }
     },
     components: {

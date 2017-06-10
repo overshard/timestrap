@@ -29,7 +29,7 @@ export default {
                 .val(this.selected)
                 .trigger('change')
                 .on('change', function (e) {
-                    this.$emit('select2-select', e.target.value);
+                    this.$emit('input', e.target.value);
                 }.bind(this));
         }
     },

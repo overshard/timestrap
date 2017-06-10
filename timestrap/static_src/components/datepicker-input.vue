@@ -16,10 +16,10 @@ export default {
             onStart: function() {
                 let currentDate = new Date();
                 this.set('select', currentDate);
-                vm.$emit('date-select', moment(currentDate).format('YYYY-MM-DD'));
+                vm.$emit('input', moment(currentDate).format('YYYY-MM-DD'));
             },
             onSet: function() {
-                vm.$emit('date-select', $(vm.$el).val());
+                vm.$emit('input', $(vm.$el).val());
             }
         });
     }

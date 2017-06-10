@@ -47,15 +47,13 @@
                         class="form-control form-control-sm date-input"
                         v-model="date"
                         v-bind:default="new Date()"
-                        placeholder="Date"
-                        @datepicker-select="dateSelect"></datepicker>
+                        placeholder="Date"></datepicker>
         </div>
         <div class="col-sm-3">
             <select2 id="entry-task"
                      v-model="task"
                      v-bind:options="tasks"
-                     placeholder="Tasks"
-                     @select2-select="selectTaskOption"></select2>
+                     placeholder="Tasks"></select2>
         </div>
         <div class="col-sm-6">
         </div>
@@ -63,8 +61,7 @@
             <select2 id="entry-project"
                      v-model="project"
                      v-bind:options="projects"
-                     placeholder="Projects"
-                     @select2-select="selectProjectOption"></select2>
+                     placeholder="Projects"></select2>
         </div>
         <div class="col-sm-5">
             <input name="entry-note"
@@ -224,15 +221,6 @@ export default {
                     return { text: client.name, children: projects };
                 });
             });
-        },
-        selectTaskOption(task) {
-            this.task = task;
-        },
-        selectProjectOption(project) {
-            this.project = project;
-        },
-        dateSelect(date) {
-            this.date = date;
         },
         moment(date) {
             return moment(date).format('LL');

@@ -34,22 +34,19 @@
                 <select2 id="report-filter-user"
                          v-model="user"
                          v-bind:options="users"
-                         placeholder="Users"
-                         @select2-select="selectUserOption"></select2>
+                         placeholder="Users"></select2>
             </div>
             <div class="form-group">
                 <select2 id="report-filter-project"
                          v-model="project"
                          v-bind:options="projects"
-                         placeholder="Projects"
-                         @select2-select="selectProjectOption"></select2>
+                         placeholder="Projects"></select2>
             </div>
             <div class="form-group">
                 <select2 id="report-filter-client"
                          v-model="client"
                          v-bind:options="clients"
-                         placeholder="Clients"
-                         @select2-select="selectClientOption"></select2>
+                         placeholder="Clients"></select2>
             </div>
         </div>
         <div class="col-sm-6">
@@ -57,8 +54,7 @@
                 <select2 id="report-filter-task"
                          v-model="task"
                          v-bind:options="tasks"
-                         placeholder="Tasks"
-                         @select2-select="selectTaskOption"></select2>
+                         placeholder="Tasks"></select2>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -67,16 +63,14 @@
                                     type="text"
                                     class="form-control form-control-sm date-input"
                                     v-model="dateMin"
-                                    placeholder="Min. date"
-                                    @datepicker-select="dateMinSelect"></datepicker>
+                                    placeholder="Min. date"></datepicker>
                     </div>
                     <div class="col-md-6">
                         <datepicker id="report-filter-max-date"
                                     type="text"
                                     class="form-control form-control-sm date-input"
                                     v-model="dateMax"
-                                    placeholder="Max. date"
-                                    @datepicker-select="dateMaxSelect"></datepicker>
+                                    placeholder="Max. date"></datepicker>
                     </div>
                 </div>
             </div>
@@ -237,24 +231,6 @@ export default {
                     return { id: task.id, text: task.name };
                 });
             });
-        },
-        selectUserOption(user) {
-            this.user = user;
-        },
-        selectClientOption(client) {
-            this.client = client;
-        },
-        selectProjectOption(project) {
-            this.project = project;
-        },
-        selectTaskOption(task) {
-            this.task = task;
-        },
-        dateMinSelect(date) {
-            this.dateMin = date;
-        },
-        dateMaxSelect(date) {
-            this.dateMax = date;
         },
         moment(date) {
             return moment(date).format('LL');
