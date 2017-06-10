@@ -11,12 +11,16 @@
     <div class="btn-group btn-group-sm" role="group">
         <button id="timer-start"
                 class="btn btn-success"
-                v-on:click="toggle"
-                v-bind:disabled="this.running">Start</button>
+                v-if="!this.running"
+                v-on:click="toggle">Start</button>
         <button id="timer-stop"
                 class="btn btn-success"
-                v-on:click="toggle"
-                v-bind:disabled="!this.running">Stop</button>
+                v-if="this.running"
+                v-on:click="toggle">Stop</button>
+        <button id="timer-entry-save"
+                class="btn btn-primary"
+                v-if="!this.running && entry"
+                v-on:click="saveEntry">Save</button>
         <button id="timer-reset"
                 class="btn btn-danger"
                 v-on:click="reset"
@@ -59,13 +63,32 @@ export default {
         },
         reset: function() {
             // TODO: Add some sort of warning/option to cancel.
+            if (this.running) {
+                this.toggle();
+            }
             this.total = 0;
             this.offset = 0;
             this.hours = '00';
             this.minutes = '00';
             this.seconds = '00';
             this.entry = false;
-        }
+        },
+        saveEntry(e) {
+            toggleButtonBusy(e.target);
+            let body = {
+                user: this.entry.user,
+                project: this.entry.project,
+                note: this.entry.note,
+                duration: secondsToDurationString(this.total)
+            };
+            quickFetch(this.entry.url, 'put', body).then(data => {
+                if (data.id) {
+                    $.growl.notice({ message: 'New entry duration saved!' });
+                    this.reset();
+                }
+                toggleButtonBusy(e.target);
+            }).catch(error => console.log(error));
+        },
     },
     mounted() {
         this.bus.$on('timerToggle', function(entry) {

@@ -132,7 +132,6 @@ export default {
                 note: this.note,
                 duration: this.duration
             };
-            console.log(this.duration);
             quickFetch(this.url, 'put', body).then(data => {
                 if (data.id) {
                     this.edit = false;

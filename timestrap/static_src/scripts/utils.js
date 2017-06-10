@@ -62,6 +62,17 @@ function durationToSeconds(duration) {
 }
 
 
+// Convert a number (0) of seconds to a string (0:00).
+function secondsToDurationString(duration) {
+    if (typeof(duration) === 'number') {
+        let hours = Math.floor(duration / 3600);
+        let minutes = Math.floor(duration % 3600 / 60);
+        duration = hours + ':' + pad(minutes);
+    }
+    return duration;
+}
+
+
 // Toggle disabled/enabled styles on form submit button(s).
 function toggleButtonBusy(target) {
     let buttons = [];
