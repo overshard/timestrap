@@ -51,15 +51,14 @@ function durationToString(duration) {
 }
 
 
-// Convert a string (00:00) duration to a number (0) of seconds.
-function stringToSeconds(duration) {
-    if (typeof(duration) === 'string') {
-        let parts = duration.split(':');
-        if (parts.length == 2) {
-            duration = parts[0] * 3600 + parts[1] * 60;
-        }
+// Convert a decimal duration (0.0) duration to a number (0) of seconds.
+function durationToSeconds(duration) {
+    if (typeof(duration) === 'number') {
+        let hours = Math.floor(duration);
+        let minutes = Math.round((duration - hours) * 60);
+        duration = hours * 3600 + minutes * 60;
     }
-    return Number(duration);
+    return duration;
 }
 
 

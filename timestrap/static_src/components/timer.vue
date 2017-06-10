@@ -70,12 +70,8 @@ export default {
             if (entry) {
                 this.entry = entry;
                 // Entry's duration should be in _decimal_ format.
-                // TODO: Find a better way to handle decimal vs. number vs. string.
                 if (entry.duration && typeof entry.duration === 'number') {
-                    this.offset = stringToSeconds(durationToString(entry.duration));
-                }
-                else {
-                    this.offset = stringToSeconds(entry.duration);
+                    this.offset = durationToSeconds(entry.duration);
                 }
             }
             this.toggle();
