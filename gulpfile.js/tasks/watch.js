@@ -10,7 +10,7 @@ gulp.task('watch:sass', function() {
 
 
 gulp.task('watch:scripts', function() {
-    return gulp.watch('timestrap/static_src/js/**/*.js', ['scripts:vendor']);
+    return gulp.watch('timestrap/static_src/scripts/**/*.js', ['scripts:vendor']);
 });
 
 
