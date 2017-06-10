@@ -42,7 +42,6 @@
                     Reports
                 </router-link>
             </li>
-            <timer />
             <li class="nav-item dropup">
                 <a class="nav-link dropdown-toggle"
                     data-toggle="dropdown">
@@ -68,6 +67,7 @@
                 </div>
             </li>
         </ul>
+        <timer />
     </div>
     <div class="content">
         <router-view v-bind:id="['component-' + $route.name]"
