@@ -1,5 +1,10 @@
 <template>
 <div id="timer" class="text-center">
+    <div v-if="entry" class="timer-entry-card small">
+        <div v-if="entry.project_details" class="text-muted">{{ entry.project_details.client_details.name }}</div>
+        <div v-if="entry.project_details">{{ entry.project_details.name }}</div>
+        <div v-if="entry.task_details" class="text-muted">{{ entry.task_details.name }}</div>
+    </div>
     <div v-bind:class="['h2', [this.running ? 'text-success' : '']]">
         {{ hours }}:{{ minutes }}:{{ seconds }}
     </div>
