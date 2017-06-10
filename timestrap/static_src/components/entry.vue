@@ -70,7 +70,7 @@
                            v-on:click="editEntry">
                             Edit
                         </a>
-                        <a class="dropdown-item restart"
+                        <a class="dropdown-item entry-menu-restart"
                            href="#"
                            v-if="global.perms.change_entry"
                            v-on:click.prevent

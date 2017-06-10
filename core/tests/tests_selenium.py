@@ -380,11 +380,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
         self.find(By.CLASS_NAME, 'entry-menu-restart').click()
-        self.waitForPresence((By.NAME, 'entry-duration'))
-        # Click the "Stop" button and wait for the edit form to appear.
-        self.find(By.NAME, 'entry-save').click()
-        self.waitForPresence((By.NAME, 'entry-note'))
-        self.find(By.NAME, 'entry-save').click()
+        self.waitForPresence((By.ID, 'timer-stop'))
+        # Click Timer's "Stop" button and wait for the save button to appear.
+        self.find(By.ID, 'timer-stop').click()
+        self.waitForPresence((By.ID, 'timer-entry-save'))
+        self.find(By.ID, 'timer-entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
         self.waitForText((By.CLASS_NAME, 'entry'),
