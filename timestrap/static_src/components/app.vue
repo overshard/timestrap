@@ -100,7 +100,7 @@ export default {
                 query: {
                     search: this.search
                 }
-            })
+            });
         }
     },
     components: {
