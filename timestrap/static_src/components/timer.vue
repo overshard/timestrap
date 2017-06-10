@@ -91,7 +91,7 @@ export default {
             }).catch(error => console.log(error));
         },
     },
-    mounted() {
+    created() {
         this.bus.$on('timerToggle', function(entry) {
             if (this.running) {
                 // TODO: Add some sort of warning/option to cancel.

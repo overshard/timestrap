@@ -146,15 +146,8 @@ export default {
             toggleButtonBusy($('#generate-report'));
             toggleButtonBusy($('#export-report'));
 
-            // FIXME: This is a mess
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
-            if (url === userEntries && this.$route.query.search) {
-                const params = {
-                    search: this.$route.query.search
-                };
-                url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(params);
-            }
 
             let entriesFetch = quickFetch(url);
 
@@ -239,6 +232,15 @@ export default {
     mounted() {
         this.loadSelect2Options();
         return this.getEntries();
+    },
+    created() {
+        this.bus.$on('search', () => {
+            const params = {
+                search: this.$route.query.search
+            };
+            const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(params);
+            this.getEntries(url);
+        });
     },
     components: {
         Datepicker,

@@ -95,12 +95,13 @@ export default {
     methods: {
         submitSearch() {
             // Use .push instead of .go to not reload entire page
-            this.$router.go({
+            this.$router.push({
                 name: 'reports',
                 query: {
                     search: this.search
                 }
             });
+            this.bus.$emit('search');
         }
     },
     components: {
