@@ -33,13 +33,13 @@ export default {
         };
     },
     methods: {
-        tick: function () {
+        tick: function() {
             ++this.total;
             this.hours = pad(Math.floor(this.total / 3600));
             this.minutes = pad(Math.floor(this.total % 3600 / 60));
             this.seconds = pad(this.total % 3600 % 60);
         },
-        toggle: function (offset) {
+        toggle: function(offset) {
             this.running = !this.running;
             if (typeof offset === 'number') {
                 this.total = offset;
@@ -60,6 +60,7 @@ export default {
     },
     mounted() {
         this.bus.$on('timerToggle', function(offset) {
+            console.log(offset);
             this.toggle(offset);
         }.bind(this));
     }

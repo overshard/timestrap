@@ -40,7 +40,7 @@ function pad(num) {
 }
 
 
-// Convert a decimal duration to a string (0:00).
+// Convert a number duration (0) of seconds to a string (0:00).
 function durationToString(duration) {
     if (typeof(duration) === 'number') {
         let hours = Math.floor(duration);
@@ -51,6 +51,18 @@ function durationToString(duration) {
 }
 
 
+// Convert a string duration (00:00) to a number (0) of seconds.
+function stringToDuration(duration) {
+    if (typeof(duration) === 'string') {
+        let parts = duration.split(':');
+        if (parts.length == 2) {
+            duration = parts[0] * 3600 + parts[1] * 60;
+        }
+    }
+    return Number(duration);
+}
+
+
 // Toggle disabled/enabled styles on form submit button(s).
 function toggleButtonBusy(target) {
     let buttons = [];
@@ -58,7 +70,7 @@ function toggleButtonBusy(target) {
     // The passed target may be a form object containing elements that include
     // the clicked submit button.
     if (typeof target.elements === 'object') {
-        for (var i = 0; i < target.elements.length; i++) {
+        for (let i = 0; i < target.elements.length; i++) {
             if (target.elements.hasOwnProperty(i)
                 && typeof target.elements[i].type !== 'undefined'
                 && target.elements[i].type == 'submit') {
@@ -70,9 +82,9 @@ function toggleButtonBusy(target) {
         buttons.push(target);
     }
 
-    for (var i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
         if (buttons.hasOwnProperty(i)) {
-            button = buttons[i];
+            let button = buttons[i];
             if (typeof button.toggleClass !== 'undefined') {
                 button.toggleClass('progress-bar-striped');
                 button.toggleClass('progress-bar-animated');

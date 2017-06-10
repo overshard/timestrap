@@ -70,6 +70,13 @@
                            v-on:click="editEntry">
                             Edit
                         </a>
+                        <a class="dropdown-item restart"
+                           href="#"
+                           v-if="global.perms.change_entry"
+                           v-on:click.prevent
+                           v-on:click="restartEntry">
+                            Restart
+                        </a>
                         <a class="dropdown-item entry-menu-delete"
                            href="#"
                            v-if="global.perms.delete_entry"
@@ -125,6 +132,7 @@ export default {
                 note: this.note,
                 duration: this.duration
             };
+            console.log(this.duration);
             quickFetch(this.url, 'put', body).then(data => {
                 if (data.id) {
                     this.edit = false;
@@ -147,6 +155,9 @@ export default {
                     $.growl.error({ message: 'Entry delete failed ):' });
                 }
             }.bind(this));
+        },
+        restartEntry() {
+            this.bus.$emit('timerToggle', stringToDuration(this.duration));
         },
         selectProjectOption(project) {
             this.project = project;
