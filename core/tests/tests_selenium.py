@@ -162,6 +162,30 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         # Log in failure creates an alert notice.
         self.waitForPresence((By.CSS_SELECTOR, '.alert.alert-danger'))
 
+    def test_timer_start(self):
+        self.logIn()
+        self.waitForPresence((By.ID, 'timer-start'))
+        self.find(By.ID, 'timer-start').click()
+        self.waitForText((By.ID, 'timer-value'), '00:00:02')
+
+    def test_timer_stop(self):
+        self.logIn()
+        self.waitForPresence((By.ID, 'timer-start'))
+        self.find(By.ID, 'timer-start').click()
+        self.waitForText((By.ID, 'timer-value'), '00:00:02')
+        self.find(By.ID, 'timer-stop').click()
+        self.assertEquals('00:00:02', self.find(By.ID, 'timer-value').text)
+
+    def test_timer_reset(self):
+        self.logIn()
+        self.waitForPresence((By.ID, 'timer-start'))
+        self.find(By.ID, 'timer-start').click()
+        self.waitForText((By.ID, 'timer-value'), '00:00:02')
+        self.find(By.ID, 'timer-stop').click()
+        self.assertEquals('00:00:02', self.find(By.ID, 'timer-value').text)
+        self.find(By.ID, 'timer-reset').click()
+        self.waitForText((By.ID, 'timer-value'), '00:00:00')
+
     def test_clients_access(self):
         self.logIn()
         # self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
@@ -380,11 +404,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
         self.find(By.CLASS_NAME, 'entry-menu-restart').click()
-        self.waitForPresence((By.NAME, 'entry-duration'))
-        # Click the "Stop" button and wait for the edit form to appear.
-        self.find(By.NAME, 'entry-save').click()
-        self.waitForPresence((By.NAME, 'entry-note'))
-        self.find(By.NAME, 'entry-save').click()
+        self.waitForPresence((By.ID, 'timer-stop'))
+        # Click Timer's "Stop" button and wait for the save button to appear.
+        self.find(By.ID, 'timer-stop').click()
+        self.waitForPresence((By.ID, 'timer-entry-save'))
+        self.find(By.ID, 'timer-entry-save').click()
         # The actual time should not change because the timer does not run for
         # more than 60 seconds.
         self.waitForText((By.CLASS_NAME, 'entry'),

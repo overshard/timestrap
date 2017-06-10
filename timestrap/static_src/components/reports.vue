@@ -158,7 +158,7 @@ export default {
             if (url === userEntries && this.$route.query.search) {
                 const params = {
                     search: this.$route.query.search
-                }
+                };
                 url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(params);
             }
 
