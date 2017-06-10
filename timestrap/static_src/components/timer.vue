@@ -26,7 +26,6 @@ export default {
     data() {
         return {
             running: false,
-            offset: 0,
             total: 0,
             hours: '00',
             minutes: '00',
@@ -44,9 +43,6 @@ export default {
         toggle: function() {
             this.running = !this.running;
             if (this.running) {
-                if (this.total === 0) {
-                    this.total = this.offset;
-                }
                 this.hours = pad(Math.floor(this.total / 3600));
                 this.minutes = pad(Math.floor(this.total % 3600 / 60));
                 this.seconds = pad(this.total % 3600 % 60);
@@ -57,6 +53,7 @@ export default {
             }
         },
         reset: function() {
+            // TODO: Add some sort of warning/option to cancel.
             this.total = 0;
             this.offset = 0;
             this.hours = '00';
@@ -67,11 +64,15 @@ export default {
     },
     mounted() {
         this.bus.$on('timerToggle', function(entry) {
+            if (this.running) {
+                // TODO: Add some sort of warning/option to cancel.
+                this.toggle();
+            }
             if (entry) {
                 this.entry = entry;
                 // Entry's duration should be in _decimal_ format.
                 if (entry.duration && typeof entry.duration === 'number') {
-                    this.offset = durationToSeconds(entry.duration);
+                    this.total = durationToSeconds(entry.duration);
                 }
             }
             this.toggle();
