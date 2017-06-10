@@ -157,7 +157,7 @@ export default {
             }.bind(this));
         },
         restartEntry() {
-            this.bus.$emit('timerToggle', stringToDuration(this.duration));
+            this.bus.$emit('timerToggle', this.entry);
         },
         selectProjectOption(project) {
             this.project = project;

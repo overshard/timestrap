@@ -26,10 +26,12 @@ export default {
     data() {
         return {
             running: false,
+            offset: 0,
             total: 0,
             hours: '00',
             minutes: '00',
             seconds: '00',
+            entry: false
         };
     },
     methods: {
@@ -39,12 +41,12 @@ export default {
             this.minutes = pad(Math.floor(this.total % 3600 / 60));
             this.seconds = pad(this.total % 3600 % 60);
         },
-        toggle: function(offset) {
+        toggle: function() {
             this.running = !this.running;
-            if (typeof offset === 'number') {
-                this.total = offset;
-            }
             if (this.running) {
+                if (this.total === 0) {
+                    this.total = this.offset;
+                }
                 this.hours = pad(Math.floor(this.total / 3600));
                 this.minutes = pad(Math.floor(this.total % 3600 / 60));
                 this.seconds = pad(this.total % 3600 % 60);
@@ -56,14 +58,27 @@ export default {
         },
         reset: function() {
             this.total = 0;
+            this.offset = 0;
             this.hours = '00';
             this.minutes = '00';
             this.seconds = '00';
+            this.entry = false;
         }
     },
     mounted() {
-        this.bus.$on('timerToggle', function(offset) {
-            this.toggle(offset);
+        this.bus.$on('timerToggle', function(entry) {
+            if (entry) {
+                this.entry = entry;
+                // Entry's duration should be in _decimal_ format.
+                // TODO: Find a better way to handle decimal vs. number vs. string.
+                if (entry.duration && typeof entry.duration === 'number') {
+                    this.offset = stringToSeconds(durationToString(entry.duration));
+                }
+                else {
+                    this.offset = stringToSeconds(entry.duration);
+                }
+            }
+            this.toggle();
         }.bind(this));
     }
 };

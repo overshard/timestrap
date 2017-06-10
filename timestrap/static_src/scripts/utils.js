@@ -40,7 +40,7 @@ function pad(num) {
 }
 
 
-// Convert a number duration (0) of seconds to a string (0:00).
+// Convert a decimal duration (0.0) to a string (0:00).
 function durationToString(duration) {
     if (typeof(duration) === 'number') {
         let hours = Math.floor(duration);
@@ -51,8 +51,8 @@ function durationToString(duration) {
 }
 
 
-// Convert a string duration (00:00) to a number (0) of seconds.
-function stringToDuration(duration) {
+// Convert a string (00:00) duration to a number (0) of seconds.
+function stringToSeconds(duration) {
     if (typeof(duration) === 'string') {
         let parts = duration.split(':');
         if (parts.length == 2) {
