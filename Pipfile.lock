@@ -1,0 +1,153 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "e7d3e4c6c60e8b4b0a71a694938c04bc87b58da53530233e0792bcd603c07bb6"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "diff-match-patch": {
+            "version": "==20121119"
+        },
+        "dj-database-url": {
+            "version": "==0.4.2"
+        },
+        "django": {
+            "version": "==1.11.2"
+        },
+        "django-filter": {
+            "version": "==1.0.4"
+        },
+        "django-import-export": {
+            "version": "==0.5.1"
+        },
+        "django-widget-tweaks": {
+            "version": "==1.4.1"
+        },
+        "djangorestframework": {
+            "version": "==3.6.3"
+        },
+        "faker": {
+            "version": "==0.7.15"
+        },
+        "gunicorn": {
+            "version": "==19.6.0"
+        },
+        "ipaddress": {
+            "version": "==1.0.18"
+        },
+        "psycopg2": {
+            "version": "==2.6.2"
+        },
+        "python-dateutil": {
+            "version": "==2.6.0"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "tablib": {
+            "version": "==0.11.4"
+        },
+        "whitenoise": {
+            "version": "==3.3.0"
+        }
+    },
+    "develop": {
+        "alabaster": {
+            "version": "==0.7.10"
+        },
+        "babel": {
+            "version": "==2.4.0"
+        },
+        "certifi": {
+            "version": "==2017.4.17"
+        },
+        "chardet": {
+            "version": "==3.0.3"
+        },
+        "commonmark": {
+            "version": "==0.5.4"
+        },
+        "configparser": {
+            "version": "==3.5.0"
+        },
+        "coverage": {
+            "version": "==4.4.1"
+        },
+        "coveralls": {
+            "version": "==1.1"
+        },
+        "docopt": {
+            "version": "==0.6.2"
+        },
+        "docutils": {
+            "version": "==0.13.1"
+        },
+        "enum34": {
+            "version": "==1.1.6"
+        },
+        "flake8": {
+            "version": "==3.3.0"
+        },
+        "idna": {
+            "version": "==2.5"
+        },
+        "imagesize": {
+            "version": "==0.7.1"
+        },
+        "jinja2": {
+            "version": "==2.9.6"
+        },
+        "markupsafe": {
+            "version": "==1.0"
+        },
+        "mccabe": {
+            "version": "==0.6.1"
+        },
+        "pycodestyle": {
+            "version": "==2.3.1"
+        },
+        "pyflakes": {
+            "version": "==1.5.0"
+        },
+        "pygments": {
+            "version": "==2.2.0"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "recommonmark": {
+            "version": "==0.4.0"
+        },
+        "requests": {
+            "version": "==2.17.3"
+        },
+        "selenium": {
+            "version": "==3.4.3"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "snowballstemmer": {
+            "version": "==1.2.1"
+        },
+        "sphinx": {
+            "version": "==1.5.6"
+        },
+        "sphinx-rtd-theme": {
+            "version": "==0.2.4"
+        },
+        "urllib3": {
+            "version": "==1.21.1"
+        }
+    }
+}

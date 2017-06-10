@@ -19,11 +19,19 @@ addons:
 install:
     - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 6
     - npm install -g gulp-cli yarn && yarn
-    - pip install -r requirements/development.txt
+    - pip install pipenv && pipenv install --dev
 before_script:
     - gulp lint
     - gulp build
 script:
-    - coverage run --source=core,api manage.py test
+    - gulp coverage
 after_success:
-    - coveralls
+    - pipenv run coveralls
+notifications:
+    email: false
+    webhooks:
+        urls:
+            - https://webhooks.gitter.im/e/103776b2181f986558f7
+        on_success: change
+        on_failure: always
+        on_start: never

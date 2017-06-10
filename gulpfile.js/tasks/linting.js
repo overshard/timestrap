@@ -1,25 +1,26 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var eslint       = require('gulp-eslint');
-var sasslint     = require('gulp-sass-lint');
+const eslint = require('gulp-eslint');
+const sasslint = require('gulp-sass-lint');
 
-var spawn        = require('child_process').spawn;
+const spawn  = require('child_process').spawn;
 
 
 gulp.task('lint', ['lint:python', 'lint:sass', 'lint:es']);
 
 
 gulp.task('lint:python', function(cb) {
-    var flake8 = spawn(
-        'flake8',
+    spawn(
+        'pipenv',
         [
+            'run',
+            'flake8',
             '--exclude=venv,.venv,node_modules,migrations'
         ],
         {
             stdio: 'inherit'
         }
-    );
-    flake8.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
@@ -45,12 +46,11 @@ gulp.task('lint:sass', function() {
 
 
 gulp.task('lint:es', function() {
-    var files = [
+    return gulp.src([
         'gulpfile.js/**/*.js',
         'timestrap/static_src/scripts/**/*.js',
-        'timestrap/static_src/tags/**/*.tag'
-    ];
-    return gulp.src(files)
+        'timestrap/static_src/app.js',
+        'timestrap/static_src/components/**/*.vue'])
         .pipe(eslint({
             'rules': {
                 'indent': [
@@ -71,18 +71,18 @@ gulp.task('lint:es', function() {
                 ]
             },
             'globals': [
-                '$',
-                'riot'
+                '$'
             ],
             'env': {
                 'browser': true
             },
             'extends': 'eslint:recommended',
             'plugins': [
-                'riot'
+                'html'
             ],
             'parserOptions': {
-                'ecmaVersion': 6
+                'ecmaVersion': 6,
+                'sourceType': 'module'
             }
         }))
         .pipe(eslint.format())

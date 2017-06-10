@@ -1,35 +1,45 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-var concat       = require('gulp-concat');
-var riot         = require('gulp-riot');
+const concat = require('gulp-concat');
+const tap = require('gulp-tap');
+const buffer = require('gulp-buffer');
+
+const vueify = require('vueify');
+const browserify = require('browserify');
 
 
-gulp.task('scripts', function(){
-    var files = [
+gulp.task('scripts', ['scripts:vendor', 'scripts:app']);
+
+
+gulp.task('scripts:vendor', function(){
+    return gulp.src([
         'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/moment/min/moment.min.js',
         'node_modules/tether/dist/js/tether.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/moment/min/moment.min.js',
         'node_modules/select2/dist/js/select2.min.js',
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/riot/riot.min.js',
-        'node_modules/riot-route/dist/route.min.js',
-        'timestrap/static_src/scripts/**/*.js'
-    ];
-    return gulp.src(files)
-        .pipe(concat('bundle.js'))
+        'node_modules/jquery.growl/javascripts/jquery.growl.js',
+        'timestrap/static_src/scripts/**/*.js'])
+        .pipe(concat('bundle-vendor.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });
 
 
-gulp.task('tags', function() {
-    var files = [
-        'timestrap/static_src/tags/**/*.tag'
-    ];
-    return gulp.src(files)
-        .pipe(riot())
-        .pipe(concat('bundle-tags.js'))
+gulp.task('scripts:app', function() {
+    gulp.src('timestrap/static_src/app.js', { read: false })
+        .pipe(tap(function(file) {
+            file.contents = browserify(file.path)
+                .transform(vueify)
+                .bundle()
+                .on('error', function(err) {
+                    console.log(err.toString());
+                    this.emit('end');
+                });
+        }))
+        .pipe(buffer())
+        .pipe(concat('bundle-app.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });

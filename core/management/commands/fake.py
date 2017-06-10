@@ -1,12 +1,13 @@
 from random import randint, choice
 from datetime import timedelta
+from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
 from faker import Factory
 
-from core.models import Client, Project, Entry
+from core.models import Client, Entry, Project, Task
 
 
 class Command(BaseCommand):
@@ -27,6 +28,17 @@ class Command(BaseCommand):
         if not iterations:
             iterations = 5
 
+        for i in range(randint(iterations, iterations*2)):
+            task_name = (fake
+                         .sentence(nb_words=3, variable_nb_words=True)
+                         .replace('.', '')
+                         .capitalize())
+            Task.objects.create(
+                name=task_name,
+                hourly_rate=Decimal(
+                    '%d.%d' % (randint(0, 200), randint(0, 99)))
+            )
+
         for i in range(iterations):
             Client.objects.create(name=fake.company())
 
@@ -37,10 +49,14 @@ class Command(BaseCommand):
                 estimate = None
                 if estimated:
                     estimate = timedelta(hours=randint(5, 150))
+                project_name = (fake
+                                .sentence(nb_words=3, variable_nb_words=True)
+                                .replace('.', '')
+                                .capitalize())
                 Project.objects.create(
                     client=client,
                     estimate=estimate,
-                    name=fake.job()
+                    name=project_name
                 )
 
         for i in range(iterations):

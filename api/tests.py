@@ -106,7 +106,7 @@ class BrowseableApiTestCase(TestCase):
         clients = clients_page.json()
 
         page = self.c.post('/api/projects/', {
-            'client': clients['results'][0]['url'],
+            'client': clients[0]['url'],
             'name': fake.job()
         })
 
@@ -116,7 +116,7 @@ class BrowseableApiTestCase(TestCase):
             Permission.objects.get(codename='add_project'))
 
         page = self.c.post('/api/projects/', {
-            'client': clients['results'][0]['url'],
+            'client': clients[0]['url'],
             'name': fake.job()
         })
 
@@ -131,7 +131,7 @@ class BrowseableApiTestCase(TestCase):
         clients = clients_page.json()
 
         page = self.c.post('/api/projects/', {
-            'client': clients['results'][0]['url'],
+            'client': clients[0]['url'],
             'name': 'Юникод'
         })
 
@@ -147,8 +147,8 @@ class BrowseableApiTestCase(TestCase):
         users = users_page.json()
 
         page = self.c.post('/api/entries/', {
-            'project': projects['results'][0]['url'],
-            'user': users['results'][0]['url'],
+            'project': projects[0]['url'],
+            'user': users[0]['url'],
             'duration': '1:30:00'
         })
 
@@ -158,8 +158,8 @@ class BrowseableApiTestCase(TestCase):
             Permission.objects.get(codename='add_entry'))
 
         page = self.c.post('/api/entries/', {
-            'project': projects['results'][0]['url'],
-            'user': users['results'][0]['url'],
+            'project': projects[0]['url'],
+            'user': users[0]['url'],
             'duration': '1:30:00'
         })
 

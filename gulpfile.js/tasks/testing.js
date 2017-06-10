@@ -1,27 +1,31 @@
-var gulp         = require('gulp');
+const gulp = require('gulp');
 
-
-var spawn        = require('child_process').spawn;
+const spawn = require('child_process').spawn;
+const spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
-    var test = spawn(
-        './manage.py',
+    spawn(
+        'pipenv',
         [
+            'run',
+            'python',
+            'manage.py',
             'test'
         ],
         {
             stdio: 'inherit'
         }
-    );
-    test.on('exit', cb);
+    ).on('exit', cb);
 });
 
 
 gulp.task('coverage', function() {
     spawnSync(
-        'coverage',
+        'pipenv',
         [
+            'run',
+            'coverage',
             'run',
             '--source=core,api',
             'manage.py',
@@ -32,8 +36,10 @@ gulp.task('coverage', function() {
         }
     );
     spawnSync(
-        'coverage',
+        'pipenv',
         [
+            'run',
+            'coverage',
             'report',
             '-m'
         ],
