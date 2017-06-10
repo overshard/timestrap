@@ -45,6 +45,9 @@ export default {
                 this.total = offset;
             }
             if (this.running) {
+                this.hours = pad(Math.floor(this.total / 3600));
+                this.minutes = pad(Math.floor(this.total % 3600 / 60));
+                this.seconds = pad(this.total % 3600 % 60);
                 this.interval = setInterval(this.tick, 1000, this);
             }
             else {
@@ -60,7 +63,6 @@ export default {
     },
     mounted() {
         this.bus.$on('timerToggle', function(offset) {
-            console.log(offset);
             this.toggle(offset);
         }.bind(this));
     }
