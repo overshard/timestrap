@@ -10,7 +10,7 @@ from .models import Client, Project, Entry
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'archive',)
+    list_display = ('name', 'invoice_email', 'payment_id', 'archive',)
     list_editable = ('archive',)
     list_filter = ('archive',)
     search_fields = ('name',)
