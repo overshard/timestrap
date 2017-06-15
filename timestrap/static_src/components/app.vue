@@ -42,6 +42,12 @@
                     Reports
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link id="nav-app-reports" class="nav-link" v-bind:to="invoicing">
+                    <i class="fa fa-credit-card-alt mr-1" aria-hidden="true"></i>
+                    Invoicing
+                </router-link>
+            </li>
             <li class="nav-item dropup">
                 <a class="nav-link dropdown-toggle"
                     data-toggle="dropdown">
@@ -86,6 +92,7 @@ export default {
             clients: timestrapConfig.CORE_URLS.CLIENTS,
             tasks: timestrapConfig.CORE_URLS.TASKS,
             reports: timestrapConfig.CORE_URLS.REPORTS,
+            invoicing: timestrapConfig.CORE_URLS.INVOICING,
             username: timestrapConfig.USER.NAME,
             api: timestrapConfig.CORE_URLS.API,
             admin: timestrapConfig.CORE_URLS.ADMIN,

@@ -2,13 +2,21 @@
 <div class="client row py-2 bg-faded rounded mb-2">
 
     <template v-if="edit">
-    <div class="col-10">
+    <div class="col-6">
         <input name="client-name"
                type="text"
                class="form-control form-control-sm"
                v-model.trim="name"
                v-on:keyup.enter="saveClient"
-               required/>
+               required />
+    </div>
+    <div class="col-4">
+        <input name="client-email"
+               placeholder="Invoicing Email"
+               type="text"
+               class="form-control form-control-sm"
+               v-model.trim="invoice_email"
+               v-on:keyup.enter="saveClient" />
     </div>
     <div class="col-2">
         <button name="client-save"
@@ -97,6 +105,7 @@ export default {
         return {
             edit: false,
             name: this.client.name,
+            invoice_email: this.client.invoice_email,
             showProjects: false
         };
     },
@@ -106,12 +115,14 @@ export default {
         },
         saveClient(e) {
             toggleButtonBusy(e.target);
-            let body = {
-                name: this.name
+            const body = {
+                name: this.name,
+                invoice_email: this.invoice_email
             };
             quickFetch(this.client.url, 'put', body).then(data => {
                 if (data.id) {
                     this.client.name = data.name;
+                    this.client.invoice_email = data.invoice_email;
                     this.edit = false;
                 }
                 toggleButtonBusy(e.target);
@@ -122,7 +133,7 @@ export default {
         },
         submitProject(e) {
             toggleButtonBusy(e.target);
-            let body = {
+            const body = {
                 name: this.project_name,
                 estimate: this.project_estimate,
                 client: this.client.url

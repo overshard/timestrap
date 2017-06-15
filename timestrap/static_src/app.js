@@ -6,6 +6,7 @@ const Clients = require('./components/clients.vue');
 const Tasks = require('./components/tasks.vue');
 const Timesheet = require('./components/timesheet.vue');
 const Reports = require('./components/reports.vue');
+const Invoicing = require('./components/invoicing.vue');
 
 
 // TODO: Figure out why this isn't working...
@@ -13,13 +14,15 @@ Vue.config.devtools = false;
 Vue.config.debug = false;
 Vue.config.silent = true;
 
+
 // Set up router.
 Vue.use(VueRouter);
 const routes = [
     { path: '/clients/', name: 'clients', component: Clients },
     { path: '/tasks/', name: 'tasks', component: Tasks },
     { path: '/timesheet/', name: 'timesheet', component: Timesheet },
-    { path: '/reports/', name: 'reports', component: Reports }
+    { path: '/reports/', name: 'reports', component: Reports },
+    { path: '/invoicing/', name: 'invoicing', component: Invoicing }
 ];
 const router = new VueRouter({
     mode: 'history',

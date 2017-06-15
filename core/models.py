@@ -13,6 +13,7 @@ class Client(models.Model):
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
     payment_id = models.CharField(max_length=255, blank=True, null=True)
+    invoice_email = models.EmailField(max_length=255, blank=True, null=True)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -81,6 +82,7 @@ class Entry(models.Model):
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
+    invoiced = models.BooleanField(default=False)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
