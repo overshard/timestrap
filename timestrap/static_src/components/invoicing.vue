@@ -1,17 +1,19 @@
 <template>
 <div class="container">
-    <div class="row">
-        <h3>Invoices</h3>
-    </div>
-    <div class="row">
+    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
         <div class="col">
-            Project
+            Client
         </div>
         <div class="col">
             Amount
         </div>
         <div class="col">
-            Status
+            Created
+        </div>
+        <div class="col">
+            Paid?
+        </div>
+        <div class="col-2">
         </div>
     </div>
 </div>
