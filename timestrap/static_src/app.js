@@ -32,50 +32,18 @@ const router = new VueRouter({
 });
 
 
-// Enable sending and receiving form the django-rest-framework API.
-const quickFetch = function(url, method, body) {
-    let csrftoken = Cookies.get('csrftoken');
-    method = (typeof method !== 'undefined') ? method : 'get';
-
-    // Give us back a promise we can .then() on, data can be accessed via
-    // .then(function(data) {console.log(data)})
-    return fetch(url, {
-        credentials: 'include',
-        headers: new Headers({
-            'content-type': 'application/json',
-            'X-CSRFToken': csrftoken
-        }),
-        method: method,
-        body: JSON.stringify(body)
-    }).then(function(response) {
-        let result = null;
-        switch (response.status) {
-        case 200:  // HTTP_200_OK
-        case 201:  // HTTP_201_CREATED
-            result = response.json();
-            break;
-        default:
-            result = response;
-            break;
-        }
-        return result;
-    });
-};
-quickFetch.install = function() {
-    Object.defineProperty(Vue.prototype, 'quickFetch', {
-        get() { return quickFetch; }
-    });
-};
+// Load plugins
+const quickFetch = require('./plugins/quickfetch.js');
 Vue.use(quickFetch);
 
 
 // Set up "global" plugin with user and permissions data.
 const global = {
-    user: quickFetch(timestrapConfig.USER.URL).then(data => {
+    user: Vue.prototype.$quickFetch(timestrapConfig.USER.URL).then(data => {
         global.user = data;
     }).catch(error => console.log(error)),
 
-    perms: quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(data => {
+    perms: Vue.prototype.$quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(data => {
         let perms = Object;
         for (let i = 0; i < data.length; i++) {
             perms[data[i].codename] = data[i];
