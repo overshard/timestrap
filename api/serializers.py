@@ -10,7 +10,7 @@ from rest_framework import serializers
 from core.models import Client, Project, Entry
 from core.fields import DurationField
 
-from core.models import Task
+from core.models import Task, Invoice
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -127,3 +127,10 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'project', 'project_details', 'task',
                   'task_details', 'user', 'user_details', 'date', 'duration',
                   'note', 'invoiced',)
+
+
+class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Invoice
+        fields = ('id', 'url', 'client', 'entries', 'created', 'paid',
+                  'transaction_id',)

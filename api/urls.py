@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 from rest_framework import routers
 
 from .views import (UserViewSet, PermissionViewSet, ClientViewSet,
-                    ProjectViewSet, EntryViewSet, TaskViewSet)
+                    ProjectViewSet, EntryViewSet, TaskViewSet, InvoiceViewSet)
 
 
 router = routers.DefaultRouter()
@@ -13,6 +13,7 @@ router.register(r'clients', ClientViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'entries', EntryViewSet)
 router.register(r'tasks', TaskViewSet)
+router.register(r'invoices', InvoiceViewSet)
 
 
 urlpatterns = [

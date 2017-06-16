@@ -6,11 +6,11 @@ from django.contrib.auth.models import User, Permission
 from rest_framework import viewsets, permissions, filters
 import django_filters
 
-from core.models import Client, Project, Entry
-from core.models import Task
+from core.models import Client, Project, Entry, Task, Invoice
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
-                          EntrySerializer, TaskSerializer)
+                          EntrySerializer, TaskSerializer,
+                          InvoiceSerializer)
 from .pagination import LimitOffsetPaginationWithTotals
 
 
@@ -77,4 +77,10 @@ class EntryViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    pagination_class = None
+
+
+class InvoiceViewSet(viewsets.ModelViewSet):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
     pagination_class = None

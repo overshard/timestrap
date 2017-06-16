@@ -102,7 +102,7 @@ class Invoice(models.Model):
     client = models.ForeignKey('Client')  # Redundant with entries?
     entries = models.ManyToManyField('Entry')
     created = models.DateTimeField(auto_now_add=True)
-    paid = models.DateTimeField()
+    paid = models.DateTimeField(blank=True, null=True)
     transaction_id = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
