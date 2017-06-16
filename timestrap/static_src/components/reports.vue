@@ -75,10 +75,20 @@
                 </div>
             </div>
             <div class="form-group">
-                <select2 id="report-order-by"
-                         v-model="orderBy"
-                         v-bind:options="orderByOptions"
-                         placeholder="Order by"></select2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <select2 id="report-sort-by"
+                                 v-model="orderBy"
+                                 v-bind:options="orderByOptions"
+                                 placeholder="Order by"></select2>
+                    </div>
+                    <div class="col-md-6">
+                        <select2 id="report-order-dir"
+                                 v-model="orderDir"
+                                 v-bind:options="orderDirOptions"
+                                 placeholder="Order direction"></select2>
+                    </div>
+                </div>
             </div>
             <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
@@ -141,6 +151,11 @@ export default {
                 { id: 'user__username', text: 'User' }
             ],
             orderBy: 'date',
+            orderDirOptions: [
+                { id: 'asc', text: 'Ascending' },
+                { id: 'desc', text: 'Descending' }
+            ],
+            orderDir: 'desc',
             project__client: null,
             dateMin: null,
             dateMax: null,
@@ -195,7 +210,7 @@ export default {
         },
         getReport() {
             const query = {
-                ordering: this.orderBy,
+                ordering: (this.orderDir == 'desc' ? '-' : '') + this.orderBy,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
@@ -204,12 +219,11 @@ export default {
                 task: this.task
             };
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
-            console.log(url);
             this.getEntries(url);
         },
         exportReport() {
             const query = {
-                ordering: this.orderBy,
+                ordering: (this.orderDir == 'desc' ? '-' : '') + this.orderBy,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
