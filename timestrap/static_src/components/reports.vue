@@ -80,12 +80,14 @@
                         <select2 id="report-sort-by"
                                  v-model="orderBy"
                                  v-bind:options="orderByOptions"
+                                 selected="date"
                                  placeholder="Order by"></select2>
                     </div>
                     <div class="col-md-6">
                         <select2 id="report-order-dir"
                                  v-model="orderDir"
                                  v-bind:options="orderDirOptions"
+                                 selected="desc"
                                  placeholder="Order direction"></select2>
                     </div>
                 </div>
@@ -211,8 +213,12 @@ export default {
             });
         },
         getReport() {
+            let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
+            if (this.orderBy != 'date') {
+                ordering += ',-date';
+            }
             const query = {
-                ordering: (this.orderDir == 'desc' ? '-' : '') + this.orderBy,
+                ordering: ordering,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
@@ -224,8 +230,12 @@ export default {
             this.getEntries(url);
         },
         exportReport() {
+            let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
+            if (this.orderBy != 'date') {
+                ordering += ',-date';
+            }
             const query = {
-                ordering: (this.orderDir == 'desc' ? '-' : '') + this.orderBy,
+                ordering: ordering,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
