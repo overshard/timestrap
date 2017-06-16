@@ -79,7 +79,7 @@ export default {
                 estimate: this.estimate,
                 name: this.name
             };
-            this.quickFetch(this.project.url, 'put', body).then(data => {
+            this.$quickFetch(this.project.url, 'put', body).then(data => {
                 if (data.id) {
                     this.project.name = data.name;
                     this.project.estimate = data.estimate;

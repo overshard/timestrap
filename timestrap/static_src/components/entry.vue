@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         editEntry() {
-            this.quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+            this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
                 this.projects = data.map(function(client) {
                     let projects = client.projects.map(function(project) {
                         return { id: project.url, text: project.name };
@@ -131,7 +131,7 @@ export default {
                 note: this.note,
                 duration: this.duration
             };
-            this.quickFetch(this.url, 'put', body).then(data => {
+            this.$quickFetch(this.url, 'put', body).then(data => {
                 if (data.id) {
                     this.edit = false;
                     this.project = data.project;
@@ -144,7 +144,7 @@ export default {
             }).catch(error => console.log(error));
         },
         deleteEntry() {
-            this.quickFetch(this.url, 'delete').then(function(response) {
+            this.$quickFetch(this.url, 'delete').then(function(response) {
                 if (response.status === 204) {
                     $.growl.notice({ message: 'Entry deleted!' });
                     this.$emit('delete-entry');

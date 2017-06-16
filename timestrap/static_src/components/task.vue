@@ -66,7 +66,7 @@ export default {
                 name: this.name,
                 hourly_rate: this.hourly_rate
             };
-            this.quickFetch(this.task.url, 'put', body).then(data => {
+            this.$quickFetch(this.task.url, 'put', body).then(data => {
                 if (data.id) {
                     this.task.name = data.name;
                     this.task.hourly_rate = data.hourly_rate;

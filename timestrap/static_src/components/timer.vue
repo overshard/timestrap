@@ -82,7 +82,7 @@ export default {
                 note: this.entry.note,
                 duration: secondsToDurationString(this.total)
             };
-            this.quickFetch(this.entry.url, 'put', body).then(data => {
+            this.$quickFetch(this.entry.url, 'put', body).then(data => {
                 if (data.id) {
                     $.growl.notice({ message: 'New entry duration saved!' });
                     this.reset();
