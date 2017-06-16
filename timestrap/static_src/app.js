@@ -36,13 +36,12 @@ const router = new VueRouter({
 const quickFetch = require('./plugins/quickfetch.js');
 Vue.use(quickFetch);
 
+const user = require('./plugins/user.js');
+Vue.use(user);
+
 
 // Set up "global" plugin with user and permissions data.
 const global = {
-    user: Vue.prototype.$quickFetch(timestrapConfig.USER.URL).then(data => {
-        global.user = data;
-    }).catch(error => console.log(error)),
-
     perms: Vue.prototype.$quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(data => {
         let perms = Object;
         for (let i = 0; i < data.length; i++) {
