@@ -74,6 +74,26 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <select2 id="report-sort-by"
+                                 v-model="orderBy"
+                                 v-bind:options="orderByOptions"
+                                 selected="date"
+                                 placeholder="Order by"></select2>
+                    </div>
+                    <div class="col-md-6">
+                        <select2 id="report-order-dir"
+                                 v-model="orderDir"
+                                 v-bind:options="orderDirOptions"
+                                 selected="desc"
+                                 placeholder="Order direction"></select2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
             <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
             </button>
@@ -127,6 +147,19 @@ export default {
             next: null,
             previous: null,
             exportFormat: 'csv',
+            orderByOptions: [
+                { id: 'project__client__name', text: 'Client' },
+                { id: 'date', text: 'Date' },
+                { id: 'project__name', text: 'Project' },
+                { id: 'task__name', text: 'Task' },
+                { id: 'user__username', text: 'User' }
+            ],
+            orderBy: 'date',
+            orderDirOptions: [
+                { id: 'asc', text: 'Ascending' },
+                { id: 'desc', text: 'Descending' }
+            ],
+            orderDir: 'desc',
             project__client: null,
             dateMin: null,
             dateMax: null,
@@ -180,7 +213,12 @@ export default {
             });
         },
         getReport() {
+            let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
+            if (this.orderBy != 'date') {
+                ordering += ',-date';
+            }
             const query = {
+                ordering: ordering,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
@@ -192,7 +230,12 @@ export default {
             this.getEntries(url);
         },
         exportReport() {
+            let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
+            if (this.orderBy != 'date') {
+                ordering += ',-date';
+            }
             const query = {
+                ordering: ordering,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
