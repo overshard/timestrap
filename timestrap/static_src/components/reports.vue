@@ -90,6 +90,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-12">
             <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
             </button>
