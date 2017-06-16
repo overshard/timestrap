@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 
 
-gulp.task('watch', ['watch:sass', 'watch:scripts', 'watch:app', 'watch:components']);
+gulp.task('watch', ['watch:sass', 'watch:scripts', 'watch:app', 'watch:components', 'watch:plugins']);
 
 
 gulp.task('watch:sass', function() {
@@ -21,4 +21,8 @@ gulp.task('watch:app', function() {
 
 gulp.task('watch:components', function() {
     return gulp.watch('timestrap/static_src/components/**/*.vue', ['scripts:app']);
+});
+
+gulp.task('watch:plugins', function() {
+    return gulp.watch('timestrap/static_src/plugins/**/*.js', ['scripts:app']);
 });
