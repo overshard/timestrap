@@ -38,7 +38,7 @@
 
     <form name="entry-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-if="global.perms.add_entry"
+          v-if="this.$perms.add_entry"
           v-on:submit.prevent
           v-on:submit="submitEntry">
         <div class="col-sm-3 mb-2">

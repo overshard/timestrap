@@ -52,7 +52,6 @@
                 <a class="nav-link dropdown-toggle"
                     data-toggle="dropdown">
                     <img v-bind:src="this.$user.gravatar_url"
-                         v-if="this.$user"
                          width="30"
                          height="30"
                          class="mr-1" />

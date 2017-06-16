@@ -16,7 +16,7 @@
 
     <form name="client-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-if="global.perms.add_client"
+          v-if="this.$perms.add_client"
           v-on:submit.prevent
           v-on:submit="submitClient">
         <div class="col-10">

@@ -1,13 +1,13 @@
 <template>
 <div class="entry row py-2 bg-faded small">
-    <template v-if="edit && global.perms.change_entry">
+    <template v-if="edit && this.$perms.change_entry">
         <div class="col-sm-3">
             <select2 id="entry-project"
                      v-model="project"
                      v-bind:options="projects"
                      v-bind:selected="project"></select2>
         </div>
-        <div v-bind:class="['col-sm-' + [global.perms.change_entry ? '5' : '7']]">
+        <div v-bind:class="['col-sm-' + [this.$perms.change_entry ? '5' : '7']]">
             <input name="entry-note"
                    type="text"
                    class="form-control form-control-sm"
@@ -23,7 +23,7 @@
                    placeholder="0:00"
                    v-model="duration" />
         </div>
-        <div class="col-sm-2" v-if="global.perms.change_entry">
+        <div class="col-sm-2" v-if="this.$perms.change_entry">
             <button name="entry-save"
                     class="btn btn-success btn-sm w-100"
                     v-on:click="saveEntry">
@@ -51,7 +51,7 @@
         </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
-                <template v-if="global.perms.change_entry || global.perms.delete_entry">
+                <template v-if="this.$perms.change_entry || this.$perms.delete_entry">
                     <button name="entry-menu"
                             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                             type="button"
@@ -64,21 +64,21 @@
                          aria-labelledby="entry-menu">
                         <a class="dropdown-item entry-menu-change"
                            href="#"
-                           v-if="global.perms.change_entry"
+                           v-if="this.$perms.change_entry"
                            v-on:click.prevent
                            v-on:click="editEntry">
                             Edit
                         </a>
                         <a class="dropdown-item entry-menu-restart"
                            href="#"
-                           v-if="global.perms.change_entry"
+                           v-if="this.$perms.change_entry"
                            v-on:click.prevent
                            v-on:click="restartEntry">
                             Restart
                         </a>
                         <a class="dropdown-item entry-menu-delete"
                            href="#"
-                           v-if="global.perms.delete_entry"
+                           v-if="this.$perms.delete_entry"
                            v-on:click.prevent
                            v-on:click="deleteEntry">
                             Delete

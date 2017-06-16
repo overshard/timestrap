@@ -8,6 +8,10 @@ const Timesheet = require('./components/timesheet.vue');
 const Reports = require('./components/reports.vue');
 const Invoicing = require('./components/invoicing.vue');
 
+// quickFetch must be loaded first, as it is used by other plugins.
+const quickFetch = require('./plugins/quickfetch.js');
+const user = require('./plugins/user.js');
+const perms = require('./plugins/permissions.js');
 
 // TODO: Figure out why this isn't working...
 Vue.config.devtools = false;
@@ -33,29 +37,9 @@ const router = new VueRouter({
 
 
 // Load plugins
-const quickFetch = require('./plugins/quickfetch.js');
 Vue.use(quickFetch);
-
-const user = require('./plugins/user.js');
 Vue.use(user);
-
-
-// Set up "global" plugin with user and permissions data.
-const global = {
-    perms: Vue.prototype.$quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(data => {
-        let perms = Object;
-        for (let i = 0; i < data.length; i++) {
-            perms[data[i].codename] = data[i];
-        }
-        global.perms = perms;
-    }).catch(error => console.log(error))
-};
-global.install = function() {
-    Object.defineProperty(Vue.prototype, 'global', {
-        get() { return global; }
-    });
-};
-Vue.use(global);
+Vue.use(perms);
 
 
 // Set up event bus for app-wide communication.

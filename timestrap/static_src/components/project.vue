@@ -1,7 +1,7 @@
 <template>
 <div class="project row py-2 bg-faded">
 
-    <template v-if="edit && global.perms.change_project">
+    <template v-if="edit && this.$perms.change_project">
     <div class="col-8">
         <input name="project-name"
                type="text"
@@ -29,7 +29,7 @@
     </template>
 
     <template v-else>
-    <div v-bind:class="['col-' + [global.perms.change_project ? '6' : '8'], 'mb-1']">{{ project.name }}</div>
+    <div v-bind:class="['col-' + [this.$perms.change_project ? '6' : '8'], 'mb-1']">{{ project.name }}</div>
     <div class="col-4 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
             <div v-if="project.percent_done"
@@ -47,7 +47,7 @@
         <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ project.total_entries }}</span>
     </div>
-    <div class="col-2" v-if="global.perms.change_project">
+    <div class="col-2" v-if="this.$perms.change_project">
         <button name="project-change"
                 class="btn btn-warning btn-sm w-100"
                 v-on:click="editProject">
