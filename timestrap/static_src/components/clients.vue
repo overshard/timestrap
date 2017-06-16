@@ -58,7 +58,7 @@ export default {
     methods: {
         getClients(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
-            quickFetch(url).then(data => {
+            this.quickFetch(url).then(data => {
                 this.clients = data;
             }).catch(error => console.log(error));
         },
@@ -67,7 +67,7 @@ export default {
             let body = {
                 name: this.name
             };
-            quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
+            this.quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 this.name = '';
                 this.clients.unshift(data);
                 toggleButtonBusy(e.target);

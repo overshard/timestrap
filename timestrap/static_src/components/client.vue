@@ -119,7 +119,7 @@ export default {
                 name: this.name,
                 invoice_email: this.invoice_email
             };
-            quickFetch(this.client.url, 'put', body).then(data => {
+            this.quickFetch(this.client.url, 'put', body).then(data => {
                 if (data.id) {
                     this.client.name = data.name;
                     this.client.invoice_email = data.invoice_email;
@@ -138,7 +138,7 @@ export default {
                 estimate: this.project_estimate,
                 client: this.client.url
             };
-            quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
+            this.quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
                 if (data.id) {
                     this.project_name = '';
                     this.project_estimate = '';

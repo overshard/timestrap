@@ -66,7 +66,7 @@ export default {
         getTasks(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
 
-            quickFetch(url).then(data => {
+            this.quickFetch(url).then(data => {
                 this.tasks = data;
             }).catch(error => console.log(error));
         },
@@ -76,7 +76,7 @@ export default {
                 name: this.name,
                 hourly_rate: this.hourly_rate
             };
-            quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
+            this.quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
                 this.name = '';
                 this.hourly_rate = '';
                 this.tasks.unshift(data);

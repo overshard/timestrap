@@ -145,7 +145,7 @@ export default {
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
-            let entriesFetch = quickFetch(url);
+            let entriesFetch = this.quickFetch(url);
 
             entriesFetch.then(data => {
                 this.next = data.next;
@@ -183,7 +183,7 @@ export default {
                 duration: this.duration,
                 user: timestrapConfig.USER.URL
             };
-            quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
+            this.quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
                 $.growl.notice({ message: 'New entry added!' });
                 let entryAdded = false;
                 this.entries.map(entryBlock => {
@@ -208,8 +208,8 @@ export default {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
         },
         loadSelect2Options() {
-            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
-            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            let tasks = this.quickFetch(timestrapConfig.API_URLS.TASKS);
+            let clients = this.quickFetch(timestrapConfig.API_URLS.CLIENTS);
             Promise.all([tasks, clients]).then(data => {
                 this.tasks = data[0].map(function(task) {
                     return { id: task.url, text: task.name };
