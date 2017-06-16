@@ -74,6 +74,12 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <select2 id="report-order-by"
+                         v-model="orderBy"
+                         v-bind:options="orderByOptions"
+                         placeholder="Order by"></select2>
+            </div>
             <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
                 Generate Report
             </button>
@@ -127,6 +133,14 @@ export default {
             next: null,
             previous: null,
             exportFormat: 'csv',
+            orderByOptions: [
+                { id: 'project__client__name', text: 'Client' },
+                { id: 'date', text: 'Date' },
+                { id: 'project__name', text: 'Project' },
+                { id: 'task__name', text: 'Task' },
+                { id: 'user__username', text: 'User' }
+            ],
+            orderBy: 'date',
             project__client: null,
             dateMin: null,
             dateMax: null,
@@ -181,6 +195,7 @@ export default {
         },
         getReport() {
             const query = {
+                ordering: this.orderBy,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
@@ -189,10 +204,12 @@ export default {
                 task: this.task
             };
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
+            console.log(url);
             this.getEntries(url);
         },
         exportReport() {
             const query = {
+                ordering: this.orderBy,
                 user: this.user,
                 project: this.project,
                 project__client: this.client,
