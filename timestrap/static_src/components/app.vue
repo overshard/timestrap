@@ -51,10 +51,10 @@
             <li class="nav-item dropup">
                 <a class="nav-link dropdown-toggle"
                     data-toggle="dropdown">
-                    <img v-bind:src="global.user.gravatar_url"
-                        width="30"
-                        height="30"
-                        class="mr-1" />
+                    <img v-bind:src="this.$user.gravatar_url"
+                         width="30"
+                         height="30"
+                         class="mr-1" />
                     {{ username }}
                 </a>
                 <div class="dropdown-menu">

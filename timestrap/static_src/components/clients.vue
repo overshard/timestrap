@@ -16,7 +16,7 @@
 
     <form name="client-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-if="global.perms.add_client"
+          v-if="this.$perms.add_client"
           v-on:submit.prevent
           v-on:submit="submitClient">
         <div class="col-10">
@@ -58,7 +58,7 @@ export default {
     methods: {
         getClients(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
-            quickFetch(url).then(data => {
+            this.$quickFetch(url).then(data => {
                 this.clients = data;
             }).catch(error => console.log(error));
         },
@@ -67,7 +67,7 @@ export default {
             let body = {
                 name: this.name
             };
-            quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
+            this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 this.name = '';
                 this.clients.unshift(data);
                 toggleButtonBusy(e.target);

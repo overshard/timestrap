@@ -182,7 +182,7 @@ export default {
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
-            let entriesFetch = quickFetch(url);
+            let entriesFetch = this.$quickFetch(url);
 
             entriesFetch.then(data => {
                 this.next = data.next;
@@ -247,9 +247,9 @@ export default {
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
         loadSelect2Options() {
-            let users = quickFetch(timestrapConfig.API_URLS.USERS);
-            let clients = quickFetch(timestrapConfig.API_URLS.CLIENTS);
-            let tasks = quickFetch(timestrapConfig.API_URLS.TASKS);
+            let users = this.$quickFetch(timestrapConfig.API_URLS.USERS);
+            let clients = this.$quickFetch(timestrapConfig.API_URLS.CLIENTS);
+            let tasks = this.$quickFetch(timestrapConfig.API_URLS.TASKS);
             Promise.all([users, clients, tasks]).then(data => {
                 this.users = data[0].map(function(user) {
                     return { id: user.id, text: user.username };

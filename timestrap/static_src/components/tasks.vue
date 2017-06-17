@@ -13,7 +13,7 @@
 
     <form name="task-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-if="global.perms.add_task"
+          v-if="this.$perms.add_task"
           v-on:submit.prevent
           v-on:submit="submitTask">
         <div class="col-8">
@@ -66,7 +66,7 @@ export default {
         getTasks(url) {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
 
-            quickFetch(url).then(data => {
+            this.$quickFetch(url).then(data => {
                 this.tasks = data;
             }).catch(error => console.log(error));
         },
@@ -76,7 +76,7 @@ export default {
                 name: this.name,
                 hourly_rate: this.hourly_rate
             };
-            quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
+            this.$quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
                 this.name = '';
                 this.hourly_rate = '';
                 this.tasks.unshift(data);

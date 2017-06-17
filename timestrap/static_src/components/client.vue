@@ -28,9 +28,9 @@
     </template>
 
     <template v-else>
-    <div v-bind:class="['col-' + [global.perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
+    <div v-bind:class="['col-' + [this.$perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
         <a class="client-view-projects text-primary font-weight-bold"
-           v-if="global.perms.view_project"
+           v-if="this.$perms.view_project"
            v-on:click="toggleProjects">
             <i v-bind:class="['fa', 'small', 'mr-2', 'fa-chevron-circle-' + [showProjects ? 'down' : 'up']]"
                aria-hidden="true"></i>
@@ -46,7 +46,7 @@
         <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ client.total_projects }}</span>
     </div>
-    <div class="col-2" v-if="global.perms.change_client">
+    <div class="col-2" v-if="this.$perms.change_client">
         <button name="client-change"
                 class="btn btn-warning btn-sm w-100"
                 v-on:click="editClient">
@@ -57,7 +57,7 @@
 
     <div class="col-12" v-if="showProjects">
         <form name="project-add"
-              v-if="global.perms.add_project"
+              v-if="this.$perms.add_project"
               v-on:submit.prevent
               v-on:submit="submitProject">
             <div class="row bg-faded py-2">
@@ -119,7 +119,7 @@ export default {
                 name: this.name,
                 invoice_email: this.invoice_email
             };
-            quickFetch(this.client.url, 'put', body).then(data => {
+            this.$quickFetch(this.client.url, 'put', body).then(data => {
                 if (data.id) {
                     this.client.name = data.name;
                     this.client.invoice_email = data.invoice_email;
@@ -138,7 +138,7 @@ export default {
                 estimate: this.project_estimate,
                 client: this.client.url
             };
-            quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
+            this.$quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
                 if (data.id) {
                     this.project_name = '';
                     this.project_estimate = '';
