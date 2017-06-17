@@ -31,7 +31,8 @@
             <button
                     name="client-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100">
+                    class="btn btn-success btn-sm w-100"
+                    v-block-during-fetch>
                 Add
             </button>
         </div>
@@ -63,14 +64,12 @@ export default {
             }).catch(error => console.log(error));
         },
         submitClient(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 name: this.name
             };
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 this.name = '';
                 this.clients.unshift(data);
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         }
     },

@@ -21,7 +21,8 @@
         <button id="timer-entry-save"
                 class="btn btn-primary"
                 v-if="!this.running && entry"
-                v-on:click="saveEntry">Save</button>
+                v-on:click="saveEntry"
+                v-block-during-fetch>Save</button>
         <button id="timer-reset"
                 class="btn btn-danger"
                 v-on:click="reset"
@@ -75,7 +76,6 @@ export default {
             this.entry = false;
         },
         saveEntry(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 user: this.entry.user,
                 project: this.entry.project,
@@ -87,7 +87,6 @@ export default {
                     $.growl.notice({ message: 'New entry duration saved!' });
                     this.reset();
                 }
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
     },

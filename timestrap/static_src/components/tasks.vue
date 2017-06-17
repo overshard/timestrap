@@ -36,7 +36,8 @@
             <button
                     name="task-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100">
+                    class="btn btn-success btn-sm w-100"
+                    v-block-during-fetch>
                 Add
             </button>
         </div>
@@ -71,7 +72,6 @@ export default {
             }).catch(error => console.log(error));
         },
         submitTask(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 name: this.name,
                 hourly_rate: this.hourly_rate
@@ -80,7 +80,6 @@ export default {
                 this.name = '';
                 this.hourly_rate = '';
                 this.tasks.unshift(data);
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
     },

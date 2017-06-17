@@ -26,6 +26,7 @@
         <div class="col-sm-2" v-if="this.$perms.change_entry">
             <button name="entry-save"
                     class="btn btn-success btn-sm w-100"
+                    v-block-during-fetch
                     v-on:click="saveEntry">
                 Save
             </button>
@@ -124,7 +125,6 @@ export default {
             }).catch(error => console.log(error));
         },
         saveEntry(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 user: this.user,
                 project: this.project,
@@ -140,7 +140,6 @@ export default {
                     this.task_details = data.task_details;
                     this.duration = durationToString(data.duration);
                 }
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry() {

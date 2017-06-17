@@ -21,6 +21,7 @@
     <div class="col-2">
         <button name="task-save"
                 class="btn btn-success btn-sm w-100"
+                v-block-during-fetch
                 v-on:click="saveTask">
             Save
         </button>
@@ -38,6 +39,7 @@
     <div class="col-2" v-if="this.$perms.change_task">
         <button name="task-change"
                 class="btn btn-warning btn-sm w-100"
+                v-block-during-fetch
                 v-on:click="editTask">
             Edit
         </button>
@@ -61,7 +63,6 @@ export default {
             this.edit = true;
         },
         saveTask(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 name: this.name,
                 hourly_rate: this.hourly_rate
@@ -72,7 +73,6 @@ export default {
                     this.task.hourly_rate = data.hourly_rate;
                     this.edit = false;
                 }
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
     }
