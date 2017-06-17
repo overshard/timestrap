@@ -14,14 +14,16 @@
     </div>
 
     <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
-        <div class="col-sm-3 mb-2">
-            Date
-        </div>
-        <div class="col-sm-3 mb-2">
-            Task
-        </div>
-        <div class="col-sm-6">
-        </div>
+        <template v-if="advancedMode">
+            <div class="col-sm-3 mb-2">
+                Date
+            </div>
+            <div class="col-sm-3 mb-2">
+                Task
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </template>
         <div class="col-sm-3">
             Project
         </div>
@@ -32,6 +34,12 @@
             Duration
         </div>
         <div class="col-sm-2">
+            <a href="#"
+                v-on:click.prevent
+                v-on:click="advanced"
+                class="btn btn-info btn-sm w-100">
+                Advanced
+            </a>
         </div>
     </div>
 
@@ -41,22 +49,24 @@
           v-if="this.$perms.add_entry"
           v-on:submit.prevent
           v-on:submit="submitEntry">
-        <div class="col-sm-3 mb-2">
-            <datepicker name="entry-date"
-                        type="text"
-                        class="form-control form-control-sm date-input"
-                        v-model="date"
-                        v-bind:default="new Date()"
-                        placeholder="Date"></datepicker>
-        </div>
-        <div class="col-sm-3">
-            <select2 id="entry-task"
-                     v-model="task"
-                     v-bind:options="tasks"
-                     placeholder="Tasks"></select2>
-        </div>
-        <div class="col-sm-6">
-        </div>
+        <template v-if="advancedMode">
+            <div class="col-sm-3 mb-2">
+                <datepicker name="entry-date"
+                            type="text"
+                            class="form-control form-control-sm date-input"
+                            v-model="date"
+                            v-bind:default="new Date()"
+                            placeholder="Date"></datepicker>
+            </div>
+            <div class="col-sm-3">
+                <select2 id="entry-task"
+                        v-model="task"
+                        v-bind:options="tasks"
+                        placeholder="Tasks"></select2>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </template>
         <div class="col-sm-3">
             <select2 id="entry-project"
                      v-model="project"
@@ -138,7 +148,8 @@ export default {
             previous: null,
             editable: true,
             tasks: {},
-            projects: {}
+            projects: {},
+            advancedMode: false
         };
     },
     methods: {
@@ -223,6 +234,9 @@ export default {
         },
         moment(date) {
             return moment(date).format('LL');
+        },
+        advanced() {
+            this.advancedMode = !this.advancedMode;
         }
     },
     mounted() {
