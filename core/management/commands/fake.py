@@ -74,6 +74,7 @@ class Command(BaseCommand):
 
         users = User.objects.all()
         projects = Project.objects.all()
+        tasks = Task.objects.all()
 
         for project in projects:
             entry_iterations = randint(iterations*2, iterations*4)
@@ -90,6 +91,7 @@ class Command(BaseCommand):
                 Entry.objects.create(
                     project=project,
                     user=choice(users),
+                    task=choice(tasks),
                     date=date,
                     duration=duration,
                     note=fake.sentence(nb_words=6, variable_nb_words=True)
