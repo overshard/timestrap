@@ -50,7 +50,7 @@
         <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
             {{ duration }}
         </div>
-        <div v-bind:class="[[editable ? 'invisible' : 'col-sm-2'], 'd-flex', 'align-self-center', 'justify-content-end',]">
+        <div v-bind:class="[[editable ? 'hidden-xl-down' : 'col-sm-2'], 'd-flex', 'align-self-center', 'justify-content-end',]">
             {{ checkInvoiced(invoiced) }}
         </div>
         <template v-if="editable">
