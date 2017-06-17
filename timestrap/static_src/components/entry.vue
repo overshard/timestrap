@@ -40,7 +40,7 @@
             </div>
             {{ project_details.name }}
         </div>
-        <div v-bind:class="['d-flex', 'flex-column', 'align-self-end', 'tasks', [editable ? 'col-sm-5' : 'col-sm-7']]">
+        <div v-bind:class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-5']">
             <div class="text-muted small"
                  v-if="task">
                 {{ task_details.name }}
@@ -49,6 +49,9 @@
         </div>
         <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
             {{ duration }}
+        </div>
+        <div v-bind:class="[[editable ? 'invisible' : 'col-sm-2'], 'd-flex', 'align-self-center', 'justify-content-end',]">
+            {{ checkInvoiced(invoiced) }}
         </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
@@ -155,6 +158,13 @@ export default {
         },
         restartEntry() {
             this.bus.$emit('timerToggle', this.entry);
+        },
+        checkInvoiced(check) {
+            if (check) {
+                return 'Invoiced';
+            } else {
+                return 'Not Invoiced';
+            }
         }
     },
     components: {
