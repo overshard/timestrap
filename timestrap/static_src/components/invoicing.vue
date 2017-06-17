@@ -17,16 +17,16 @@
 
     <div class="entry-rows">
         <div class="entry row py-2 bg-faded small" v-for="invoice in invoices">
-            <div class="col">
+            <div class="col-3">
                 {{ moment(invoice.created) }}
             </div>
-            <div class="col">
+            <div class="col-5">
                 {{ invoice.client_details.name }}
             </div>
-            <div class="col">
+            <div class="col-2">
                 $ {{ invoice.amount }}
             </div>
-            <div class="col">
+            <div class="col-2">
                 {{ moment(invoice.paid) }}
             </div>
         </div>
