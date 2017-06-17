@@ -2,7 +2,10 @@
 <div class="container">
     <div class="row py-2 mb-4 bg-faded rounded">
         <div class="col-12">
-            <button id="export-report" class="btn btn-primary btn-sm" v-on:click="exportReport">
+            <button id="export-report"
+                    class="btn btn-primary btn-sm"
+                    v-block-during-fetch
+                    v-on:click="exportReport">
                 <i class="fa fa-download" aria-hidden="true"></i>
                 Export Report
             </button>
@@ -94,7 +97,10 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <button id="generate-report" type="submit" class="btn btn-primary btn-sm w-100">
+            <button id="generate-report"
+                    type="submit"
+                    class="btn btn-primary btn-sm w-100"
+                    v-block-during-fetch>
                 Generate Report
             </button>
         </div>
@@ -176,9 +182,6 @@ export default {
     },
     methods: {
         getEntries(url) {
-            toggleButtonBusy($('#generate-report'));
-            toggleButtonBusy($('#export-report'));
-
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -207,9 +210,6 @@ export default {
 
                 this.subtotal = durationToString(data.subtotal_duration);
                 this.total = durationToString(data.total_duration);
-
-                toggleButtonBusy($('#generate-report'));
-                toggleButtonBusy($('#export-report'));
             });
         },
         getReport() {

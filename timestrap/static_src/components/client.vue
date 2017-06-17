@@ -21,6 +21,7 @@
     <div class="col-2">
         <button name="client-save"
                 class="btn btn-success btn-sm w-100"
+                v-block-during-fetch
                 v-on:click="saveClient">
             Save
         </button>
@@ -49,6 +50,7 @@
     <div class="col-2" v-if="this.$perms.change_client">
         <button name="client-change"
                 class="btn btn-warning btn-sm w-100"
+                v-block-during-fetch
                 v-on:click="editClient">
             Edit
         </button>
@@ -79,7 +81,8 @@
                 <div class="col-2">
                     <button name="project-add-submit"
                             type="submit"
-                            class="btn btn-success btn-sm w-100">
+                            class="btn btn-success btn-sm w-100"
+                            v-block-during-fetch>
                         Add
                     </button>
                 </div>
@@ -114,7 +117,6 @@ export default {
             this.edit = true;
         },
         saveClient(e) {
-            toggleButtonBusy(e.target);
             const body = {
                 name: this.name,
                 invoice_email: this.invoice_email
@@ -125,14 +127,12 @@ export default {
                     this.client.invoice_email = data.invoice_email;
                     this.edit = false;
                 }
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         toggleProjects() {
             this.showProjects = !this.showProjects;
         },
         submitProject(e) {
-            toggleButtonBusy(e.target);
             const body = {
                 name: this.project_name,
                 estimate: this.project_estimate,
@@ -144,7 +144,6 @@ export default {
                     this.project_estimate = '';
                     this.client.projects.unshift(data);
                 }
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         }
     },

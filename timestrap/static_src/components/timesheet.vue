@@ -81,7 +81,8 @@
         <div class="col-sm-2">
             <button name="entry-add-submit"
                     type="submit"
-                    class="btn btn-success btn-sm w-100">
+                    class="btn btn-success btn-sm w-100"
+                    v-block-during-fetch>
                 Add
             </button>
         </div>
@@ -174,7 +175,6 @@ export default {
             });
         },
         submitEntry(e) {
-            toggleButtonBusy(e.target);
             let body = {
                 date: this.date,
                 task: this.task,
@@ -201,7 +201,6 @@ export default {
                 }
                 this.note = '';
                 this.duration = '';
-                toggleButtonBusy(e.target);
             }).catch(error => console.log(error));
         },
         deleteEntry: function(blockIndex, entryIndex) {
