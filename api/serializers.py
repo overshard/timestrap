@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import hashlib
+from decimal import Decimal, ROUND_DOWN
 
 from django.contrib.auth.models import User, Permission
 
@@ -9,6 +10,7 @@ from rest_framework import serializers
 
 from core.models import Client, Project, Entry
 from core.fields import DurationField
+from core.utils import duration_decimal
 
 from core.models import Task, Invoice
 
@@ -130,7 +132,17 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
+    client_details = ProjectClientSerializer(source='client', read_only=True)
+    amount = serializers.SerializerMethodField()
+
     class Meta:
         model = Invoice
-        fields = ('id', 'url', 'client', 'entries', 'created', 'paid',
-                  'transaction_id',)
+        fields = ('id', 'url', 'client', 'client_details', 'amount', 'entries',
+                  'created', 'paid', 'transaction_id',)
+
+    def get_amount(self, obj):
+        total = Decimal('0.00')
+        for entry in obj.entries.iterator():
+            total += Decimal(
+                duration_decimal(entry.duration) * entry.task.hourly_rate)
+        return total.quantize(Decimal('.01'), rounding=ROUND_DOWN)
