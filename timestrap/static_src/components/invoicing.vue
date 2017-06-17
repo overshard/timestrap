@@ -27,7 +27,7 @@
                 $ {{ invoice.amount }}
             </div>
             <div class="col">
-                {{ invoice.paid }}
+                {{ moment(invoice.paid) }}
             </div>
         </div>
     </div>
@@ -53,7 +53,11 @@ export default {
             });
         },
         moment(date) {
-            return moment(date).format('LL');
+            if (date) {
+                return moment(date).format('LL');
+            } else {
+                return 'Not Paid';
+            }
         }
     },
     mounted() {
