@@ -6,7 +6,7 @@ const Clients = require('./components/clients.vue');
 const Tasks = require('./components/tasks.vue');
 const Timesheet = require('./components/timesheet.vue');
 const Reports = require('./components/reports.vue');
-const Invoicing = require('./components/invoicing.vue');
+const Invoices = require('./components/invoices.vue');
 
 // quickFetch must be loaded first, as it is used by other plugins.
 const quickFetch = require('./plugins/quickfetch.js');
@@ -31,7 +31,7 @@ const routes = [
     { path: '/tasks/', name: 'tasks', component: Tasks },
     { path: '/timesheet/', name: 'timesheet', component: Timesheet },
     { path: '/reports/', name: 'reports', component: Reports },
-    { path: '/invoicing/', name: 'invoicing', component: Invoicing }
+    { path: '/invoices/', name: 'invoices', component: Invoices }
 ];
 const router = new VueRouter({
     mode: 'history',

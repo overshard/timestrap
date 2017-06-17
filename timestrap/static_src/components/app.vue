@@ -43,9 +43,9 @@
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link id="nav-app-reports" class="nav-link" v-bind:to="invoicing">
+                <router-link id="nav-app-reports" class="nav-link" v-bind:to="invoices">
                     <i class="fa fa-credit-card-alt mr-1" aria-hidden="true"></i>
-                    Invoicing
+                    Invoices
                 </router-link>
             </li>
             <li class="nav-item dropup">
@@ -92,7 +92,7 @@ export default {
             clients: timestrapConfig.CORE_URLS.CLIENTS,
             tasks: timestrapConfig.CORE_URLS.TASKS,
             reports: timestrapConfig.CORE_URLS.REPORTS,
-            invoicing: timestrapConfig.CORE_URLS.INVOICING,
+            invoices: timestrapConfig.CORE_URLS.INVOICES,
             username: timestrapConfig.USER.NAME,
             api: timestrapConfig.CORE_URLS.API,
             admin: timestrapConfig.CORE_URLS.ADMIN,
