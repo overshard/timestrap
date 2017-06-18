@@ -30,10 +30,18 @@
     </template>
 
     <template v-else>
-    <div v-bind:class="['col-' + [this.$perms.change_project ? '6' : '8'], 'mb-1']">
-        <strong>{{ project.name }}</strong>
+    <div v-bind:class="['col-' + [this.$perms.change_project ? '4' : '6'], 'mb-1']">
+        {{ project.name }}
     </div>
-    <div class="col-4 d-flex align-items-center" v-if="project.percent_done">
+    <div class="col-2 d-flex align-items-center">
+        <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
+        <span class="mb-1">{{ project.total_duration }}</span>
+    </div>
+    <div class="col-2 d-flex align-items-center">
+        <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
+        <span class="mb-1">{{ project.total_entries }}</span>
+    </div>
+    <div class="col-2 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
             <div v-if="project.percent_done"
                  v-bind:class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
@@ -42,21 +50,37 @@
             </div>
         </div>
     </div>
-    <div class="col-2 d-flex align-items-center" v-if="!project.percent_done">
-        <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-        <span class="mb-1">{{ project.total_duration }}</span>
+    <div class="col-2 d-flex align-items-center" v-else>
+        No Estimate
     </div>
-    <div class="col-2 d-flex align-items-center" v-if="!project.percent_done">
-        <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
-        <span class="mb-1">{{ project.total_entries }}</span>
-    </div>
-    <div class="col-2" v-if="this.$perms.change_project">
-        <button name="project-change"
-                class="btn btn-warning btn-sm w-100"
-                v-block-during-fetch
-                v-on:click="editProject">
-            Edit
-        </button>
+    <div class="col-sm-2 d-flex align-self-center justify-content-end">
+        <template v-if="this.$perms.change_project || this.$perms.delete_project">
+            <button name="project-menu"
+                    class="btn btn-faded btn-sm btn-icon dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="project-menu">
+                <a class="dropdown-item project-menu-change"
+                   href="#"
+                   v-if="this.$perms.change_project"
+                   v-on:click.prevent
+                   v-on:click="editProject">
+                    Edit
+                </a>
+                <a class="dropdown-item project-menu-delete"
+                   href="#"
+                   v-if="this.$perms.delete_project"
+                   v-on:click.prevent
+                   v-on:click="deleteProject">
+                    Delete
+                </a>
+            </div>
+        </template>
     </div>
     </template>
 </div>
@@ -90,6 +114,16 @@ export default {
                     this.edit = false;
                 }
             }).catch(error => console.log(error));
+        },
+        deleteProject() {
+            this.$quickFetch(this.project.url, 'delete').then(function(response) {
+                if (response.status === 204) {
+                    $.growl.notice({ message: 'Project deleted!' });
+                    this.$emit('delete-project');
+                } else {
+                    $.growl.error({ message: 'Project delete failed ):' });
+                }
+            }.bind(this));
         }
     }
 };

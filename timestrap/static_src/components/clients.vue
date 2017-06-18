@@ -10,10 +10,20 @@
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Client
             </button>
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#newProjectModal"
+                    v-if="this.$perms.add_project">
+                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                New Project
+            </button>
         </div>
     </div>
 
     <new-client @appendClient="appendClient"></new-client>
+
+    <new-project @appendProject="appendProject"></new-project>
 
     <client v-for="(client, index) in clients"
             v-bind:client="client"
@@ -27,6 +37,7 @@
 <script>
 const Client = require('./client.vue');
 const NewClient = require('./new-client.vue');
+const NewProject = require('./new-project.vue');
 
 export default {
     data() {
@@ -43,6 +54,14 @@ export default {
         },
         appendClient(client) {
             this.clients.unshift(client);
+        },
+        appendProject(project) {
+            this.clients.map(client => {
+                if (client.id === project.client_details.id) {
+                    client.projects.unshift(project);
+                }
+                return client;
+            });
         }
     },
     mounted() {
@@ -50,7 +69,8 @@ export default {
     },
     components: {
         Client,
-        NewClient
+        NewClient,
+        NewProject
     }
 };
 </script>

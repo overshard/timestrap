@@ -29,13 +29,8 @@
         </template>
 
         <template v-else>
-            <div v-bind:class="['col-' + [this.$perms.change_task ? '6' : '8'], 'd-flex', 'align-items-center']">
-                <a class="client-view-projects text-primary font-weight-bold"
-                v-if="this.$perms.view_project"
-                v-on:click="toggleProjects">
-                    <span class="text-uppercase">{{ client.name }}</span>
-                </a>
-                <span class="text-primary font-weight-bold" v-else>{{ client.name }}</span>
+            <div v-bind:class="['col-' + [this.$perms.change_task ? '4' : '6'], 'd-flex', 'align-items-center']">
+                <span class="font-weight-bold text-uppercase">{{ client.name }}</span>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
@@ -44,6 +39,10 @@
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
                 Entries
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-percent text-muted mr-2" aria-hidden="true"></i>
+                Progress
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <template v-if="this.$perms.change_client || this.$perms.delete_client">
@@ -59,13 +58,17 @@
                          aria-labelledby="entry-menu">
                         <a class="dropdown-item client-menu-change"
                            href="#"
-                           v-if="this.$perms.change_entry"
+                           v-if="this.$perms.change_client"
                            v-on:click.prevent
                            v-on:click="editClient">
                             Edit
                         </a>
-                        <a class="dropdown-item client-menu-new" href="#">
-                            New Project
+                        <a class="dropdown-item client-menu-delete"
+                           href="#"
+                           v-if="this.$perms.delete_client"
+                           v-on:click.prevent
+                           v-on:click="deleteClient">
+                            Delete
                         </a>
                     </div>
                 </template>
@@ -73,41 +76,10 @@
         </template>
     </div>
 
-    <form name="project-add"
-            v-if="this.$perms.add_project"
-            v-on:submit.prevent
-            v-on:submit="submitProject">
-        <div class="row bg-faded py-2">
-            <div class="col-8">
-                <input name="project-name"
-                        type="text"
-                        class="form-control form-control-sm"
-                        v-model.trim="project_name"
-                        placeholder="New Project Name"
-                        required/>
-            </div>
-            <div class="col-2">
-                <input name="project-estimate"
-                        type="text"
-                        class="form-control form-control-sm"
-                        placeholder="Estimate"
-                        v-model.number="project_estimate"/>
-            </div>
-            <div class="col-2">
-                <button name="project-add-submit"
-                        type="submit"
-                        class="btn btn-success btn-sm w-100"
-                        v-block-during-fetch>
-                    Add
-                </button>
-            </div>
-        </div>
-    </form>
-
     <project v-for="(project, index) in client.projects"
-            v-bind:project="project"
-            v-bind:index="index"
-            v-bind:key="client.projects.id">
+             v-bind:project="project"
+             v-bind:index="index"
+             v-bind:key="client.projects.id">
     </project>
 </div>
 </template>
@@ -141,19 +113,15 @@ export default {
                 }
             }).catch(error => console.log(error));
         },
-        submitProject(e) {
-            const body = {
-                name: this.project_name,
-                estimate: this.project_estimate,
-                client: this.client.url
-            };
-            this.$quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
-                if (data.id) {
-                    this.project_name = '';
-                    this.project_estimate = '';
-                    this.client.projects.unshift(data);
+        deleteClient() {
+            this.$quickFetch(this.client.url, 'delete').then(function(response) {
+                if (response.status === 204) {
+                    $.growl.notice({ message: 'Client deleted!' });
+                    this.$emit('delete-client');
+                } else {
+                    $.growl.error({ message: 'Client delete failed ):' });
                 }
-            }).catch(error => console.log(error));
+            }.bind(this));
         }
     },
     components: {
