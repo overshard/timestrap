@@ -42,14 +42,14 @@ class PermissionViewSet(viewsets.ModelViewSet):
 
 
 class ClientViewSet(viewsets.ModelViewSet):
-    queryset = Client.objects.all()
+    queryset = Client.objects.filter(archive=False)
     serializer_class = ClientSerializer
     pagination_class = None
     filter_fields = ('id',)
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
+    queryset = Project.objects.filter(archive=False)
     serializer_class = ProjectSerializer
     pagination_class = None
     filter_fields = ('id', 'client',)

@@ -70,6 +70,13 @@
                            v-on:click="deleteClient">
                             Delete
                         </a>
+                        <a class="dropdown-item client-menu-archive"
+                           href="#"
+                           v-if="this.$perms.change_client"
+                           v-on:click.prevent
+                           v-on:click="archiveClient">
+                            Archive
+                        </a>
                     </div>
                 </template>
             </div>
@@ -122,6 +129,18 @@ export default {
                     $.growl.error({ message: 'Client delete failed ):' });
                 }
             }.bind(this));
+        },
+        archiveClient() {
+            const body = {
+                name: this.client.name,
+                archive: true
+            };
+            this.$quickFetch(this.client.url, 'put', body).then(data => {
+                if (data.id) {
+                    $.growl.notice({ message: 'Client archived!' });
+                    this.$emit('archive-client');
+                }
+            }).catch(error => console.log(error));
         }
     },
     components: {
