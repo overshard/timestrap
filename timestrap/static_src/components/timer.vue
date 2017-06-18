@@ -89,7 +89,7 @@ export default {
                 user: this.entry.user,
                 project: this.entry.project,
                 note: this.entry.note,
-                duration: secondsToDurationString(this.total)
+                duration: this.secondsToString(this.total)
             };
             this.$quickFetch(this.entry.url, 'put', body).then(data => {
                 if (data.id) {
@@ -97,7 +97,7 @@ export default {
                     this.reset();
                 }
             }).catch(error => console.log(error));
-        },
+        }
     },
     created() {
         this.bus.$on('timerToggle', function(entry) {
