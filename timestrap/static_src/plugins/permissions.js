@@ -8,6 +8,6 @@ module.exports = {
                 perms[data[i].codename] = data[i];
             }
             Vue.prototype.$perms = perms;
-        }).catch(error => console.log(error))
+        }).catch(error => console.error(error));
     }
 };

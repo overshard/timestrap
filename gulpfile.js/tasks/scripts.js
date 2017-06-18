@@ -21,8 +21,7 @@ gulp.task('scripts:vendor', function(){
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/jquery.growl/javascripts/jquery.growl.js',
-        'timestrap/static_src/scripts/**/*.js'])
+        'node_modules/jquery.growl/javascripts/jquery.growl.js'])
         .pipe(concat('bundle-vendor.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });

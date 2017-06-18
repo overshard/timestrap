@@ -48,9 +48,10 @@ gulp.task('lint:sass', function() {
 gulp.task('lint:es', function() {
     return gulp.src([
         'gulpfile.js/**/*.js',
-        'timestrap/static_src/scripts/**/*.js',
         'timestrap/static_src/app.js',
-        'timestrap/static_src/components/**/*.vue'])
+        'timestrap/static_src/components/**/*.vue',
+        'timestrap/static_src/mixins/**/*.js',
+        'timestrap/static_src/plugins/**/*.js',])
         .pipe(eslint({
             'rules': {
                 'indent': [

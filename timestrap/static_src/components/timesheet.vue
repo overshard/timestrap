@@ -133,11 +133,13 @@
 
 <script>
 const Datepicker = require('./datepicker.vue');
+const DurationFormatter = require('../mixins/durationformatter');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
 
 export default {
+    mixins: [ DurationFormatter ],
     data() {
         return {
             entries: null,
@@ -181,8 +183,8 @@ export default {
                     });
                 });
 
-                this.subtotal = durationToString(data.subtotal_duration);
-                this.total = durationToString(data.total_duration);
+                this.subtotal = this.durationToString(data.subtotal_duration);
+                this.total = this.durationToString(data.total_duration);
             });
         },
         submitEntry(e) {
