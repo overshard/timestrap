@@ -4,20 +4,28 @@
         <button id="timer-start"
                 class="btn btn-success"
                 v-if="!this.running"
-                v-on:click="toggle">Start</button>
+                v-on:click="toggle">
+            <i class="fa fa-play" aria-hidden="true"></i>
+        </button>
         <button id="timer-stop"
                 class="btn btn-success"
                 v-if="this.running"
-                v-on:click="toggle">Stop</button>
+                v-on:click="toggle">
+            <i class="fa fa-stop" aria-hidden="true"></i>
+        </button>
         <button id="timer-entry-save"
                 class="btn btn-primary"
                 v-if="!this.running && entry"
                 v-on:click="saveEntry"
-                v-block-during-fetch>Save</button>
+                v-block-during-fetch>
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </button>
         <button id="timer-reset"
                 class="btn btn-danger"
                 v-on:click="reset"
-                v-bind:disabled="this.total === 0">Reset</button>
+                v-bind:disabled="this.total === 0">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
     </div>
     <div id="timer-value" v-bind:class="['h4', 'mb-0', 'ml-3', [this.running ? 'text-success' : '']]">
         {{ hours }}<span>h</span> {{ minutes }}<span>m</span> {{ seconds }}<span>s</span>
