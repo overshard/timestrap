@@ -27,7 +27,7 @@
             <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
     </div>
-    <div id="timer-value" v-bind:class="['h4', 'mb-0', 'ml-3', [this.running ? 'text-success' : '']]">
+    <div id="timer-value" v-bind:class="['h5', 'mb-0', 'ml-3', [this.running ? 'text-success' : '']]">
         {{ hours }}<span>h</span> {{ minutes }}<span>m</span> {{ seconds }}<span>s</span>
     </div>
     <div v-if="entry" class="small ml-3">
