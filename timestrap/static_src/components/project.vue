@@ -1,5 +1,5 @@
 <template>
-<div class="project row py-1 bg-faded">
+<div class="project row py-1 bg-faded" v-if="!project.archive">
 
     <template v-if="edit && this.$perms.change_project">
     <div class="col-8">
@@ -79,6 +79,13 @@
                    v-on:click="deleteProject">
                     Delete
                 </a>
+                <a class="dropdown-item project-menu-archive"
+                    href="#"
+                    v-if="this.$perms.change_project"
+                    v-on:click.prevent
+                    v-on:click="archiveProject">
+                    Archive
+                </a>
             </div>
         </template>
     </div>
@@ -124,6 +131,19 @@ export default {
                     $.growl.error({ message: 'Project delete failed ):' });
                 }
             }.bind(this));
+        },
+        archiveProject() {
+            const body = {
+                name: this.project.name,
+                client: this.project.client,
+                archive: true
+            };
+            this.$quickFetch(this.project.url, 'put', body).then(data => {
+                if (data.id) {
+                    $.growl.notice({ message: 'Project archived!' });
+                    this.$emit('project-client');
+                }
+            }).catch(error => console.log(error));
         }
     }
 };

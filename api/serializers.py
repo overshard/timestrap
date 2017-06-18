@@ -35,7 +35,7 @@ class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'url', 'name', 'client', 'estimate', 'total_entries',
-                  'total_duration', 'percent_done',)
+                  'total_duration', 'percent_done', 'archive',)
 
     def get_total_entries(self, obj):
         return obj.get_total_entries()
