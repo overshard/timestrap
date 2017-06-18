@@ -12,12 +12,21 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <input name="client-name"
-                        type="text"
-                        class="form-control"
-                        v-model.trim="name"
-                        placeholder="Client Name"
-                        required />
+                <div class="form-group">
+                    <input name="client-name"
+                           placeholder="Client Name"
+                           type="text"
+                           class="form-control"
+                           v-model.trim="name"
+                           required />
+                </div>
+                <div class="form-group">
+                    <input name="client-email"
+                           placeholder="Invoicing Email"
+                           type="text"
+                           class="form-control"
+                           v-model.trim="invoice_email" />
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -40,7 +49,8 @@ export default {
     methods: {
         submitClient(e) {
             let body = {
-                name: this.name
+                name: this.name,
+                invoice_email: this.invoice_email
             };
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 $('#newClientModal').modal('hide');

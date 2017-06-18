@@ -4,19 +4,19 @@
         <template v-if="edit">
             <div class="col-6">
                 <input name="client-name"
-                    type="text"
-                    class="form-control form-control-sm"
-                    v-model.trim="name"
-                    v-on:keyup.enter="saveClient"
-                    required />
+                       type="text"
+                       class="form-control form-control-sm"
+                       v-model.trim="name"
+                       v-on:keyup.enter="saveClient"
+                       required />
             </div>
             <div class="col-4">
                 <input name="client-email"
-                    placeholder="Invoicing Email"
-                    type="text"
-                    class="form-control form-control-sm"
-                    v-model.trim="invoice_email"
-                    v-on:keyup.enter="saveClient" />
+                       placeholder="Invoicing Email"
+                       type="text"
+                       class="form-control form-control-sm"
+                       v-model.trim="invoice_email"
+                       v-on:keyup.enter="saveClient" />
             </div>
             <div class="col-2">
                 <button name="client-save"
