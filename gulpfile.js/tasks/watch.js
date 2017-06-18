@@ -1,7 +1,13 @@
 const gulp = require('gulp');
 
 
-gulp.task('watch', ['watch:sass', 'watch:scripts', 'watch:app', 'watch:components', 'watch:plugins']);
+gulp.task('watch', [
+    'watch:sass',
+    'watch:scripts',
+    'watch:app',
+    'watch:components',
+    'watch:plugins',
+    'watch:mixins']);
 
 
 gulp.task('watch:sass', function() {
@@ -25,4 +31,8 @@ gulp.task('watch:components', function() {
 
 gulp.task('watch:plugins', function() {
     return gulp.watch('timestrap/static_src/plugins/**/*.js', ['scripts:app']);
+});
+
+gulp.task('watch:mixins', function() {
+    return gulp.watch('timestrap/static_src/mixins/**/*.js', ['scripts:app']);
 });
