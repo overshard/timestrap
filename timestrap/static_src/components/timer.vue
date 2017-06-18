@@ -39,7 +39,10 @@
 
 
 <script>
+const DurationFormatter = require('../mixins/durationformatter');
+
 export default {
+    mixins: [ DurationFormatter ],
     data() {
         return {
             running: false,
@@ -106,7 +109,7 @@ export default {
                 this.entry = entry;
                 // Entry's duration should be in _decimal_ format.
                 if (entry.duration && typeof entry.duration === 'number') {
-                    this.total = durationToSeconds(entry.duration);
+                    this.total = this.durationToSeconds(entry.duration);
                 }
             }
             this.toggle();
