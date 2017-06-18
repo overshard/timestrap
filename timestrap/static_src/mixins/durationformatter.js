@@ -5,7 +5,7 @@ module.exports = {
             if (typeof(duration) === 'number') {
                 let hours = Math.floor(duration);
                 let minutes = Math.round((duration - hours) * 60);
-                duration = hours + ':' + pad(minutes);
+                duration = hours + ':' + ('00' + minutes).slice(-2);
             }
             return duration;
         },
@@ -23,7 +23,7 @@ module.exports = {
             if (typeof(duration) === 'number') {
                 let hours = Math.floor(duration / 3600);
                 let minutes = Math.floor(duration % 3600 / 60);
-                duration = hours + ':' + pad(minutes);
+                duration = hours + ':' + ('00' + minutes).slice(-2);
             }
             return duration;
         }
