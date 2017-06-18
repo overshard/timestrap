@@ -1,42 +1,49 @@
 <template>
 <div class="container">
-    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
-        <div class="col-sm-6">
-            Client
-        </div>
-        <div class="col-sm-2">
-            Total Time
-        </div>
-        <div class="col-sm-2">
-            # Related
-        </div>
-        <div class="col-sm-2">
+    <div class="row py-2 mb-4 bg-faded rounded">
+        <div class="col-12">
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#newClientModal">
+                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                New Client
+            </button>
         </div>
     </div>
 
-    <form name="client-add"
-          class="row mb-4 py-2 bg-faded rounded-bottom"
-          v-if="this.$perms.add_client"
-          v-on:submit.prevent
-          v-on:submit="submitClient">
-        <div class="col-10">
-            <input name="client-name"
-                   type="text"
-                   class="form-control form-control-sm"
-                   v-model.trim="name"
-                   placeholder="New Client Name"
-                   required/>
+    <div class="modal fade" id="newClientModal">
+        <div class="modal-dialog">
+            <form name="client-add"
+                  class="modal-content"
+                  v-if="this.$perms.add_client"
+                  v-on:submit.prevent
+                  v-on:submit="submitClient">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
+                        New Client
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <input name="client-name"
+                            type="text"
+                            class="form-control"
+                            v-model.trim="name"
+                            placeholder="Client Name"
+                            required />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Add Client
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="col-2">
-            <button
-                    name="client-add-submit"
-                    type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-block-during-fetch>
-                Add
-            </button>
-        </div>
-    </form>
+    </div>
 
     <client v-for="(client, index) in clients"
             v-bind:client="client"
@@ -68,6 +75,7 @@ export default {
                 name: this.name
             };
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
+                $('#newClientModal').modal('hide');
                 this.name = '';
                 this.clients.unshift(data);
             }).catch(error => console.log(error));

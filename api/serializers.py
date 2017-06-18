@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import hashlib
 from decimal import Decimal, ROUND_DOWN
 
 from django.contrib.auth.models import User, Permission
@@ -16,21 +15,15 @@ from core.models import Task, Invoice
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    gravatar_url = serializers.SerializerMethodField()
-
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'gravatar_url')
-
-    def get_gravatar_url(self, obj):
-        email_hash = hashlib.md5(obj.email.lower().encode()).hexdigest()
-        return "https://www.gravatar.com/avatar/" + email_hash
+        fields = ('id', 'url', 'username',)
 
 
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Permission
-        fields = ('id', 'url', 'name', 'codename')
+        fields = ('id', 'url', 'name', 'codename',)
 
 
 class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,7 +35,7 @@ class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'url', 'name', 'client', 'estimate', 'total_entries',
-                  'total_duration', 'percent_done')
+                  'total_duration', 'percent_done',)
 
     def get_queryset(self):
         queryset = super(ClientProjectSerializer, self).get_queryset()
@@ -96,7 +89,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = Project
         fields = ('id', 'url', 'client', 'client_details', 'name',
                   'archive', 'estimate', 'total_entries', 'total_duration',
-                  'percent_done')
+                  'percent_done',)
 
     def get_queryset(self):
         queryset = super(ProjectSerializer, self).get_queryset()

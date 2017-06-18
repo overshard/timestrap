@@ -1,5 +1,5 @@
 <template>
-<div class="project row py-2 bg-faded">
+<div class="project row py-1 bg-faded">
 
     <template v-if="edit && this.$perms.change_project">
     <div class="col-8">
@@ -8,7 +8,7 @@
                class="form-control form-control-sm"
                v-model.trim="name"
                v-on:keyup.enter="saveProject"
-               required/>
+               required />
     </div>
     <div class="col-2">
         <input name="project-estimate"
@@ -17,7 +17,7 @@
                placeholder="Estimate"
                v-model.number="estimate"
                v-on:keyup.enter="saveProject"
-               required/>
+               required />
     </div>
     <div class="col-2">
         <button name="project-save"
@@ -30,7 +30,9 @@
     </template>
 
     <template v-else>
-    <div v-bind:class="['col-' + [this.$perms.change_project ? '6' : '8'], 'mb-1']">{{ project.name }}</div>
+    <div v-bind:class="['col-' + [this.$perms.change_project ? '6' : '8'], 'mb-1']">
+        <strong>{{ project.name }}</strong>
+    </div>
     <div class="col-4 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
             <div v-if="project.percent_done"

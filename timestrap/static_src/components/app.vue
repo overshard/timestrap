@@ -41,10 +41,6 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown dropdown-menu-right">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <img v-bind:src="this.$user.gravatar_url"
-                                width="30"
-                                height="30"
-                                class="mr-1" />
                             {{ username }}
                         </a>
                         <div class="dropdown-menu">
@@ -71,7 +67,7 @@
                 </div>
                 <div class="col-sm-4 text-right">
                     <form v-on:submit.prevent v-on:submit="submitSearch">
-                        <input class="form-control form-control-sm" type="text" placeholder="Search" v-model="search" />
+                        <input class="form-control form-control-sm" type="text" placeholder="Search by project, client, or entry" v-model="search" />
                     </form>
                 </div>
             </div>
