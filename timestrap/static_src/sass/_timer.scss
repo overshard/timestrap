@@ -2,4 +2,12 @@
 
 #timer-value {
     display: inline-block;
+    background: #fdfdfd;
+    padding: .1em .4em;
+    border-radius: .2em;
+
+    span {
+        color: #aaa;
+        font-size: .8em;
+    }
 }

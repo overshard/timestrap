@@ -20,7 +20,7 @@
                 v-bind:disabled="this.total === 0">Reset</button>
     </div>
     <div id="timer-value" v-bind:class="['h4', 'mb-0', 'ml-3', [this.running ? 'text-success' : '']]">
-        {{ hours }}:{{ minutes }}:{{ seconds }}
+        {{ hours }}<span>h</span> {{ minutes }}<span>m</span> {{ seconds }}<span>s</span>
     </div>
     <div v-if="entry" class="small ml-3">
         <div v-if="entry.project_details" class="text-muted">{{ entry.project_details.client_details.name }}</div>
@@ -36,25 +36,25 @@ export default {
         return {
             running: false,
             total: 0,
-            hours: '00',
-            minutes: '00',
-            seconds: '00',
+            hours: '0',
+            minutes: '0',
+            seconds: '0',
             entry: false
         };
     },
     methods: {
         tick: function() {
             ++this.total;
-            this.hours = pad(Math.floor(this.total / 3600));
-            this.minutes = pad(Math.floor(this.total % 3600 / 60));
-            this.seconds = pad(this.total % 3600 % 60);
+            this.hours = Math.floor(this.total / 3600);
+            this.minutes = Math.floor(this.total % 3600 / 60);
+            this.seconds = this.total % 3600 % 60;
         },
         toggle: function() {
             this.running = !this.running;
             if (this.running) {
-                this.hours = pad(Math.floor(this.total / 3600));
-                this.minutes = pad(Math.floor(this.total % 3600 / 60));
-                this.seconds = pad(this.total % 3600 % 60);
+                this.hours = Math.floor(this.total / 3600);
+                this.minutes = Math.floor(this.total % 3600 / 60);
+                this.seconds = this.total % 3600 % 60;
                 this.interval = setInterval(this.tick, 1000, this);
             }
             else {
@@ -68,9 +68,9 @@ export default {
             }
             this.total = 0;
             this.offset = 0;
-            this.hours = '00';
-            this.minutes = '00';
-            this.seconds = '00';
+            this.hours = '0';
+            this.minutes = '0';
+            this.seconds = '0';
             this.entry = false;
         },
         saveEntry(e) {
