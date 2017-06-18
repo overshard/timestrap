@@ -97,10 +97,12 @@
 
 
 <script>
+const DurationFormatter = require('../mixins/durationformatter');
 const Select2 = require('./select2.vue');
 
 export default {
     props: ['entry', 'editable'],
+    mixins: [ DurationFormatter ],
     data() {
         return {
             edit: false,
@@ -111,7 +113,7 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            duration: durationToString(this.entry.duration),
+            duration: this.durationToString(this.entry.duration),
             projects: {}
         };
     },
@@ -141,7 +143,7 @@ export default {
                     this.project_details = data.project_details;
                     this.task = data.task;
                     this.task_details = data.task_details;
-                    this.duration = durationToString(data.duration);
+                    this.duration = this.durationToString(data.duration);
                 }
             }).catch(error => console.log(error));
         },
