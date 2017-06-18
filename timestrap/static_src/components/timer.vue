@@ -1,12 +1,5 @@
 <template>
 <div id="timer" class="d-flex align-items-center">
-    <div v-if="entry" class="small mr-3">
-        <div v-if="entry.project_details" class="text-muted">{{ entry.project_details.client_details.name }}</div>
-        <div v-if="entry.project_details">{{ entry.project_details.name }}</div>
-    </div>
-    <div id="timer-value" v-bind:class="['h4', 'mb-0', 'mr-3', [this.running ? 'text-success' : '']]">
-        {{ hours }}:{{ minutes }}:{{ seconds }}
-    </div>
     <div class="btn-group btn-group-sm" role="group">
         <button id="timer-start"
                 class="btn btn-success"
@@ -25,6 +18,13 @@
                 class="btn btn-danger"
                 v-on:click="reset"
                 v-bind:disabled="this.total === 0">Reset</button>
+    </div>
+    <div id="timer-value" v-bind:class="['h4', 'mb-0', 'ml-3', [this.running ? 'text-success' : '']]">
+        {{ hours }}:{{ minutes }}:{{ seconds }}
+    </div>
+    <div v-if="entry" class="small ml-3">
+        <div v-if="entry.project_details" class="text-muted">{{ entry.project_details.client_details.name }}</div>
+        <div v-if="entry.project_details">{{ entry.project_details.name }}</div>
     </div>
 </div>
 </template>
