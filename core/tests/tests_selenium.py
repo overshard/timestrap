@@ -457,7 +457,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 1\nTask 1\nNote\n0:35')
 
     def test_timesheet_entry_delete(self):
-        client = Client(name='Client', archive=False)
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
                           client=client, archive=False)
@@ -475,7 +476,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'entry-menu').click()
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-delete'))
         self.find(By.CLASS_NAME, 'entry-menu-delete').click()
-        self.assertNotIn('entry', self.find(By.CLASS_NAME, 'entry-rows').text)
+        self.assertNotIn('entry', self.find(By.ID, 'entry-rows').text)
 
     def test_reports_access(self):
         self.logIn()
