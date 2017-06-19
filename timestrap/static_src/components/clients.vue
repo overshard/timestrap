@@ -1,16 +1,19 @@
 <template>
 <div class="container">
-    <div class="row py-2 mb-4 bg-faded rounded">
+    <div class="row py-2 mb-4 bg-faded rounded"
+         v-if="this.$perms.add_client || this.$perms.add_project">
         <div class="col-12">
-            <button type="button"
+            <button id="client-add"
+                    type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"
-                    data-target="#newClientModal"
+                    data-target="#new-client-modal"
                     v-if="this.$perms.add_client">
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Client
             </button>
-            <button type="button"
+            <button id="project-add"
+                    type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"
                     data-target="#newProjectModal"
@@ -21,9 +24,11 @@
         </div>
     </div>
 
-    <new-client @appendClient="appendClient"></new-client>
+    <new-client @appendClient="appendClient"
+                v-if="this.$perms.add_client"></new-client>
 
-    <new-project @appendProject="appendProject"></new-project>
+    <new-project @appendProject="appendProject"
+                 v-if="this.$perms.add_project"></new-project>
 
     <client v-for="(client, index) in clients"
             v-bind:client="client"

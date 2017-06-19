@@ -202,7 +202,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertNotIn('client-add', self.driver.page_source)
         self.addPerms(['add_client'])
         self.driver.refresh()
+        self.find(By.ID, 'client-add').click()
+        self.waitForPresence((By.ID, 'new-client-modal'))
         self.find(By.NAME, 'client-name').send_keys('Client')
+        self.find(By.NAME, 'client-email').send_keys('client@company.com')
         self.find(By.NAME, 'client-add-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'client'))
 
