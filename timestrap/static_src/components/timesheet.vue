@@ -35,9 +35,10 @@
         </div>
         <div class="col-sm-2">
             <a href="#"
-                v-on:click.prevent
-                v-on:click="advanced"
-                class="btn btn-info btn-sm w-100">
+               id="entry-advanced-fields"
+               v-on:click.prevent
+               v-on:click="advanced"
+               class="btn btn-info btn-sm w-100">
                 Advanced
             </a>
         </div>
