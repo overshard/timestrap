@@ -16,7 +16,7 @@
                     type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"
-                    data-target="#newProjectModal"
+                    data-target="#new-project-modal"
                     v-if="this.$perms.add_project">
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Project

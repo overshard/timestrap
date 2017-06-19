@@ -1,5 +1,5 @@
 <template>
-<div class="modal fade" id="newProjectModal">
+<div class="modal fade" id="new-project-modal">
     <div class="modal-dialog">
         <form name="project-add"
                 class="modal-content"
@@ -13,7 +13,8 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Client</label>
-                    <select2 v-model="client"
+                    <select2 id="project-client"
+                             v-model="client"
                              v-bind:options="clients"
                              placeholder="Clients"></select2>
                 </div>
@@ -36,10 +37,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button name="project-add-cancel"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
                     Close
                 </button>
-                <button type="submit" class="btn btn-primary">
+                <button name="project-add-submit" type="submit" class="btn btn-primary">
                     Add Project
                 </button>
             </div>
@@ -67,7 +71,7 @@ export default {
             };
             this.$quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
                 if (data.id) {
-                    $('#newProjectModal').modal('hide');
+                    $('#new-project-modal').modal('hide');
                     this.project_name = '';
                     this.project_estimate = '';
                     this.$emit('appendProject', data);
