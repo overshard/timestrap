@@ -131,8 +131,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         id attribute in order for this work. Select2 uses the select element id
         to create its container for selections.
         """
-        self.find(By.CSS_SELECTOR, '#select2-' + id +
-                  '-container + .select2-selection__arrow').click()
+        selector = '#select2-' + id + '-container + .select2-selection__arrow'
+        self.waitForClickable((By.CSS_SELECTOR, selector))
+        self.find(By.CSS_SELECTOR, selector).click()
         field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
         field.send_keys(value)
         field.send_keys(Keys.RETURN)
@@ -331,33 +332,30 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_entry'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-timesheet').click()
-        self.waitForPresence((By.ID, 'component-timesheet'))
+        self.waitForPresence((By.ID, 'entry-rows'))
 
     def test_timesheet_entry_add(self):
-        client = Client(name='Client', archive=False)
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
         client.save()
         Project(name='Project 1', estimate=timedelta(hours=1), client=client,
                 archive=False).save()
         Project(name='Project 2', estimate=timedelta(hours=1), client=client,
                 archive=False).save()
-        Task(name='Task 1', hourly_rate=130).save()
-        Task(name='Task 2', hourly_rate=80).save()
         self.logIn()
-        self.addPerms(['view_client', 'view_entry',
-                       'view_project', 'view_task'])
+        self.addPerms(['view_client', 'view_entry', 'view_project'])
         self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
         self.assertNotIn('entry-add', self.driver.page_source)
         self.addPerms(['add_entry'])
         self.driver.refresh()
-        self.select2Select('entry-task', 'Task 2')
         self.select2Select('entry-project', 'Project 1')
         self.find(By.NAME, 'entry-note').send_keys('Note')
         self.find(By.NAME, 'entry-duration').send_keys('0:35')
         self.find(By.NAME, 'entry-add-submit').submit()
         self.waitForPresence((By.CLASS_NAME, 'entry'))
         self.waitForText((By.CLASS_NAME, 'entry'),
-                         'Client\nProject 1\nTask 2\nNote\n0:35')
+                         'Client\nProject 1\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
         client = Client(name='Client', archive=False)
