@@ -1,0 +1,9 @@
+.task {
+    font-size: .9em;
+    border-top: 1px solid #eee;
+
+    &:last-child {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 1rem;
+    }
+}
