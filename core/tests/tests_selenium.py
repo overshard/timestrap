@@ -245,7 +245,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.CLASS_NAME, 'project'), 'Project 1')
 
     def test_projects_add(self):
-        Client(name='Client', archive=False).save()
+        Client(name='Client', invoice_email='client@company.com',
+               archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
@@ -262,7 +263,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'project'))
 
     def test_projects_change(self):
-        client = Client(name='Client', archive=False)
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
         client.save()
         Project(name='Project', client=client, estimate=timedelta(hours=1),
                 archive=False).save()
@@ -270,18 +272,16 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_project'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.find(By.CLASS_NAME, 'client-view-projects').click()
-        self.assertNotIn('project-change', self.driver.page_source)
+        self.assertNotIn('project-menu', self.driver.page_source)
         self.addPerms(['change_project'])
         self.driver.refresh()
-        self.find(By.CLASS_NAME, 'client-view-projects').click()
-        self.waitForPresence((By.NAME, 'project-change'))
-        self.find(By.NAME, 'project-change').click()
+        self.find(By.NAME, 'project-menu').click()
+        self.find(By.ID, 'project-menu-change').click()
         self.waitForPresence((By.NAME, 'project-name'))
         self.find(By.NAME, 'project-name').send_keys(' Changed')
         self.find(By.NAME, 'project-estimate').send_keys('.5')
         self.find(By.NAME, 'project-save').click()
-        self.waitForText((By.CLASS_NAME, 'project'), 'Project Changed')
+        self.waitForText((By.CLASS_NAME, 'project-name'), 'Project Changed')
 
     def test_tasks_access(self):
         self.logIn()
