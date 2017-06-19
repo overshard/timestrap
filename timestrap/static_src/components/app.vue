@@ -35,7 +35,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link id="nav-app-reports" class="nav-link" v-bind:to="invoices">
+                        <router-link id="nav-app-invoices" class="nav-link" v-bind:to="invoices">
                             <i class="fa fa-credit-card-alt mr-1" aria-hidden="true"></i>
                             Invoices
                         </router-link>

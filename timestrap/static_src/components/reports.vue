@@ -106,32 +106,34 @@
         </div>
     </form>
 
-    <div class="mb-4" v-for="entryBlock in entries">
-        <div class="row inset-row">
-            <div class="col-12">
-                <h2 class="display-4 text-muted">
-                    {{ moment(entryBlock.date) }}
-                </h2>
+    <div v-if="this.$perms.view_entry" id="entry-rows">
+        <div class="mb-4" v-for="entryBlock in entries">
+            <div class="row inset-row">
+                <div class="col-12">
+                    <h2 class="display-4 text-muted">
+                        {{ moment(entryBlock.date) }}
+                    </h2>
+                </div>
+            </div>
+            <div class="entry-rows rounded">
+                <entry v-for="(entry, index) in entryBlock.entries"
+                    v-bind:entry="entry"
+                    v-bind:index="index"
+                    v-bind:key="entry.id"
+                    v-bind:editable="editable">
+                </entry>
             </div>
         </div>
-        <div class="entry-rows rounded">
-            <entry v-for="(entry, index) in entryBlock.entries"
-                v-bind:entry="entry"
-                v-bind:index="index"
-                v-bind:key="entry.id"
-                v-bind:editable="editable">
-            </entry>
-        </div>
-    </div>
 
-    <div class="row bg-success text-white py-2 mb-4 rounded">
-        <div class="offset-sm-6 col-sm-2 text-right">
-            Subtotal<br>
-            <strong>Total</strong>
-        </div>
-        <div class="col-sm-2 text-right">
-            {{ subtotal }}<br>
-            <strong>{{ total }}</strong>
+        <div class="row bg-success text-white py-2 mb-4 rounded">
+            <div class="offset-sm-6 col-sm-2 text-right">
+                Subtotal<br>
+                <strong>Total</strong>
+            </div>
+            <div class="col-sm-2 text-right">
+                {{ subtotal }}<br>
+                <strong>{{ total }}</strong>
+            </div>
         </div>
     </div>
 </div>

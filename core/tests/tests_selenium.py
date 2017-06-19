@@ -480,9 +480,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def test_reports_access(self):
         self.logIn()
-
+        # self.assertNotIn('nav-app-reports', self.driver.page_source)
+        self.addPerms(['view_entry'])
+        self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-reports').click()
-        self.waitForPresence((By.ID, 'component-reports'))
+        self.waitForPresence((By.ID, 'entry-rows'))
 
     def test_reports_filter(self):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
