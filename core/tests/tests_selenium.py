@@ -424,7 +424,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_restart(self):
-        client = Client(name='Client', archive=False)
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
                           client=client, archive=False)
