@@ -386,7 +386,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
-        client = Client(name='Client', archive=False)
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
         client.save()
         project = Project(name='Project 1', estimate=timedelta(hours=1),
                           client=client, archive=False)
@@ -412,7 +413,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
         self.find(By.CLASS_NAME, 'entry-menu-change').click()
         self.waitForPresence((By.NAME, 'entry-save'))
-        # self.select2Select('entry-task', 'Task 2')
         self.select2Select('entry-project', 'Project 2')
         self.find(By.NAME, 'entry-note').clear()
         self.find(By.NAME, 'entry-note').send_keys('Changed note')
