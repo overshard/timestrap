@@ -210,19 +210,24 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'client'))
 
     def test_clients_change(self):
-        Client(name='Client', archive=False).save()
+        Client(name='Client', invoice_email='client@company.com',
+               archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-change', self.driver.page_source)
+        self.assertNotIn('client-menu-change', self.driver.page_source)
         self.addPerms(['change_client'])
         self.driver.refresh()
-        self.find(By.NAME, 'client-change').click()
+        self.find(By.NAME, 'client-menu').click()
+        self.find(By.ID, 'client-menu-change').click()
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
         self.find(By.NAME, 'client-save').click()
-        self.waitForText((By.CLASS_NAME, 'client'), 'Client Changed')
+        # There is no case insensitive option for this test at present and
+        # the driver returns as uppercase because the element also has class
+        # text-uppercase.
+        self.waitForText((By.CLASS_NAME, 'client-name'), 'CLIENT CHANGED')
 
     def test_projects_access(self):
         Client(name='Client', archive=False).save()

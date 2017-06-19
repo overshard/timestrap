@@ -30,7 +30,7 @@
 
         <template v-else>
             <div v-bind:class="['col-' + [this.$perms.change_task ? '4' : '6'], 'd-flex', 'align-items-center']">
-                <span class="font-weight-bold text-uppercase">{{ client.name }}</span>
+                <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
@@ -46,7 +46,7 @@
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <template v-if="this.$perms.change_client || this.$perms.delete_client">
-                    <button name="entry-menu"
+                    <button name="client-menu"
                             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                             type="button"
                             data-toggle="dropdown"
@@ -56,21 +56,24 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right"
                          aria-labelledby="entry-menu">
-                        <a class="dropdown-item client-menu-change"
+                        <a id="client-menu-change"
+                           class="dropdown-item"
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
                            v-on:click="editClient">
                             Edit
                         </a>
-                        <a class="dropdown-item client-menu-delete"
+                        <a id="client-menu-delete"
+                           class="dropdown-item"
                            href="#"
                            v-if="this.$perms.delete_client"
                            v-on:click.prevent
                            v-on:click="deleteClient">
                             Delete
                         </a>
-                        <a class="dropdown-item client-menu-archive"
+                        <a id="client-menu-archive"
+                           class="dropdown-item"
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
