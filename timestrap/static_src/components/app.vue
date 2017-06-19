@@ -9,7 +9,7 @@
                 Timestrap
             </router-link>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav">
+                <ul id="nav-app" class="navbar-nav">
                     <li class="nav-item">
                         <router-link id="nav-app-timesheet" class="nav-link" v-bind:to="timesheet">
                             <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
