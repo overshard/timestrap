@@ -5,14 +5,14 @@ const spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
+    let command = [ 'run', 'python', 'manage.py', 'test' ];
+    let args = process.argv;
+    if (args[3] == '--test' && args[4]) {
+        command.push(args[4]);
+    }
     spawn(
         'pipenv',
-        [
-            'run',
-            'python',
-            'manage.py',
-            'test'
-        ],
+        command,
         {
             stdio: 'inherit'
         }
