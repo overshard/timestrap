@@ -3,7 +3,7 @@
     <div class="row py-2 mb-4 bg-faded rounded"
          v-if="this.$perms.add_client || this.$perms.add_project">
         <div class="col-12">
-            <button id="client-add"
+            <button name="client-add"
                     type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"
@@ -12,7 +12,7 @@
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Client
             </button>
-            <button id="project-add"
+            <button name="project-add"
                     type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"

@@ -1,7 +1,7 @@
 <template>
 <div class="modal fade" id="new-client-modal">
     <div class="modal-dialog">
-        <form name="client-add"
+        <form id="client-add"
               class="modal-content"
               v-on:submit.prevent
               v-on:submit="submitClient">

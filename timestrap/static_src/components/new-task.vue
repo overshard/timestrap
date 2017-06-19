@@ -1,10 +1,10 @@
 <template>
 <div class="modal fade" id="new-task-modal">
     <div class="modal-dialog">
-        <form name="task-add"
-                class="modal-content"
-                v-on:submit.prevent
-                v-on:submit="submitTask">
+        <form id="task-add"
+              class="modal-content"
+              v-on:submit.prevent
+              v-on:submit="submitTask">
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fa fa-tasks mr-1" aria-hidden="true"></i>

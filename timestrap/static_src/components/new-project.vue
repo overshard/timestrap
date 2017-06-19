@@ -1,10 +1,10 @@
 <template>
 <div class="modal fade" id="new-project-modal">
     <div class="modal-dialog">
-        <form name="project-add"
-                class="modal-content"
-                v-on:submit.prevent
-                v-on:submit="submitProject">
+        <form id="project-add"
+              class="modal-content"
+              v-on:submit.prevent
+              v-on:submit="submitProject">
             <div class="modal-header">
                 <h5 class="modal-title">
                     New Project
