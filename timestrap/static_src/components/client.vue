@@ -86,11 +86,14 @@
         </template>
     </div>
 
-    <project v-for="(project, index) in client.projects"
+    <template v-if="this.$perms.view_project">
+        <project v-for="(project, index) in client.projects"
              v-bind:project="project"
              v-bind:index="index"
              v-bind:key="client.projects.id">
-    </project>
+        </project>
+    </template>
+
 </div>
 </template>
 

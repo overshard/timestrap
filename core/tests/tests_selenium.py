@@ -230,15 +230,19 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.CLASS_NAME, 'client-name'), 'CLIENT CHANGED')
 
     def test_projects_access(self):
-        Client(name='Client', archive=False).save()
+        client = Client(name='Client', invoice_email='client@company.com',
+                        archive=False)
+        client.save()
+        Project(name='Project 1', client=client, estimate=timedelta(hours=1),
+                archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('client-view-projects', self.driver.page_source)
+        self.assertNotIn('Project 1', self.driver.page_source)
         self.addPerms(['view_project'])
         self.driver.refresh()
-        self.waitForPresence((By.CLASS_NAME, 'client-view-projects'))
+        self.waitForText((By.CLASS_NAME, 'project'), 'Project 1')
 
     def test_projects_add(self):
         Client(name='Client', archive=False).save()
