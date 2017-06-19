@@ -30,11 +30,13 @@
     <new-project @appendProject="appendProject"
                  v-if="this.$perms.add_project"></new-project>
 
-    <client v-for="(client, index) in clients"
-            v-bind:client="client"
-            v-bind:index="index"
-            v-bind:key="client.id">
-    </client>
+    <div v-if="this.$perms.view_client" id="client-rows">
+        <client v-for="(client, index) in clients"
+                v-bind:client="client"
+                v-bind:index="index"
+                v-bind:key="client.id">
+        </client>
+    </div>
 
 </div>
 </template>

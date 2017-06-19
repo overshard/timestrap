@@ -192,7 +192,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-clients').click()
-        self.waitForPresence((By.ID, 'component-clients'))
+        self.waitForPresence((By.ID, 'client-rows'))
 
     def test_clients_add(self):
         self.logIn()
@@ -289,7 +289,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_task'])
         self.driver.get(self.live_server_url)
         self.find(By.ID, 'nav-app-tasks').click()
-        self.waitForPresence((By.ID, 'component-tasks'))
+        self.waitForPresence((By.ID, 'task-rows'))
 
     def test_tasks_add(self):
         self.logIn()
