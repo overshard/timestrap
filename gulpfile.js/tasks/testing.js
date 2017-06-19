@@ -16,7 +16,9 @@ gulp.task('test', function(cb) {
         {
             stdio: 'inherit'
         }
-    ).on('exit', cb);
+    ).on('exit', (code) => {
+        process.exit(code);
+    });
 });
 
 
