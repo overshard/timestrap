@@ -312,10 +312,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_task'])
         self.driver.get('%s%s' % (self.live_server_url, '/tasks/'))
 
-        self.assertNotIn('task-change', self.driver.page_source)
+        self.assertNotIn('task-menu-change', self.driver.page_source)
         self.addPerms(['change_task'])
         self.driver.refresh()
-        self.find(By.NAME, 'task-change').click()
+        self.find(By.NAME, 'task-menu').click()
+        self.find(By.ID, 'task-menu-change').click()
         self.waitForPresence((By.NAME, 'task-name'))
         self.find(By.NAME, 'task-name').send_keys(' Changed')
         self.find(By.NAME, 'task-hourly-rate').click()

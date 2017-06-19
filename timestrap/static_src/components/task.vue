@@ -37,7 +37,7 @@
         </div>
         <div class="col-sm-2 d-flex align-self-center justify-content-end">
             <template v-if="this.$perms.change_task || this.$perms.delete_task">
-                <button name="entry-menu"
+                <button name="task-menu"
                         class="btn btn-faded btn-sm btn-icon dropdown-toggle"
                         type="button"
                         data-toggle="dropdown"
@@ -47,18 +47,20 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="task-menu">
-                    <a class="dropdown-item task-menu-change"
-                        href="#"
-                        v-if="this.$perms.change_task"
-                        v-on:click.prevent
-                        v-on:click="editTask">
+                    <a id="task-menu-change"
+                       class="dropdown-item"
+                       href="#"
+                       v-if="this.$perms.change_task"
+                       v-on:click.prevent
+                       v-on:click="editTask">
                         Edit
                     </a>
-                    <a class="dropdown-item task-menu-delete"
-                        href="#"
-                        v-if="this.$perms.delete_task"
-                        v-on:click.prevent
-                        v-on:click="deleteTask">
+                    <a id="task-menu-delete"
+                       class="dropdown-item"
+                       href="#"
+                       v-if="this.$perms.delete_task"
+                       v-on:click.prevent
+                       v-on:click="deleteTask">
                         Delete
                     </a>
                 </div>
