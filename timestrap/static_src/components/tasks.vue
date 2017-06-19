@@ -1,11 +1,12 @@
 <template>
 <div class="container">
-    <div class="row py-2 mb-4 bg-faded rounded">
+    <div v-if="this.$perms.add_task" class="row py-2 mb-4 bg-faded rounded">
         <div class="col-12">
-            <button type="button"
+            <button name="task-add"
+                    type="button"
                     class="btn btn-primary btn-sm"
                     data-toggle="modal"
-                    data-target="#newTaskModal"
+                    data-target="#new-task-modal"
                     v-if="this.$perms.add_task">
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Task
@@ -13,9 +14,9 @@
         </div>
     </div>
 
-    <new-task @appendTask="appendTask"></new-task>
+    <new-task @appendTask="appendTask" v-if="this.$perms.add_task"></new-task>
 
-    <div class="task-rows rounded">
+    <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
         <task v-for="(task, index) in tasks"
             v-bind:task="task"
             v-bind:index="index"
