@@ -276,6 +276,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertNotIn('project-menu', self.driver.page_source)
         self.addPerms(['change_project'])
         self.driver.refresh()
+        self.waitForClickable((By.NAME, 'project-menu'))
         self.find(By.NAME, 'project-menu').click()
         self.find(By.ID, 'project-menu-change').click()
         self.waitForPresence((By.NAME, 'project-name'))
