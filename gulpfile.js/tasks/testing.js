@@ -21,7 +21,7 @@ gulp.task('test', function(cb) {
 });
 
 
-gulp.task('coverage', function() {
+gulp.task('coverage', function(cb) {
     spawn(
         'pipenv',
         [
@@ -51,7 +51,10 @@ gulp.task('coverage', function() {
                 stdio: 'inherit'
             }
         ).on('exit', (code) => {
-            process.exit(code);
+            if (code != 0) {
+                process.exit(code);
+            }
+            return cb;
         });
     });
 });
