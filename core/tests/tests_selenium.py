@@ -143,6 +143,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         for codename in perms:
             self.user.user_permissions.add(
                 Permission.objects.get(codename=codename))
+        self.wait(0.25)
 
     def logIn(self):
         self.user = User.objects.create_user(self.profile['username'],
