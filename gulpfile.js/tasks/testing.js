@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 
 const spawn = require('child_process').spawn;
-const spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
@@ -23,7 +22,7 @@ gulp.task('test', function(cb) {
 
 
 gulp.task('coverage', function() {
-    spawnSync(
+    spawn(
         'pipenv',
         [
             'run',
@@ -37,20 +36,22 @@ gulp.task('coverage', function() {
             stdio: 'inherit'
         }
     ).on('exit', (code) => {
-        process.exit(code);
-    });
-    spawnSync(
-        'pipenv',
-        [
-            'run',
-            'coverage',
-            'report',
-            '-m'
-        ],
-        {
-            stdio: 'inherit'
+        if (code != 0) {
+            process.exit(code);
         }
-    ).on('exit', (code) => {
-        process.exit(code);
+        spawn(
+            'pipenv',
+            [
+                'run',
+                'coverage',
+                'report',
+                '-m'
+            ],
+            {
+                stdio: 'inherit'
+            }
+        ).on('exit', (code) => {
+            process.exit(code);
+        });
     });
 });
