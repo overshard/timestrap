@@ -553,3 +553,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.assertEqual(len(self.find(By.CLASS_NAME, 'entry')), 3)
 
         management.call_command('flush', verbosity=0, interactive=False)
+
+    # This is a temporary test to verify changes to Gulp for CI.
+    def test_gulp_exit_code(self):
+        self.assertFalse(True)
