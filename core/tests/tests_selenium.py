@@ -173,23 +173,24 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
         self.waitForPresence((By.ID, 'timer-start'))
         self.find(By.ID, 'timer-start').click()
-        self.waitForText((By.ID, 'timer-value'), '0h 0m 2s')
+        self.wait(2)
+        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
 
     def test_timer_stop(self):
         self.logIn()
         self.waitForPresence((By.ID, 'timer-start'))
         self.find(By.ID, 'timer-start').click()
-        self.waitForText((By.ID, 'timer-value'), '0h 0m 2s')
+        self.wait(2)
         self.find(By.ID, 'timer-stop').click()
-        self.assertEquals('0h 0m 2s', self.find(By.ID, 'timer-value').text)
+        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
 
     def test_timer_reset(self):
         self.logIn()
         self.waitForPresence((By.ID, 'timer-start'))
         self.find(By.ID, 'timer-start').click()
-        self.waitForText((By.ID, 'timer-value'), '0h 0m 2s')
+        self.wait(2)
         self.find(By.ID, 'timer-stop').click()
-        self.assertEquals('0h 0m 2s', self.find(By.ID, 'timer-value').text)
+        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
         self.find(By.ID, 'timer-reset').click()
         self.waitForText((By.ID, 'timer-value'), '0h 0m 0s')
 
