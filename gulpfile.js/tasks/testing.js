@@ -36,7 +36,9 @@ gulp.task('coverage', function() {
         {
             stdio: 'inherit'
         }
-    );
+    ).on('exit', (code) => {
+        process.exit(code);
+    });
     spawnSync(
         'pipenv',
         [
@@ -48,5 +50,7 @@ gulp.task('coverage', function() {
         {
             stdio: 'inherit'
         }
-    );
+    ).on('exit', (code) => {
+        process.exit(code);
+    });
 });
