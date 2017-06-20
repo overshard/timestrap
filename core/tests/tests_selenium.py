@@ -126,6 +126,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         return WebDriverWait(self.driver, self.wait_time).until(
             ec.element_to_be_clickable(element))
 
+    def wait(self, seconds):
+        """Use a lambda that always returns False to wait for a number of
+        seconds without any expected conditions."""
+        try:
+            WebDriverWait(self.driver, seconds).until(lambda driver: 1 == 0)
+        except TimeoutException:
+            pass
+
     def select2Select(self, id, value):
         """Select a value in a select2 menu. The select element *must* have an
         id attribute in order for this work. Select2 uses the select element id
