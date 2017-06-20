@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import os
 from datetime import timedelta
-from time import sleep
 
 from django.contrib.auth.models import User, Permission
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -101,11 +100,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         else:
             return elements
 
-    def addPerms(self, perms):
-        for codename in perms:
-            self.user.user_permissions.add(
-                Permission.objects.get(codename=codename))
-        sleep(0.25)
+    def wait(self, seconds):
+        """Use a lambda that always returns False to wait for a number of
+        seconds without any expected conditions."""
+        try:
+            WebDriverWait(self.driver, seconds).until(lambda driver: 1 == 0)
+        except TimeoutException:
+            pass
 
     def waitForPresence(self, element):
         return WebDriverWait(self.driver, self.wait_time).until(
@@ -126,14 +127,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         return WebDriverWait(self.driver, self.wait_time).until(
             ec.element_to_be_clickable(element))
 
-    def wait(self, seconds):
-        """Use a lambda that always returns False to wait for a number of
-        seconds without any expected conditions."""
-        try:
-            WebDriverWait(self.driver, seconds).until(lambda driver: 1 == 0)
-        except TimeoutException:
-            pass
-
     def select2Select(self, id, value):
         """Select a value in a select2 menu. The select element *must* have an
         id attribute in order for this work. Select2 uses the select element id
@@ -145,6 +138,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         field = self.waitForPresence((By.CLASS_NAME, 'select2-search__field'))
         field.send_keys(value)
         field.send_keys(Keys.RETURN)
+
+    def addPerms(self, perms):
+        for codename in perms:
+            self.user.user_permissions.add(
+                Permission.objects.get(codename=codename))
 
     def logIn(self):
         self.user = User.objects.create_user(self.profile['username'],
