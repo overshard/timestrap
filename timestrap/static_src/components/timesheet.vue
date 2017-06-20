@@ -35,16 +35,17 @@
         </div>
         <div class="col-sm-2">
             <a href="#"
-                v-on:click.prevent
-                v-on:click="advanced"
-                class="btn btn-info btn-sm w-100">
+               id="entry-advanced-fields"
+               v-on:click.prevent
+               v-on:click="advanced"
+               class="btn btn-info btn-sm w-100">
                 Advanced
             </a>
         </div>
     </div>
 
 
-    <form name="entry-add"
+    <form id="entry-add"
           class="row mb-4 py-2 bg-faded rounded-bottom"
           v-if="this.$perms.add_entry"
           v-on:submit.prevent
@@ -98,33 +99,35 @@
         </div>
     </form>
 
-    <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
-        <div class="row inset-row">
-            <div class="col-12">
-                <h2 class="display-4 text-muted">
-                    {{ moment(entryBlock.date) }}
-                </h2>
+    <div v-if="this.$perms.view_entry" id="entry-rows">
+        <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
+            <div class="row inset-row">
+                <div class="col-12">
+                    <h2 class="display-4 text-muted">
+                        {{ moment(entryBlock.date) }}
+                    </h2>
+                </div>
+            </div>
+            <div class="rounded">
+                <entry v-for="(entry, entryIndex) in entryBlock.entries"
+                       v-on:delete-entry="deleteEntry(blockIndex, entryIndex)"
+                       v-bind:entry="entry"
+                       v-bind:index="entryIndex"
+                       v-bind:key="entry.id"
+                       v-bind:editable="editable">
+                </entry>
             </div>
         </div>
-        <div class="entry-rows rounded">
-            <entry v-for="(entry, entryIndex) in entryBlock.entries"
-                   v-on:delete-entry="deleteEntry(blockIndex, entryIndex)"
-                   v-bind:entry="entry"
-                   v-bind:index="entryIndex"
-                   v-bind:key="entry.id"
-                   v-bind:editable="editable">
-            </entry>
-        </div>
-    </div>
 
-    <div class="row bg-success text-white py-2 mb-4 rounded">
-        <div class="offset-sm-6 col-sm-2 text-right">
-            Subtotal<br>
-            <strong>Total</strong>
-        </div>
-        <div class="col-sm-2 text-right">
-            {{ subtotal }}<br>
-            <strong>{{ total }}</strong>
+        <div class="row bg-success text-white py-2 mb-4 rounded">
+            <div class="offset-sm-6 col-sm-2 text-right">
+                Subtotal<br>
+                <strong>Total</strong>
+            </div>
+            <div class="col-sm-2 text-right">
+                {{ subtotal }}<br>
+                <strong>{{ total }}</strong>
+            </div>
         </div>
     </div>
 </div>
@@ -220,19 +223,23 @@ export default {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
         },
         loadSelect2Options() {
-            let tasks = this.$quickFetch(timestrapConfig.API_URLS.TASKS);
-            let clients = this.$quickFetch(timestrapConfig.API_URLS.CLIENTS);
-            Promise.all([tasks, clients]).then(data => {
-                this.tasks = data[0].map(function(task) {
-                    return { id: task.url, text: task.name };
-                });
-                this.projects = data[1].map(function(client) {
-                    let projects = client.projects.map(function(project) {
-                        return { id: project.url, text: project.name };
+            if (this.$perms.view_task) {
+                this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
+                    this.tasks = data.map(function(task) {
+                        return { id: task.url, text: task.name };
                     });
-                    return { text: client.name, children: projects };
                 });
-            });
+            }
+            if (this.$perms.view_client && this.$perms.view_project) {
+                this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+                    this.projects = data.map(function(client) {
+                        let projects = client.projects.map(function(project) {
+                            return { id: project.url, text: project.name };
+                        });
+                        return { text: client.name, children: projects };
+                    });
+                });
+            }
         },
         moment(date) {
             return moment(date).format('LL');

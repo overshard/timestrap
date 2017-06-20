@@ -1,10 +1,10 @@
 <template>
-<div class="modal fade" id="newTaskModal">
+<div class="modal fade" id="new-task-modal">
     <div class="modal-dialog">
-        <form name="task-add"
-                class="modal-content"
-                v-on:submit.prevent
-                v-on:submit="submitTask">
+        <form id="task-add"
+              class="modal-content"
+              v-on:submit.prevent
+              v-on:submit="submitTask">
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
@@ -30,10 +30,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button name="task-add-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
                 </button>
-                <button type="submit" class="btn btn-primary">
+                <button name="task-add-submit" type="submit" class="btn btn-primary">
                     Add Task
                 </button>
             </div>
@@ -54,7 +54,7 @@ export default {
                 hourly_rate: this.hourly_rate
             };
             this.$quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
-                $('#newTaskModal').modal('hide');
+                $('#new-task-modal').modal('hide');
                 this.name = '';
                 this.hourly_rate = '';
                 this.$emit('appendTask', data);

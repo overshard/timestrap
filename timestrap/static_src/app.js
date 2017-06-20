@@ -47,6 +47,13 @@ Vue.use(perms);
 Vue.use(user);
 
 
+router.beforeEach((to, from, next) => {
+    Promise.all([Vue.prototype.$user, Vue.prototype.$perms]).then(function() {
+        next();
+    });
+});
+
+
 const app = new Vue({
     router,
     el: '#app',

@@ -30,7 +30,7 @@
     </template>
 
     <template v-else>
-    <div v-bind:class="['col-' + [this.$perms.change_project ? '4' : '6'], 'mb-1']">
+    <div v-bind:class="['col-' + [this.$perms.change_project ? '4' : '6'], 'mb-1', 'project-name']">
         {{ project.name }}
     </div>
     <div class="col-2 d-flex align-items-center">
@@ -65,25 +65,28 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="project-menu">
-                <a class="dropdown-item project-menu-change"
+                <a id="project-menu-change"
+                   class="dropdown-item"
                    href="#"
                    v-if="this.$perms.change_project"
                    v-on:click.prevent
                    v-on:click="editProject">
                     Edit
                 </a>
-                <a class="dropdown-item project-menu-delete"
+                <a id="project-menu-delete"
+                   class="dropdown-item"
                    href="#"
                    v-if="this.$perms.delete_project"
                    v-on:click.prevent
                    v-on:click="deleteProject">
                     Delete
                 </a>
-                <a class="dropdown-item project-menu-archive"
-                    href="#"
-                    v-if="this.$perms.change_project"
-                    v-on:click.prevent
-                    v-on:click="archiveProject">
+                <a id="project-menu-archive"
+                   class="dropdown-item"
+                   href="#"
+                   v-if="this.$perms.change_project"
+                   v-on:click.prevent
+                   v-on:click="archiveProject">
                     Archive
                 </a>
             </div>

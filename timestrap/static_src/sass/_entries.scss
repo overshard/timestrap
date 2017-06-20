@@ -1,29 +1,5 @@
-.inset-row {
-    margin-bottom: -.75rem;
-}
-
-.inset-row .display-4 {
-    font-size: 2rem;
-}
-
-.project-rows {
-    .row {
-        border-top: 1px solid $row-border-color;
-
-        &:nth-of-type(2n) {
-            background-color: $striping-row-color;
-        }
-
-        &:last-child {
-            border-bottom-right-radius: .25rem;
-            border-bottom-left-radius: .25rem;
-            border-bottom: 1px solid $row-border-color;
-        }
-    }
-}
-
-.entry-rows {
-    .row {
+#entry-rows {
+    .row:not(.inset-row) {
         border-top: 1px solid $row-border-color;
 
         &:first-child {
@@ -59,6 +35,14 @@
         overflow-x: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .inset-row {
+        margin-bottom: -.75rem;
+
+        .display-4 {
+            font-size: 2rem;
+        }
     }
 }
 

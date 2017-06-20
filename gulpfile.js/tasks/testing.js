@@ -1,27 +1,28 @@
 const gulp = require('gulp');
 
 const spawn = require('child_process').spawn;
-const spawnSync = require('child_process').spawnSync;
 
 
 gulp.task('test', function(cb) {
+    let command = [ 'run', 'python', 'manage.py', 'test' ];
+    let args = process.argv;
+    if (args[3] == '--test' && args[4]) {
+        command.push(args[4]);
+    }
     spawn(
         'pipenv',
-        [
-            'run',
-            'python',
-            'manage.py',
-            'test'
-        ],
+        command,
         {
             stdio: 'inherit'
         }
-    ).on('exit', cb);
+    ).on('exit', (code) => {
+        process.exit(code);
+    });
 });
 
 
-gulp.task('coverage', function() {
-    spawnSync(
+gulp.task('coverage', function(cb) {
+    spawn(
         'pipenv',
         [
             'run',
@@ -34,17 +35,26 @@ gulp.task('coverage', function() {
         {
             stdio: 'inherit'
         }
-    );
-    spawnSync(
-        'pipenv',
-        [
-            'run',
-            'coverage',
-            'report',
-            '-m'
-        ],
-        {
-            stdio: 'inherit'
+    ).on('exit', (code) => {
+        if (code != 0) {
+            process.exit(code);
         }
-    );
+        spawn(
+            'pipenv',
+            [
+                'run',
+                'coverage',
+                'report',
+                '-m'
+            ],
+            {
+                stdio: 'inherit'
+            }
+        ).on('exit', (code) => {
+            if (code != 0) {
+                process.exit(code);
+            }
+            return cb;
+        });
+    });
 });

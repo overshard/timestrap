@@ -9,7 +9,7 @@
                 Timestrap
             </router-link>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav">
+                <ul id="nav-app" class="navbar-nav">
                     <li class="nav-item">
                         <router-link id="nav-app-timesheet" class="nav-link" v-bind:to="timesheet">
                             <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
@@ -35,7 +35,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link id="nav-app-reports" class="nav-link" v-bind:to="invoices">
+                        <router-link id="nav-app-invoices" class="nav-link" v-bind:to="invoices">
                             <i class="fa fa-credit-card-alt mr-1" aria-hidden="true"></i>
                             Invoices
                         </router-link>

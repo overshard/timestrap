@@ -1,10 +1,10 @@
 <template>
-<div class="modal fade" id="newClientModal">
+<div class="modal fade" id="new-client-modal">
     <div class="modal-dialog">
-        <form name="client-add"
-                class="modal-content"
-                v-on:submit.prevent
-                v-on:submit="submitClient">
+        <form id="client-add"
+              class="modal-content"
+              v-on:submit.prevent
+              v-on:submit="submitClient">
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
@@ -29,10 +29,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button name="client-add-cancel"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
                     Close
                 </button>
-                <button type="submit" class="btn btn-primary">
+                <button name="client-add-submit" type="submit" class="btn btn-primary">
                     Add Client
                 </button>
             </div>
@@ -53,7 +56,7 @@ export default {
                 invoice_email: this.invoice_email
             };
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
-                $('#newClientModal').modal('hide');
+                $('#new-client-modal').modal('hide');
                 this.name = '';
                 this.$emit('appendClient', data);
             }).catch(error => console.log(error));
