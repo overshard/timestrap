@@ -1,8 +1,8 @@
 const gulp = require('gulp');
-
 const concat = require('gulp-concat');
-
 const spawn = require('child_process').spawn;
+
+const docsReadmeFiles = require('../config.js').docsReadmeFiles;
 
 
 gulp.task('docs', ['docs:build', 'docs:watch']);
@@ -17,13 +17,7 @@ gulp.task('docs:watch', function() {
 
 
 gulp.task('docs:github', function() {
-    gulp.src([
-        'docs/introduction/lead.md',
-        'docs/introduction/demo.md',
-        'docs/introduction/quickstart.md',
-        'docs/installation/manual.md',
-        'docs/installation/development.md',
-        'docs/introduction/further_reading.md'])
+    gulp.src(docsReadmeFiles)
         .pipe(concat('README.md'))
         .pipe(gulp.dest('.'));
 });

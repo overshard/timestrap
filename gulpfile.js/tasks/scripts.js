@@ -1,33 +1,24 @@
 const gulp = require('gulp');
-
 const concat = require('gulp-concat');
 const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
-
 const vueify = require('vueify');
 const browserify = require('browserify');
+
+const scriptsFiles = require('../config.js').scriptsFiles;
 
 
 gulp.task('scripts', ['scripts:vendor', 'scripts:app']);
 
 
-gulp.task('scripts:vendor', function(){
-    return gulp.src([
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/tether/dist/js/tether.min.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/moment/min/moment.min.js',
-        'node_modules/select2/dist/js/select2.min.js',
-        'node_modules/pickadate/lib/compressed/picker.js',
-        'node_modules/pickadate/lib/compressed/picker.date.js',
-        'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/jquery.growl/javascripts/jquery.growl.js'])
+gulp.task('scripts:vendor', () => {
+    return gulp.src(scriptsFiles)
         .pipe(concat('bundle-vendor.js'))
         .pipe(gulp.dest('timestrap/static/js/'));
 });
 
 
-gulp.task('scripts:app', function() {
+gulp.task('scripts:app', () => {
     gulp.src('timestrap/static_src/app.js', { read: false })
         .pipe(tap(function(file) {
             file.contents = browserify(file.path)
