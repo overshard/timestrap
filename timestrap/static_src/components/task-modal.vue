@@ -1,7 +1,8 @@
 <template>
 <modal>
     <h5 slot="header">
-        <i class="fa fa-tasks mr-1" aria-hidden="true"></i>New Task
+        <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
+        {{ config.task ? 'Edit: ' + config.task.name : 'New Task' }}
     </h5>
 
     <div slot="body">
@@ -24,17 +25,17 @@
     </div>
 
     <div slot="footer">
-        <button name="task-add-cancel"
+        <button name="task-modal-cancel"
                 type="button"
                 class="btn btn-secondary"
                 @click="$emit('close')">
             Close
         </button>
-        <button name="task-add-submit"
+        <button name="task-modal-submit"
                 type="submit"
                 class="btn btn-primary"
-                @click="submitTask">
-            Add Task
+                @click="submit">
+            {{ config.task ? 'Save Changes' : 'Add Task' }}
         </button>
     </div>
 </modal>
@@ -44,23 +45,29 @@
 const Modal = require('./modal.vue');
 
 export default {
-    props: ['task'],
+    props: ['config'],
     data() {
         return {
-            name: null,
-            hourly_rate: null
+            name: this.config.task ? this.config.task.name : null,
+            hourly_rate: this.config.task ? this.config.task.hourly_rate : null
         };
     },
     methods: {
-        submitTask() {
+        submit() {
             let body = {
                 name: this.name,
                 hourly_rate: this.hourly_rate
             };
-            this.$quickFetch(timestrapConfig.API_URLS.TASKS, 'post', body).then(data => {
+            let url = timestrapConfig.API_URLS.TASKS;
+            let method = 'post';
+            if (this.config.task) {
+                url = this.config.task.url;
+                method = 'put'
+            }
+            this.$quickFetch(url, method, body).then(data => {
                 this.name = '';
                 this.hourly_rate = '';
-                this.$emit('appendTask', data);
+                this.$emit('updateTask', data, this.config.index);
                 this.$emit('close');
             }).catch(error => console.log(error));
         }

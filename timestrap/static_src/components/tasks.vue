@@ -13,16 +13,18 @@
         </div>
     </div>
 
-    <task-modal @appendTask="appendTask"
+    <task-modal v-if="modal_config.show && (this.$perms.add_task || this.$perms.change_task)"
+                @updateTask="updateTask"
                 @close="toggleModal"
-                v-if="show_modal && (this.$perms.add_task || this.$perms.change_task)"></task-modal>
+                v-bind:config="modal_config"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
         <task v-for="(task, index) in tasks"
-            v-bind:task="task"
-            v-bind:index="index"
-            v-bind:key="task.id">
-        </task>
+              @removeTask="removeTask"
+              v-bind:task="task"
+              v-bind:index="index"
+              v-bind:key="task.id"
+              v-bind:toggleEditModal="toggleModal"></task>
     </div>
 </div>
 </template>
@@ -36,7 +38,7 @@ export default {
     data() {
         return {
             tasks: null,
-            show_modal: false
+            modal_config: { index: null, task: null, show: false }
         };
     },
     methods: {
@@ -47,11 +49,23 @@ export default {
                 this.tasks = data;
             }).catch(error => console.log(error));
         },
-        appendTask(task) {
-            this.tasks.unshift(task);
+        updateTask(task, index) {
+            if (task && (index || index === 0)) {
+                this.tasks[index] = task
+            }
+            else {
+                this.tasks.unshift(task);
+            }
         },
-        toggleModal() {
-            this.show_modal = !this.show_modal;
+        removeTask(index) {
+            this.tasks.splice(1, index)
+        },
+        toggleModal(task, index) {
+            if (task && (index || index === 0)) {
+                this.modal_config.task = task;
+                this.modal_config.index = index;
+            }
+            this.modal_config.show = !this.modal_config.show;
         }
     },
     mounted() {
