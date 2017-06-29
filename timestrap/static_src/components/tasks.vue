@@ -56,6 +56,8 @@ export default {
             else {
                 this.tasks.unshift(task);
             }
+            this.modal_config.index = null;
+            this.modal_config.task = null;
         },
         removeTask(index) {
             this.tasks.splice(1, index)

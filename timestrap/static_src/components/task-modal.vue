@@ -65,9 +65,9 @@ export default {
                 method = 'put'
             }
             this.$quickFetch(url, method, body).then(data => {
-                this.name = '';
-                this.hourly_rate = '';
                 this.$emit('updateTask', data, this.config.index);
+                this.name = null;
+                this.hourly_rate = null;
                 this.$emit('close');
             }).catch(error => console.log(error));
         }
