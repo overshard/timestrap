@@ -5,8 +5,7 @@
             <button name="task-add"
                     type="button"
                     class="btn btn-primary btn-sm"
-                    data-toggle="modal"
-                    data-target="#new-task-modal"
+                    @click="toggleModal"
                     v-if="this.$perms.add_task">
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Task
@@ -14,7 +13,9 @@
         </div>
     </div>
 
-    <new-task @appendTask="appendTask" v-if="this.$perms.add_task"></new-task>
+    <task-modal @appendTask="appendTask"
+                @close="toggleModal"
+                v-if="show_modal && (this.$perms.add_task || this.$perms.change_task)"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
         <task v-for="(task, index) in tasks"
@@ -29,12 +30,13 @@
 
 <script>
 const Task = require('./task.vue');
-const NewTask = require('./new-task.vue');
+const TaskModal = require('./task-modal.vue');
 
 export default {
     data() {
         return {
-            tasks: null
+            tasks: null,
+            show_modal: false
         };
     },
     methods: {
@@ -47,6 +49,9 @@ export default {
         },
         appendTask(task) {
             this.tasks.unshift(task);
+        },
+        toggleModal() {
+            this.show_modal = !this.show_modal;
         }
     },
     mounted() {
@@ -54,7 +59,7 @@ export default {
     },
     components: {
         Task,
-        NewTask
+        TaskModal
     }
 };
 </script>
