@@ -62,7 +62,7 @@ export default {
             let method = 'post';
             if (this.config.task) {
                 url = this.config.task.url;
-                method = 'put'
+                method = 'put';
             }
             this.$quickFetch(url, method, body).then(data => {
                 this.$emit('updateTask', data, this.config.index);

@@ -51,7 +51,7 @@ export default {
         },
         updateTask(task, index) {
             if (task && (index || index === 0)) {
-                this.tasks[index] = task
+                this.tasks[index] = task;
             }
             else {
                 this.tasks.unshift(task);
@@ -60,7 +60,7 @@ export default {
             this.modal_config.task = null;
         },
         removeTask(index) {
-            this.tasks.splice(1, index)
+            this.tasks.splice(1, index);
         },
         toggleModal(task, index) {
             if (task && (index || index === 0)) {
