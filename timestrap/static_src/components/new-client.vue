@@ -47,7 +47,10 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            name: null,
+            invoice_email: null
+        };
     },
     methods: {
         submitClient(e) {
@@ -57,7 +60,8 @@ export default {
             };
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', body).then(data => {
                 $('#new-client-modal').modal('hide');
-                this.name = '';
+                this.name = null;
+                this.invoice_email = null;
                 this.$emit('appendClient', data);
             }).catch(error => console.log(error));
         }

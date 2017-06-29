@@ -45,7 +45,10 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            name: null,
+            hourly_rate: null
+        };
     },
     methods: {
         submitTask() {

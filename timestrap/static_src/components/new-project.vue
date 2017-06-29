@@ -59,7 +59,9 @@ export default {
     data() {
         return {
             clients: null,
-            projects: null
+            client: null,
+            project_name: null,
+            project_estimate: null
         };
     },
     methods: {
@@ -72,8 +74,9 @@ export default {
             this.$quickFetch(timestrapConfig.API_URLS.PROJECTS, 'post', body).then(data => {
                 if (data.id) {
                     $('#new-project-modal').modal('hide');
-                    this.project_name = '';
-                    this.project_estimate = '';
+                    this.client = null;
+                    this.project_name = null;
+                    this.project_estimate = null;
                     this.$emit('appendProject', data);
                 }
             }).catch(error => console.log(error));
