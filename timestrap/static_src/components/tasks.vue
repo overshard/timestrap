@@ -13,7 +13,8 @@
         </div>
     </div>
 
-    <task-modal v-if="modal_config.show && (this.$perms.add_task || this.$perms.change_task)"
+    <task-modal id="task-modal"
+                v-if="modal_config.show && (this.$perms.add_task || this.$perms.change_task)"
                 @updateTask="updateTask"
                 @close="toggleModal"
                 v-bind:config="modal_config"></task-modal>
