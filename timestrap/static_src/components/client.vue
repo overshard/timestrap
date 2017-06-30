@@ -87,11 +87,13 @@
     </div>
 
     <template v-if="this.$perms.view_project">
-        <project v-for="(project, index) in client.projects"
-             v-bind:project="project"
-             v-bind:index="index"
-             v-bind:key="client.projects.id">
-        </project>
+        <project v-for="(project, project_index) in client.projects"
+                 @removeProject="removeProject"
+                 v-bind:project="project"
+                 v-bind:index="project_index"
+                 v-bind:client_index="index"
+                 v-bind:key="client.projects.id"
+                 v-bind:toggleEditModal="toggleProjectEditModal"></project>
     </template>
 
 </div>
@@ -101,7 +103,7 @@
 const Project = require('./project.vue');
 
 export default {
-    props: ['client'],
+    props: ['client', 'index', 'key', 'toggleProjectEditModal', 'removeProject'],
     data() {
         return {
             edit: false,
