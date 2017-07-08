@@ -51,7 +51,12 @@
             {{ duration }}
         </div>
         <div v-bind:class="[[editable ? 'hidden-xl-down' : 'col-sm-2'], 'd-flex', 'align-self-center', 'justify-content-end',]">
-            {{ checkInvoiced(invoiced) }}
+            <template v-if="invoiced">
+                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            </template>
+            <template v-else>
+                <i class="fa fa-square-o" aria-hidden="true"></i>
+            </template>
         </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
@@ -113,6 +118,7 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
+            invoiced: this.entry.invoiced,
             duration: this.durationToString(this.entry.duration),
             projects: {}
         };
@@ -160,13 +166,6 @@ export default {
         },
         restartEntry() {
             this.bus.$emit('timerToggle', this.entry);
-        },
-        checkInvoiced(check) {
-            if (check) {
-                return 'Invoiced';
-            } else {
-                return 'Not Invoiced';
-            }
         }
     },
     components: {
