@@ -10,6 +10,14 @@
                 Export Report
             </button>
 
+            <button id="create-invoice"
+                    class="btn btn-primary btn-sm"
+                    v-block-during-fetch
+                    v-on:click="createInvoice">
+                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                Create Invoice
+            </button>
+
             <select class="custom-select form-control-sm" v-model="exportFormat">
                 <option value="csv">csv</option>
                 <option value="xls">xls</option>
@@ -96,7 +104,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-md-6">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input id="report-invoiced"
+                        v-model="invoiced"
+                        type="checkbox"
+                        class="form-check-input">
+                    Invoiced?
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
             <button id="generate-report"
                     type="submit"
                     class="btn btn-primary btn-sm w-100"
