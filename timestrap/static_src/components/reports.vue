@@ -247,8 +247,10 @@ export default {
                 project__client: this.client,
                 min_date: this.dateMin,
                 max_date: this.dateMax,
-                task: this.task
+                task: this.task,
+                invoiced: this.invoiced
             };
+            console.log(this.invoiced);
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
             this.getEntries(url);
         },
@@ -265,6 +267,7 @@ export default {
                 min_date: this.dateMin,
                 max_date: this.dateMax,
                 task: this.task,
+                invoiced: this.invoiced,
                 exportFormat: this.exportFormat
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
