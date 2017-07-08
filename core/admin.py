@@ -26,7 +26,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('project', 'user', 'date', 'duration',)
+    list_display = ('project', 'user', 'date', 'duration', 'invoiced',)
     list_editable = ('date', 'duration',)
     list_filter = ('project', 'project__client', 'user', 'date',)
     search_fields = ('project', 'project__client', 'user', 'note',)

@@ -1,5 +1,5 @@
 from random import randint, choice
-from datetime import timedelta
+from datetime import timedelta, datetime
 from decimal import Decimal
 
 from django.core.management.base import BaseCommand
@@ -97,10 +97,15 @@ class Command(BaseCommand):
                     note=fake.sentence(nb_words=6, variable_nb_words=True)
                 )
 
+        one_week_ago = datetime.now() - timedelta(days=7)
+        one_week_ago = one_week_ago.date()
         for project in Project.objects.all():
             invoice = Invoice.objects.create(client=project.client)
             for entry in project.entries.iterator():
-                invoice.entries.add(entry)
+                if entry.date < one_week_ago:
+                    entry.invoiced = True
+                    entry.save()
+                    invoice.entries.add(entry)
 
         if verbosity > 0:
             self.stdout.write(

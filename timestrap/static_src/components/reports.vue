@@ -10,14 +10,6 @@
                 Export Report
             </button>
 
-            <button id="create-invoice"
-                    class="btn btn-primary btn-sm"
-                    v-block-during-fetch
-                    v-on:click="createInvoice">
-                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
-                Create Invoice
-            </button>
-
             <select class="custom-select form-control-sm" v-model="exportFormat">
                 <option value="csv">csv</option>
                 <option value="xls">xls</option>
@@ -28,6 +20,14 @@
                 <option value="yaml">yaml</option>
                 <option value="html">html</option>
             </select>
+
+            <button id="create-invoice"
+                    class="btn btn-primary btn-sm ml-2"
+                    v-block-during-fetch
+                    v-on:click="createInvoice">
+                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                Create Invoice
+            </button>
 
             <pager v-bind:next="next"
                    v-bind:previous="previous"
