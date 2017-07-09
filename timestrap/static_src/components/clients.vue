@@ -6,8 +6,7 @@
             <button name="client-add"
                     type="button"
                     class="btn btn-primary btn-sm"
-                    data-toggle="modal"
-                    data-target="#new-client-modal"
+                    @click="toggleClientModal"
                     v-if="this.$perms.add_client">
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Client
@@ -23,14 +22,17 @@
         </div>
     </div>
 
-    <new-client @appendClient="appendClient"
-                v-if="this.$perms.add_client"></new-client>
+    <client-modal id="client-modal"
+                   v-if="modal_config.client.show"
+                   @updateClient="updateClient"
+                   @close="toggleClientModal"
+                   v-bind:config="modal_config.client"></client-modal>
 
     <project-modal id="project-modal"
-                   v-if="project_modal_config.show && (this.$perms.add_project || this.$perms.change_project)"
+                   v-if="modal_config.project.show"
                    @updateProject="updateProject"
                    @close="toggleProjectModal"
-                   v-bind:config="project_modal_config"></project-modal>
+                   v-bind:config="modal_config.project"></project-modal>
 
     <div v-if="this.$perms.view_client" id="client-rows">
         <client v-for="(client, index) in clients"
@@ -46,18 +48,25 @@
 
 <script>
 const Client = require('./client.vue');
-const NewClient = require('./new-client.vue');
+const ClientModal = require('./client-modal.vue');
 const ProjectModal = require('./project-modal.vue');
 
 export default {
     data() {
         return {
             clients: null,
-            project_modal_config: {
-                index: null,
-                project: null,
-                client_index: null,
-                show: false
+            modal_config: {
+                project: {
+                    index: null,
+                    project: null,
+                    client_index: null,
+                    show: false
+                },
+                client: {
+                    index: null,
+                    client: null,
+                    show: false
+                },
             }
         };
     },
@@ -68,21 +77,37 @@ export default {
                 this.clients = data;
             }).catch(error => console.log(error));
         },
-        appendClient(client) {
-            this.clients.unshift(client);
+        toggleClientModal(client, index) {
+            if (client && (index || index === 0)) {
+                this.modal_config.client.client = client;
+                this.modal_config.client.index = index;
+            }
+            else {
+                this.modal_config.client.client = null;
+                this.modal_config.client.index = null;
+            }
+            this.modal_config.client.show = !this.modal_config.client.show;
+        },
+        updateClient(client, index) {
+            if (client && (index || index === 0)) {
+                this.clients[index] = client;
+            }
+            else {
+                this.clients.unshift(client);
+            }
         },
         toggleProjectModal(project, index, client_index) {
             if (project && (index || index === 0) && (client_index || client_index === 0)) {
-                this.project_modal_config.project = project;
-                this.project_modal_config.index = index;
-                this.project_modal_config.client_index = client_index;
+                this.modal_config.project.project = project;
+                this.modal_config.project.index = index;
+                this.modal_config.project.client_index = client_index;
             }
             else {
-                this.project_modal_config.project = null;
-                this.project_modal_config.index = null;
-                this.project_modal_config.client_index = null;
+                this.modal_config.project.project = null;
+                this.modal_config.project.index = null;
+                this.modal_config.project.client_index = null;
             }
-            this.project_modal_config.show = !this.project_modal_config.show;
+            this.modal_config.project.show = !this.modal_config.project.show;
         },
         updateProject(project, index, client_index) {
             if (project && (index || index === 0) && (client_index || client_index === 0)) {
@@ -96,9 +121,6 @@ export default {
                     }
                 }
             }
-            this.project_modal_config.index = null;
-            this.project_modal_config.project = null;
-            this.project_modal_config.client_index = null;
         },
         removeProject(client_index, index) {
             this.$delete(this.clients[client_index].projects, index);
@@ -109,7 +131,7 @@ export default {
     },
     components: {
         Client,
-        NewClient,
+        ClientModal,
         ProjectModal
     }
 };
