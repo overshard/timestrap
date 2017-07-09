@@ -68,6 +68,10 @@ export default {
                 this.modal_config.task = task;
                 this.modal_config.index = index;
             }
+            else {
+                this.modal_config.task = null;
+                this.modal_config.index = null;
+            }
             this.modal_config.show = !this.modal_config.show;
         }
     },

@@ -77,6 +77,11 @@ export default {
                 this.project_modal_config.index = index;
                 this.project_modal_config.client_index = client_index;
             }
+            else {
+                this.project_modal_config.project = null;
+                this.project_modal_config.index = null;
+                this.project_modal_config.client_index = null;
+            }
             this.project_modal_config.show = !this.project_modal_config.show;
         },
         updateProject(project, index, client_index) {
