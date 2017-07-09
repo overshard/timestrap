@@ -58,11 +58,21 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class EntryFilter(django_filters.rest_framework.FilterSet):
     min_date = django_filters.DateFilter(name="date", lookup_expr="gte")
     max_date = django_filters.DateFilter(name="date", lookup_expr="lte")
+    invoiced = django_filters.BooleanFilter(
+        name="invoiced",
+        method="is_invoiced"
+    )
 
     class Meta:
         model = Entry
-        fields = ('id', 'date', 'user', 'task', 'project', 'project__client',
-                  'invoiced',)
+        fields = ('id', 'date', 'user', 'task', 'project', 'project__client',)
+
+    def is_invoiced(self, queryset, name, value):
+        if value == True:
+            return queryset.filter(invoices__isnull=False)
+        elif value == False:
+            return queryset.filter(invoices__isnull=True)
+        return queryset
 
 
 class EntryViewSet(viewsets.ModelViewSet):

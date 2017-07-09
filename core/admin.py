@@ -26,7 +26,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('project', 'user', 'date', 'duration', 'invoiced',)
+    list_display = ('project', 'user', 'date', 'duration',)
     list_editable = ('date', 'duration',)
     list_filter = ('project', 'project__client', 'user', 'date',)
     search_fields = ('project', 'project__client', 'user', 'note',)
@@ -34,7 +34,7 @@ class EntryAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('project', 'user',)
         }),
-        ('Date Completed and Duration of Project', {
+        ('Date Completed & Duration of Project', {
             'fields': ('date', 'duration',)
         }),
         ('Extra', {

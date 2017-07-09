@@ -108,12 +108,16 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
     project_details = ProjectSerializer(source='project', read_only=True)
     user_details = UserSerializer(source='user', read_only=True)
     task_details = TaskSerializer(source='task', read_only=True)
+    is_invoiced = serializers.SerializerMethodField()
 
     class Meta:
         model = Entry
         fields = ('id', 'url', 'project', 'project_details', 'task',
                   'task_details', 'user', 'user_details', 'date', 'duration',
-                  'note', 'invoiced',)
+                  'note', 'is_invoiced',)
+
+    def is_invoiced(self, obj):
+        return obj.get_invoiced()
 
 
 class InvoiceSerializer(serializers.HyperlinkedModelSerializer):

@@ -75,6 +75,14 @@ class Task(models.Model):
         return 'Task: ' + self.name
 
 
+class EntryManager(models.Manager):
+    def invoiced(self):
+        return super(EntryManager, self).get_queryset().filter(invoices__isnull=False)
+
+    def uninvoiced(self):
+        return super(EntryManager, self).get_queryset().filter(invoices__isnull=True)
+
+
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')
     task = models.ForeignKey('core.Task', related_name='entries',
@@ -83,7 +91,8 @@ class Entry(models.Model):
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
-    invoiced = models.BooleanField(default=False)
+
+    objects = EntryManager()
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -98,10 +107,15 @@ class Entry(models.Model):
     def __str__(self):
         return 'Entry for ' + self.project.name + ' by ' + self.user.username
 
+    def is_invoiced(self):
+        if self.invoices:
+            return True
+        return False
+
 
 class Invoice(models.Model):
     client = models.ForeignKey('Client')  # Redundant with entries?
-    entries = models.ManyToManyField('Entry')
+    entries = models.ManyToManyField('Entry', related_name='invoices')
     created = models.DateTimeField(auto_now_add=True)
     paid = models.DateTimeField(blank=True, null=True)
     transaction_id = models.CharField(max_length=255, blank=True, null=True)

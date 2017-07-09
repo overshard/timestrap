@@ -103,8 +103,6 @@ class Command(BaseCommand):
             invoice = Invoice.objects.create(client=project.client)
             for entry in project.entries.iterator():
                 if entry.date < one_week_ago:
-                    entry.invoiced = True
-                    entry.save()
                     invoice.entries.add(entry)
 
         if verbosity > 0:
