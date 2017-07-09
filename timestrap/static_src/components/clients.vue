@@ -39,8 +39,10 @@
                 v-bind:client="client"
                 v-bind:index="index"
                 v-bind:key="client.id"
-                v-bind:removeProject="removeProject"
-                v-bind:toggleProjectEditModal="toggleProjectModal"></client>
+                v-bind:toggleEditModal="toggleClientModal"
+                @removeClient="removeClient"
+                v-bind:toggleProjectEditModal="toggleProjectModal"
+                v-bind:removeProject="removeProject"></client>
     </div>
 
 </div>
@@ -66,7 +68,7 @@ export default {
                     index: null,
                     client: null,
                     show: false
-                },
+                }
             }
         };
     },
@@ -96,6 +98,9 @@ export default {
                 this.clients.unshift(client);
             }
         },
+        removeClient(index) {
+            this.$delete(this.clients, index);
+        },
         toggleProjectModal(project, index, client_index) {
             if (project && (index || index === 0) && (client_index || client_index === 0)) {
                 this.modal_config.project.project = project;
@@ -124,7 +129,7 @@ export default {
         },
         removeProject(client_index, index) {
             this.$delete(this.clients[client_index].projects, index);
-        },
+        }
     },
     mounted() {
         return this.getClients();

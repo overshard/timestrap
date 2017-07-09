@@ -2,7 +2,7 @@
 <modal>
     <h5 slot="header">
         <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
-        {{ config.task ? 'Edit: ' + config.task.name : 'New Client' }}
+        {{ config.client ? 'Edit: ' + config.client.name : 'New Client' }}
     </h5>
 
     <div slot="body">
@@ -24,17 +24,17 @@
     </div>
 
     <div slot="footer">
-        <button name="task-modal-cancel"
+        <button name="client-modal-cancel"
                 type="button"
                 class="btn btn-secondary"
                 @click="$emit('close')">
             Close
         </button>
-        <button name="task-modal-submit"
+        <button name="client-modal-submit"
                 type="submit"
                 class="btn btn-primary"
                 @click="submit">
-            {{ config.task ? 'Save Changes' : 'Add Client' }}
+            {{ config.client ? 'Save Changes' : 'Add Client' }}
         </button>
     </div>
 </modal>

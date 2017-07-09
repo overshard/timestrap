@@ -61,25 +61,19 @@
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
-                           v-on:click="editClient">
-                            Edit
-                        </a>
+                           v-on:click="toggleEditModal(client, index)">Edit</a>
                         <a id="client-menu-delete"
                            class="dropdown-item"
                            href="#"
                            v-if="this.$perms.delete_client"
                            v-on:click.prevent
-                           v-on:click="deleteClient">
-                            Delete
-                        </a>
+                           v-on:click="deleteClient">Delete</a>
                         <a id="client-menu-archive"
                            class="dropdown-item"
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
-                           v-on:click="archiveClient">
-                            Archive
-                        </a>
+                           v-on:click="archiveClient">Archive</a>
                     </div>
                 </template>
             </div>
@@ -103,7 +97,7 @@
 const Project = require('./project.vue');
 
 export default {
-    props: ['client', 'index', 'key', 'toggleProjectEditModal', 'removeProject'],
+    props: ['client', 'index', 'key', 'toggleEditModal', 'toggleProjectEditModal', 'removeProject'],
     data() {
         return {
             edit: false,
@@ -112,27 +106,11 @@ export default {
         };
     },
     methods: {
-        editClient() {
-            this.edit = true;
-        },
-        saveClient(e) {
-            const body = {
-                name: this.name,
-                invoice_email: this.invoice_email
-            };
-            this.$quickFetch(this.client.url, 'put', body).then(data => {
-                if (data.id) {
-                    this.client.name = data.name;
-                    this.client.invoice_email = data.invoice_email;
-                    this.edit = false;
-                }
-            }).catch(error => console.log(error));
-        },
         deleteClient() {
             this.$quickFetch(this.client.url, 'delete').then(function(response) {
                 if (response.status === 204) {
                     $.growl.notice({ message: 'Client deleted!' });
-                    this.$emit('delete-client');
+                    this.$emit('removeClient', this.index);
                 } else {
                     $.growl.error({ message: 'Client delete failed ):' });
                 }
@@ -146,7 +124,7 @@ export default {
             this.$quickFetch(this.client.url, 'put', body).then(data => {
                 if (data.id) {
                     $.growl.notice({ message: 'Client archived!' });
-                    this.$emit('archive-client');
+                    this.$emit('removeClient', this.index);
                 }
             }).catch(error => console.log(error));
         }
