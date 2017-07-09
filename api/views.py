@@ -68,9 +68,9 @@ class EntryFilter(django_filters.rest_framework.FilterSet):
         fields = ('id', 'date', 'user', 'task', 'project', 'project__client',)
 
     def is_invoiced(self, queryset, name, value):
-        if value == True:
+        if value is True:
             return queryset.filter(invoices__isnull=False)
-        elif value == False:
+        elif value is False:
             return queryset.filter(invoices__isnull=True)
         return queryset
 
