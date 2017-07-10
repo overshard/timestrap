@@ -77,10 +77,12 @@ class Task(models.Model):
 
 class EntryManager(models.Manager):
     def invoiced(self):
-        return super(EntryManager, self).get_queryset().filter(invoices__isnull=False)
+        return super(EntryManager, self).get_queryset().filter(
+            invoices__isnull=False)
 
     def uninvoiced(self):
-        return super(EntryManager, self).get_queryset().filter(invoices__isnull=True)
+        return super(EntryManager, self).get_queryset().filter(
+            invoices__isnull=True)
 
 
 class Entry(models.Model):

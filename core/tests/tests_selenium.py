@@ -212,10 +212,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['add_client'])
         self.driver.refresh()
         self.find(By.NAME, 'client-add').click()
-        self.waitForPresence((By.ID, 'new-client-modal'))
+        self.waitForPresence((By.ID, 'client-modal'))
         self.find(By.NAME, 'client-name').send_keys('Client')
         self.find(By.NAME, 'client-email').send_keys('client@company.com')
-        self.find(By.NAME, 'client-add-submit').click()
+        self.find(By.NAME, 'client-modal-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'client'))
 
     def test_clients_change(self):
@@ -232,7 +232,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'client-menu-change').click()
         self.waitForPresence((By.NAME, 'client-name'))
         self.find(By.NAME, 'client-name').send_keys(' Changed')
-        self.find(By.NAME, 'client-save').click()
+        self.find(By.NAME, 'client-modal-submit').click()
         # There is no case insensitive option for this test at present and
         # the driver returns as uppercase because the element also has class
         # text-uppercase.
@@ -264,11 +264,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['add_project'])
         self.driver.refresh()
         self.find(By.NAME, 'project-add').click()
-        self.waitForPresence((By.ID, 'new-project-modal'))
+        self.waitForPresence((By.ID, 'project-modal'))
         self.select2Select('project-client', 'Client')
         self.find(By.NAME, 'project-name').send_keys('Project')
         self.find(By.NAME, 'project-estimate').send_keys('1')
-        self.find(By.NAME, 'project-add-submit').click()
+        self.find(By.NAME, 'project-modal-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'project'))
 
     def test_projects_change(self):
@@ -290,7 +290,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.NAME, 'project-name'))
         self.find(By.NAME, 'project-name').send_keys(' Changed')
         self.find(By.NAME, 'project-estimate').send_keys('.5')
-        self.find(By.NAME, 'project-save').click()
+        self.find(By.NAME, 'project-modal-submit').click()
         self.waitForText((By.CLASS_NAME, 'project-name'), 'Project Changed')
 
     def test_tasks_access(self):
@@ -310,10 +310,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['add_task'])
         self.driver.refresh()
         self.find(By.NAME, 'task-add').click()
-        self.waitForPresence((By.ID, 'new-task-modal'))
+        self.waitForPresence((By.ID, 'task-modal'))
         self.find(By.NAME, 'task-name').send_keys('Task')
         self.find(By.NAME, 'task-hourly-rate').send_keys('25')
-        self.find(By.NAME, 'task-add-submit').click()
+        self.find(By.NAME, 'task-modal-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'task'))
 
     def test_tasks_change(self):
@@ -332,7 +332,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'task-hourly-rate').click()
         self.find(By.NAME, 'task-hourly-rate').clear()
         self.find(By.NAME, 'task-hourly-rate').send_keys('125')
-        self.find(By.NAME, 'task-save').click()
+        self.find(By.NAME, 'task-modal-submit').click()
         self.waitForText((By.CLASS_NAME, 'task'), 'Task Changed\n$125')
 
     def test_timesheet_access(self):

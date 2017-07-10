@@ -61,25 +61,19 @@
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
-                           v-on:click="editClient">
-                            Edit
-                        </a>
+                           v-on:click="toggleEditModal(client, index)">Edit</a>
                         <a id="client-menu-delete"
                            class="dropdown-item"
                            href="#"
                            v-if="this.$perms.delete_client"
                            v-on:click.prevent
-                           v-on:click="deleteClient">
-                            Delete
-                        </a>
+                           v-on:click="deleteClient">Delete</a>
                         <a id="client-menu-archive"
                            class="dropdown-item"
                            href="#"
                            v-if="this.$perms.change_client"
                            v-on:click.prevent
-                           v-on:click="archiveClient">
-                            Archive
-                        </a>
+                           v-on:click="archiveClient">Archive</a>
                     </div>
                 </template>
             </div>
@@ -87,11 +81,13 @@
     </div>
 
     <template v-if="this.$perms.view_project">
-        <project v-for="(project, index) in client.projects"
-             v-bind:project="project"
-             v-bind:index="index"
-             v-bind:key="client.projects.id">
-        </project>
+        <project v-for="(project, project_index) in client.projects"
+                 @removeProject="removeProject"
+                 v-bind:project="project"
+                 v-bind:index="project_index"
+                 v-bind:client_index="index"
+                 v-bind:key="client.projects.id"
+                 v-bind:toggleEditModal="toggleProjectEditModal"></project>
     </template>
 
 </div>
@@ -101,7 +97,7 @@
 const Project = require('./project.vue');
 
 export default {
-    props: ['client'],
+    props: ['client', 'index', 'key', 'toggleEditModal', 'toggleProjectEditModal', 'removeProject'],
     data() {
         return {
             edit: false,
@@ -110,27 +106,11 @@ export default {
         };
     },
     methods: {
-        editClient() {
-            this.edit = true;
-        },
-        saveClient(e) {
-            const body = {
-                name: this.name,
-                invoice_email: this.invoice_email
-            };
-            this.$quickFetch(this.client.url, 'put', body).then(data => {
-                if (data.id) {
-                    this.client.name = data.name;
-                    this.client.invoice_email = data.invoice_email;
-                    this.edit = false;
-                }
-            }).catch(error => console.log(error));
-        },
         deleteClient() {
             this.$quickFetch(this.client.url, 'delete').then(function(response) {
                 if (response.status === 204) {
                     $.growl.notice({ message: 'Client deleted!' });
-                    this.$emit('delete-client');
+                    this.$emit('removeClient', this.index);
                 } else {
                     $.growl.error({ message: 'Client delete failed ):' });
                 }
@@ -144,7 +124,7 @@ export default {
             this.$quickFetch(this.client.url, 'put', body).then(data => {
                 if (data.id) {
                     $.growl.notice({ message: 'Client archived!' });
-                    this.$emit('archive-client');
+                    this.$emit('removeClient', this.index);
                 }
             }).catch(error => console.log(error));
         }
