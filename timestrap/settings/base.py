@@ -20,6 +20,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'tenant',
     'core',
     'api',
 
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'timestrap.middleware.TenantMiddleware',
+    'tenant.middleware.TenantMiddleware',
 ]
 
 ROOT_URLCONF = 'timestrap.urls'

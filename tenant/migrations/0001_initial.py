@@ -13,7 +13,6 @@ def load_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0008_auto_20170709_0230'),
         ('sites', '0001_initial'),
     ]
 
