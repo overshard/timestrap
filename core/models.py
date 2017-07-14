@@ -3,10 +3,29 @@ from __future__ import unicode_literals
 
 from datetime import date
 
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from .utils import duration_string
+from conf.utils import current_site_id
+
+
+@receiver(post_save)
+def add_current_site(sender, instance, **kwargs):
+    """
+    Add the current site to a model's sites property after a save. This is
+    required in post save because ManyToManyField fields require an existing
+    key.
+
+    TODO: Don't run this on *every* post_save.
+    """
+    if hasattr(instance, 'sites'):
+        if not instance.sites.all():
+            instance.sites = Site.objects.filter(id=current_site_id())
+            instance.save()
 
 
 class Client(models.Model):
@@ -14,6 +33,7 @@ class Client(models.Model):
     archive = models.BooleanField(default=False)
     payment_id = models.CharField(max_length=255, blank=True, null=True)
     invoice_email = models.EmailField(max_length=255, blank=True, null=True)
+    sites = models.ManyToManyField(Site)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -66,6 +86,7 @@ class Task(models.Model):
     name = models.CharField(max_length=255)
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2,
                                       blank=True, null=True)
+    sites = models.ManyToManyField(Site)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
