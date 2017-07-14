@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <router-link class="navbar-brand" v-bind:to="timesheet">
-                {{ tenant.NAME }}
+                {{ site.NAME }}
             </router-link>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul id="nav-app" class="navbar-nav">
@@ -97,7 +97,7 @@ export default {
             api: timestrapConfig.CORE_URLS.API,
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT,
-            tenant: timestrapConfig.TENANT,
+            site: timestrapConfig.SITE,
         };
     },
     methods: {

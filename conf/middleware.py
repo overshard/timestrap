@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http.request import split_domain_port
 
 
-class TenantMiddleware(object):
+class ConfMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -18,6 +18,6 @@ class TenantMiddleware(object):
         except Site.DoesNotExist:
             current_site = Site.objects.get(id=settings.SITE_ID)
 
-        request.tenant = current_site
+        request.site = current_site
 
         return self.get_response(request)

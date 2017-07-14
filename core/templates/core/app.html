@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Application - {{ request.tenant.name }}</title>
+        <title>Application - {{ request.site.name }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
         <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
@@ -44,10 +44,10 @@
                     URL: "{% url 'user-detail' user.id %}",
                     NAME: "{{ user.username }}"
                 };
-                timestrapConfig.TENANT = {
-                    ID: {{ request.tenant.id }},
-                    DOMAIN: "{{ request.tenant.domain }}",
-                    NAME: "{{ request.tenant.name }}"
+                timestrapConfig.SITE = {
+                    ID: {{ request.site.id }},
+                    DOMAIN: "{{ request.site.domain }}",
+                    NAME: "{{ request.site.name }}"
                 };
             })(document, window);
         </script>

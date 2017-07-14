@@ -5,17 +5,17 @@ from django.contrib import admin
 from django.contrib.sites.models import Site
 from django.contrib.sites.admin import SiteAdmin as BaseSiteAdmin
 
-from .models import Tenant
+from .models import Conf
 
 
-class TenantInline(admin.StackedInline):
-    model = Tenant
+class ConfInline(admin.StackedInline):
+    model = Conf
     can_delete = False
 
 
 class SiteAdmin(BaseSiteAdmin):
     inlines = [
-        TenantInline,
+        ConfInline,
     ]
 
 

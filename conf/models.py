@@ -7,18 +7,21 @@ from django.contrib.sites.models import Site
 from django.dispatch import receiver
 
 
-class Tenant(models.Model):
-    site = models.OneToOneField(Site, related_name='tenant',
+class Conf(models.Model):
+    site = models.OneToOneField(Site, related_name='conf',
                                 on_delete=models.CASCADE)
     color = models.CharField(max_length=5, blank=True)
 
+    def __str__(self):
+        return 'Configuration'
+
 
 @receiver(post_save, sender=Site)
-def create_tenant(sender, instance, created, **kwargs):
+def create_conf(sender, instance, created, **kwargs):
     if created:
-        Tenant.objects.create(site=instance)
+        Conf.objects.create(site=instance)
 
 
 @receiver(post_save, sender=Site)
-def save_tenant(sender, instance, **kwargs):
-    instance.tenant.save()
+def save_conf(sender, instance, **kwargs):
+    instance.conf.save()
