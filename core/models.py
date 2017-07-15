@@ -11,6 +11,7 @@ from django.dispatch import receiver
 
 from .utils import duration_string
 from conf.utils import current_site_id
+from conf.managers import CurrentSiteManager
 
 
 @receiver(post_save)
@@ -34,6 +35,8 @@ class Client(models.Model):
     payment_id = models.CharField(max_length=255, blank=True, null=True)
     invoice_email = models.EmailField(max_length=255, blank=True, null=True)
     sites = models.ManyToManyField(Site)
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -87,6 +90,8 @@ class Task(models.Model):
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2,
                                       blank=True, null=True)
     sites = models.ManyToManyField(Site)
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
