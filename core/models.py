@@ -35,6 +35,7 @@ class Client(models.Model):
     payment_id = models.CharField(max_length=255, blank=True, null=True)
     invoice_email = models.EmailField(max_length=255, blank=True, null=True)
     sites = models.ManyToManyField(Site)
+
     objects = models.Manager()
     on_site = CurrentSiteManager()
 
@@ -90,6 +91,7 @@ class Task(models.Model):
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2,
                                       blank=True, null=True)
     sites = models.ManyToManyField(Site)
+
     objects = models.Manager()
     on_site = CurrentSiteManager()
 
@@ -119,8 +121,11 @@ class Entry(models.Model):
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)
+    site = models.ForeignKey(Site, default=current_site_id(),
+                             on_delete=models.CASCADE)
 
     objects = EntryManager()
+    on_site = CurrentSiteManager()
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -130,6 +135,7 @@ class Entry(models.Model):
     def save(self, *args, **kwargs):
         if not self.date:
             self.date = date.today()
+        self.site = Site.objects.get(id=current_site_id())
         super(Entry, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -147,9 +153,18 @@ class Invoice(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     paid = models.DateTimeField(blank=True, null=True)
     transaction_id = models.CharField(max_length=255, blank=True, null=True)
+    site = models.ForeignKey(Site, default=current_site_id(),
+                             on_delete=models.CASCADE)
+
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
+
+    def save(self, *args, **kwargs):
+        self.site = Site.objects.get(id=current_site_id())
+        super(Invoice, self).save(*args, **kwargs)
 
     def __str__(self):
         return 'Invoice: ' + self.client.name

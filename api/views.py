@@ -91,6 +91,9 @@ class EntryViewSet(viewsets.ModelViewSet):
     search_fields = ('id', 'date', 'note', 'user__username', 'task__name',
                      'project__name', 'project__client__name',)
 
+    def get_queryset(self):
+        return Entry.on_site.all()
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
@@ -105,3 +108,6 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
     pagination_class = None
+
+    def get_queryset(self):
+        return Invoice.on_site.all()
