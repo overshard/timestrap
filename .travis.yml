@@ -24,7 +24,7 @@ before_script:
     - gulp lint
     - gulp build
 script:
-    - gulp coverage
+    - travis_retry gulp coverage
 after_success:
     - pipenv run coveralls
 notifications:
