@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Login - Timestrap</title>
+        <title>Login - {{ request.site.name }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
         <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}"/>
@@ -15,7 +15,7 @@
     <body class="bg-primary">
         <div id="view-{{ request.resolver_match.view_name }}" class="container">
             <div class="text-center mb-4">
-                <h1 class="display-3 mb-3 text-white">Timestrap</h1>
+                <h1 class="display-3 mb-3 text-white">{{ request.site.name }}</h1>
             </div>
             <div class="login-wrapper rounded">
                 <div class="p-4">

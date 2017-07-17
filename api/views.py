@@ -42,10 +42,13 @@ class PermissionViewSet(viewsets.ModelViewSet):
 
 
 class ClientViewSet(viewsets.ModelViewSet):
-    queryset = Client.objects.filter(archive=False)
+    queryset = Client.on_site.filter(archive=False)
     serializer_class = ClientSerializer
     pagination_class = None
     filter_fields = ('id',)
+
+    def get_queryset(self):
+        return Client.on_site.all()
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -88,14 +91,23 @@ class EntryViewSet(viewsets.ModelViewSet):
     search_fields = ('id', 'date', 'note', 'user__username', 'task__name',
                      'project__name', 'project__client__name',)
 
+    def get_queryset(self):
+        return Entry.on_site.all()
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     pagination_class = None
 
+    def get_queryset(self):
+        return Task.on_site.all()
+
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
     pagination_class = None
+
+    def get_queryset(self):
+        return Invoice.on_site.all()
