@@ -54,7 +54,6 @@
                                 v-bind:href="admin">Admin</a>
                             <a id="nav-admin-logout"
                                 class="dropdown-item"
-                                target="_blank"
                                 v-bind:href="logout">Logout</a>
                         </div>
                     </li>
