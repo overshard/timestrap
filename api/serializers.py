@@ -17,7 +17,8 @@ from core.models import Task, Invoice
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'url', 'username',)
+        fields = ('id', 'url', 'username', 'is_active', 'is_staff',
+                  'is_superuser')
 
 
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
