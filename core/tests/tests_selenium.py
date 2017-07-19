@@ -19,6 +19,7 @@ from selenium.webdriver.chrome.options import Options
 
 from faker import Factory
 
+from conf.models import Site, SitePermission
 from ..models import Client, Project, Entry, Task
 
 
@@ -149,6 +150,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.user = User.objects.create_user(self.profile['username'],
                                              self.profile['mail'],
                                              self.profile['password'])
+
+        site_permission = SitePermission.objects.create(user=self.user)
+        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.save()
 
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
@@ -498,9 +503,17 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     def test_reports_filter(self):
         management.call_command('loaddata', 'tests_data.json', verbosity=0)
 
-        self.logIn()
-        self.addPerms(['view_client', 'view_entry',
-                       'view_project', 'view_task'])
+        # Log in with the "tester" account, part of the tests data fixture.
+        self.driver.get('%s%s' % (self.live_server_url, '/login/'))
+        username_input = self.find(By.NAME, 'username')
+        username_input.clear()
+        username_input.send_keys('tester')
+        password_input = self.find(By.NAME, 'password')
+        password_input.clear()
+        password_input.send_keys('tester')
+        self.find(By.NAME, 'login').click()
+        self.waitForPresence((By.ID, 'nav-app'))
+
         self.driver.get('%s%s' % (self.live_server_url, '/reports/'))
         self.waitForPresence((By.ID, 'component-reports'))
 

@@ -10,6 +10,7 @@ from django.test import Client as HttpClient
 from django.contrib.auth.models import User
 from django.core.management import call_command
 
+from conf.models import Site, SitePermission
 from ..models import Client, Project, Entry
 from ..utils import parse_duration, duration_string, duration_decimal
 
@@ -32,8 +33,11 @@ class ViewsTestCase(TestCase):
 
         fake_user = fake.simple_profile()
         fake_password = fake.password()
-        User.objects.create_user(fake_user['username'], fake_user['mail'],
-                                 fake_password)
+        user = User.objects.create_user(fake_user['username'],
+                                        fake_user['mail'], fake_password)
+        site_permission = SitePermission.objects.create(user=user)
+        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.save()
 
         self.c.login(username=fake_user['username'], password=fake_password)
 
@@ -114,6 +118,7 @@ class EntryTestCase(TestCase):
         self.project = Project.objects.create(client=client, name='Testing')
         self.user = User.objects.create_user('testuser', 'test@example.com',
                                              'testpassword')
+
         Entry.objects.create(
             project=self.project,
             user=self.user,
@@ -170,8 +175,11 @@ class ReportsTestCase(TestCase):
 
         fake_user = fake.simple_profile()
         fake_password = fake.password()
-        User.objects.create_user(fake_user['username'], fake_user['mail'],
-                                 fake_password)
+        user = User.objects.create_user(fake_user['username'],
+                                        fake_user['mail'], fake_password)
+        site_permission = SitePermission.objects.create(user=user)
+        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.save()
 
         self.c.login(username=fake_user['username'], password=fake_password)
 

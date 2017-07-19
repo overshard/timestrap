@@ -4,17 +4,9 @@ from __future__ import unicode_literals
 
 import conf.managers
 from django.conf import settings
-from django.core.management import call_command
 from django.db import migrations, models
 import django.db.models.deletion
 import django.db.models.manager
-
-
-def load_initial_data(apps, schema_editor):
-    """
-    Creates the initial user (admin/admin) with an association to Site ID 1.
-    """
-    call_command('loaddata', 'initial_data')
 
 
 class Migration(migrations.Migration):
@@ -134,5 +126,4 @@ class Migration(migrations.Migration):
             name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='entries', to=settings.AUTH_USER_MODEL),
         ),
-        migrations.RunPython(load_initial_data),
     ]
