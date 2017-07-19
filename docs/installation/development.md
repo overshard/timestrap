@@ -21,10 +21,6 @@ static files.
 
         gulp migrate
 
-1. :lock: Create a super user.
-
-        gulp createsuperuser
-
 1. Run the server!
 
         gulp
@@ -32,5 +28,12 @@ static files.
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
-the application. [Pull requests](https://github.com/overshard/timestrap/pulls)
-are :+1: welcome and :clap: encouraged!
+the application.
+
+The default account credentials are:
+
+- Username: `admin`
+- Password: `admin`
+
+[Pull requests](https://github.com/overshard/timestrap/pulls) are :+1: welcome 
+and :clap: encouraged!
