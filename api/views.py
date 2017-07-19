@@ -23,6 +23,13 @@ class UserViewSet(viewsets.ModelViewSet):
         # Prevent rest_framework from checking for the "view" perm.
         return (permissions.IsAuthenticated(),)
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = User.objects.all()
+        else:
+            queryset = User.objects.filter(id=self.request.user.id)
+        return queryset
+
 
 class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
@@ -34,7 +41,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
         return (permissions.IsAuthenticated(),)
 
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.is_superuser:
             queryset = Permission.objects.all()
         else:
             queryset = Permission.objects.filter(user=self.request.user)

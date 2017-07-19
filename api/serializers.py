@@ -14,16 +14,29 @@ from core.utils import duration_decimal
 from core.models import Task, Invoice
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'url', 'username',)
-
-
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Permission
         fields = ('id', 'url', 'name', 'codename',)
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    perms = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('id', 'url', 'username', 'is_active', 'is_staff',
+                  'is_superuser', 'perms', 'groups')
+
+    def get_perms(self, obj):
+        perms = {}
+        if obj.is_superuser:
+            queryset = Permission.objects.all()
+        else:
+            queryset = Permission.objects.filter(user=obj)
+        for perm in queryset.values():
+            perms[perm['codename']] = perm
+        return perms
 
 
 class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):

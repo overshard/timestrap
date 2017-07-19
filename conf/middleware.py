@@ -20,7 +20,7 @@ def current_request():
 
 class SiteMiddleware(object):
     """
-    Determine the current Site based on the domain in use.
+    Determines the current Site based on the domain in use.
     """
     def __init__(self, get_response):
         self.get_response = get_response

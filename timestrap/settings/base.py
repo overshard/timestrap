@@ -79,6 +79,10 @@ WSGI_APPLICATION = 'timestrap.wsgi.application'
 # Authentication
 # https://docs.djangoproject.com/en/1.11/topics/auth/default/
 
+AUTHENTICATION_BACKENDS = [
+    'conf.backends.SitePermissionBackend',
+]
+
 LOGIN_REDIRECT_URL = '/timesheet/'
 
 LOGIN_URL = '/login/'

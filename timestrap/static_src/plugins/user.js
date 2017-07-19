@@ -1,4 +1,4 @@
-// Enable sending and receiving form the django-rest-framework API.
+// Retrieve Django User object data.
 module.exports = {
     install: function(Vue, options) {
         Vue.prototype.$user = Vue.prototype.$quickFetch(timestrapConfig.USER.URL).then(data => {
