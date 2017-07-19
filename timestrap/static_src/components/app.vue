@@ -47,14 +47,18 @@
                             {{ username }}
                         </a>
                         <div class="dropdown-menu">
-                            <a id="nav-admin-api" class="dropdown-item" target="_blank" v-bind:href="api">API Browser</a>
+                            <a id="nav-admin-api"
+                               class="dropdown-item"
+                               target="_blank"
+                               v-bind:href="api">API Browser</a>
                             <a id="nav-admin-admin"
-                                class="dropdown-item"
-                                target="_blank"
-                                v-bind:href="admin">Admin</a>
+                               class="dropdown-item"
+                               target="_blank"
+                               v-if="this.$user.is_staff"
+                               v-bind:href="admin">Admin</a>
                             <a id="nav-admin-logout"
-                                class="dropdown-item"
-                                v-bind:href="logout">Logout</a>
+                               class="dropdown-item"
+                               v-bind:href="logout">Logout</a>
                         </div>
                     </li>
                 </ul>
