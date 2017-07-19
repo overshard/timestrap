@@ -19,6 +19,7 @@ from selenium.webdriver.chrome.options import Options
 
 from faker import Factory
 
+from conf.models import Site, SitePermission
 from ..models import Client, Project, Entry, Task
 
 
@@ -149,6 +150,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.user = User.objects.create_user(self.profile['username'],
                                              self.profile['mail'],
                                              self.profile['password'])
+
+        site_permission = SitePermission.objects.create(user=self.user)
+        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.save()
 
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
