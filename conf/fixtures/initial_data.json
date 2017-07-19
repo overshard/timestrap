@@ -1,10 +1,17 @@
 [
-   {
-      "model":"sites.site",
-      "pk":1,
-      "fields":{
-         "domain":"time.strap",
-         "name":"Timestrap"
-      }
-   }
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain":"time.strap",
+            "name":"Timestrap"
+        }
+    },
+    {
+        "model": "conf.sitepermission",
+        "pk": 1,
+        "fields": {
+            "user": 1, "sites": [1]
+        }
+    }
 ]
