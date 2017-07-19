@@ -16,12 +16,7 @@ class SitePermissionBackend(ModelBackend):
         user = super(SitePermissionBackend, self).authenticate(
             request, username, password, **kwargs)
 
-        if user and user.is_active:
-            if user.is_superuser:
-                return user
-
-        '''TODO: Decide what to do if sitepermission is not available.'''
-        if hasattr(user, 'sitepermission'):
+        if user and user.is_active and hasattr(user, 'sitepermission'):
             site = Site.objects.get(id=current_site_id())
             if site in user.sitepermission.sites.all():
                 return user
