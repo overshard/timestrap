@@ -4,20 +4,14 @@ from django.core.management import call_command
 
 
 class Command(BaseCommand):
-    help = 'Creates a superuser for Heroku'
+    help = 'Runs migrations for Heroku'
 
     def handle(self, *args, **kwargs):
         verbosity = kwargs['verbosity']
 
         call_command('migrate', verbosity=0)
 
-        User.objects.create_superuser(
-            username='admin',
-            email='admin@example.com',
-            password='changeme123'
-        )
-
         if verbosity > 0:
             self.stdout.write(
-                self.style.SUCCESS('Successfully run all Heroku commands.')
+                self.style.SUCCESS('Successfully ran all Heroku commands.')
             )
