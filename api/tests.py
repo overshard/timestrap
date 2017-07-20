@@ -9,6 +9,8 @@ from django.apps import apps
 
 from faker import Factory
 
+from conf.models import Site, SitePermission
+
 
 fake = Factory.create()
 
@@ -29,9 +31,12 @@ class BrowseableApiTestCase(TestCase):
 
         fake_user = fake.simple_profile()
         fake_password = fake.password()
-        User.objects.create_user(fake_user['username'],
-                                 fake_user['mail'],
-                                 fake_password)
+        user = User.objects.create_user(fake_user['username'],
+                                        fake_user['mail'],
+                                        fake_password)
+        site_permission = SitePermission.objects.create(user=user)
+        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.save()
 
         self.user = User.objects.get(username=fake_user['username'])
         self.c.login(username=fake_user['username'],
