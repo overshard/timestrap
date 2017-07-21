@@ -20,14 +20,7 @@
             "first_name": "Tester",
             "is_superuser": false,
             "is_staff": false,
-            "is_active": true,
-            "user_permissions": [
-                7,
-                11,
-                15,
-                19,
-                23
-            ]
+            "is_active": true
         }
     },
     {
