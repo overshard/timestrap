@@ -30,6 +30,7 @@ fake = Factory.create()
     STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 )
 class SeleniumTestCase(StaticLiveServerTestCase):
+    fixtures = ['initial_data']
 
     @classmethod
     def setUpClass(cls):
