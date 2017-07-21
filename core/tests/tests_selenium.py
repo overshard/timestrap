@@ -501,7 +501,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'entry-rows'))
 
     def test_reports_filter(self):
-        management.call_command('loaddata', 'tests_data.json', verbosity=0)
+        management.call_command('loaddata', 'test_reports_filter.json', verbosity=0)
 
         # Log in with the "tester" account, part of the tests data fixture.
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
