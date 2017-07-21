@@ -30,6 +30,7 @@ fake = Factory.create()
     STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 )
 class SeleniumTestCase(StaticLiveServerTestCase):
+    fixtures = ['initial_data']
 
     @classmethod
     def setUpClass(cls):
@@ -501,7 +502,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'entry-rows'))
 
     def test_reports_filter(self):
-        management.call_command('loaddata', 'tests_data.json', verbosity=0)
+        # Load a new user "tester" and objects associated with that user.
+        management.call_command('loaddata', 'test_reports_filter', verbosity=0)
+        self.user = User.objects.get(username='tester')
+        self.addPerms(['view_client', 'view_entry', 'view_invoice',
+                       'view_project', 'view_task'])
 
         # Log in with the "tester" account, part of the tests data fixture.
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))

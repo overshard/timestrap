@@ -20,22 +20,7 @@
             "first_name": "Tester",
             "is_superuser": false,
             "is_staff": false,
-            "is_active": true,
-            "user_permissions": [
-                10,
-                11,
-                12,
-                9,
-                18,
-                19,
-                20,
-                17,
-                14,
-                15,
-                16,
-                13,
-                23
-            ]
+            "is_active": true
         }
     },
     {
