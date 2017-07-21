@@ -22,18 +22,10 @@
             "is_staff": false,
             "is_active": true,
             "user_permissions": [
-                10,
+                7,
                 11,
-                12,
-                9,
-                18,
-                19,
-                20,
-                17,
-                14,
                 15,
-                16,
-                13,
+                19,
                 23
             ]
         }
