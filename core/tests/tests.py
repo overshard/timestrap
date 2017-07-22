@@ -78,6 +78,15 @@ class ClientTestCase(TestCase):
         client = Client.objects.get(name='Юникод')
         self.assertEqual(client.name, 'Юникод')
 
+    def test_client_site_relationship(self):
+        Site.objects.create(domain='test.site', name='Test Site')
+        client = Client.objects.create(name='Client on time.strap')
+        self.assertEqual(client.sites.get().name, 'Timestrap')
+        client = Client.objects.create(name='Client on test.site')
+        client.sites = Site.objects.filter(domain='test.site')
+        client.save()
+        self.assertEqual(client.sites.get().name, 'Test Site')
+
 
 class ProjectTestCase(TestCase):
     def setUp(self):
@@ -144,6 +153,14 @@ class EntryTestCase(TestCase):
             duration__lte=timedelta(hours=1, minutes=30)
         )
         self.assertEqual(len(entries), 1)
+
+    def test_entry_site_relationship(self):
+        site = Site.objects.create(domain='test.site', name='Test Site')
+        entry = Entry.objects.get(duration=timedelta(hours=1))
+        self.assertEqual(entry.site.name, 'Timestrap')
+        entry.site = site
+        entry.save()
+        self.assertEqual(entry.site.name, 'Test Site')
 
     def test_parse_duration(self):
         duration = parse_duration('3.25')

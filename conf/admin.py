@@ -32,6 +32,7 @@ class SitePermissionInline(admin.StackedInline):
 
 
 class SitePermissionUserAdmin(UserAdmin):
+    UserAdmin.list_filter += ('sitepermission__sites',)
     inlines = [
         SitePermissionInline,
     ]

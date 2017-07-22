@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
 from django.core.exceptions import PermissionDenied
 
@@ -21,7 +22,10 @@ class SitePermissionBackend(ModelBackend):
             if site in user.sitepermission.sites.all():
                 return user
             else:
-                '''TODO: Handle in UI with a more verbose message.'''
+                messages.error(request,
+                               'This account does not have permission to log '
+                               'in to {}.'.format(request.site),
+                               'no_sitepermission')
                 raise PermissionDenied
 
     def get_user(self, user_id):
