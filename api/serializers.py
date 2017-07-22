@@ -116,10 +116,16 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'name', 'hourly_rate',)
 
 
+class EntryUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'url', 'username',)
+
+
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
     duration = DurationField()
     project_details = ProjectSerializer(source='project', read_only=True)
-    user_details = UserSerializer(source='user', read_only=True)
+    user_details = EntryUserSerializer(source='user', read_only=True)
     task_details = TaskSerializer(source='task', read_only=True)
     is_invoiced = serializers.SerializerMethodField()
 
