@@ -118,7 +118,7 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            invoiced: this.entry.invoiced,
+            invoiced: this.entry.is_invoiced,
             duration: this.durationToString(this.entry.duration),
             projects: {}
         };
