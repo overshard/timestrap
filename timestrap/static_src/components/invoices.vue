@@ -18,7 +18,7 @@
     <div class="entry-rows">
         <template v-for="(invoice, index) in invoices"
                   v-bind:invoice="invoice">
-            <div v-bind:class="['task', {'bg-faded': index % 2 === 0}, 'row', 'py-2']"
+            <div v-bind:class="['task', {'bg-danger': invoice.paid === null, 'bg-success': invoice.paid !== null}, 'row', 'py-2', 'text-white']"
                  v-bind:key="invoice.id">
                 <div class="col-3">
                     {{ moment(invoice.created) }}
@@ -27,7 +27,7 @@
                     {{ invoice.client_details.name }}
                 </div>
                 <div class="col-2">
-                    $ {{ invoice.amount }}
+                    ${{ invoice.amount }}
                 </div>
                 <div class="col-2">
                     {{ moment(invoice.paid) }}

@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
 from faker import Factory
+import pytz
 
 from core.models import Client, Entry, Project, Task, Invoice
 
@@ -100,7 +101,12 @@ class Command(BaseCommand):
         one_week_ago = datetime.now() - timedelta(days=7)
         one_week_ago = one_week_ago.date()
         for project in Project.objects.all():
-            invoice = Invoice.objects.create(client=project.client)
+            has_paid = choice([True, False])
+            if has_paid:
+                paid = datetime.now(pytz.timezone('US/Eastern'))
+            else:
+                paid = None
+            invoice = Invoice.objects.create(client=project.client, paid=paid)
             for entry in project.entries.iterator():
                 if entry.date < one_week_ago:
                     invoice.entries.add(entry)
