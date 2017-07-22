@@ -142,7 +142,7 @@ class Entry(models.Model):
         return 'Entry for ' + self.project.name + ' by ' + self.user.username
 
     def is_invoiced(self):
-        if self.invoices:
+        if self.invoices.count() > 0:
             return True
         return False
 

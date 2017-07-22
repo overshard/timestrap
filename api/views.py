@@ -9,8 +9,7 @@ import django_filters
 from core.models import Client, Project, Entry, Task, Invoice
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
-                          EntrySerializer, TaskSerializer,
-                          InvoiceSerializer)
+                          EntrySerializer, TaskSerializer, InvoiceSerializer)
 from .pagination import LimitOffsetPaginationWithTotals
 
 
