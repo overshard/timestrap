@@ -135,7 +135,8 @@ class Entry(models.Model):
     def save(self, *args, **kwargs):
         if not self.date:
             self.date = date.today()
-        self.site = Site.objects.get(id=current_site_id())
+        if not self.site:
+            self.site = Site.objects.get(id=current_site_id())
         super(Entry, self).save(*args, **kwargs)
 
     def __str__(self):
