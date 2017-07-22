@@ -72,7 +72,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             try:
                 options = Options()
                 if os.environ.get('GOOGLE_CHROME_BINARY', None):
-                    options.binary_location = os.environ['GOOGLE_CHROME_BINARY']
+                    options.binary_location = \
+                        os.environ['GOOGLE_CHROME_BINARY']
                 options.add_argument('--headless')
                 options.add_argument('--disable-gpu')
                 options.add_argument('--no-sandbox')
