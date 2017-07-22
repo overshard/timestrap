@@ -105,15 +105,10 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input id="report-invoiced"
+            <select2 id="report-invoiced"
                         v-model="invoiced"
-                        type="checkbox"
-                        class="form-check-input">
-                    Invoiced?
-                </label>
-            </div>
+                        v-bind:options="invoicedOptions"
+                        placeholder="Invoiced"></select2>
         </div>
         <div class="col-md-6">
             <button id="generate-report"
@@ -189,6 +184,11 @@ export default {
                 { id: 'desc', text: 'Descending' }
             ],
             orderDir: 'desc',
+            invoiced: 1,
+            invoicedOptions: [
+                { id: 2, text: 'Yes' },
+                { id: 3, text: 'No' }
+            ],
             project__client: null,
             dateMin: null,
             dateMax: null,
