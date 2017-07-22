@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const spawn = require('child_process').spawn;
 
 
-gulp.task('makemigrations', function(cb) {
+gulp.task('makemigrations', cb => {
     spawn(
         'pipenv',
         [
@@ -19,7 +19,7 @@ gulp.task('makemigrations', function(cb) {
 });
 
 
-gulp.task('migrate', function(cb) {
+gulp.task('migrate', cb => {
     spawn(
         'pipenv',
         [
@@ -35,7 +35,7 @@ gulp.task('migrate', function(cb) {
 });
 
 
-gulp.task('createsuperuser', function(cb) {
+gulp.task('createsuperuser', cb => {
     spawn(
         'pipenv',
         [
@@ -51,10 +51,10 @@ gulp.task('createsuperuser', function(cb) {
 });
 
 
-gulp.task('reset', ['reset:flush', 'reset:heroku', 'reset:fake']);
+gulp.task('reset', ['reset:flush', 'reset:load', 'reset:fake']);
 
 
-gulp.task('reset:flush', function(cb) {
+gulp.task('reset:flush', cb => {
     spawn(
         'pipenv',
         [
@@ -71,14 +71,15 @@ gulp.task('reset:flush', function(cb) {
 });
 
 
-gulp.task('reset:heroku', ['reset:flush'], function(cb) {
+gulp.task('reset:load', ['reset:flush'], cb => {
     spawn(
         'pipenv',
         [
             'run',
             'python',
             'manage.py',
-            'heroku'
+            'loaddata',
+            'initial_data.json'
         ],
         {
             stdio: 'inherit'
@@ -87,7 +88,7 @@ gulp.task('reset:heroku', ['reset:flush'], function(cb) {
 });
 
 
-gulp.task('reset:fake', ['reset:heroku'], function(cb) {
+gulp.task('reset:fake', ['reset:load'], cb => {
     spawn(
         'pipenv',
         [
