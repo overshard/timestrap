@@ -1,3 +1,5 @@
+@import 'variables';
+
 #entry-rows {
     .row:not(.inset-row) {
         border-top: 1px solid $row-border-color;
