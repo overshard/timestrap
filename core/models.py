@@ -79,7 +79,8 @@ class Project(models.Model):
             try:
                 if entry.task.hourly_rate:
                     total_cost += (
-                        duration_decimal(entry.duration) * entry.task.hourly_rate
+                        duration_decimal(entry.duration)
+                        * entry.task.hourly_rate
                     )
             except:
                 continue
