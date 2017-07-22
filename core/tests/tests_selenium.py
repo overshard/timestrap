@@ -9,7 +9,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core import management
 from django.test import override_settings
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -69,16 +69,18 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                 desired_capabilities=desired_capabilities
             )
         else:
-            options = Options()
-            if os.environ.get('GOOGLE_CHROME_BINARY', None):
-                options.binary_location = os.environ['GOOGLE_CHROME_BINARY']
-            options.add_argument('--headless')
-            options.add_argument('--disable-gpu')
-            options.add_argument('--no-sandbox')
-            options.add_argument('--log-level=3')
-            options.add_argument('--window-size=1280,720')
-
-            cls.driver = webdriver.Chrome(chrome_options=options)
+            try:
+                options = Options()
+                if os.environ.get('GOOGLE_CHROME_BINARY', None):
+                    options.binary_location = os.environ['GOOGLE_CHROME_BINARY']
+                options.add_argument('--headless')
+                options.add_argument('--disable-gpu')
+                options.add_argument('--no-sandbox')
+                options.add_argument('--log-level=3')
+                options.add_argument('--window-size=1280,720')
+                cls.driver = webdriver.Chrome(chrome_options=options)
+            except WebDriverException:
+                cls.driver = webdriver.Firefox()
 
         cls.driver.implicitly_wait(10)
         cls.wait_time = 5
