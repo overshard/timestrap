@@ -31,6 +31,6 @@
         }
     },
     "scripts": {
-        "postdeploy": "python manage.py heroku"
+        "postdeploy": "python manage.py migrate"
     }
 }
