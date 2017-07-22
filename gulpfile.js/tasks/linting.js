@@ -33,7 +33,7 @@ gulp.task('lint:sass', function() {
                 'indentation': [
                     1,
                     {
-                        'size': 4
+                        'size': 4  // TODO: Doesn't seem to always check?
                     }
                 ],
                 'property-sort-order': 0,
