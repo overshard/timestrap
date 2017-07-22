@@ -27,7 +27,7 @@
                 <input name="project-estimate"
                        type="text"
                        class="form-control form-control-sm"
-                       placeholder="Hours Estimate"
+                       placeholder="Cost Estimate"
                        v-model.number="project_estimate" />
             </div>
         </div>

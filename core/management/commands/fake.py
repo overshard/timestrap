@@ -49,7 +49,7 @@ class Command(BaseCommand):
                 estimated = choice([True, False])
                 estimate = None
                 if estimated:
-                    estimate = timedelta(hours=randint(5, 150))
+                    estimate = randint(1000, 20000)
                 project_name = (fake
                                 .sentence(nb_words=3, variable_nb_words=True)
                                 .replace('.', '')

@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.core.management import call_command
 
 from conf.models import Site, SitePermission
-from ..models import Client, Project, Entry
+from ..models import Client, Project, Entry, Task
 from ..utils import parse_duration, duration_string, duration_decimal
 
 from csv import DictReader
@@ -101,11 +101,16 @@ class ProjectTestCase(TestCase):
         project = Project.objects.create(
             client=self.client,
             name='Testing',
-            estimate=timedelta(hours=50)
+            estimate=5000.00
+        )
+        task = Task.objects.create(
+            name='Testing',
+            hourly_rate=100.00
         )
         Entry.objects.create(
             project=project,
             user=self.user,
+            task=task,
             duration=timedelta(hours=10),
             note='Creating tests for the core app'
         )

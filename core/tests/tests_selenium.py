@@ -251,7 +251,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        Project(name='Project 1', client=client, estimate=timedelta(hours=1),
+        Project(name='Project 1', client=client, estimate=100.00,
                 archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
@@ -276,7 +276,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'project-modal'))
         self.select2Select('project-client', 'Client')
         self.find(By.NAME, 'project-name').send_keys('Project')
-        self.find(By.NAME, 'project-estimate').send_keys('1')
+        self.find(By.NAME, 'project-estimate').send_keys('100.00')
         self.find(By.NAME, 'project-modal-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'project'))
 
@@ -284,7 +284,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        Project(name='Project', client=client, estimate=timedelta(hours=1),
+        Project(name='Project', client=client, estimate=100.00,
                 archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project'])
@@ -298,7 +298,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'project-menu-change').click()
         self.waitForPresence((By.NAME, 'project-name'))
         self.find(By.NAME, 'project-name').send_keys(' Changed')
-        self.find(By.NAME, 'project-estimate').send_keys('.5')
+        self.find(By.NAME, 'project-estimate').send_keys('50.00')
         self.find(By.NAME, 'project-modal-submit').click()
         self.waitForText((By.CLASS_NAME, 'project-name'), 'Project Changed')
 
@@ -356,9 +356,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        Project(name='Project 1', estimate=timedelta(hours=1), client=client,
+        Project(name='Project 1', estimate=100.00, client=client,
                 archive=False).save()
-        Project(name='Project 2', estimate=timedelta(hours=1), client=client,
+        Project(name='Project 2', estimate=100.00, client=client,
                 archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_entry', 'view_project'])
@@ -379,9 +379,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        Project(name='Project 1', estimate=timedelta(hours=1), client=client,
+        Project(name='Project 1', estimate=100.00, client=client,
                 archive=False).save()
-        Project(name='Project 2', estimate=timedelta(hours=1), client=client,
+        Project(name='Project 2', estimate=100.00, client=client,
                 archive=False).save()
         Task(name='Task 1', hourly_rate=130).save()
         Task(name='Task 2', hourly_rate=80).save()
@@ -407,10 +407,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        project = Project(name='Project 1', estimate=timedelta(hours=1),
+        project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
         project.save()
-        Project(name='Project 2', estimate=timedelta(hours=1), client=client,
+        Project(name='Project 2', estimate=100.00, client=client,
                 archive=False).save()
         task = Task(name='Task 1', hourly_rate=130)
         task.save()
@@ -445,7 +445,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        project = Project(name='Project 1', estimate=timedelta(hours=1),
+        project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
         project.save()
         task = Task(name='Task 1', hourly_rate=130)
@@ -478,7 +478,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         client = Client(name='Client', invoice_email='client@company.com',
                         archive=False)
         client.save()
-        project = Project(name='Project 1', estimate=timedelta(hours=1),
+        project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
         project.save()
         task = Task(name='Task 1', hourly_rate=130)

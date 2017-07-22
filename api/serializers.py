@@ -42,13 +42,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ClientProjectSerializer(serializers.HyperlinkedModelSerializer):
     total_entries = serializers.SerializerMethodField()
     total_duration = serializers.SerializerMethodField()
+    total_cost = serializers.SerializerMethodField()
     percent_done = serializers.SerializerMethodField()
-    estimate = DurationField(required=False)
 
     class Meta:
         model = Project
         fields = ('id', 'url', 'name', 'client', 'estimate', 'total_entries',
-                  'total_duration', 'percent_done', 'archive',)
+                  'total_duration', 'total_cost', 'percent_done', 'archive',)
+
+    def get_total_cost(self, obj):
+        return obj.get_total_cost()
 
     def get_total_entries(self, obj):
         return obj.get_total_entries()
@@ -88,7 +91,6 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     total_entries = serializers.SerializerMethodField()
     total_duration = serializers.SerializerMethodField()
     percent_done = serializers.SerializerMethodField()
-    estimate = DurationField(required=False)
 
     class Meta:
         model = Project

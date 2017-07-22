@@ -88,7 +88,7 @@
             "client": 1,
             "name": "Project 1",
             "archive": false,
-            "estimate": "02:00:00"
+            "estimate": "2000.00"
         }
     },
     {
@@ -98,7 +98,7 @@
             "client": 1,
             "name": "Project 2",
             "archive": false,
-            "estimate": "05:00:00"
+            "estimate": "5000.00"
         }
     },
     {
@@ -108,7 +108,7 @@
             "client": 2,
             "name": "Project 3",
             "archive": false,
-            "estimate": "20:00:00"
+            "estimate": "20000.00"
         }
     },
     {
@@ -118,7 +118,7 @@
             "client": 3,
             "name": "Project 4",
             "archive": false,
-            "estimate": "01:00:00"
+            "estimate": "1000.00"
         }
     },
     {
@@ -128,7 +128,7 @@
             "client": 3,
             "name": "Project 5",
             "archive": false,
-            "estimate": "01:00:00"
+            "estimate": "1000.00"
         }
     },
     {
@@ -138,7 +138,7 @@
             "client": 3,
             "name": "Project 6",
             "archive": false,
-            "estimate": "05:00:00"
+            "estimate": "5000.00"
         }
     },
     {

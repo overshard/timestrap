@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from datetime import date
+from decimal import Decimal, ROUND_DOWN
 
 from django.contrib.sites.models import Site
 from django.db import models
@@ -9,7 +10,7 @@ from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .utils import duration_string
+from .utils import duration_string, duration_decimal
 from conf.utils import current_site_id
 from conf.managers import CurrentSiteManager
 
@@ -59,7 +60,8 @@ class Project(models.Model):
     client = models.ForeignKey('Client', related_name='projects')
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
-    estimate = models.DurationField(blank=True, null=True)
+    estimate = models.DecimalField(max_digits=10, decimal_places=2,
+                                   blank=True, null=True)
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
@@ -71,6 +73,18 @@ class Project(models.Model):
     def get_total_entries(self):
         return self.entries.count()
 
+    def get_total_cost(self):
+        total_cost = Decimal()
+        for entry in self.entries.iterator():
+            try:
+                if entry.task.hourly_rate:
+                    total_cost += (
+                        duration_decimal(entry.duration) * entry.task.hourly_rate
+                    )
+            except:
+                continue
+        return total_cost.quantize(Decimal('.01'), rounding=ROUND_DOWN)
+
     def get_total_duration(self):
         return duration_string(self.entries.aggregate(
             Sum('duration')
@@ -78,11 +92,10 @@ class Project(models.Model):
 
     def get_percent_done(self):
         if self.estimate is not None:
-            total_duration = float(self.get_total_duration().split(':')[0])
-            total_estimate = \
-                float(duration_string(self.estimate).split(':')[0])
-            if total_duration != 0 and total_estimate != 0:
-                return int(100 * (total_duration/total_estimate))
+            total_cost = Decimal(self.get_total_cost())
+            total_estimate = Decimal(self.estimate)
+            if total_cost != 0 and total_estimate != 0:
+                return int(100 * (total_cost/total_estimate))
         return None
 
 
