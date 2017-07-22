@@ -19,3 +19,11 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=500)
 }
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')  # noqa: F405
+EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')  # noqa: F405
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 60
