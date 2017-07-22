@@ -1,5 +1,5 @@
 <template>
-<div class="task row py-2 bg-faded">
+<div v-bind:class="['task', {'bg-faded': this.index % 2 === 0}, 'row', 'py-2']">
     <div v-bind:class="[[this.$perms.change_task ? 'col-8' : 'col-10'], 'd-flex', 'align-items-center']">
         {{ task.name }}
     </div>

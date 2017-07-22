@@ -16,20 +16,24 @@
     </div>
 
     <div class="entry-rows">
-        <div class="entry row py-2 bg-faded small" v-for="invoice in invoices">
-            <div class="col-3">
-                {{ moment(invoice.created) }}
+        <template v-for="(invoice, index) in invoices"
+                  v-bind:invoice="invoice">
+            <div v-bind:class="['task', {'bg-faded': index % 2 === 0}, 'row', 'py-2']"
+                 v-bind:key="invoice.id">
+                <div class="col-3">
+                    {{ moment(invoice.created) }}
+                </div>
+                <div class="col-5">
+                    {{ invoice.client_details.name }}
+                </div>
+                <div class="col-2">
+                    $ {{ invoice.amount }}
+                </div>
+                <div class="col-2">
+                    {{ moment(invoice.paid) }}
+                </div>
             </div>
-            <div class="col-5">
-                {{ invoice.client_details.name }}
-            </div>
-            <div class="col-2">
-                $ {{ invoice.amount }}
-            </div>
-            <div class="col-2">
-                {{ moment(invoice.paid) }}
-            </div>
-        </div>
+        </template>
     </div>
 </div>
 </template>
