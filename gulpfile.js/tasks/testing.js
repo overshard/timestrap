@@ -30,7 +30,7 @@ gulp.task('coverage', (cb) => {
             'run',
             'coverage',
             'run',
-            '--source=core,api',
+            '--source=conf,core,api',
             'manage.py',
             'test'
         ],

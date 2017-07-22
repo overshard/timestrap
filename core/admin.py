@@ -5,30 +5,22 @@ from django.contrib import admin
 
 from import_export import resources
 
-from .models import Client, Project, Entry, Invoice
+from .models import Client, Entry, Invoice, Project, Task
 
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('name', 'invoice_email', 'payment_id', 'archive',)
     list_editable = ('archive',)
-    list_filter = ('archive',)
+    list_filter = ('archive', 'sites')
     search_fields = ('name',)
-
-
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'client', 'archive',)
-    list_editable = ('archive',)
-    list_filter = ('client', 'archive',)
-    search_fields = ('name', 'client',)
 
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     list_display = ('project', 'user', 'date', 'duration',)
     list_editable = ('date', 'duration',)
-    list_filter = ('project', 'project__client', 'user', 'date',)
+    list_filter = ('project', 'project__client', 'user', 'date', 'site',)
     search_fields = ('project', 'project__client', 'user', 'note',)
     fieldsets = (
         (None, {
@@ -38,7 +30,7 @@ class EntryAdmin(admin.ModelAdmin):
             'fields': ('date', 'duration',)
         }),
         ('Extra', {
-            'fields': ('note',)
+            'fields': ('note', 'site',)
         }),
     )
 
@@ -57,3 +49,18 @@ class InvoiceAdmin(admin.ModelAdmin):
     list_filter = ('client', 'paid',)
     search_fields = ('client', 'transaction_id',)
     filter_horizontal = ('entries',)
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('name', 'client', 'archive',)
+    list_editable = ('archive',)
+    list_filter = ('client', 'archive',)
+    search_fields = ('name', 'client',)
+
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('name', 'hourly_rate',)
+    list_filter = ('sites',)
+    search_fields = ('name',)
