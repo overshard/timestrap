@@ -13,8 +13,12 @@ class Conf(models.Model):
                                 on_delete=models.CASCADE)
     color = models.CharField(max_length=5, blank=True)
 
+    class Meta:
+        verbose_name = 'Configuration'
+        verbose_name_plural = 'Configuration'
+
     def __str__(self):
-        return 'Configuration'
+        return 'Configuration for {}'.format(self.site.name)
 
 
 @receiver(post_save, sender=Site)
