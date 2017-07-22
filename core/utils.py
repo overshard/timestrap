@@ -18,6 +18,8 @@ def parse_duration(duration):
         hours = int(duration_split[0])
         minutes = int(duration_split[1])
     elif '.' in duration:
+        if duration.index('.') == 0:
+            duration = '0' + duration
         duration_split = duration.split('.')
         # TODO: Fix error here when not appending a 0, ex .5 instead of 0.5
         hours = int(duration_split[0])
