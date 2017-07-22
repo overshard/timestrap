@@ -252,6 +252,3 @@ class CommandsTestCase(TestCase):
 
     def test_fake(self):
         call_command('fake', verbosity=0)
-
-    def test_heroku(self):
-        call_command('heroku', verbosity=0)
