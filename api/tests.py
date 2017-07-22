@@ -15,6 +15,29 @@ from conf.models import Site, SitePermission
 fake = Factory.create()
 
 
+def init_api_test_data():
+    """
+    Generates fake data, starts an HttpClient session, creates a fake user and
+    logs that user in.
+    """
+    call_command('fake', verbosity=0, iterations=1)
+
+    c = HttpClient()
+
+    fake_user = fake.simple_profile()
+    fake_password = fake.password()
+    user = User.objects.create_user(fake_user['username'], fake_user['mail'],
+                                    fake_password)
+    site_permission = SitePermission.objects.create(user=user)
+    site_permission.sites = Site.objects.filter(id=1)
+    site_permission.save()
+
+    user = User.objects.get(username=fake_user['username'])
+    c.login(username=fake_user['username'], password=fake_password)
+
+    return [c, user]
+
+
 class AppTestCase(TestCase):
     def setUp(self):
         pass
@@ -23,32 +46,9 @@ class AppTestCase(TestCase):
         self.assertEqual(apps.get_app_config('api').name, 'api')
 
 
-class BrowseableApiTestCase(TestCase):
+class ClientBrowseableApiTestCase(TestCase):
     def setUp(self):
-        call_command('fake', verbosity=0, iterations=1)
-
-        self.c = HttpClient()
-
-        fake_user = fake.simple_profile()
-        fake_password = fake.password()
-        user = User.objects.create_user(fake_user['username'],
-                                        fake_user['mail'],
-                                        fake_password)
-        site_permission = SitePermission.objects.create(user=user)
-        site_permission.sites = Site.objects.filter(id=1)
-        site_permission.save()
-
-        self.user = User.objects.get(username=fake_user['username'])
-        self.c.login(username=fake_user['username'],
-                     password=fake_password)
-
-    def test_users_get(self):
-        page = self.c.get('/api/users/')
-        self.assertEqual(page.status_code, 200)
-
-    def test_permission_get(self):
-        page = self.c.get('/api/permissions/')
-        self.assertEqual(page.status_code, 200)
+        self.c, self.user = init_api_test_data()
 
     def test_clients_get(self):
         page = self.c.get('/api/clients/')
@@ -58,26 +58,6 @@ class BrowseableApiTestCase(TestCase):
             Permission.objects.get(codename='view_client'))
 
         page = self.c.get('/api/clients/')
-        self.assertEqual(page.status_code, 200)
-
-    def test_projects_get(self):
-        page = self.c.get('/api/projects/')
-        self.assertEqual(page.status_code, 403)
-
-        self.user.user_permissions.add(
-            Permission.objects.get(codename='view_project'))
-
-        page = self.c.get('/api/projects/')
-        self.assertEqual(page.status_code, 200)
-
-    def test_entries_get(self):
-        page = self.c.get('/api/entries/')
-        self.assertEqual(page.status_code, 403)
-
-        self.user.user_permissions.add(
-            Permission.objects.get(codename='view_entry'))
-
-        page = self.c.get('/api/entries/')
         self.assertEqual(page.status_code, 200)
 
     def test_clients_post(self):
@@ -102,6 +82,21 @@ class BrowseableApiTestCase(TestCase):
             'name': 'Юникод'
         })
         self.assertEqual(page.status_code, 201)
+
+
+class ProjectBrowseableApiTestCase(TestCase):
+    def setUp(self):
+        self.c, self.user = init_api_test_data()
+
+    def test_projects_get(self):
+        page = self.c.get('/api/projects/')
+        self.assertEqual(page.status_code, 403)
+
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_project'))
+
+        page = self.c.get('/api/projects/')
+        self.assertEqual(page.status_code, 200)
 
     def test_projects_post(self):
         self.user.user_permissions.add(
@@ -142,6 +137,21 @@ class BrowseableApiTestCase(TestCase):
 
         self.assertEqual(page.status_code, 201)
 
+
+class EntryBrowseableApiTestCase(TestCase):
+    def setUp(self):
+        self.c, self.user = init_api_test_data()
+
+    def test_entries_get(self):
+        page = self.c.get('/api/entries/')
+        self.assertEqual(page.status_code, 403)
+
+        self.user.user_permissions.add(
+            Permission.objects.get(codename='view_entry'))
+
+        page = self.c.get('/api/entries/')
+        self.assertEqual(page.status_code, 200)
+
     def test_entries_post(self):
         self.user.user_permissions.add(
             Permission.objects.get(codename='view_project'))
@@ -169,3 +179,21 @@ class BrowseableApiTestCase(TestCase):
         })
 
         self.assertEqual(page.status_code, 201)
+
+
+class UserBrowseableApiTestCase(TestCase):
+    def setUp(self):
+        self.c, self.user = init_api_test_data()
+
+    def test_permission_get(self):
+        page = self.c.get('/api/permissions/')
+        self.assertEqual(page.status_code, 200)
+
+
+class PermissionBrowseableApiTestCase(TestCase):
+    def setUp(self):
+        self.c, self.user = init_api_test_data()
+
+    def test_users_get(self):
+        page = self.c.get('/api/users/')
+        self.assertEqual(page.status_code, 200)
