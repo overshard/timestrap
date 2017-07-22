@@ -30,7 +30,7 @@ class EntryAdmin(admin.ModelAdmin):
             'fields': ('date', 'duration',)
         }),
         ('Extra', {
-            'fields': ('note',)
+            'fields': ('note', 'site',)
         }),
     )
 
@@ -46,7 +46,7 @@ class EntryResource(resources.ModelResource):
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('client', 'created', 'paid', 'transaction_id',)
     list_editable = ('paid', 'transaction_id',)
-    list_filter = ('client', 'paid', 'site',)
+    list_filter = ('client', 'paid',)
     search_fields = ('client', 'transaction_id',)
     filter_horizontal = ('entries',)
 
