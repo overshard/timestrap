@@ -15,6 +15,10 @@ requirements and procedures, see [Development Installation](#development-install
 
         python manage.py migrate
 
+1. Create the initial site and user (username: admin, password: admin).
+
+        python manage.py createsite
+
 1. Run the server!
 
         python manage.py runserver
@@ -22,8 +26,3 @@ requirements and procedures, see [Development Installation](#development-install
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
 If it is not, feel free to [create an issue](https://github.com/overshard/timestrap/issues)
 to seek assistance or report a bug! :bug:
-
-The default account credentials are:
-
-- Username: `admin`
-- Password: `admin`

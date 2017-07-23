@@ -29,20 +29,17 @@ Want to get up and running quickly? :rocket:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/overshard/timestrap)
 
-The Heroku deployment has a default username and password with superuser 
-access, please change it via the admin panel:
-
-- Username: `admin`
-- Password: `admin`
-
 For manual deployments to Heroku without using the deploy button, make sure to
 create two settings before pushing using `heroku config:set`:
 
     heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
     heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
 
-:lock: After a successful push, log in with the default credentials (below)
+After a successful push, log in with the default credentials (below)
 and **change the admin password**
+
+:lock: Heroku deployments use a default username and password with superuser 
+access, please change it via the admin panel after initial login:
 
 - Username: `admin`
 - Password: `admin`
@@ -64,6 +61,10 @@ requirements and procedures, see [Development Installation](#development-install
 
         python manage.py migrate
 
+1. Create the initial site and user (username: admin, password: admin).
+
+        python manage.py createsite
+
 1. Run the server!
 
         python manage.py runserver
@@ -71,11 +72,6 @@ requirements and procedures, see [Development Installation](#development-install
 The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
 If it is not, feel free to [create an issue](https://github.com/overshard/timestrap/issues)
 to seek assistance or report a bug! :bug:
-
-The default account credentials are:
-
-- Username: `admin`
-- Password: `admin`
 
 ## Development Installation
 
@@ -100,6 +96,10 @@ static files.
 
         gulp migrate
 
+1. Create the initial site and user (username: admin, password: admin).
+
+        gulp createsite
+
 1. Run the server!
 
         gulp
@@ -108,11 +108,6 @@ The Timestrap application should now be running at [http://localhost:8000](http:
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
 the application.
-
-The default account credentials are:
-
-- Username: `admin`
-- Password: `admin`
 
 [Pull requests](https://github.com/overshard/timestrap/pulls) are :+1: welcome 
 and :clap: encouraged!
