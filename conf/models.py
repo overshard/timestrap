@@ -10,25 +10,49 @@ from django.dispatch import receiver
 
 
 class Conf(models.Model):
-    site = models.OneToOneField(Site, related_name='conf',
-                                on_delete=models.CASCADE)
+    site = models.OneToOneField(
+        Site,
+        related_name='conf',
+        on_delete=models.CASCADE
+    )
 
     # SMTP settings
-    smtp_host = models.CharField(verbose_name='Host', max_length=255,
-                                 default=settings.EMAIL_HOST)
-    smtp_user = models.CharField(verbose_name='User', max_length=255,
-                                 default=settings.EMAIL_HOST_USER)
+    smtp_from_address = models.EmailField(
+        verbose_name='"From" Email Address',
+        default=settings.DEFAULT_FROM_EMAIL,
+        blank=True
+    )
+    smtp_host = models.CharField(
+        verbose_name='SMTP Host',
+        max_length=255,
+        blank=True,
+        default=settings.EMAIL_HOST
+    )
+    smtp_user = models.CharField(
+        verbose_name='SMTP Username',
+        max_length=255,
+        blank=True,
+        default=settings.EMAIL_HOST_USER
+    )
     # TODO: Store and use this securely.
     smtp_password = models.CharField(
-        verbose_name='Password',
+        verbose_name='SMTP Password',
         help_text='This password is stored in plaintext. Use with caution!',
         max_length=255,
+        blank=True,
         default=settings.EMAIL_HOST_PASSWORD
     )
-    smtp_port = models.PositiveIntegerField(verbose_name='Port',
-                                            default=settings.EMAIL_PORT)
-    smtp_tls = models.BooleanField(verbose_name='Use TLS',
-                                   default=settings.EMAIL_USE_TLS)
+    smtp_port = models.PositiveIntegerField(
+        verbose_name='SMTP Port',
+        blank=True,
+        default=settings.EMAIL_PORT
+    )
+    smtp_tls = models.BooleanField(
+        verbose_name='Use TLS',
+        default=settings.EMAIL_USE_TLS
+    )
+
+    objects = models.Manager()
 
     class Meta:
         verbose_name = 'Configuration'

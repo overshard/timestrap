@@ -14,9 +14,9 @@ class ConfInline(admin.StackedInline):
     model = Conf
     can_delete = False
     fieldsets = (
-        ('SMTP Settings', {
-            'fields': ('smtp_host', 'smtp_user', 'smtp_password', 'smtp_port',
-                       'smtp_tls',)
+        ('Email Settings', {
+            'fields': ('smtp_from_address', 'smtp_host', 'smtp_user',
+                       'smtp_password', 'smtp_port', 'smtp_tls',)
         }),
     )
 
