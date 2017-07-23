@@ -3,16 +3,8 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.management import call_command
 from django.db import migrations, models
 import django.db.models.deletion
-
-
-def load_initial_data(apps, schema_editor):
-    """
-    Creates the initial Site and adds a SitePermission for User ID 1.
-    """
-    call_command('loaddata', 'initial_data')
 
 
 class Migration(migrations.Migration):
@@ -45,5 +37,4 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Site permissions',
             },
         ),
-        migrations.RunPython(load_initial_data),
     ]

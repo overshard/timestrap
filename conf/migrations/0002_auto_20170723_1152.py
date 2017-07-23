@@ -3,6 +3,14 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.core.management import call_command
+
+
+def load_initial_data(apps, schema_editor):
+    """
+    Creates the initial Site and adds a SitePermission for User ID 1.
+    """
+    call_command('loaddata', 'initial_data')
 
 
 class Migration(migrations.Migration):
@@ -50,4 +58,5 @@ class Migration(migrations.Migration):
             name='smtp_user',
             field=models.CharField(blank=True, default='', max_length=255, verbose_name='SMTP Username'),
         ),
+        migrations.RunPython(load_initial_data),
     ]
