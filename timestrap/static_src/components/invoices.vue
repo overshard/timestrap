@@ -58,7 +58,7 @@ export default {
         },
         moment(date) {
             if (date) {
-                return moment(date).format('LL');
+                return moment(date).tz(timestrapConfig.SITE.TIMEZONE).format('LL');
             } else {
                 return 'Not Paid';
             }
