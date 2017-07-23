@@ -14,6 +14,9 @@ class ConfInline(admin.StackedInline):
     model = Conf
     can_delete = False
     fieldsets = (
+        ('Internationalization', {
+            'fields': ('i18n_language_code', 'i18n_timezone',)
+        }),
         ('Email Settings', {
             'fields': ('smtp_from_address', 'smtp_host', 'smtp_user',
                        'smtp_password', 'smtp_port', 'smtp_tls',)

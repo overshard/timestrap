@@ -16,6 +16,18 @@ class Conf(models.Model):
         on_delete=models.CASCADE
     )
 
+    # Internationalization settings
+    i18n_language_code = models.CharField(
+        verbose_name='Language Code',
+        max_length=5,
+        default=settings.LANGUAGE_CODE
+    )
+    i18n_timezone = models.CharField(
+        verbose_name='Timezone',
+        max_length=255,
+        default=settings.TIME_ZONE
+    )
+
     # SMTP settings
     smtp_from_address = models.EmailField(
         verbose_name='"From" Email Address',
