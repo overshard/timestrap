@@ -20,6 +20,7 @@ def init_api_test_data():
     Generates fake data, starts an HttpClient session, creates a fake user and
     logs that user in.
     """
+    call_command('createsite', verbosity=0)
     call_command('fake', verbosity=0, iterations=1)
 
     c = HttpClient()
