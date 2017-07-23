@@ -21,6 +21,10 @@ static files.
 
         gulp migrate
 
+1. Create the initial site and user (username: admin, password: admin).
+
+        gulp createsite
+
 1. Run the server!
 
         gulp
@@ -29,11 +33,6 @@ The Timestrap application should now be running at [http://localhost:8000](http:
 Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
 the application.
-
-The default account credentials are:
-
-- Username: `admin`
-- Password: `admin`
 
 [Pull requests](https://github.com/overshard/timestrap/pulls) are :+1: welcome 
 and :clap: encouraged!

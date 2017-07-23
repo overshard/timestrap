@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from pytz import all_timezones
+
 from django.conf import settings
+from django.conf.global_settings import LANGUAGES
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
@@ -14,6 +17,20 @@ class Conf(models.Model):
         Site,
         related_name='conf',
         on_delete=models.CASCADE
+    )
+
+    # Internationalization settings
+    i18n_language_code = models.CharField(
+        verbose_name='Language Code',
+        max_length=7,
+        choices=LANGUAGES,
+        default=settings.LANGUAGE_CODE
+    )
+    i18n_timezone = models.CharField(
+        verbose_name='Timezone',
+        max_length=255,
+        choices=(zip(all_timezones, all_timezones)),
+        default=settings.TIME_ZONE
     )
 
     # SMTP settings

@@ -6,6 +6,7 @@ from datetime import timedelta
 
 from django.contrib.auth.models import User, Permission
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.core.management import call_command
 from django.core import management
 from django.test import override_settings
 
@@ -30,10 +31,9 @@ fake = Factory.create()
     STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 )
 class SeleniumTestCase(StaticLiveServerTestCase):
-    fixtures = ['initial_data']
-
     @classmethod
     def setUpClass(cls):
+        call_command('createsite', verbosity=0)
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()

@@ -52,7 +52,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'conf.middleware.SiteMiddleware',
+    'conf.middleware.site.SiteMiddleware',
+    'conf.middleware.i18n.I18NMiddleware',
 ]
 
 ROOT_URLCONF = 'timestrap.urls'
@@ -93,7 +94,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'America/New_York'
 

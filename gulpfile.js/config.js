@@ -15,6 +15,8 @@ module.exports = {
         'node_modules/tether/dist/js/tether.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/moment/min/moment.min.js',
+        'node_modules/moment/min/locales.min.js',
+        'node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
         'node_modules/select2/dist/js/select2.min.js',
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',

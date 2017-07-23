@@ -47,7 +47,9 @@
                 timestrapConfig.SITE = {
                     ID: {{ request.site.id }},
                     DOMAIN: "{{ request.site.domain }}",
-                    NAME: "{{ request.site.name }}"
+                    NAME: "{{ request.site.name }}",
+                    LOCALE: "{{ request.site.conf.i18n_language_code }}",
+                    TIMEZONE: "{{ request.site.conf.i18n_timezone }}"
                 };
             })(document, window);
         </script>

@@ -114,6 +114,9 @@ export default {
             this.bus.$emit('search');
         }
     },
+    mounted() {
+        moment.locale(timestrapConfig.SITE.LOCALE);
+    },
     components: {
         Timer
     }
