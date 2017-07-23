@@ -52,7 +52,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'conf.middleware.SiteMiddleware',
+    'conf.middleware.site.SiteMiddleware',
+    'conf.middleware.i18n.I18NMiddleware',
 ]
 
 ROOT_URLCONF = 'timestrap.urls'

@@ -1,6 +1,6 @@
 from __future__ import division
 
-from .middleware import current_request
+from .middleware.site import current_request
 from .models import Conf, Site
 
 from django.conf import settings
