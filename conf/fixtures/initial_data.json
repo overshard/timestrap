@@ -3,8 +3,8 @@
         "model": "sites.site",
         "pk": 1,
         "fields": {
-            "domain":"time.strap",
-            "name":"Timestrap"
+            "domain": "time.strap",
+            "name": "Timestrap"
         }
     },
     {

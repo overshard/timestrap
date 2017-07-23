@@ -105,6 +105,14 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         else:
             return elements
 
+    def clear(self, element):
+        """Send back space commands to clear a form field element. This is used
+        because Selenium's built-in clear() method is inconsistent."""
+        value = element.get_attribute('value')
+        if len(value) > 0:
+            for char in value:
+                element.send_keys(Keys.BACK_SPACE)
+
     def wait(self, seconds):
         """Use a lambda that always returns False to wait for a number of
         seconds without any expected conditions."""
@@ -161,10 +169,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
-        username_input.clear()
+        self.clear(username_input)
         username_input.send_keys(self.profile['username'])
         password_input = self.find(By.NAME, 'password')
-        password_input.clear()
+        self.clear(password_input)
         password_input.send_keys(self.profile['password'])
         self.find(By.NAME, 'login').click()
         self.waitForPresence((By.ID, 'nav-app'))
@@ -298,6 +306,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'project-menu-change').click()
         self.waitForPresence((By.NAME, 'project-name'))
         self.find(By.NAME, 'project-name').send_keys(' Changed')
+        self.clear(self.find(By.NAME, 'project-estimate'))
         self.find(By.NAME, 'project-estimate').send_keys('50.00')
         self.find(By.NAME, 'project-modal-submit').click()
         self.waitForText((By.CLASS_NAME, 'project-name'), 'Project Changed')
@@ -338,9 +347,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'task-menu-change').click()
         self.waitForPresence((By.NAME, 'task-name'))
         self.find(By.NAME, 'task-name').send_keys(' Changed')
-        self.find(By.NAME, 'task-hourly-rate').click()
-        self.find(By.NAME, 'task-hourly-rate').clear()
-        self.find(By.NAME, 'task-hourly-rate').send_keys('125')
+        hourly_rate_field = self.find(By.NAME, 'task-hourly-rate')
+        hourly_rate_field.click()
+        self.clear(hourly_rate_field)
+        hourly_rate_field.send_keys('125')
         self.find(By.NAME, 'task-modal-submit').click()
         self.waitForText((By.CLASS_NAME, 'task'), 'Task Changed\n$125')
 
@@ -432,9 +442,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.CLASS_NAME, 'entry-menu-change').click()
         self.waitForPresence((By.NAME, 'entry-save'))
         self.select2Select('entry-project', 'Project 2')
-        self.find(By.NAME, 'entry-note').clear()
+        self.clear(self.find(By.NAME, 'entry-note'))
         self.find(By.NAME, 'entry-note').send_keys('Changed note')
-        self.find(By.NAME, 'entry-duration').clear()
+        self.clear(self.find(By.NAME, 'entry-duration'))
         self.find(By.NAME, 'entry-duration').send_keys('1.5')
         self.find(By.NAME, 'entry-save').click()
         self.waitForPresence((By.CLASS_NAME, 'entry'))
@@ -514,10 +524,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         # Log in with the "tester" account, part of the tests data fixture.
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.find(By.NAME, 'username')
-        username_input.clear()
+        self.clear(username_input)
         username_input.send_keys('tester')
         password_input = self.find(By.NAME, 'password')
-        password_input.clear()
+        self.clear(password_input)
         password_input.send_keys('tester')
         self.find(By.NAME, 'login').click()
         self.waitForPresence((By.ID, 'nav-app'))

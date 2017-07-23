@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
 from django.core.exceptions import PermissionDenied
 
-from .models import Site
-from .utils import current_site_id
+from conf.models import Site
+from conf.utils import current_site_id
 
 
 class SitePermissionBackend(ModelBackend):
