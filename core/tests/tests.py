@@ -29,6 +29,7 @@ fake = Factory.create()
 )
 class ViewsTestCase(TestCase):
     def setUp(self):
+        call_command('createsite', verbosity=0)
         self.c = HttpClient()
 
         fake_user = fake.simple_profile()
