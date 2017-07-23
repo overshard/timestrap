@@ -14,7 +14,7 @@
     "license": "BSD-2-Clause",
     "buildpacks": [
         {
-            "url": "heroku/node"
+            "url": "heroku/nodejs"
         },
         {
             "url": "heroku/python"
