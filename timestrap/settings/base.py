@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'timestrap.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/topics/auth/default/
 
 AUTHENTICATION_BACKENDS = [
-    'conf.backends.SitePermissionBackend',
+    'conf.backends.auth.SitePermissionBackend',
 ]
 
 LOGIN_REDIRECT_URL = '/timesheet/'
@@ -103,6 +103,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# Email settings
+# https://docs.djangoproject.com/en/1.11/topics/email/
+
+EMAIL_BACKEND = 'conf.backends.mail.EmailBackend'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
