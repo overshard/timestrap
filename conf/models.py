@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
@@ -14,18 +15,20 @@ class Conf(models.Model):
 
     # SMTP settings
     smtp_host = models.CharField(verbose_name='Host', max_length=255,
-                                 null=True)
+                                 default=settings.EMAIL_HOST)
     smtp_user = models.CharField(verbose_name='User', max_length=255,
-                                 null=True)
+                                 default=settings.EMAIL_HOST_USER)
     # TODO: Store and use this securely.
     smtp_password = models.CharField(
         verbose_name='Password',
         help_text='This password is stored in plaintext. Use with caution!',
         max_length=255,
-        null=True
+        default=settings.EMAIL_HOST_PASSWORD
     )
-    smtp_port = models.PositiveIntegerField(verbose_name='Port', null=True)
-    smtp_tls = models.NullBooleanField(verbose_name='Use TLS', null=True)
+    smtp_port = models.PositiveIntegerField(verbose_name='Port',
+                                            default=settings.EMAIL_PORT)
+    smtp_tls = models.BooleanField(verbose_name='Use TLS',
+                                   default=settings.EMAIL_USE_TLS)
 
     class Meta:
         verbose_name = 'Configuration'
