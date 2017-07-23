@@ -11,7 +11,21 @@ from django.dispatch import receiver
 class Conf(models.Model):
     site = models.OneToOneField(Site, related_name='conf',
                                 on_delete=models.CASCADE)
-    color = models.CharField(max_length=5, blank=True)
+
+    # SMTP settings
+    smtp_host = models.CharField(verbose_name='Host', max_length=255,
+                                 null=True)
+    smtp_user = models.CharField(verbose_name='User', max_length=255,
+                                 null=True)
+    # TODO: Store and use this securely.
+    smtp_password = models.CharField(
+        verbose_name='Password',
+        help_text='This password is stored in plaintext. Use with caution!',
+        max_length=255,
+        null=True
+    )
+    smtp_port = models.PositiveIntegerField(verbose_name='Port', null=True)
+    smtp_tls = models.NullBooleanField(verbose_name='Use TLS', null=True)
 
     class Meta:
         verbose_name = 'Configuration'
