@@ -75,9 +75,7 @@ gulp.task('reset', cb => {
             'python',
             'manage.py',
             'reset',
-            '--no-input',
-            '--fake',
-            '5'
+            '--no-input'
         ],
         {
             stdio: 'inherit'

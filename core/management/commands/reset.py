@@ -27,7 +27,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--fake',
             dest='iterations',
-            default=0,
+            default=5,
             help=(
                 'Fill the database with fake data after the reset. Provide a '
                 'number a number of iterations to perform (higher number = '
