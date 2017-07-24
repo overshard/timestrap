@@ -59,7 +59,7 @@ Type 'yes' to continue, or 'no' to cancel: """)
                 call_command('flush', database=database, interactive=False,
                              verbosity=verbosity)
                 self.stdout.write(
-                    self.style.SUCCESS('Successfully flushed the database.')
+                    self.style.SUCCESS('Successfully flushed database.')
                 )
             except CommandError:
                 self.stdout.write(
