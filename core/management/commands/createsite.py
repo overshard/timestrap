@@ -14,7 +14,7 @@ class Command(BaseCommand):
         verbosity = kwargs['verbosity']
 
         default_site = Site.objects.get(id=1)
-        Conf.objects.create(site=default_site)
+        Conf.objects.get_or_create(site=default_site)
         default_site.domain = 'time.strap'
         default_site.name = 'Timestrap'
         default_site.save()
