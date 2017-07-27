@@ -10,5 +10,16 @@ either `superuser` or the various `site` and `conf` permissions. Sites are
 based on domain and use two primary settings, `domain` and `name` in addition 
 to the various configuration options available.
 
-Clients and tasks can be shared between all or some sites, while entries and 
-invoices are tied only to the site they are created on.
+### Data Sharing
+
+All Timestrap data will be related to either one or multiple sites.
+
+- **Clients** and **Tasks** can be related to *multiple* sites.
+- **Entries** and **Invoices** can be related to a *single* site.
+
+Data with a single-site relationship will automatically be related to the site 
+it was entered on. This settings can be changed from the admin site.
+
+Currently, multiple site relationships can only be controlled from the admin
+site. To use a Client or Task on multiple sites, it must be added to one 
+site and then modified in the admin site to be related to additional sites.
