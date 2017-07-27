@@ -67,51 +67,15 @@ gulp.task('createsuperuser', cb => {
 });
 
 
-gulp.task('reset', ['reset:flush', 'reset:load', 'reset:fake']);
-
-
-gulp.task('reset:flush', cb => {
+gulp.task('reset', cb => {
     spawn(
         'pipenv',
         [
             'run',
             'python',
             'manage.py',
-            'flush',
-            '--noinput'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    ).on('exit', cb);
-});
-
-
-gulp.task('reset:load', ['reset:flush'], cb => {
-    spawn(
-        'pipenv',
-        [
-            'run',
-            'python',
-            'manage.py',
-            'loaddata',
-            'initial_data.json'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    ).on('exit', cb);
-});
-
-
-gulp.task('reset:fake', ['reset:load'], cb => {
-    spawn(
-        'pipenv',
-        [
-            'run',
-            'python',
-            'manage.py',
-            'fake'
+            'reset',
+            '--no-input'
         ],
         {
             stdio: 'inherit'

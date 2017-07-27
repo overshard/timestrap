@@ -12,6 +12,7 @@ multiple formats and easily extensible.
 .. image:: ../screenshot.png
 
 .. toctree::
+   :name: quickstart
    :caption: Project Info
    :maxdepth: 2
 
@@ -19,6 +20,7 @@ multiple formats and easily extensible.
    Quickstart <introduction/quickstart>
 
 .. toctree::
+   :name: installation
    :caption: Installation
    :maxdepth: 2
 
@@ -26,6 +28,16 @@ multiple formats and easily extensible.
    Development Installation <installation/development>
 
 .. toctree::
+   :name: sites
+   :caption: Sites
+   :maxdepth: 2
+
+   Introduction <sites/introduction>
+   Single Site <sites/single>
+   Multiple Sites <sites/multiple>
+
+.. toctree::
+   :name: configuration
    :caption: Configuration
    :maxdepth: 2
 
@@ -33,10 +45,11 @@ multiple formats and easily extensible.
    Localization <configuration/localization>
 
 .. toctree::
+   :name: development
    :caption: Development
    :maxdepth: 2
 
    Requirements <development/requirements>
-   Running Timestrap With Gulp <development/gulp>
+   Gulp Command Reference <development/gulp>
    Generating Fake Data <development/fake>
    Testing <development/testing>
