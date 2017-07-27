@@ -1,13 +1,82 @@
-## Running Timestrap With Gulp
+## Gulp Command Reference
 
-Similar to above you will still need to be in the virtual environment by running
-`source .venv/bin/acivate`. Also make sure you've migrated, created a superuser
-and the other tasks. Once that is done you can then run Timestrap with Gulp:
+Although it is entirely optional, Timestrap makes extensive use of custom Gulp
+commands to ease the development process. Review the `gulpfile.js` directory 
+and files within for a complete understanding of available commands. The 
+reference below outlines the basic function of each command.
 
-    gulp
+### `gulp`
 
-This provides you with live updated static files for working on the files in
-`static_src`. Once you've completed your changes you can stop Gulp, run 
-`gulp build` and commit the changes. We do this to reduce the
-number of dependencies required to install Timestrap for people who don't want
-to update static files source code or dependencies.
+Builds all required assets, runs the Django development server, and watches for
+changes to asset/source files, rebuilding and restarting as necessary.
+
+### `gulp build`
+
+Effectively runs:
+
+1. `gulp styles`
+1. `gulp scripts`
+1. `gulp extras`
+
+### `gulp coverage`
+
+Runs the `python manage.py test` command and prints a test coverage report when
+finished.
+
+### `gulp createsite`
+
+A simple alias for the `python manage.py createsite` command. This is a custom 
+command that initiate's the first site for a Timestrap install and creates a 
+user with username `admin` and `password` admin. This command should only be 
+run after a new migration.
+
+### `gulp createsuperuser`
+
+A simple alias for Django's `python manage.py createsuperuser` command.
+
+### `gulp docs`
+
+Build GitHub and RTD style documentation files and watching source files for 
+changes, creating updated builds as necessary.
+
+### `gulp extras`
+
+Copies `extrasFiles` from vendor folders to `/timestrap/static/` folders.
+
+### `gulp lint`
+
+Executes Python, SASS and JavaScript ES6 linting on all source files.
+
+### `gulp makemigrations`
+
+A simple alias for Django's `python manage.py makemigrations` command.
+
+### `gulp migrate`
+
+A simple alias for Django's `python manage.py migrate` command.
+
+### `gulp reset`
+
+This command effectively runs:
+
+1. `python manage.py flush` to clear all data from the database and re-execute
+post-migration hooks.
+1. `python manage.py createsite` to establish the initial site and user.
+1. `python manage.py fake` to generate fake data in the database.
+
+The argument `--fake 0` can be used to bypass the fake data generation.
+
+### `gulp scripts`
+
+Compiles JavaScript assets from Timestrap's VueJS files in to `bundle-app.js` 
+and vendor assets in to `bundle-vendor.js`, placing both in the 
+`/timestrap/static/js/` folder.
+
+### `gulp styles`
+
+Compiles vendor CSS in to `bundle-vendor.css` and Timestrap's SASS in to 
+`bundle-scss.css`, placing both in the `/timestrap/static/css/` folder.
+
+### `gulp test`
+
+A simple alias for Django's `python manage.py test` command.

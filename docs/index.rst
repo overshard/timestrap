@@ -45,6 +45,6 @@ multiple formats and easily extensible.
    :maxdepth: 2
 
    Requirements <development/requirements>
-   Running Timestrap With Gulp <development/gulp>
+   Gulp Command Reference <development/gulp>
    Generating Fake Data <development/fake>
    Testing <development/testing>
