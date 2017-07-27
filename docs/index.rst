@@ -26,6 +26,14 @@ multiple formats and easily extensible.
    Development Installation <installation/development>
 
 .. toctree::
+   :caption: Sites
+   :maxdepth: 2
+
+   Introduction <sites/introduction>
+   Single Site <sites/single>
+   Multiple Sites <sites/multiple>
+
+.. toctree::
    :caption: Configuration
    :maxdepth: 2
 
