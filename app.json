@@ -30,11 +30,6 @@
             "generator": "secret"
         }
     },
-    "addons": [
-        {
-            "plan": "sendgrid:starter"
-        },
-    ],
     "scripts": {
         "postdeploy": "python manage.py migrate && python manage.py createsite"
     }
