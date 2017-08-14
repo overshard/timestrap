@@ -1,0 +1,26 @@
+{% load static widget_tweaks %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>{% block title %}{% endblock %} - {{ request.site.name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/bundle-scss.css' %}"/>
+    </head>
+    <body class="bg-primary registration">
+        <div id="view-{{ request.resolver_match.view_name }}" class="container">
+            <div class="text-center mb-4">
+                <h1 class="display-3 mb-3 text-white">{{ request.site.name }}</h1>
+            </div>
+            <div class="registration-wrapper rounded">
+                <div class="p-4">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

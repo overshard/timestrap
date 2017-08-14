@@ -1,13 +1,13 @@
 @import 'variables';
 
-#view-login {
+.registration {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.login-wrapper {
+.registration-wrapper {
     max-width: 400px;
     margin: 0 auto;
     background-color: $white;
