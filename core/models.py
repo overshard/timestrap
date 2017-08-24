@@ -164,6 +164,7 @@ class Entry(models.Model):
 
 class Invoice(models.Model):
     client = models.ForeignKey('Client')  # Redundant with entries?
+    note = models.CharField(max_length=255, blank=True, null=True)
     entries = models.ManyToManyField('Entry', related_name='invoices')
     created = models.DateTimeField(auto_now_add=True)
     paid = models.DateTimeField(blank=True, null=True)
