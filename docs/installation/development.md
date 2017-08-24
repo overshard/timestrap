@@ -15,7 +15,7 @@ static files.
 
 1. Install Node dependencies.
 
-        npm install -g yarn && yarn install
+        npm install -g yarn gulp-cli && yarn install
 
 1. Bootstrap the database.
 
