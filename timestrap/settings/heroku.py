@@ -2,7 +2,7 @@ import os
 
 import dj_database_url
 
-from .base import *  # noqa: F401, F403
+from .base import *  # noqa: F401,F403
 
 
 DEBUG = False
