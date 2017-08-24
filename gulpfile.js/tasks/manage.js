@@ -82,3 +82,19 @@ gulp.task('reset', cb => {
         }
     ).on('exit', cb);
 });
+
+
+gulp.task('fake', cb => {
+    spawn(
+        'pipenv',
+        [
+            'run',
+            'python',
+            'manage.py',
+            'fake'
+        ],
+        {
+            stdio: 'inherit'
+        }
+    ).on('exit', cb);
+});
