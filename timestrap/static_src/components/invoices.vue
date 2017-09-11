@@ -18,7 +18,7 @@
     <div class="entry-rows">
         <template v-for="(invoice, index) in invoices"
                   v-bind:invoice="invoice">
-            <div v-bind:class="['task', {'bg-danger': invoice.paid === null, 'bg-success': invoice.paid !== null}, 'row', 'py-2', 'text-white']"
+            <div v-bind:class="['invoice', {'bg-danger': invoice.paid === null, 'bg-success': invoice.paid !== null}, 'row', 'py-2', 'text-white']"
                  v-bind:key="invoice.id">
                 <div class="col-3">
                     <router-link :to="{ name: 'invoice', params: { invoiceId: 123 }}">
