@@ -20,6 +20,15 @@
                 v-bind:config="modal_config"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
+        <div class="task bg-faded row py-2">
+            <div class="col-8 d-flex align-items-center">
+                <strong>Task Name</strong>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <strong>Hourly Rate</strong>
+            </div>
+            <div class="col-2"></div>
+        </div>
         <task v-for="(task, index) in tasks"
               @removeTask="removeTask"
               v-bind:task="task"
