@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    props: ['options', 'selected', 'placeholder'],
+    props: ['options', 'selected', 'placeholder', 'allowclear'],
     mounted() {
         this.update();
     },
@@ -18,13 +18,18 @@ export default {
     },
     methods: {
         update() {
+            if (this.allowclear == "true") {
+                this.allowclear = true;
+            } else {
+                this.allowclear = false;
+            }
             $(this.$el)
                 .select2({
                     data: this.options,
                     placeholder: this.placeholder,
                     width: '100%',
                     dropdownAutoWidth: true,
-                    allowClear: true
+                    allowClear: this.allowclear
                 })
                 .val(this.selected)
                 .trigger('change')

@@ -45,19 +45,22 @@
                 <select2 id="report-filter-user"
                          v-model="user"
                          v-bind:options="users"
-                         placeholder="Users"></select2>
+                         placeholder="Users"
+                         allowclear="true"></select2>
             </div>
             <div class="form-group">
                 <select2 id="report-filter-project"
                          v-model="project"
                          v-bind:options="projects"
-                         placeholder="Projects"></select2>
+                         placeholder="Projects"
+                         allowclear="true"></select2>
             </div>
             <div class="form-group">
                 <select2 id="report-filter-client"
                          v-model="client"
                          v-bind:options="clients"
-                         placeholder="Clients"></select2>
+                         placeholder="Clients"
+                         allowclear="true"></select2>
             </div>
         </div>
         <div class="col-sm-6">
@@ -65,7 +68,8 @@
                 <select2 id="report-filter-task"
                          v-model="task"
                          v-bind:options="tasks"
-                         placeholder="Tasks"></select2>
+                         placeholder="Tasks"
+                         allowclear="true"></select2>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -74,14 +78,16 @@
                                     type="text"
                                     class="form-control form-control-sm date-input"
                                     v-model="dateMin"
-                                    placeholder="Min. date"></datepicker>
+                                    placeholder="Min. date"
+                                    allowclear="true"></datepicker>
                     </div>
                     <div class="col-md-6">
                         <datepicker id="report-filter-max-date"
                                     type="text"
                                     class="form-control form-control-sm date-input"
                                     v-model="dateMax"
-                                    placeholder="Max. date"></datepicker>
+                                    placeholder="Max. date"
+                                    allowclear="true"></datepicker>
                     </div>
                 </div>
             </div>
