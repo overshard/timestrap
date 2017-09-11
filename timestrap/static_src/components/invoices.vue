@@ -21,7 +21,9 @@
             <div v-bind:class="['task', {'bg-danger': invoice.paid === null, 'bg-success': invoice.paid !== null}, 'row', 'py-2', 'text-white']"
                  v-bind:key="invoice.id">
                 <div class="col-3">
-                    {{ moment(invoice.created) }}
+                    <router-link :to="{ name: 'invoice', params: { invoiceId: 123 }}">
+                        {{ moment(invoice.created) }}
+                    </router-link>
                 </div>
                 <div class="col-5">
                     {{ invoice.client_details.name }}
