@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         update() {
-            if (this.allowclear == "true") {
+            if (this.allowclear == 'true') {
                 this.allowclear = true;
             } else {
                 this.allowclear = false;
