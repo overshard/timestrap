@@ -231,7 +231,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.NAME, 'client-add').click()
         self.waitForPresence((By.ID, 'client-modal'))
         self.find(By.NAME, 'client-name').send_keys('Client')
-        self.find(By.NAME, 'client-email').send_keys('client@company.com')
         self.find(By.NAME, 'client-modal-submit').click()
         self.waitForPresence((By.CLASS_NAME, 'client'))
 
