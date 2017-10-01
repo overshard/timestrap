@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6 offset-md-6">
             <button id="generate-report"
                     type="submit"
                     class="btn btn-primary btn-sm w-100"
