@@ -29,7 +29,7 @@ fake = Factory.create()
 )
 class ViewsTestCase(TestCase):
     def setUp(self):
-        call_command('createsite', verbosity=0)
+        call_command('migrate', verbosity=0)
         self.c = HttpClient()
 
         fake_user = fake.simple_profile()
@@ -67,7 +67,7 @@ class ViewsTestCase(TestCase):
 
 class ClientTestCase(TestCase):
     def setUp(self):
-        call_command('createsite', verbosity=0)
+        call_command('migrate', verbosity=0)
 
     def test_client_created(self):
         Client.objects.create(name='Timestrap')
@@ -129,7 +129,7 @@ class ProjectTestCase(TestCase):
 
 class EntryTestCase(TestCase):
     def setUp(self):
-        call_command('createsite', verbosity=0)
+        call_command('migrate', verbosity=0)
         client = Client.objects.create(name='Timestrap')
         self.project = Project.objects.create(client=client, name='Testing')
         self.user = User.objects.create_user('testuser', 'test@example.com',
@@ -195,7 +195,7 @@ class EntryTestCase(TestCase):
 
 class ReportsTestCase(TestCase):
     def setUp(self):
-        call_command('createsite', verbosity=0)
+        call_command('migrate', verbosity=0)
         self.c = HttpClient()
 
         fake_user = fake.simple_profile()

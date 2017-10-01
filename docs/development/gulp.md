@@ -23,13 +23,6 @@ Effectively runs:
 Runs the `python manage.py test` command and prints a test coverage report when
 finished.
 
-### `gulp createsite`
-
-A simple alias for the `python manage.py createsite` command. This is a custom 
-command that initiate's the first site for a Timestrap install and creates a 
-user with username `admin` and `password` admin. This command should only be 
-run after a new migration.
-
 ### `gulp createsuperuser`
 
 A simple alias for Django's `python manage.py createsuperuser` command.

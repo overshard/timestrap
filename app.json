@@ -31,6 +31,6 @@
         }
     },
     "scripts": {
-        "postdeploy": "python manage.py migrate && python manage.py createsite"
+        "postdeploy": "python manage.py migrate"
     }
 }

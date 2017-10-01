@@ -33,7 +33,7 @@ fake = Factory.create()
 class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
-        call_command('createsite', verbosity=0)
+        call_command('migrate', verbosity=0)
         cls.profile = fake.simple_profile()
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()

@@ -35,22 +35,6 @@ gulp.task('migrate', cb => {
 });
 
 
-gulp.task('createsite', cb => {
-    spawn(
-        'pipenv',
-        [
-            'run',
-            'python',
-            'manage.py',
-            'createsite'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    ).on('exit', cb);
-});
-
-
 gulp.task('createsuperuser', cb => {
     spawn(
         'pipenv',
