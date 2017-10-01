@@ -66,7 +66,7 @@ Type 'yes' to continue, or 'no' to cancel: """)
                     self.style.ERROR('Database flush failed. Reset aborted.')
                 )
                 return
-            call_command('createsite', verbosity=verbosity)
+            call_command('migrate', verbosity=verbosity)
 
             if iterations > 0:
                 call_command('fake', verbosity=verbosity,
