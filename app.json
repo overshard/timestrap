@@ -1,14 +1,13 @@
 {
     "name": "Timestrap",
     "author": "Timestrap's Contributors",
-    "description": "Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.",
+    "description": "Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.",
     "repository": "https://github.com/overshard/timestrap",
     "keywords": [
         "python",
         "django",
         "web",
-        "timetracking",
-        "invoicing"
+        "timetracking"
     ],
     "version": "1.0.0-alpha",
     "license": "BSD-2-Clause",

@@ -6,7 +6,7 @@
 Timestrap
 =========
 
-Time tracking and invoicing you can host anywhere. Full export support in
+Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
 .. image:: ../screenshot.png

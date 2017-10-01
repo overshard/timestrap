@@ -6,7 +6,7 @@
 
 [![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=flat-square)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=flat-square)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=flat-square)](https://github.com/overshard/timestrap/blob/master/LICENSE.md) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/overshard/timestrap)
 
-Time tracking and invoicing you can host anywhere. Full export support in
+Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
 ![Timestrap](screenshot.png)

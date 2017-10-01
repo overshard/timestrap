@@ -69,7 +69,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'Timestrap', 'Timestrap Documentation',
-     author, 'Timestrap', 'Time tracking and invoicing you can host anywhere. Full export support in multiple formats and easily extensible.',  # noqa: E501
+     author, 'Timestrap', 'Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.',  # noqa: E501
      'Miscellaneous'),
 ]
 
