@@ -87,7 +87,7 @@ static files.
 
 1. Install Node dependencies.
 
-        npm install -g yarn gulp-cli && yarn install --ignore-engines
+        npm install -g gulp-cli && npm install
 
 1. Bootstrap the database and creates the initial site and user
 (username: admin, password: admin)

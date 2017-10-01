@@ -7,9 +7,9 @@ General development requirements are fairly simple:
 
 For frontend development, a few extra tools are needed:
 
-- NPM/Yarn (frontend)
-- Gulp (frontend)
-- Chromedriver/geckodriver (frontend tests)
+- NPM
+- Gulp
+- Chromedriver/geckodriver
 
 ### Windows
 
@@ -61,12 +61,12 @@ You can install everything you need from pip, which is just pipenv:
     cd /path/to/timestrap
     pipenv install
 
-If you are doing frontend development you also need NPM, Node.js and Yarn:
+If you are doing frontend development you also need NPM and Node.js:
 
     sudo apt install npm
-    npm install -g yarn
+    npm install -g gulp-cli
     cd /path/to/timestrap
-    yarn install
+    npm install
 
 If you want to run tests you will need to install some additional packages,
 these are not required and if you are working on small changes or documentation
