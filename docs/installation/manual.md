@@ -11,13 +11,10 @@ requirements and procedures, see [Development Installation](#development-install
 
         pip install pipenv && pipenv install
 
-1. Bootstrap the database.
+1. Bootstrap the database and creates the initial site and user
+(username: admin, password: admin)
 
         python manage.py migrate
-
-1. Create the initial site and user (username: admin, password: admin).
-
-        python manage.py createsite
 
 1. Run the server!
 

@@ -61,7 +61,7 @@ This command effectively runs:
 
 1. `python manage.py flush` to clear all data from the database and re-execute
 post-migration hooks.
-1. `python manage.py createsite` to establish the initial site and user.
+1. `python manage.py migrate` to establish the initial site and user.
 1. `python manage.py fake` to generate fake data in the database.
 
 The argument `--fake 0` can be used to bypass the fake data generation.
