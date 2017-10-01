@@ -14,13 +14,6 @@
                    v-model.trim="name"
                    required />
         </div>
-        <div class="form-group">
-            <input name="client-email"
-                   placeholder="Invoicing Email"
-                   type="text"
-                   class="form-control"
-                   v-model.trim="invoice_email" />
-        </div>
     </div>
 
     <div slot="footer">

@@ -34,7 +34,6 @@ class Client(models.Model):
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
     payment_id = models.CharField(max_length=255, blank=True, null=True)
-    invoice_email = models.EmailField(max_length=255, blank=True, null=True)
     sites = models.ManyToManyField(Site)
 
     objects = models.Manager()
@@ -117,16 +116,6 @@ class Task(models.Model):
         return 'Task: ' + self.name
 
 
-class EntryManager(models.Manager):
-    def invoiced(self):
-        return super(EntryManager, self).get_queryset().filter(
-            invoices__isnull=False)
-
-    def uninvoiced(self):
-        return super(EntryManager, self).get_queryset().filter(
-            invoices__isnull=True)
-
-
 class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries')
     task = models.ForeignKey('core.Task', related_name='entries',
@@ -138,7 +127,6 @@ class Entry(models.Model):
     site = models.ForeignKey(Site, default=current_site_id(),
                              on_delete=models.CASCADE)
 
-    objects = EntryManager()
     on_site = CurrentSiteManager()
 
     class Meta:
@@ -155,44 +143,3 @@ class Entry(models.Model):
 
     def __str__(self):
         return 'Entry for ' + self.project.name + ' by ' + self.user.username
-
-    def is_invoiced(self):
-        if self.invoices.count() > 0:
-            return True
-        return False
-
-
-class Invoice(models.Model):
-    client = models.ForeignKey('Client')  # Redundant with entries?
-    note = models.CharField(max_length=255, blank=True, null=True)
-    entries = models.ManyToManyField('Entry', related_name='invoices')
-    created = models.DateTimeField(auto_now_add=True)
-    paid = models.DateTimeField(blank=True, null=True)
-    transaction_id = models.CharField(max_length=255, blank=True, null=True)
-    site = models.ForeignKey(Site, default=current_site_id(),
-                             on_delete=models.CASCADE)
-
-    objects = models.Manager()
-    on_site = CurrentSiteManager()
-
-    class Meta:
-        default_permissions = ('view', 'add', 'change', 'delete')
-
-    def save(self, *args, **kwargs):
-        self.site = Site.objects.get(id=current_site_id())
-        super(Invoice, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return 'Invoice: ' + self.client.name
-
-    def total_duration(self):
-        total = 0
-        for entry in self.entries:
-            total += entry.duration
-
-    def total_billed(self):
-        total = 0
-        for entry in self.entries:
-            if entry.task.hourly_rate:
-                total += entry.duration * entry.hourly_rate
-        return total

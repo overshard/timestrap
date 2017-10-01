@@ -2,21 +2,13 @@
 <div class="client">
     <div class="row py-2 bg-faded">
         <template v-if="edit">
-            <div class="col-6">
+            <div class="col-10">
                 <input name="client-name"
                        type="text"
                        class="form-control form-control-sm"
                        v-model.trim="name"
                        v-on:keyup.enter="saveClient"
                        required />
-            </div>
-            <div class="col-4">
-                <input name="client-email"
-                       placeholder="Invoicing Email"
-                       type="text"
-                       class="form-control form-control-sm"
-                       v-model.trim="invoice_email"
-                       v-on:keyup.enter="saveClient" />
             </div>
             <div class="col-2">
                 <button name="client-save"
