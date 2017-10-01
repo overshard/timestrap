@@ -4,22 +4,25 @@ verify_ssl = true
 
 
 [dev-packages]
-flake8 = "*"
+
+"flake8" = "*"
 coveralls = "*"
 selenium = "*"
 sphinx = "*"
 recommonmark = "*"
-sphinx_rtd_theme = "*"
+"sphinx-rtd-theme" = "*"
 
 
 [packages]
+
 django = "*"
-django-widget-tweaks = "*"
+"django-widget-tweaks" = "*"
 whitenoise = "*"
 djangorestframework = "*"
-django-filter = "*"
-django-import-export = "*"
+"django-filter" = "*"
+"django-import-export" = "*"
 faker = "*"
-dj-database-url = "*"
-psycopg2 = "*"
+"dj-database-url" = "*"
+"psycopg2" = "*"
 gunicorn = "*"
+ipaddress = "*"
