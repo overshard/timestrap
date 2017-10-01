@@ -236,8 +236,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'client'))
 
     def test_clients_change(self):
-        Client(name='Client', invoice_email='client@company.com',
-               archive=False).save()
+        Client(name='Client', archive=False).save()
         self.logIn()
         self.addPerms(['view_client'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
@@ -256,8 +255,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.CLASS_NAME, 'client-name'), 'CLIENT CHANGED')
 
     def test_projects_access(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         Project(name='Project 1', client=client, estimate=100.00,
                 archive=False).save()
@@ -271,8 +269,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.CLASS_NAME, 'project'), 'Project 1')
 
     def test_projects_add(self):
-        Client(name='Client', invoice_email='client@company.com',
-               archive=False).save()
+        Client(name='Client', archive=False).save()
         self.logIn()
         self.addPerms(['view_client', 'view_project'])
         self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
@@ -289,8 +286,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'project'))
 
     def test_projects_change(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         Project(name='Project', client=client, estimate=100.00,
                 archive=False).save()
@@ -363,8 +359,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.ID, 'entry-rows'))
 
     def test_timesheet_entry_add(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         Project(name='Project 1', estimate=100.00, client=client,
                 archive=False).save()
@@ -386,8 +381,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 1\nNote\n0:35')
 
     def test_timesheet_entry_add_advanced(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         Project(name='Project 1', estimate=100.00, client=client,
                 archive=False).save()
@@ -414,8 +408,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
@@ -452,8 +445,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_restart(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
@@ -485,8 +477,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                          'Client\nProject 1\nTask 1\nNote\n0:35')
 
     def test_timesheet_entry_delete(self):
-        client = Client(name='Client', invoice_email='client@company.com',
-                        archive=False)
+        client = Client(name='Client', archive=False)
         client.save()
         project = Project(name='Project 1', estimate=100.00,
                           client=client, archive=False)
@@ -518,8 +509,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         # Load a new user "tester" and objects associated with that user.
         management.call_command('loaddata', 'test_reports_filter', verbosity=0)
         self.user = User.objects.get(username='tester')
-        self.addPerms(['view_client', 'view_entry', 'view_invoice',
-                       'view_project', 'view_task'])
+        self.addPerms(['view_client', 'view_entry', 'view_project',
+                       'view_task'])
 
         # Log in with the "tester" account, part of the tests data fixture.
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))

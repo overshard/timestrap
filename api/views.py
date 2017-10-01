@@ -6,10 +6,10 @@ from django.contrib.auth.models import User, Permission
 from rest_framework import viewsets, permissions, filters
 import django_filters
 
-from core.models import Client, Project, Entry, Task, Invoice
+from core.models import Client, Project, Entry, Task
 from .serializers import (UserSerializer, ClientSerializer,
                           PermissionSerializer, ProjectSerializer,
-                          EntrySerializer, TaskSerializer, InvoiceSerializer)
+                          EntrySerializer, TaskSerializer)
 from .pagination import LimitOffsetPaginationWithTotals
 
 
@@ -67,21 +67,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class EntryFilter(django_filters.rest_framework.FilterSet):
     min_date = django_filters.DateFilter(name="date", lookup_expr="gte")
     max_date = django_filters.DateFilter(name="date", lookup_expr="lte")
-    invoiced = django_filters.BooleanFilter(
-        name="invoiced",
-        method="is_invoiced"
-    )
 
     class Meta:
         model = Entry
         fields = ('id', 'date', 'user', 'task', 'project', 'project__client',)
-
-    def is_invoiced(self, queryset, name, value):
-        if value is True:
-            return queryset.filter(invoices__isnull=False)
-        elif value is False:
-            return queryset.filter(invoices__isnull=True)
-        return queryset
 
 
 class EntryViewSet(viewsets.ModelViewSet):
@@ -108,12 +97,3 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Task.on_site.all()
-
-
-class InvoiceViewSet(viewsets.ModelViewSet):
-    queryset = Invoice.objects.all()
-    serializer_class = InvoiceSerializer
-    pagination_class = None
-
-    def get_queryset(self):
-        return Invoice.on_site.all()

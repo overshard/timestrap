@@ -15,7 +15,7 @@ to the various configuration options available.
 All Timestrap data will be related to either one or multiple sites.
 
 - **Clients** and **Tasks** can be related to *multiple* sites.
-- **Entries** and **Invoices** can be related to a *single* site.
+- **Entries** can be related to a *single* site.
 
 Data with a single-site relationship will automatically be related to the site 
 it was entered on. This settings can be changed from the admin site.

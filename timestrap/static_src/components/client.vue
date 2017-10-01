@@ -93,8 +93,7 @@ export default {
     data() {
         return {
             edit: false,
-            name: this.client.name,
-            invoice_email: this.client.invoice_email
+            name: this.client.name
         };
     },
     methods: {

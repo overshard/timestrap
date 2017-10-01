@@ -15,8 +15,6 @@ urlpatterns = [
     url(r'^clients/$', AppView.as_view(), name='clients'),
     url(r'^tasks/$', AppView.as_view(), name='tasks'),
     url(r'^reports/$', AppView.as_view(), name='reports'),
-    url(r'^invoices/$', AppView.as_view(), name='invoices'),
-    url(r'^invoices/([0-9]+)/$', AppView.as_view(), name='invoices'),
 
     url(
         r'^$',

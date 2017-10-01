@@ -17,11 +17,10 @@ class Command(migrate.Command):
         verbosity = kwargs['verbosity']
 
         default_site = Site.objects.get(id=1)
+        Conf.objects.get_or_create(site=default_site)
         if default_site.domain == 'example.com':
             default_site.name = 'Timestrap'
             default_site.save()
-
-        Conf.objects.get_or_create(site=default_site)
 
         superusers = User.objects.filter(is_superuser=True)
         if len(superusers) == 0:

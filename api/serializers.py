@@ -11,7 +11,7 @@ from core.models import Client, Project, Entry
 from core.fields import DurationField
 from core.utils import duration_decimal
 
-from core.models import Task, Invoice
+from core.models import Task
 
 
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
@@ -70,8 +70,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Client
-        fields = ('id', 'url', 'name', 'payment_id', 'invoice_email',
-                  'archive', 'projects', 'total_projects', 'total_duration',)
+        fields = ('id', 'url', 'name', 'payment_id', 'archive', 'projects',
+                  'total_projects', 'total_duration',)
 
     def get_total_projects(self, obj):
         return obj.get_total_projects()
@@ -129,30 +129,9 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
     project_details = ProjectSerializer(source='project', read_only=True)
     user_details = EntryUserSerializer(source='user', read_only=True)
     task_details = TaskSerializer(source='task', read_only=True)
-    is_invoiced = serializers.SerializerMethodField()
 
     class Meta:
         model = Entry
         fields = ('id', 'url', 'project', 'project_details', 'task',
                   'task_details', 'user', 'user_details', 'date', 'duration',
-                  'note', 'is_invoiced',)
-
-    def is_invoiced(self, obj):
-        return obj.get_invoiced()
-
-
-class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
-    client_details = ProjectClientSerializer(source='client', read_only=True)
-    amount = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Invoice
-        fields = ('id', 'url', 'client', 'client_details', 'amount', 'entries',
-                  'created', 'paid', 'transaction_id',)
-
-    def get_amount(self, obj):
-        total = Decimal('0.00')
-        for entry in obj.entries.iterator():
-            total += Decimal(
-                duration_decimal(entry.duration) * entry.task.hourly_rate)
-        return total.quantize(Decimal('.01'), rounding=ROUND_DOWN)
+                  'note',)

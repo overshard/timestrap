@@ -127,6 +127,7 @@ class Entry(models.Model):
     site = models.ForeignKey(Site, default=current_site_id(),
                              on_delete=models.CASCADE)
 
+    objects = models.Manager()
     on_site = CurrentSiteManager()
 
     class Meta:

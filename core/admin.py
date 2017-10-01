@@ -5,12 +5,12 @@ from django.contrib import admin
 
 from import_export import resources
 
-from .models import Client, Entry, Invoice, Project, Task
+from .models import Client, Entry, Project, Task
 
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'invoice_email', 'payment_id', 'archive',)
+    list_display = ('name', 'payment_id', 'archive',)
     list_editable = ('archive',)
     list_filter = ('archive', 'sites')
     search_fields = ('name',)
@@ -40,15 +40,6 @@ class EntryResource(resources.ModelResource):
         model = Entry
         fields = ('project__name', 'user__username', 'date', 'duration',
                   'note')
-
-
-@admin.register(Invoice)
-class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ('client', 'created', 'paid', 'transaction_id',)
-    list_editable = ('paid', 'transaction_id',)
-    list_filter = ('client', 'paid',)
-    search_fields = ('client', 'transaction_id',)
-    filter_horizontal = ('entries',)
 
 
 @admin.register(Project)

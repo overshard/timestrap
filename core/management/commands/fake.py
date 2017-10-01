@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from faker import Factory
 import pytz
 
-from core.models import Client, Entry, Project, Task, Invoice
+from core.models import Client, Entry, Project, Task
 
 
 class Command(BaseCommand):
@@ -97,19 +97,6 @@ class Command(BaseCommand):
                     duration=duration,
                     note=fake.sentence(nb_words=6, variable_nb_words=True)
                 )
-
-        one_week_ago = datetime.now() - timedelta(days=7)
-        one_week_ago = one_week_ago.date()
-        for project in Project.objects.all():
-            has_paid = choice([True, False])
-            if has_paid:
-                paid = datetime.now(pytz.timezone('US/Eastern'))
-            else:
-                paid = None
-            invoice = Invoice.objects.create(client=project.client, paid=paid)
-            for entry in project.entries.iterator():
-                if entry.date < one_week_ago:
-                    invoice.entries.add(entry)
 
         if verbosity > 0:
             self.stdout.write(

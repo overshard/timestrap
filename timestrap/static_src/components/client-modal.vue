@@ -40,15 +40,13 @@ export default {
     props: ['config'],
     data() {
         return {
-            name: this.config.client ? this.config.client.name : null,
-            invoice_email: this.config.client ? this.config.client.invoice_email : null
+            name: this.config.client ? this.config.client.name : null
         };
     },
     methods: {
         submit() {
             let body = {
-                name: this.name,
-                invoice_email: this.invoice_email
+                name: this.name
             };
             let url = timestrapConfig.API_URLS.CLIENTS;
             let method = 'post';
@@ -59,7 +57,6 @@ export default {
             this.$quickFetch(url, method, body).then(data => {
                 this.$emit('updateClient', data, this.config.index);
                 this.name = null;
-                this.invoice_email = null;
                 this.$emit('close');
             }).catch(error => console.log(error));
         }

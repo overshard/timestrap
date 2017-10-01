@@ -50,14 +50,6 @@
         <div class="col-sm-2 d-flex align-self-center justify-content-end display-4 duration">
             {{ duration }}
         </div>
-        <div v-bind:class="[[editable ? 'hidden-xl-down' : 'col-sm-2'], 'd-flex', 'align-self-center', 'justify-content-end',]">
-            <template v-if="invoiced">
-                <i class="fa fa-check-square-o" aria-hidden="true"></i>
-            </template>
-            <template v-else>
-                <i class="fa fa-square-o" aria-hidden="true"></i>
-            </template>
-        </div>
         <template v-if="editable">
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <template v-if="this.$perms.change_entry || this.$perms.delete_entry">
@@ -118,7 +110,6 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            invoiced: this.entry.is_invoiced,
             duration: this.durationToString(this.entry.duration),
             projects: {}
         };

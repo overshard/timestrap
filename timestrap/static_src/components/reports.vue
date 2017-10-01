@@ -21,14 +21,6 @@
                 <option value="html">html</option>
             </select>
 
-            <button id="create-invoice"
-                    class="btn btn-primary btn-sm ml-2"
-                    v-block-during-fetch
-                    v-on:click="createInvoice">
-                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
-                Create Invoice
-            </button>
-
             <pager v-bind:next="next"
                    v-bind:previous="previous"
                    @next-page="getEntries(next)"
@@ -110,13 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <select2 id="report-invoiced"
-                        v-model="invoiced"
-                        v-bind:options="invoicedOptions"
-                        placeholder="Invoiced"></select2>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <button id="generate-report"
                     type="submit"
                     class="btn btn-primary btn-sm w-100"
@@ -190,11 +176,6 @@ export default {
                 { id: 'desc', text: 'Descending' }
             ],
             orderDir: 'desc',
-            invoiced: 1,
-            invoicedOptions: [
-                { id: 2, text: 'Yes' },
-                { id: 3, text: 'No' }
-            ],
             project__client: null,
             dateMin: null,
             dateMax: null,
@@ -253,8 +234,7 @@ export default {
                 project__client: this.client,
                 min_date: this.dateMin,
                 max_date: this.dateMax,
-                task: this.task,
-                invoiced: this.invoiced
+                task: this.task
             };
             const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
             this.getEntries(url);
@@ -272,7 +252,6 @@ export default {
                 min_date: this.dateMin,
                 max_date: this.dateMax,
                 task: this.task,
-                invoiced: this.invoiced,
                 exportFormat: this.exportFormat
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
@@ -301,40 +280,6 @@ export default {
         },
         moment(date) {
             return moment(date).format('LL');
-        },
-        createInvoice() {
-            if (this.client) {
-                const query = {
-                    user: this.user,
-                    project: this.project,
-                    project__client: this.client,
-                    min_date: this.dateMin,
-                    max_date: this.dateMax,
-                    task: this.task,
-                    invoiced: this.invoiced
-                };
-                let userEntries = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
-
-                let entriesFetch = this.$quickFetch(userEntries);
-
-                let entries = [];
-                entriesFetch.then(data => {
-                    $.each(data.results, function(i, entry) {
-                        entries.push(entry.url);
-                    });
-
-                    const invoice = {
-                        client: this.entries[0].entries[0].project_details.client,
-                        entries: entries
-                    };
-
-                    this.$quickFetch(timestrapConfig.API_URLS.INVOICES, 'post', invoice).then(data => {
-                        $.growl.notice({ message: 'New inovice created!' });
-                    });
-                });
-            } else {
-                $.growl.error({ message: 'No invoiced created, please select a client!' });
-            }
         }
     },
     mounted() {
