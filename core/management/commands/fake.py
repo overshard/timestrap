@@ -1,12 +1,11 @@
 from random import randint, choice
-from datetime import timedelta, datetime
+from datetime import timedelta
 from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
 from faker import Factory
-import pytz
 
 from core.models import Client, Entry, Project, Task
 

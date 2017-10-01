@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from decimal import Decimal, ROUND_DOWN
-
 from django.contrib.auth.models import User, Permission
 
 from rest_framework import serializers
 
 from core.models import Client, Project, Entry
 from core.fields import DurationField
-from core.utils import duration_decimal
 
 from core.models import Task
 
