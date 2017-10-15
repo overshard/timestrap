@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="row py-2 mb-4 bg-faded rounded">
+    <div class="row py-2 mb-4 bg-light rounded">
         <div class="col-12">
             <router-link to="/reports/" class="btn btn-primary btn-sm">
                 <i class="fa fa-book" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="row py-1 bg-inverse text-white font-weight-bold rounded-top">
+    <div class="row py-1 bg-dark text-white font-weight-bold rounded-top">
         <template v-if="advancedMode">
             <div class="col-sm-3 mb-2">
                 Date
@@ -46,7 +46,7 @@
 
 
     <form id="entry-add"
-          class="row mb-4 py-2 bg-faded rounded-bottom"
+          class="row mb-4 py-2 bg-light rounded-bottom"
           v-if="this.$perms.add_entry"
           v-on:submit.prevent
           v-on:submit="submitEntry">

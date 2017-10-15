@@ -1,5 +1,5 @@
 <template>
-<div class="entry row py-2 bg-faded small">
+<div class="entry row py-2 bg-light small">
     <template v-if="edit && this.$perms.change_entry">
         <div class="col-sm-3">
             <select2 id="entry-project"

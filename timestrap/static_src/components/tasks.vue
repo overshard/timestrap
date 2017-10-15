@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div v-if="this.$perms.add_task" class="row py-2 mb-4 bg-faded rounded">
+    <div v-if="this.$perms.add_task" class="row py-2 mb-4 bg-light rounded">
         <div class="col-12">
             <button name="task-add"
                     type="button"
@@ -20,7 +20,7 @@
                 v-bind:config="modal_config"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
-        <div class="task-head bg-faded row py-2">
+        <div class="task-head bg-light row py-2">
             <div class="col-8 d-flex align-items-center">
                 <strong>Task Name</strong>
             </div>

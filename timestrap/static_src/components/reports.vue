@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="row py-2 mb-4 bg-faded rounded">
+    <div class="row py-2 mb-4 bg-light rounded">
         <div class="col-12">
             <button id="export-report"
                     class="btn btn-primary btn-sm"
@@ -29,7 +29,7 @@
     </div>
 
     <form name="report-filters"
-          class="row mb-4 pt-3 pb-1 bg-faded rounded"
+          class="row mb-4 pt-3 pb-1 bg-light rounded"
           v-on:submit.prevent
           v-on:submit="getReport">
         <div class="col-sm-6">

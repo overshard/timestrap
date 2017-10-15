@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="row py-2 mb-4 bg-faded rounded"
+    <div class="row py-2 mb-4 bg-light rounded"
          v-if="this.$perms.add_client || this.$perms.add_project">
         <div class="col-12">
             <button name="client-add"

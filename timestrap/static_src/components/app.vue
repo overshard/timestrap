@@ -1,13 +1,13 @@
 <template>
 <div id="app">
-    <div class="navbar navbar-toggleable-sm navbar-inverse bg-primary">
-        <div class="container w-100">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container">
             <router-link class="navbar-brand" v-bind:to="timesheet">
                 {{ site.NAME }}
             </router-link>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul id="nav-app" class="navbar-nav">
                     <li class="nav-item">
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-faded py-2">
+    <div class="bg-light py-2">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">

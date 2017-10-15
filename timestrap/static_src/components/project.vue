@@ -1,5 +1,5 @@
 <template>
-<div class="project row py-1 bg-faded" v-if="!project.archive">
+<div class="project row py-1" v-if="!project.archive">
     <div v-bind:class="['col-' + [this.$perms.change_project ? '4' : '6'], 'mb-1', 'project-name']">
         {{ project.name }}
     </div>

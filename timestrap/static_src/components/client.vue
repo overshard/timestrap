@@ -1,6 +1,6 @@
 <template>
 <div class="client">
-    <div class="row py-2 bg-faded">
+    <div class="row py-2 bg-light">
         <template v-if="edit">
             <div class="col-10">
                 <input name="client-name"
