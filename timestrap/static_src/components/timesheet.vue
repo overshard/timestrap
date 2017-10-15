@@ -120,7 +120,7 @@
         </div>
 
         <div class="row bg-success text-white py-2 mb-4 rounded">
-            <div class="offset-sm-6 col-sm-2 text-right">
+            <div class="ml-auto col-sm-2 text-right">
                 Subtotal<br>
                 <strong>Total</strong>
             </div>
