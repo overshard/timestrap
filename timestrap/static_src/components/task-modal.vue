@@ -7,18 +7,20 @@
 
     <div slot="body">
         <div class="form-group">
-        <input name="task-name"
-               placeholder="Task Name"
-               type="text"
-               class="form-control"
-               v-model.trim="name"
-               required />
+            <label>Task Name</label>
+            <input name="task-name"
+                   placeholder="Task Name"
+                   type="text"
+                   class="form-control form-control-sm"
+                   v-model.trim="name"
+                   required />
         </div>
         <div class="form-group">
+            <label>Hourly Rate</label>
             <input name="task-hourly-rate"
                    placeholder="Hourly Rate"
                    type="text"
-                   class="form-control"
+                   class="form-control form-control-sm"
                    v-model.number="hourly_rate"
                    required />
         </div>

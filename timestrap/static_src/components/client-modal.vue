@@ -7,10 +7,11 @@
 
     <div slot="body">
         <div class="form-group">
+            <label>Client Name</label>
             <input name="client-name"
                    placeholder="Client Name"
                    type="text"
-                   class="form-control"
+                   class="form-control form-control-sm"
                    v-model.trim="name"
                    required />
         </div>
