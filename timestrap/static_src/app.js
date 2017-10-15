@@ -12,11 +12,6 @@ const quickFetch = require('./plugins/quickfetch.js');
 const perms = require('./plugins/permissions.js');
 const user = require('./plugins/user.js');
 
-// TODO: Figure out why this isn't working...
-Vue.config.devtools = false;
-Vue.config.debug = false;
-Vue.config.silent = true;
-
 
 // Set up event bus for app-wide communication.
 // @see: https://vuejs.org/v2/guide/components.html#Non-Parent-Child-Communication
