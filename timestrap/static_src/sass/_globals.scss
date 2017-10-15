@@ -18,8 +18,18 @@ input:required {
     font-weight: bold;
 }
 
-
 .form-search {
     background: #bcbec0;
     color: #fff;
+}
+
+#github {
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    font-size: 2em;
+
+    a {
+        color: #000;
+    }
 }
