@@ -18,6 +18,11 @@
             border-bottom-left-radius: .25rem;
             border-bottom: 1px solid $row-border-color;
         }
+
+        // Fix for override of striping-row-color above
+        &.bg-success {
+            background-color: #28a745 !important;
+        }
     }
 
     .duration.display-4 {
