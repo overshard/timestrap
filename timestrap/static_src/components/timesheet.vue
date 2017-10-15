@@ -33,12 +33,12 @@
         <div class="col-sm-2">
             Duration
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 text-right">
             <a href="#"
                id="entry-advanced-fields"
                v-on:click.prevent
                v-on:click="advanced"
-               class="btn btn-info btn-sm w-100">
+               class="btn btn-light btn-sm w-100">
                 Advanced
             </a>
         </div>
