@@ -54,35 +54,6 @@
                          placeholder="Clients"
                          allowclear="true"></select2>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <select2 id="report-filter-task"
-                         v-model="task"
-                         v-bind:options="tasks"
-                         placeholder="Tasks"
-                         allowclear="true"></select2>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        <datepicker id="report-filter-min-date"
-                                    type="text"
-                                    class="form-control form-control-sm date-input"
-                                    v-model="dateMin"
-                                    placeholder="Min. date"
-                                    allowclear="true"></datepicker>
-                    </div>
-                    <div class="col-md-6">
-                        <datepicker id="report-filter-max-date"
-                                    type="text"
-                                    class="form-control form-control-sm date-input"
-                                    v-model="dateMax"
-                                    placeholder="Max. date"
-                                    allowclear="true"></datepicker>
-                    </div>
-                </div>
-            </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
@@ -102,7 +73,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 offset-md-6">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <select2 id="report-filter-task"
+                         v-model="task"
+                         v-bind:options="tasks"
+                         placeholder="Tasks"
+                         allowclear="true"></select2>
+            </div>
+            <div class="form-group">
+                <datepicker id="report-filter-min-date"
+                            type="text"
+                            class="form-control form-control-sm date-input"
+                            v-model="dateMin"
+                            placeholder="Min. date"
+                            allowclear="true"></datepicker>
+            </div>
+            <div class="form-group">
+                <datepicker id="report-filter-max-date"
+                            type="text"
+                            class="form-control form-control-sm date-input"
+                            v-model="dateMax"
+                            placeholder="Max. date"
+                            allowclear="true"></datepicker>
+            </div>
             <button id="generate-report"
                     type="submit"
                     class="btn btn-primary btn-sm w-100"
