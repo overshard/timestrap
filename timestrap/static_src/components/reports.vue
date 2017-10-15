@@ -21,6 +21,12 @@
                 <option value="html">html</option>
             </select>
 
+            <button class="btn btn-secondary btn-sm pull-right ml-2"
+                    v-on:click.prevent
+                    v-on:click="refresh">
+                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+            </button>
+
             <pager v-bind:next="next"
                    v-bind:previous="previous"
                    @next-page="getEntries(next)"
@@ -274,6 +280,9 @@ export default {
         },
         moment(date) {
             return moment(date).format('LL');
+        },
+        refresh() {
+            return this.getEntries();
         }
     },
     mounted() {

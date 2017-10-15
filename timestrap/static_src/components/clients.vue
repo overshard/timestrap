@@ -19,6 +19,12 @@
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Project
             </button>
+
+            <button class="btn btn-secondary btn-sm pull-right ml-2"
+                    v-on:click.prevent
+                    v-on:click="refresh">
+                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+            </button>
         </div>
     </div>
 
@@ -129,6 +135,9 @@ export default {
         },
         removeProject(client_index, index) {
             this.$delete(this.clients[client_index].projects, index);
+        },
+        refresh() {
+            return this.getClients();
         }
     },
     mounted() {

@@ -10,6 +10,12 @@
                 <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                 New Task
             </button>
+
+            <button class="btn btn-secondary btn-sm pull-right ml-2"
+                    v-on:click.prevent
+                    v-on:click="refresh">
+                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+            </button>
         </div>
     </div>
 
@@ -82,6 +88,9 @@ export default {
                 this.modal_config.index = null;
             }
             this.modal_config.show = !this.modal_config.show;
+        },
+        refresh() {
+            return this.getTasks();
         }
     },
     mounted() {
