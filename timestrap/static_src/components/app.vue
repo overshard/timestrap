@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-light py-2">
+    <div class="bg-secondary py-2">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-sm-4 text-right">
                     <form v-on:submit.prevent v-on:submit="submitSearch">
-                        <input class="form-control form-control-sm" type="text" placeholder="Search by project, client, or entry" v-model="search" />
+                        <input class="form-control form-control-sm form-search" type="text" placeholder="Search by project, client, or entry" v-model="search" />
                     </form>
                 </div>
             </div>

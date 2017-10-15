@@ -2,13 +2,14 @@
 
 #timer-value {
     display: inline-block;
-    background: #fdfdfd;
+    background: #bcbec0;
     padding: .1em .4em;
     border-radius: .2em;
     font-size: 1.4rem;
+    color: #fff;
 
     span {
-        color: #aaa;
+        color: #efefef;
         font-size: .8em;
     }
 }
