@@ -10,7 +10,7 @@
                 Export Report
             </button>
 
-            <select class="custom-select form-control-sm" v-model="exportFormat">
+            <select class="export-select custom-select form-control-sm" v-model="exportFormat">
                 <option value="csv">csv</option>
                 <option value="xls">xls</option>
                 <option value="xlsx">xlsx</option>
