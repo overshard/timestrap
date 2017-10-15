@@ -38,7 +38,7 @@
                id="entry-advanced-fields"
                v-on:click.prevent
                v-on:click="advanced"
-               class="btn btn-light btn-sm w-100">
+               class="btn btn-secondary btn-sm w-100">
                 Advanced
             </a>
         </div>
