@@ -4,6 +4,7 @@ const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
 const vueify = require('vueify');
 const browserify = require('browserify');
+const envify = require('envify/custom');
 
 const scriptsFiles = require('../config.js').scriptsFiles;
 
@@ -23,6 +24,10 @@ gulp.task('scripts:app', () => {
         .pipe(tap(function(file) {
             file.contents = browserify(file.path)
                 .transform(vueify)
+                .transform(
+                    { global: true },
+                    envify({ NODE_ENV: 'production' })
+                )
                 .bundle()
                 .on('error', function(err) {
                     console.log(err.toString());
