@@ -1,7 +1,7 @@
 <template>
 <div id="app">
     <div class="navbar navbar-toggleable-sm navbar-inverse bg-primary">
-        <div class="container">
+        <div class="container w-100">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
