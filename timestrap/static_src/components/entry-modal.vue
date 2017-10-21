@@ -42,7 +42,7 @@
             <input name="project-duration"
                     type="text"
                     class="form-control form-control-sm"
-                    placeholder="Entry Duration"
+                    placeholder="0:00"
                     v-model.number="entry_duration" />
         </div>
     </div>
