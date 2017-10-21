@@ -7,15 +7,6 @@
                 Create Reports
             </router-link>
 
-            <button name="entry-add"
-                    type="button"
-                    class="btn btn-primary btn-sm"
-                    @click="toggleModal"
-                    v-if="this.$perms.add_entry">
-                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
-                New Entry
-            </button>
-
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
                     v-on:click="refresh">
