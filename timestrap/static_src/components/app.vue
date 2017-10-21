@@ -79,6 +79,7 @@
 </div>
 </template>
 
+
 <script>
 const Timer = require('./timer.vue');
 
@@ -93,7 +94,7 @@ export default {
             api: timestrapConfig.CORE_URLS.API,
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT,
-            site: timestrapConfig.SITE,
+            site: timestrapConfig.SITE
         };
     },
     methods: {

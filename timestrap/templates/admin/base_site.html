@@ -5,7 +5,7 @@
 
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">Timestrap Admin</a></h1>
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ request.site.name }} Admin</a></h1>
 {% endblock %}
 
 

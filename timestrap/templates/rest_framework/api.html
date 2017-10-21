@@ -2,7 +2,7 @@
 
 
 {% block branding %}
-    <a class="navbar-brand" href="{% url 'dashboard' %}">
-        Timestrap API Browser
-    </a> 
+<a class="navbar-brand" href="{% url 'dashboard' %}">
+    {{ request.site.name }} API Browser
+</a> 
 {% endblock %}
