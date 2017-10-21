@@ -99,7 +99,7 @@ const DurationFormatter = require('../mixins/durationformatter');
 const Select2 = require('./select2.vue');
 
 export default {
-    props: ['entry', 'editable', 'toggleEditModal'],
+    props: ['entry', 'index', 'editable', 'toggleEditModal'],
     mixins: [ DurationFormatter ],
     data() {
         return {

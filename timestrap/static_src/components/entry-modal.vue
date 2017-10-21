@@ -1,7 +1,7 @@
 <template>
 <modal>
     <h5 slot="header">
-        {{ config.entry ? 'Edit: ' + config.project.name : 'New Entry' }}
+        {{ config.entry ? 'Edit Entry' : 'New Entry' }}
     </h5>
 
     <div slot="body">
@@ -17,15 +17,17 @@
         <div class="form-group">
             <label>Projects</label>
             <select2 id="project-projects"
-                        v-model="projects"
+                        v-model="project"
                         v-bind:options="projects"
+                        v-bind:selected="project"
                         placeholder="Projects"></select2>
         </div>
         <div class="form-group">
             <label>Tasks</label>
             <select2 id="project-tasks"
-                        v-model="tasks"
+                        v-model="task"
                         v-bind:options="tasks"
+                        v-bind:selected="task"
                         placeholder="Tasks"></select2>
         </div>
         <div class="form-group">
@@ -78,7 +80,7 @@ export default {
             task: this.config.entry ? this.config.entry.task : null,
             project: this.config.entry ? this.config.entry.project : null,
             entry_date: this.config.entry ? this.config.entry.date : null,
-            entry_note: this.config.entry ? this.config.entry.name : null,
+            entry_note: this.config.entry ? this.config.entry.note : null,
             entry_duration: this.config.entry ? this.config.entry.duration : null
         };
     },
@@ -109,9 +111,12 @@ export default {
         }
     },
     created() {
-        this.$quickFetch(timestrapConfig.API_URLS.PROJECTS).then(data => {
-            this.projects = data.map(function(project) {
-                return { id: project.url, text: project.name };
+        this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+            this.projects = data.map(function(client) {
+                let projects = client.projects.map(function(project) {
+                    return { id: project.url, text: project.name };
+                });
+                return { text: client.name, children: projects };
             });
         });
         this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {

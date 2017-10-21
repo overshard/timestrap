@@ -128,8 +128,7 @@
                        v-bind:index="entryIndex"
                        v-bind:key="entry.id"
                        v-bind:editable="editable"
-                       v-bind:toggleEditModal="toggleModal">
-                </entry>
+                       v-bind:toggleEditModal="toggleModal"></entry>
             </div>
         </div>
 
@@ -269,7 +268,6 @@ export default {
                 this.modal_config.entry = null;
                 this.modal_config.index = null;
             }
-            console.log(this.modal_config);
             this.modal_config.show = !this.modal_config.show;
         },
         moment(date) {
