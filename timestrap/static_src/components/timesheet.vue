@@ -7,6 +7,15 @@
                 Create Reports
             </router-link>
 
+            <button name="entry-add"
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    @click="toggleModal"
+                    v-if="this.$perms.add_entry">
+                <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+                New Entry
+            </button>
+
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
                     v-on:click="refresh">
@@ -19,6 +28,12 @@
                    @previous-page="getEntries(previous)"></pager>
         </div>
     </div>
+
+    <entry-modal id="entry-modal"
+                 v-if="modal_config.show && (this.$perms.add_entry || this.$perms.change_entry)"
+                 @updateEntry="updateEntry"
+                 @close="toggleModal"
+                 v-bind:config="modal_config"></entry-modal>
 
     <div class="row py-1 bg-dark text-white font-weight-bold rounded-top">
         <template v-if="advancedMode">
@@ -121,7 +136,8 @@
                        v-bind:entry="entry"
                        v-bind:index="entryIndex"
                        v-bind:key="entry.id"
-                       v-bind:editable="editable">
+                       v-bind:editable="editable"
+                       v-bind:toggleEditModal="toggleModal">
                 </entry>
             </div>
         </div>
@@ -147,6 +163,7 @@ const DurationFormatter = require('../mixins/durationformatter');
 const Entry = require('./entry.vue');
 const Pager = require('./pager.vue');
 const Select2 = require('./select2.vue');
+const EntryModal = require('./entry-modal.vue');
 
 export default {
     mixins: [ DurationFormatter ],
@@ -161,7 +178,8 @@ export default {
             editable: true,
             tasks: {},
             projects: {},
-            advancedMode: false
+            advancedMode: false,
+            modal_config: { index: null, entry: null, show: false }
         };
     },
     methods: {
@@ -251,6 +269,18 @@ export default {
                 });
             }
         },
+        toggleModal(entry, index) {
+            if (entry && (index || index === 0)) {
+                this.modal_config.entry = entry;
+                this.modal_config.index = index;
+            }
+            else {
+                this.modal_config.entry = null;
+                this.modal_config.index = null;
+            }
+            console.log(this.modal_config);
+            this.modal_config.show = !this.modal_config.show;
+        },
         moment(date) {
             return moment(date).format('LL');
         },
@@ -269,7 +299,8 @@ export default {
         Datepicker,
         Entry,
         Pager,
-        Select2
+        Select2,
+        EntryModal
     }
 };
 </script>

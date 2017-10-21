@@ -63,11 +63,12 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right"
                          aria-labelledby="entry-menu">
-                        <a class="dropdown-item entry-menu-change"
+                        <a id="entry-menu-change"
+                           class="dropdown-item"
                            href="#"
                            v-if="this.$perms.change_entry"
                            v-on:click.prevent
-                           v-on:click="editEntry">
+                           v-on:click="toggleEditModal(entry, index)">
                             Edit
                         </a>
                         <a class="dropdown-item entry-menu-restart"
@@ -98,7 +99,7 @@ const DurationFormatter = require('../mixins/durationformatter');
 const Select2 = require('./select2.vue');
 
 export default {
-    props: ['entry', 'editable'],
+    props: ['entry', 'editable', 'toggleEditModal'],
     mixins: [ DurationFormatter ],
     data() {
         return {
