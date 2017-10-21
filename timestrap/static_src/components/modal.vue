@@ -11,7 +11,7 @@
                     <slot name="body"></slot>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer bg-light">
                     <slot name="footer"></slot>
                 </div>
                 </form>
