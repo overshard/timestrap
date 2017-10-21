@@ -25,13 +25,25 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-    margin-top: 0;
-    color: #42b983;
+.modal-header {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+
+    h5 {
+        margin-bottom: 0;
+        font-weight: bold;
+    }
 }
 
 .modal-body {
     margin: 20px 0;
+
+    label {
+        font-weight: bold;
+        font-size: .7em;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
 }
 
 .modal-default-button {
