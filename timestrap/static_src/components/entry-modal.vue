@@ -81,8 +81,12 @@ const Datepicker = require('./datepicker.vue');
 const DurationFormatter = require('../mixins/durationformatter');
 
 export default {
-    mixins: [ DurationFormatter ],
-    props: ['config'],
+    mixins: [
+        DurationFormatter,
+    ],
+    props: [
+        'config',
+    ],
     data() {
         return {
             projects: null,
@@ -93,7 +97,7 @@ export default {
             project: this.config.entry ? this.config.entry.project : null,
             entry_date: this.config.entry ? this.config.entry.date : null,
             entry_note: this.config.entry ? this.config.entry.note : null,
-            entry_duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null
+            entry_duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
         };
     },
     methods: {
@@ -104,7 +108,7 @@ export default {
                 date: this.entry_date,
                 project: this.project,
                 task: this.task,
-                user: this.user
+                user: this.user,
             };
             let url = timestrapConfig.API_URLS.ENTRIES;
             let method = 'post';
@@ -147,7 +151,7 @@ export default {
     components: {
         Modal,
         Select2,
-        Datepicker
+        Datepicker,
     }
 };
 </script>
