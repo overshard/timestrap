@@ -26,6 +26,10 @@
                  @close="toggleModal"
                  v-bind:config="modal_config"></entry-modal>
 
+    <div class="chartjs-wrapper" style="height: 250px;">
+        <canvas id="chartjs-1" class="chartjs"></canvas>
+    </div>
+
     <div v-if="this.$perms.view_entry" id="entry-rows">
         <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
             <div class="row inset-row">
@@ -83,7 +87,8 @@ export default {
             tasks: {},
             projects: {},
             advancedMode: false,
-            modal_config: { index: null, entry: null, show: false }
+            modal_config: { index: null, entry: null, show: false },
+            renderedChart: false
         };
     },
     methods: {
@@ -117,6 +122,42 @@ export default {
 
                 this.subtotal = this.durationToString(data.subtotal_duration);
                 this.total = this.durationToString(data.total_duration);
+
+                let chartDates = [];
+                let chartDurations = [];
+                let entryBlock;
+                for (entryBlock in this.entries) {
+                    chartDates.push(moment(this.entries[entryBlock].date).format('MMMM Do'));
+                    let entry;
+                    let totalTime = 0;
+                    for (entry in this.entries[entryBlock].entries) {
+                        totalTime = totalTime + this.entries[entryBlock].entries[entry].duration;
+                    }
+                    chartDurations.push(totalTime);
+                }
+
+                if (this.renderedChart) this.renderedChart.destroy();
+                this.renderedChart = new Chart(document.getElementById("chartjs-1"), {
+                    "type": "bar",
+                    "data": {
+                        "labels": chartDates,
+                        "datasets": [{
+                            "backgroundColor": "#17a2b8",
+                            "data": chartDurations
+                        }]
+                    },
+                    "options": {
+                        "maintainAspectRatio": false,
+                        "legend": {
+                            "display": false
+                        },
+                        "scales": {
+                            "yAxes": [{
+                                "ticks": { "beginAtZero": true }
+                            }]
+                        }
+                    }
+                });
             });
         },
         submitEntry(e) {
@@ -195,7 +236,7 @@ export default {
             this.modal_config.show = !this.modal_config.show;
         },
         moment(date) {
-            return moment(date).format('LL');
+            return moment(date).format('MMMM Do');
         },
         advanced() {
             this.advancedMode = !this.advancedMode;
@@ -212,6 +253,9 @@ export default {
         this.bus.$on('refreshEntries', function() {
             return this.getEntries();
         }.bind(this));
+    },
+    destroyed() {
+        this.renderedChart.destroy();
     },
     components: {
         Datepicker,

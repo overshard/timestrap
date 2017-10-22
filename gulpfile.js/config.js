@@ -21,7 +21,8 @@ module.exports = {
         'node_modules/pickadate/lib/compressed/picker.js',
         'node_modules/pickadate/lib/compressed/picker.date.js',
         'node_modules/js-cookie/src/js.cookie.js',
-        'node_modules/jquery.growl/javascripts/jquery.growl.js'
+        'node_modules/jquery.growl/javascripts/jquery.growl.js',
+        'node_modules/chart.js/dist/Chart.min.js'
     ],
     stylesFiles: [
         'node_modules/font-awesome/css/font-awesome.min.css',
