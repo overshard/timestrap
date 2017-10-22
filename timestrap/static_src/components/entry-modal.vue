@@ -15,8 +15,16 @@
                         placeholder="Date"></datepicker>
         </div>
         <div class="form-group">
+            <label>User</label>
+            <select2 id="entry-user"
+                        v-model="user"
+                        v-bind:options="users"
+                        v-bind:selected="user"
+                        placeholder="Users"></select2>
+        </div>
+        <div class="form-group">
             <label>Projects</label>
-            <select2 id="project-projects"
+            <select2 id="entry-projects"
                         v-model="project"
                         v-bind:options="projects"
                         v-bind:selected="project"
@@ -24,7 +32,7 @@
         </div>
         <div class="form-group">
             <label>Tasks</label>
-            <select2 id="project-tasks"
+            <select2 id="entry-tasks"
                         v-model="task"
                         v-bind:options="tasks"
                         v-bind:selected="task"
@@ -32,7 +40,7 @@
         </div>
         <div class="form-group">
             <label>Note</label>
-            <input name="project-note"
+            <input name="entry-note"
                     type="text"
                     class="form-control form-control-sm"
                     v-model.trim="entry_note"
@@ -41,7 +49,7 @@
         </div>
         <div class="form-group">
             <label>Duration</label>
-            <input name="project-duration"
+            <input name="entry-duration"
                     type="text"
                     class="form-control form-control-sm"
                     placeholder="0:00"
@@ -77,6 +85,8 @@ export default {
         return {
             projects: null,
             tasks: null,
+            users: null,
+            user: this.config.entry ? this.config.entry.user : null,
             task: this.config.entry ? this.config.entry.task : null,
             project: this.config.entry ? this.config.entry.project : null,
             entry_date: this.config.entry ? this.config.entry.date : null,
@@ -91,7 +101,8 @@ export default {
                 duration: this.entry_duration,
                 date: this.entry_date,
                 project: this.project,
-                task: this.task
+                task: this.task,
+                user: this.user
             };
             let url = timestrapConfig.API_URLS.ENTRIES;
             let method = 'post';
@@ -103,6 +114,7 @@ export default {
                 this.$emit('updateEntry', data, this.config.index, this.config.client_index);
                 this.task = null;
                 this.project = null;
+                this.user = null;
                 this.entry_date = null;
                 this.entry_note = null;
                 this.entry_duration = null;
@@ -122,6 +134,11 @@ export default {
         this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
             this.tasks = data.map(function(task) {
                 return { id: task.url, text: task.name };
+            });
+        });
+        this.$quickFetch(timestrapConfig.API_URLS.USERS).then(data => {
+            this.users = data.map(function(user) {
+                return { id: user.url, text: user.username };
             });
         });
     },

@@ -240,6 +240,16 @@ export default {
                 this.entries.splice(blockIndex, 1);
             }
         },
+        updateEntry(entry, index) {
+            if (entry && (index || index === 0)) {
+                this.entries[index] = entry;
+            }
+            else {
+                this.entries.unshift(entry);
+            }
+            this.modal_config.index = null;
+            this.modal_config.entry = null;
+        },
         loadSelect2Options() {
             if (this.$perms.view_task) {
                 this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
