@@ -57,7 +57,11 @@ export default {
     data() {
         return {
             tasks: null,
-            modal_config: { index: null, task: null, show: false }
+            modal_config: {
+                index: null,
+                task: null,
+                show: false,
+            },
         };
     },
     methods: {
@@ -85,23 +89,22 @@ export default {
             if (task && (index || index === 0)) {
                 this.modal_config.task = task;
                 this.modal_config.index = index;
-            }
-            else {
+            } else {
                 this.modal_config.task = null;
                 this.modal_config.index = null;
             }
             this.modal_config.show = !this.modal_config.show;
         },
         refresh() {
-            return this.getTasks();
+            this.getTasks();
         }
     },
     mounted() {
-        return this.getTasks();
+        this.getTasks();
     },
     components: {
         Task,
-        TaskModal
+        TaskModal,
     }
 };
 </script>

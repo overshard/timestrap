@@ -27,7 +27,7 @@
                  @refresh="refresh"
                  v-bind:config="modal_config"></entry-modal>
 
-    <div class="chartjs-wrapper py-4" style="height: 250px;">
+    <div class="row chartjs-wrapper bg-light rounded my-4 pt-4 pb-2">
         <canvas id="chartjs-1" class="chartjs"></canvas>
     </div>
 
@@ -53,11 +53,15 @@
 
         <div class="row bg-success text-white py-2 mb-4 rounded">
             <div class="ml-auto col-sm-2 text-right">
-                Subtotal<br>
+                Subtotal
+                <br>
                 <strong>Total</strong>
             </div>
-            <div class="col-sm-2 text-right">
-                {{ subtotal }}<br>
+            <div class="col-sm-3">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                {{ subtotal }}
+                <br>
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
                 <strong>{{ total }}</strong>
             </div>
         </div>
@@ -89,7 +93,11 @@ export default {
             previous: null,
 
             editable: true,
-            modal_config: { index: null, entry: null, show: false },
+            modal_config: {
+                index: null,
+                entry: null,
+                show: false,
+            },
             renderedChart: false,
         };
     },

@@ -2,25 +2,25 @@
 <div class="bg-light py-2">
     <div id="tracker" class="container">
         <div class="row">
-            <div class="col-2">
+            <div class="col-sm-2">
                 <select2 id="entry-project" v-model="project" name="entry-project"
                          v-bind:options="projects" placeholder="Project"></select2>
             </div>
-            <div class="col-2">
+            <div class="col-sm-2">
                 <select2 id="entry-task" v-model="task" v-bind:options="tasks"
                          placeholder="Task" name="entry-task"></select2>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 <input class="form-control form-control-sm w-100"
                        name="entry-note" placeholder="Note" type="text"
                        v-model="note" />
             </div>
-            <div class="col-2">
+            <div class="col-sm-2">
                 <input class="form-control form-control-sm text-right font-weight-bold w-100"
                        name="entry-duration" placeholder="0:00" type="text"
                        v-model="duration" />
             </div>
-            <div class="col-2">
+            <div class="col-sm-2">
                 <button class="btn btn-sm btn-success w-100"
                         v-on:click="toggle" v-block-during-fetch
                         v-if="!this.running && !this.duration"
@@ -54,7 +54,9 @@ const Select2 = require('./select2.vue');
 const DurationFormatter = require('../mixins/durationformatter');
 
 export default {
-    mixins: [ DurationFormatter ],
+    mixins: [
+        DurationFormatter,
+    ],
     data() {
         return {
             task: null,
@@ -69,15 +71,14 @@ export default {
             total: 0,
             seconds: '0',
 
-            submitted: false
+            submitted: false,
         };
     },
     methods: {
         submitEntry(e) {
             if (!this.project) {
                 return $.growl.error({ message: 'Need to select a project.' });
-            }
-            else if (!this.duration) {
+            } else if (!this.duration) {
                 return $.growl.error({ message: 'Need to add a duration.' });
             }
             let body = {
@@ -112,8 +113,7 @@ export default {
             if (this.running) {
                 this.reset();
                 this.interval = setInterval(this.tick, 1000, this);
-            }
-            else {
+            } else {
                 clearInterval(this.interval);
                 if (this.total < 60) {
                     this.reset();
@@ -137,7 +137,7 @@ export default {
         });
     },
     components: {
-        Select2
+        Select2,
     }
 };
 </script>
