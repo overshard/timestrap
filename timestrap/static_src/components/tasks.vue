@@ -26,11 +26,13 @@
                 v-bind:config="modal_config"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
-        <div class="task-head bg-light row py-2">
+        <div class="task-head bg-secondary text-white row py-2">
             <div class="col-8 d-flex align-items-center">
+                <i class="fa fa-tasks mr-2" aria-hidden="true"></i>
                 <strong>Task Name</strong>
             </div>
             <div class="col-2 d-flex align-items-center">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
                 <strong>Hourly Rate</strong>
             </div>
             <div class="col-2"></div>

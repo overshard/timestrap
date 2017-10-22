@@ -1,9 +1,11 @@
 <template>
-<div v-bind:class="['task', {'bg-light': this.index % 2 === 2}, 'row', 'py-2']">
+<div class="task row bg-light py-1">
     <div v-bind:class="[[this.$perms.change_task ? 'col-8' : 'col-10'], 'd-flex', 'align-items-center']">
+        <i class="fa fa-tasks text-muted mr-2" aria-hidden="true"></i>
         {{ task.name }}
     </div>
     <div class="col-2 d-flex align-items-center">
+        <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
         ${{ task.hourly_rate }}
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end">

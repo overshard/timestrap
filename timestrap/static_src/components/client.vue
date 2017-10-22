@@ -27,15 +27,15 @@
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                Total Time
+                <strong>Total Time</strong>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-list mr-2" aria-hidden="true"></i>
-                Entries
+                <strong>Entries</strong>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <i class="fa fa-percent mr-2" aria-hidden="true"></i>
-                Progress
+                <strong>Progress</strong>
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">
                 <template v-if="this.$perms.change_client || this.$perms.delete_client">
