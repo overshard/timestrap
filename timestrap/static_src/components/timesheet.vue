@@ -75,7 +75,9 @@ const Select2 = require('./select2.vue');
 const EntryModal = require('./entry-modal.vue');
 
 export default {
-    mixins: [ DurationFormatter ],
+    mixins: [
+        DurationFormatter,
+    ],
     data() {
         return {
             entries: null,
@@ -88,7 +90,7 @@ export default {
 
             editable: true,
             modal_config: { index: null, entry: null, show: false },
-            renderedChart: false
+            renderedChart: false,
         };
     },
     methods: {
@@ -161,7 +163,7 @@ export default {
                 });
             });
         },
-        deleteEntry: function(blockIndex, entryIndex) {
+        deleteEntry(blockIndex, entryIndex) {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
             if (this.entries[blockIndex].entries.length == 0) {
                 this.entries.splice(blockIndex, 1);
