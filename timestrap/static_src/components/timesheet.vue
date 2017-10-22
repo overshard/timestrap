@@ -181,7 +181,6 @@ export default {
             return moment(date).format('MMMM Do');
         },
         refresh() {
-            this.entries = [];
             this.getEntries();
         }
     },
