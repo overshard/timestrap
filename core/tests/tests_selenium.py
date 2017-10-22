@@ -443,38 +443,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
-    def test_timesheet_entry_restart(self):
-        client = Client(name='Client', archive=False)
-        client.save()
-        project = Project(name='Project 1', estimate=100.00,
-                          client=client, archive=False)
-        project.save()
-        task = Task(name='Task 1', hourly_rate=130)
-        task.save()
-        # Log in to establish self.user.
-        self.logIn()
-        Entry(project=project, task=task, user=self.user, note='Note',
-              duration=timedelta(minutes=35)).save()
-        self.addPerms(['view_entry'])
-        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
-
-        self.assertNotIn('entry-menu', self.driver.page_source)
-        self.addPerms(['change_entry'])
-        self.driver.refresh()
-        self.waitForPresence((By.NAME, 'entry-menu'))
-        self.find(By.NAME, 'entry-menu').click()
-        self.waitForPresence((By.CLASS_NAME, 'entry-menu-restart'))
-        self.find(By.CLASS_NAME, 'entry-menu-restart').click()
-        self.waitForPresence((By.ID, 'timer-stop'))
-        # Click Timer's "Stop" button and wait for the save button to appear.
-        self.find(By.ID, 'timer-stop').click()
-        self.waitForPresence((By.ID, 'timer-entry-save'))
-        self.find(By.ID, 'timer-entry-save').click()
-        # The actual time should not change because the timer does not run for
-        # more than 60 seconds.
-        self.waitForText((By.CLASS_NAME, 'entry'),
-                         'Client\nProject 1\nTask 1\nNote\n0:35')
-
     def test_timesheet_entry_delete(self):
         client = Client(name='Client', archive=False)
         client.save()
