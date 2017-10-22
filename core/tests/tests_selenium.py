@@ -187,31 +187,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         # Log in failure creates an alert notice.
         self.waitForPresence((By.CSS_SELECTOR, '.alert.alert-danger'))
 
-    def test_timer_start(self):
-        self.logIn()
-        self.waitForPresence((By.ID, 'timer-start'))
-        self.find(By.ID, 'timer-start').click()
-        self.wait(2)
-        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
-
-    def test_timer_stop(self):
-        self.logIn()
-        self.waitForPresence((By.ID, 'timer-start'))
-        self.find(By.ID, 'timer-start').click()
-        self.wait(2)
-        self.find(By.ID, 'timer-stop').click()
-        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
-
-    def test_timer_reset(self):
-        self.logIn()
-        self.waitForPresence((By.ID, 'timer-start'))
-        self.find(By.ID, 'timer-start').click()
-        self.wait(2)
-        self.find(By.ID, 'timer-stop').click()
-        self.assertNotIn('0h 0m 0s', self.find(By.ID, 'timer-value').text)
-        self.find(By.ID, 'timer-reset').click()
-        self.waitForText((By.ID, 'timer-value'), '0h 0m 0s')
-
     def test_clients_access(self):
         self.logIn()
         # self.assertNotIn('nav-app-clients', self.find(By.ID, 'nav-app').text)
