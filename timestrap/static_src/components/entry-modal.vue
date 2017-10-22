@@ -78,8 +78,10 @@
 const Modal = require('./modal.vue');
 const Select2 = require('./select2.vue');
 const Datepicker = require('./datepicker.vue');
+const DurationFormatter = require('../mixins/durationformatter');
 
 export default {
+    mixins: [ DurationFormatter ],
     props: ['config'],
     data() {
         return {
@@ -91,7 +93,7 @@ export default {
             project: this.config.entry ? this.config.entry.project : null,
             entry_date: this.config.entry ? this.config.entry.date : null,
             entry_note: this.config.entry ? this.config.entry.note : null,
-            entry_duration: this.config.entry ? this.config.entry.duration : null
+            entry_duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null
         };
     },
     methods: {
