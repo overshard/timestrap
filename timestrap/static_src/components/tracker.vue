@@ -115,6 +115,9 @@ export default {
             }
             else {
                 clearInterval(this.interval);
+                if (this.total < 60) {
+                    this.reset();
+                }
             }
         },
     },
