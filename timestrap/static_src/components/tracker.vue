@@ -25,17 +25,20 @@
                         v-on:click="toggle" v-block-during-fetch
                         v-if="!this.running && !this.duration"
                         v-bind:disabled="submitted">
+                    <i class="fa fa-play" aria-hidden="true"></i>
                     Start
                 </button>
                 <button class="btn btn-sm btn-danger w-100"
                         v-on:click="toggle" v-block-during-fetch
                         v-if="this.running" v-bind:disabled="submitted">
+                    <i class="fa fa-stop" aria-hidden="true"></i>
                     Stop ({{ this.seconds }})
                 </button>
                 <button class="btn btn-sm btn-info w-100"
                         v-on:click="submitEntry" v-block-during-fetch
                         v-if="!this.running && this.duration"
                         v-bind:disabled="submitted">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
                     Add
                 </button>
             </div>
