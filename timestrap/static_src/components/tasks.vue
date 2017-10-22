@@ -13,6 +13,7 @@
 
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
+                    v-block-during-fetch
                     v-on:click="refresh">
                 <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
             </button>
