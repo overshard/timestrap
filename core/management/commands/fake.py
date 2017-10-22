@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from random import randint, choice
 from datetime import timedelta
 from decimal import Decimal
