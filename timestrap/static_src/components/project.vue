@@ -1,18 +1,18 @@
 <template>
 <div class="project row py-1 bg-light" v-if="!project.archive">
-    <div v-bind:class="['col-' + [this.$perms.change_project ? '4' : '6'], 'mb-1', 'project-name']">
+    <div v-bind:class="['col-sm-' + [this.$perms.change_project ? '4' : '6'], 'mb-1', 'project-name']">
         <i class="fa fa-briefcase text-muted mr-1" aria-hidden="true"></i>
         {{ project.name }}
     </div>
-    <div class="col-2 d-flex align-items-center">
+    <div class="col-sm-2 d-flex align-items-center">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ project.total_duration }}</span>
     </div>
-    <div class="col-2 d-flex align-items-center">
+    <div class="col-sm-2 d-flex align-items-center">
         <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ project.total_entries }}</span>
     </div>
-    <div class="col-2 d-flex align-items-center" v-if="project.percent_done">
+    <div class="col-sm-3 d-flex align-items-center" v-if="project.percent_done">
         <div class="progress w-100">
             <div v-if="project.percent_done"
                  v-bind:class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
@@ -21,10 +21,10 @@
             </div>
         </div>
     </div>
-    <div class="col-2 d-flex align-items-center" v-else>
+    <div class="col-sm-3 d-flex align-items-center" v-else>
         No Estimate
     </div>
-    <div class="col-sm-2 d-flex align-self-center justify-content-end">
+    <div class="col-sm-1 d-flex align-self-center justify-content-end">
         <template v-if="this.$perms.change_project || this.$perms.delete_project">
             <button name="project-menu"
                     class="btn btn-faded btn-sm btn-icon dropdown-toggle"
