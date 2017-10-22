@@ -22,11 +22,11 @@
 
     <entry-modal id="entry-modal"
                  v-if="modal_config.show && (this.$perms.add_entry || this.$perms.change_entry)"
-                 @updateEntry="updateEntry"
                  @close="toggleModal"
+                 @refresh="refresh"
                  v-bind:config="modal_config"></entry-modal>
 
-    <div class="chartjs-wrapper" style="height: 250px;">
+    <div class="chartjs-wrapper py-4" style="height: 250px;">
         <canvas id="chartjs-1" class="chartjs"></canvas>
     </div>
 
@@ -78,15 +78,14 @@ export default {
     data() {
         return {
             entries: null,
-            clients: null,
+
             subtotal: null,
             total: null,
+
             next: null,
             previous: null,
+
             editable: true,
-            tasks: {},
-            projects: {},
-            advancedMode: false,
             modal_config: { index: null, entry: null, show: false },
             renderedChart: false
         };
@@ -127,7 +126,7 @@ export default {
                 let chartDurations = [];
                 let entryBlock;
                 for (entryBlock in this.entries) {
-                    chartDates.push(moment(this.entries[entryBlock].date).format('MMMM Do'));
+                    chartDates.push(this.moment(this.entries[entryBlock].date));
                     let entry;
                     let totalTime = 0;
                     for (entry in this.entries[entryBlock].entries) {
@@ -160,76 +159,17 @@ export default {
                 });
             });
         },
-        submitEntry(e) {
-            let body = {
-                date: this.date,
-                task: this.task,
-                project: this.project,
-                note: this.note,
-                duration: this.duration,
-                user: timestrapConfig.USER.URL
-            };
-            this.$quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
-                $.growl.notice({ message: 'New entry added!' });
-                let entryAdded = false;
-                this.entries.map(entryBlock => {
-                    if (entryBlock.date === data.date) {
-                        entryBlock.entries.unshift(data);
-                        entryAdded = true;
-                    }
-                    return entryBlock;
-                });
-                if (!entryAdded) {
-                    this.entries.unshift({
-                        date: data.date,
-                        entries: [data]
-                    });
-                }
-                this.note = '';
-                this.duration = '';
-            }).catch(error => console.log(error));
-        },
         deleteEntry: function(blockIndex, entryIndex) {
             this.entries[blockIndex].entries.splice(entryIndex, 1);
             if (this.entries[blockIndex].entries.length == 0) {
                 this.entries.splice(blockIndex, 1);
             }
         },
-        updateEntry(entry, index) {
-            if (entry && (index || index === 0)) {
-                this.entries[index] = entry;
-            }
-            else {
-                this.entries.unshift(entry);
-            }
-            this.modal_config.index = null;
-            this.modal_config.entry = null;
-        },
-        loadSelect2Options() {
-            if (this.$perms.view_task) {
-                this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
-                    this.tasks = data.map(function(task) {
-                        return { id: task.url, text: task.name };
-                    });
-                });
-            }
-            if (this.$perms.view_client && this.$perms.view_project) {
-                this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
-                    this.projects = data.map(function(client) {
-                        let projects = client.projects.map(function(project) {
-                            return { id: project.url, text: project.name };
-                        });
-                        return { text: client.name, children: projects };
-                    });
-                });
-            }
-        },
         toggleModal(entry, index) {
             if (entry && (index || index === 0)) {
                 this.modal_config.entry = entry;
                 this.modal_config.index = index;
-            }
-            else {
+            } else {
                 this.modal_config.entry = null;
                 this.modal_config.index = null;
             }
@@ -238,20 +178,17 @@ export default {
         moment(date) {
             return moment(date).format('MMMM Do');
         },
-        advanced() {
-            this.advancedMode = !this.advancedMode;
-        },
         refresh() {
-            return this.getEntries();
+            this.entries = [];
+            this.getEntries();
         }
     },
     mounted() {
-        this.loadSelect2Options();
-        return this.getEntries();
+        this.getEntries();
     },
     created() {
         this.bus.$on('refreshEntries', function() {
-            return this.getEntries();
+            this.refresh();
         }.bind(this));
     },
     destroyed() {

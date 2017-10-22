@@ -113,13 +113,13 @@ export default {
                 method = 'put';
             }
             this.$quickFetch(url, method, body).then(data => {
-                this.$emit('updateEntry', data, this.config.index, this.config.client_index);
                 this.task = null;
                 this.project = null;
                 this.user = null;
                 this.entry_date = null;
                 this.entry_note = null;
                 this.entry_duration = null;
+                this.$emit('refresh');
                 this.$emit('close');
             }).catch(error => console.log(error));
         }

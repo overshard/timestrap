@@ -88,7 +88,7 @@ export default {
                 $.growl.notice({ message: 'New entry added!' });
                 this.reset();
                 this.note = null;
-                this.bus.$emit('refreshEntries', this.entry);
+                this.bus.$emit('refreshEntries');
                 this.submitted = false;
             }).catch(error => console.log(error));
         },
