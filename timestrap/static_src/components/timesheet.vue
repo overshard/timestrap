@@ -133,6 +133,7 @@ export default {
                     for (entry in this.entries[entryBlock].entries) {
                         totalTime = totalTime + this.entries[entryBlock].entries[entry].duration;
                     }
+                    totalTime = Math.round(totalTime * 10) / 10;
                     chartDurations.push(totalTime);
                 }
 
