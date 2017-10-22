@@ -164,10 +164,7 @@ export default {
             });
         },
         deleteEntry(blockIndex, entryIndex) {
-            this.entries[blockIndex].entries.splice(entryIndex, 1);
-            if (this.entries[blockIndex].entries.length == 0) {
-                this.entries.splice(blockIndex, 1);
-            }
+            this.refresh();
         },
         toggleModal(entry, index) {
             if (entry && (index || index === 0)) {
