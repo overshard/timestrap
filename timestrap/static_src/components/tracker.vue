@@ -69,7 +69,7 @@ export default {
             seconds: '0',
 
             submitted: false
-        }
+        };
     },
     methods: {
         submitEntry(e) {
