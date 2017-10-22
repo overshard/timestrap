@@ -71,13 +71,6 @@
                            v-on:click="toggleEditModal(entry, index)">
                             Edit
                         </a>
-                        <a class="dropdown-item entry-menu-restart"
-                           href="#"
-                           v-if="this.$perms.change_entry"
-                           v-on:click.prevent
-                           v-on:click="restartEntry">
-                            Restart
-                        </a>
                         <a class="dropdown-item entry-menu-delete"
                            href="#"
                            v-if="this.$perms.delete_entry"
@@ -155,9 +148,6 @@ export default {
                     $.growl.error({ message: 'Entry delete failed ):' });
                 }
             }.bind(this));
-        },
-        restartEntry() {
-            this.bus.$emit('timerToggle', this.entry);
         }
     },
     components: {

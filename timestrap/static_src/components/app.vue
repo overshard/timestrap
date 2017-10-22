@@ -59,20 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-secondary py-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <timer></timer>
-                </div>
-                <div class="col-sm-4 text-right">
-                    <form v-on:submit.prevent v-on:submit="submitSearch">
-                        <input class="form-control form-control-sm form-search" type="text" placeholder="Search by project, client, or entry" v-model="search" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <tracker></tracker>
     <div class="container my-4">
         <router-view v-bind:id="['component-' + $route.name]" class="view"></router-view>
     </div>
@@ -81,7 +68,7 @@
 
 
 <script>
-const Timer = require('./timer.vue');
+const Tracker = require('./tracker.vue');
 
 export default {
     data () {
@@ -112,7 +99,7 @@ export default {
         moment.locale(timestrapConfig.SITE.LOCALE);
     },
     components: {
-        Timer
+        Tracker
     }
 };
 </script>

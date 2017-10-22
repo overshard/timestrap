@@ -26,92 +26,6 @@
                  @close="toggleModal"
                  v-bind:config="modal_config"></entry-modal>
 
-    <div class="row py-1 bg-dark text-white font-weight-bold rounded-top">
-        <template v-if="advancedMode">
-            <div class="col-sm-3 mb-2">
-                Date
-            </div>
-            <div class="col-sm-3 mb-2">
-                Task
-            </div>
-            <div class="col-sm-6">
-            </div>
-        </template>
-        <div class="col-sm-3">
-            Project
-        </div>
-        <div class="col-sm-5">
-            Note
-        </div>
-        <div class="col-sm-2">
-            Duration
-        </div>
-        <div class="col-sm-2 text-right">
-            <a href="#"
-               id="entry-advanced-fields"
-               v-on:click.prevent
-               v-on:click="advanced"
-               class="btn btn-secondary btn-sm w-100">
-                Advanced
-            </a>
-        </div>
-    </div>
-
-
-    <form id="entry-add"
-          class="row mb-4 py-2 bg-light rounded-bottom"
-          v-if="this.$perms.add_entry"
-          v-on:submit.prevent
-          v-on:submit="submitEntry">
-        <template v-if="advancedMode">
-            <div class="col-sm-3 mb-2">
-                <datepicker name="entry-date"
-                            type="text"
-                            class="form-control form-control-sm date-input"
-                            v-model="date"
-                            v-bind:default="new Date()"
-                            placeholder="Date"></datepicker>
-            </div>
-            <div class="col-sm-3">
-                <select2 id="entry-task"
-                        v-model="task"
-                        v-bind:options="tasks"
-                        placeholder="Tasks"></select2>
-            </div>
-            <div class="col-sm-6">
-            </div>
-        </template>
-        <div class="col-sm-3">
-            <select2 id="entry-project"
-                     v-model="project"
-                     v-bind:options="projects"
-                     placeholder="Projects"></select2>
-        </div>
-        <div class="col-sm-5">
-            <input name="entry-note"
-                   type="text"
-                   class="form-control form-control-sm"
-                   v-model="note"
-                   placeholder="Note" />
-        </div>
-        <div class="col-sm-2">
-            <input name="entry-duration"
-                   type="text"
-                   class="form-control form-control-sm text-right font-weight-bold"
-                   v-model="duration"
-                   placeholder="0:00"
-                   required />
-        </div>
-        <div class="col-sm-2">
-            <button name="entry-add-submit"
-                    type="submit"
-                    class="btn btn-success btn-sm w-100"
-                    v-block-during-fetch>
-                Add
-            </button>
-        </div>
-    </form>
-
     <div v-if="this.$perms.view_entry" id="entry-rows">
         <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
             <div class="row inset-row">
@@ -293,6 +207,11 @@ export default {
     mounted() {
         this.loadSelect2Options();
         return this.getEntries();
+    },
+    created() {
+        this.bus.$on('refreshEntries', function() {
+            return this.getEntries();
+        }.bind(this));
     },
     components: {
         Datepicker,
