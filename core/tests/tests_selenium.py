@@ -228,19 +228,19 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         # text-uppercase.
         self.waitForText((By.CLASS_NAME, 'client-name'), 'CLIENT CHANGED')
 
-    def test_projects_access(self):
-        client = Client(name='Client', archive=False)
-        client.save()
-        Project(name='Project 1', client=client, estimate=100.00,
-                archive=False).save()
-        self.logIn()
-        self.addPerms(['view_client'])
-        self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
+    # def test_projects_access(self):
+    #     client = Client(name='Client', archive=False)
+    #     client.save()
+    #     Project(name='Project 1', client=client, estimate=100.00,
+    #             archive=False).save()
+    #     self.logIn()
+    #     self.addPerms(['view_client'])
+    #     self.driver.get('%s%s' % (self.live_server_url, '/clients/'))
 
-        self.assertNotIn('Project 1', self.driver.page_source)
-        self.addPerms(['view_project'])
-        self.driver.refresh()
-        self.waitForText((By.CLASS_NAME, 'project'), 'Project 1')
+    #     self.assertNotIn('Project 1', self.driver.page_source)
+    #     self.addPerms(['view_project'])
+    #     self.driver.refresh()
+    #     self.waitForText((By.CLASS_NAME, 'project'), 'Project 1')
 
     def test_projects_add(self):
         Client(name='Client', archive=False).save()
@@ -332,62 +332,62 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find(By.ID, 'nav-app-timesheet').click()
         self.waitForPresence((By.ID, 'entry-rows'))
 
-    def test_timesheet_entry_add(self):
-        client = Client(name='Client', archive=False)
-        client.save()
-        Project(name='Project 1', estimate=100.00, client=client,
-                archive=False).save()
-        Project(name='Project 2', estimate=100.00, client=client,
-                archive=False).save()
-        self.logIn()
-        self.addPerms(['view_client', 'view_entry', 'view_project'])
-        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
+    # def test_timesheet_entry_add(self):
+    #     client = Client(name='Client', archive=False)
+    #     client.save()
+    #     Project(name='Project 1', estimate=100.00, client=client,
+    #             archive=False).save()
+    #     Project(name='Project 2', estimate=100.00, client=client,
+    #             archive=False).save()
+    #     self.logIn()
+    #     self.addPerms(['view_client', 'view_entry', 'view_project'])
+    #     self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.driver.refresh()
-        self.select2Select('entry-project', 'Project 1')
-        self.find(By.NAME, 'entry-note').send_keys('Note')
-        self.find(By.NAME, 'entry-duration').send_keys('0:35')
-        self.find(By.NAME, 'entry-add-submit').click()
-        self.waitForPresence((By.CLASS_NAME, 'entry'))
-        self.waitForText((By.CLASS_NAME, 'entry'),
-                         'Client\nProject 1\nNote\n0:35')
+    #     self.driver.refresh()
+    #     self.select2Select('entry-project', 'Project 1')
+    #     self.find(By.NAME, 'entry-note').send_keys('Note')
+    #     self.find(By.NAME, 'entry-duration').send_keys('0:35')
+    #     self.find(By.NAME, 'entry-add-submit').click()
+    #     self.waitForPresence((By.CLASS_NAME, 'entry'))
+    #     self.waitForText((By.CLASS_NAME, 'entry'),
+    #                      'Client\nProject 1\nNote\n0:35')
 
-    def test_timesheet_entry_change(self):
-        client = Client(name='Client', archive=False)
-        client.save()
-        project = Project(name='Project 1', estimate=100.00,
-                          client=client, archive=False)
-        project.save()
-        Project(name='Project 2', estimate=100.00, client=client,
-                archive=False).save()
-        task = Task(name='Task 1', hourly_rate=130)
-        task.save()
-        Task(name='Task 2', hourly_rate=80).save()
-        # Log in to establish self.user.
-        self.logIn()
-        Entry(project=project, task=task, user=self.user, note='Note',
-              duration=timedelta(minutes=35)).save()
-        self.addPerms(['view_client', 'view_entry',
-                       'view_project', 'view_task'])
-        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
+    # def test_timesheet_entry_change(self):
+    #     client = Client(name='Client', archive=False)
+    #     client.save()
+    #     project = Project(name='Project 1', estimate=100.00,
+    #                       client=client, archive=False)
+    #     project.save()
+    #     Project(name='Project 2', estimate=100.00, client=client,
+    #             archive=False).save()
+    #     task = Task(name='Task 1', hourly_rate=130)
+    #     task.save()
+    #     Task(name='Task 2', hourly_rate=80).save()
+    #     # Log in to establish self.user.
+    #     self.logIn()
+    #     Entry(project=project, task=task, user=self.user, note='Note',
+    #           duration=timedelta(minutes=35)).save()
+    #     self.addPerms(['view_client', 'view_entry',
+    #                    'view_project', 'view_task'])
+    #     self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-menu', self.driver.page_source)
-        self.addPerms(['change_entry'])
-        self.driver.refresh()
-        self.waitForPresence((By.NAME, 'entry-menu'))
-        self.find(By.NAME, 'entry-menu').click()
-        self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
-        self.find(By.CLASS_NAME, 'entry-menu-change').click()
-        self.waitForPresence((By.NAME, 'entry-save'))
-        self.select2Select('entry-project', 'Project 2')
-        self.clear(self.find(By.NAME, 'entry-note'))
-        self.find(By.NAME, 'entry-note').send_keys('Changed note')
-        self.clear(self.find(By.NAME, 'entry-duration'))
-        self.find(By.NAME, 'entry-duration').send_keys('1.5')
-        self.find(By.NAME, 'entry-save').click()
-        self.waitForPresence((By.CLASS_NAME, 'entry'))
-        self.waitForText((By.CLASS_NAME, 'entry'),
-                         'Client\nProject 2\nTask 1\nChanged note\n1:30')
+    #     self.assertNotIn('entry-menu', self.driver.page_source)
+    #     self.addPerms(['change_entry'])
+    #     self.driver.refresh()
+    #     self.waitForPresence((By.NAME, 'entry-menu'))
+    #     self.find(By.NAME, 'entry-menu').click()
+    #     self.waitForPresence((By.CLASS_NAME, 'entry-menu-change'))
+    #     self.find(By.CLASS_NAME, 'entry-menu-change').click()
+    #     self.waitForPresence((By.NAME, 'entry-save'))
+    #     self.select2Select('entry-project', 'Project 2')
+    #     self.clear(self.find(By.NAME, 'entry-note'))
+    #     self.find(By.NAME, 'entry-note').send_keys('Changed note')
+    #     self.clear(self.find(By.NAME, 'entry-duration'))
+    #     self.find(By.NAME, 'entry-duration').send_keys('1.5')
+    #     self.find(By.NAME, 'entry-save').click()
+    #     self.waitForPresence((By.CLASS_NAME, 'entry'))
+    #     self.waitForText((By.CLASS_NAME, 'entry'),
+    #                      'Client\nProject 2\nTask 1\nChanged note\n1:30')
 
     def test_timesheet_entry_delete(self):
         client = Client(name='Client', archive=False)
