@@ -1,8 +1,16 @@
+@import 'variables';
+
 .client {
     font-size: .9em;
 
     .row {
         border-top: 1px solid #eee;
+
+        &:not(.bg-secondary) {
+            &:nth-of-type(2n+1) {
+                background-color: $striping-row-color !important;
+            }
+        }
 
         &:last-child {
             border-bottom: 1px solid #eee;

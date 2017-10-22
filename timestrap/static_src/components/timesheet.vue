@@ -136,23 +136,23 @@ export default {
                 }
 
                 if (this.renderedChart) this.renderedChart.destroy();
-                this.renderedChart = new Chart(document.getElementById("chartjs-1"), {
-                    "type": "bar",
-                    "data": {
-                        "labels": chartDates,
-                        "datasets": [{
-                            "backgroundColor": "#17a2b8",
-                            "data": chartDurations
+                this.renderedChart = new Chart(document.getElementById('chartjs-1'), {
+                    type: 'bar',
+                    data: {
+                        labels: chartDates,
+                        datasets: [{
+                            backgroundColor: '#17a2b8',
+                            data: chartDurations
                         }]
                     },
-                    "options": {
-                        "maintainAspectRatio": false,
-                        "legend": {
-                            "display": false
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
                         },
-                        "scales": {
-                            "yAxes": [{
-                                "ticks": { "beginAtZero": true }
+                        scales: {
+                            yAxes: [{
+                                ticks: { beginAtZero: true }
                             }]
                         }
                     }

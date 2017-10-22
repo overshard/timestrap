@@ -1,6 +1,6 @@
 <template>
 <div class="client">
-    <div class="row py-2 bg-light">
+    <div class="row py-2 bg-secondary text-white">
         <template v-if="edit">
             <div class="col-10">
                 <input name="client-name"
@@ -22,18 +22,19 @@
 
         <template v-else>
             <div v-bind:class="['col-' + [this.$perms.change_task ? '4' : '6'], 'd-flex', 'align-items-center']">
+                <i class="fa fa-address-book mr-2" aria-hidden="true"></i>
                 <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>
             </div>
             <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
                 Total Time
             </div>
             <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
+                <i class="fa fa-list mr-2" aria-hidden="true"></i>
                 Entries
             </div>
             <div class="col-2 d-flex align-items-center">
-                <i class="fa fa-percent text-muted mr-2" aria-hidden="true"></i>
+                <i class="fa fa-percent mr-2" aria-hidden="true"></i>
                 Progress
             </div>
             <div class="col-sm-2 d-flex align-self-center justify-content-end">

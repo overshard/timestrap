@@ -38,6 +38,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown dropdown-menu-right">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user-circle mr-2" aria-hidden="true"></i>
                             {{ username }}
                         </a>
                         <div class="dropdown-menu">
