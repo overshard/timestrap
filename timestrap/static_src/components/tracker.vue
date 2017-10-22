@@ -3,12 +3,12 @@
     <div id="tracker" class="container">
         <div class="row">
             <div class="col-2">
-                <select2 id="entry-project" v-model="project"
+                <select2 id="entry-project" v-model="project" name="entry-project"
                          v-bind:options="projects" placeholder="Project"></select2>
             </div>
             <div class="col-2">
                 <select2 id="entry-task" v-model="task" v-bind:options="tasks"
-                         placeholder="Task"></select2>
+                         placeholder="Task" name="entry-task"></select2>
             </div>
             <div class="col-4">
                 <input class="form-control form-control-sm w-100"
@@ -35,6 +35,7 @@
                     Stop ({{ this.seconds }})
                 </button>
                 <button class="btn btn-sm btn-info w-100"
+                        name="entry-add-submit"
                         v-on:click="submitEntry" v-block-during-fetch
                         v-if="!this.running && this.duration"
                         v-bind:disabled="submitted">

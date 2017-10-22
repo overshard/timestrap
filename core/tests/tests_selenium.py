@@ -343,8 +343,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.addPerms(['view_client', 'view_entry', 'view_project'])
         self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
 
-        self.assertNotIn('entry-add', self.driver.page_source)
-        self.addPerms(['add_entry'])
         self.driver.refresh()
         self.select2Select('entry-project', 'Project 1')
         self.find(By.NAME, 'entry-note').send_keys('Note')
@@ -353,33 +351,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.waitForPresence((By.CLASS_NAME, 'entry'))
         self.waitForText((By.CLASS_NAME, 'entry'),
                          'Client\nProject 1\nNote\n0:35')
-
-    def test_timesheet_entry_add_advanced(self):
-        client = Client(name='Client', archive=False)
-        client.save()
-        Project(name='Project 1', estimate=100.00, client=client,
-                archive=False).save()
-        Project(name='Project 2', estimate=100.00, client=client,
-                archive=False).save()
-        Task(name='Task 1', hourly_rate=130).save()
-        Task(name='Task 2', hourly_rate=80).save()
-        self.logIn()
-        self.addPerms(['view_client', 'view_entry',
-                       'view_project', 'view_task'])
-        self.driver.get('%s%s' % (self.live_server_url, '/timesheet/'))
-
-        self.assertNotIn('entry-add', self.driver.page_source)
-        self.addPerms(['add_entry'])
-        self.driver.refresh()
-        self.find(By.ID, 'entry-advanced-fields').click()
-        self.select2Select('entry-task', 'Task 2')
-        self.select2Select('entry-project', 'Project 1')
-        self.find(By.NAME, 'entry-note').send_keys('Note')
-        self.find(By.NAME, 'entry-duration').send_keys('0:35')
-        self.find(By.NAME, 'entry-add-submit').click()
-        self.waitForPresence((By.CLASS_NAME, 'entry'))
-        self.waitForText((By.CLASS_NAME, 'entry'),
-                         'Client\nProject 1\nTask 2\nNote\n0:35')
 
     def test_timesheet_entry_change(self):
         client = Client(name='Client', archive=False)
