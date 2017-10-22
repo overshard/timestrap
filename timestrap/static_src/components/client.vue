@@ -21,7 +21,7 @@
         </template>
 
         <template v-else>
-            <div v-bind:class="['col-sm-' + [this.$perms.change_task ? '4' : '6'], 'd-flex', 'align-items-center']">
+            <div v-bind:class="['col-sm-4', 'd-flex', 'align-items-center']">
                 <i class="fa fa-address-book mr-2" aria-hidden="true"></i>
                 <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>
             </div>

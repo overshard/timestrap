@@ -1,6 +1,6 @@
 <template>
 <div class="project row py-1 bg-light" v-if="!project.archive">
-    <div v-bind:class="['col-sm-' + [this.$perms.change_project ? '4' : '6'], 'mb-1', 'project-name']">
+    <div v-bind:class="['col-sm-4', 'mb-1', 'project-name']">
         <i class="fa fa-briefcase text-muted mr-1" aria-hidden="true"></i>
         {{ project.name }}
     </div>
