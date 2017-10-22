@@ -35,29 +35,32 @@
     </div>
 
     <form name="report-filters"
-          class="row mb-4 pt-3 pb-1 bg-light rounded"
+          class="row mb-4 pt-3 pb-1 bg-light rounded report-filters"
           v-on:submit.prevent
           v-on:submit="getReport">
         <div class="col-sm-6">
             <div class="form-group">
+                <label>User</label>
                 <select2 id="report-filter-user"
                          v-model="user"
                          v-bind:options="users"
-                         placeholder="Users"
+                         placeholder="User"
                          allowclear="true"></select2>
             </div>
             <div class="form-group">
-                <select2 id="report-filter-project"
-                         v-model="project"
-                         v-bind:options="projects"
-                         placeholder="Projects"
-                         allowclear="true"></select2>
-            </div>
-            <div class="form-group">
+                <label>Client</label>
                 <select2 id="report-filter-client"
                          v-model="client"
                          v-bind:options="clients"
-                         placeholder="Clients"
+                         placeholder="Client"
+                         allowclear="true"></select2>
+            </div>
+            <div class="form-group pb-4">
+                <label>Project</label>
+                <select2 id="report-filter-project"
+                         v-model="project"
+                         v-bind:options="projects"
+                         placeholder="Project"
                          allowclear="true"></select2>
             </div>
             <div class="form-group">
@@ -81,13 +84,15 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
+                <label>Task</label>
                 <select2 id="report-filter-task"
                          v-model="task"
                          v-bind:options="tasks"
-                         placeholder="Tasks"
+                         placeholder="Task"
                          allowclear="true"></select2>
             </div>
             <div class="form-group">
+                <label>Min. Date</label>
                 <datepicker id="report-filter-min-date"
                             type="text"
                             class="form-control form-control-sm date-input"
@@ -95,7 +100,8 @@
                             placeholder="Min. date"
                             allowclear="true"></datepicker>
             </div>
-            <div class="form-group">
+            <div class="form-group pb-4">
+                <label>Max. Date</label>
                 <datepicker id="report-filter-max-date"
                             type="text"
                             class="form-control form-control-sm date-input"
