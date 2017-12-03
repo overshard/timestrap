@@ -37,7 +37,7 @@ class ViewsTestCase(TestCase):
         user = User.objects.create_user(fake_user['username'],
                                         fake_user['mail'], fake_password)
         site_permission = SitePermission.objects.create(user=user)
-        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.sites.set(Site.objects.filter(id=1))
         site_permission.save()
 
         self.c.login(username=fake_user['username'], password=fake_password)
@@ -84,7 +84,7 @@ class ClientTestCase(TestCase):
         client = Client.objects.create(name='Client on time.strap')
         self.assertEqual(client.sites.get().name, 'Timestrap')
         client = Client.objects.create(name='Client on test.site')
-        client.sites = Site.objects.filter(domain='test.site')
+        client.sites.set(Site.objects.filter(domain='test.site'))
         client.save()
         self.assertEqual(client.sites.get().name, 'Test Site')
 
@@ -203,7 +203,7 @@ class ReportsTestCase(TestCase):
         user = User.objects.create_user(fake_user['username'],
                                         fake_user['mail'], fake_password)
         site_permission = SitePermission.objects.create(user=user)
-        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.sites.set(Site.objects.filter(id=1))
         site_permission.save()
 
         self.c.login(username=fake_user['username'], password=fake_password)

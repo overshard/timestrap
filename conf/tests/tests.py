@@ -32,7 +32,7 @@ class SitePermissionTestCase(TestCase):
 
     def test_sitepermission_sites_added(self):
         site_permission = SitePermission.objects.create(user=self.user)
-        site_permission.sites = Site.objects.all()
+        site_permission.sites.set(Site.objects.all())
         site_permission.save()
         self.assertQuerysetEqual(site_permission.sites.all(),
                                  map(repr, Site.objects.all()))

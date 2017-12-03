@@ -164,7 +164,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
                                              self.profile['password'])
 
         site_permission = SitePermission.objects.create(user=self.user)
-        site_permission.sites = Site.objects.filter(id=1)
+        site_permission.sites.set(Site.objects.filter(id=1))
         site_permission.save()
 
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))

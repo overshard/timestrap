@@ -5,7 +5,7 @@ process installs the minimal requirements to *run* Timestrap. For development
 requirements and procedures, see [Development Installation](#development-installation).
 
 1. Install the requirements:
-    - Python 2.7+
+    - Python 3.4+
 
 1. Initiate a virtual environment.
 

@@ -26,5 +26,5 @@ class Command(migrate.Command):
             default_user.is_staff = True
             default_user.save()
             site_permission = SitePermission.objects.create(user=default_user)
-            site_permission.sites = Site.objects.filter(id=1)
+            site_permission.sites.set(Site.objects.filter(id=1))
             site_permission.save()

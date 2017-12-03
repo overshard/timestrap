@@ -6,8 +6,8 @@ workflow. This installation procedure is only necessary for making changes to
 static files.
 
 1. Install the requirements:
-    - Python 2.7+
-    - Node 6+
+    - Python 3.4+
+    - Node 8+
 
 1. Initiate a virtual environment with the development requirements.
 

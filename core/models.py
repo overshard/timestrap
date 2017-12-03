@@ -26,7 +26,7 @@ def add_current_site(sender, instance, **kwargs):
     """
     if hasattr(instance, 'sites'):
         if not instance.sites.all():
-            instance.sites = Site.objects.filter(id=current_site_id())
+            instance.sites.set(Site.objects.filter(id=current_site_id()))
             instance.save()
 
 
@@ -56,7 +56,8 @@ class Client(models.Model):
 
 
 class Project(models.Model):
-    client = models.ForeignKey('Client', related_name='projects')
+    client = models.ForeignKey('Client', related_name='projects',
+                               on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     archive = models.BooleanField(default=False)
     estimate = models.DecimalField(max_digits=10, decimal_places=2,
@@ -81,7 +82,7 @@ class Project(models.Model):
                         duration_decimal(entry.duration)
                         * entry.task.hourly_rate
                     )
-            except:
+            except:  # noqa: E722
                 continue
         return total_cost.quantize(Decimal('.01'), rounding=ROUND_DOWN)
 
@@ -117,10 +118,12 @@ class Task(models.Model):
 
 
 class Entry(models.Model):
-    project = models.ForeignKey('Project', related_name='entries')
+    project = models.ForeignKey('Project', related_name='entries',
+                                on_delete=models.CASCADE)
     task = models.ForeignKey('core.Task', related_name='entries',
-                             blank=True, null=True)
-    user = models.ForeignKey('auth.User', related_name='entries')
+                             blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', related_name='entries',
+                             on_delete=models.CASCADE)
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
     note = models.TextField(blank=True, null=True)

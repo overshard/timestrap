@@ -78,8 +78,11 @@ class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     pagination_class = LimitOffsetPaginationWithTotals
     filter_class = EntryFilter
-    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend,
-                       filters.OrderingFilter,)
+    filter_backends = (
+        filters.SearchFilter,
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter
+    )
     ordering_fields = ('date', 'user__username', 'task__name', 'project__name',
                        'project__client__name',)
     ordering = ('-date',)

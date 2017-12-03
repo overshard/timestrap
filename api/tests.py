@@ -30,7 +30,7 @@ def init_api_test_data():
     user = User.objects.create_user(fake_user['username'], fake_user['mail'],
                                     fake_password)
     site_permission = SitePermission.objects.create(user=user)
-    site_permission.sites = Site.objects.filter(id=1)
+    site_permission.sites.set(Site.objects.filter(id=1))
     site_permission.save()
 
     user = User.objects.get(username=fake_user['username'])

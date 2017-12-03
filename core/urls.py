@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
 from django.views.generic import RedirectView
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from .views import AppView, reports_export
 
