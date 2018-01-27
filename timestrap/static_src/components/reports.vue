@@ -2,23 +2,25 @@
 <div class="container">
     <div class="row py-2 mb-4 bg-light rounded">
         <div class="col-12">
-            <button id="export-report"
-                    class="btn btn-primary btn-sm"
-                    v-block-during-fetch
-                    v-on:click="exportReport">
-                <i class="fa fa-download" aria-hidden="true"></i>
-                Export Report
-            </button>
+            <template v-if="is_staff">
+                <button id="export-report"
+                        class="btn btn-primary btn-sm"
+                        v-block-during-fetch
+                        v-on:click="exportReport">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    Export Report
+                </button>
 
-            <select class="export-select custom-select form-control-sm" v-model="exportFormat">
-                <option value="csv">csv</option>
-                <option value="xls">xls</option>
-                <option value="tsv">tsv</option>
-                <option value="ods">ods</option>
-                <option value="json">json</option>
-                <option value="yaml">yaml</option>
-                <option value="html">html</option>
-            </select>
+                <select class="export-select custom-select form-control-sm" v-model="exportFormat">
+                    <option value="csv">csv</option>
+                    <option value="xls">xls</option>
+                    <option value="tsv">tsv</option>
+                    <option value="ods">ods</option>
+                    <option value="json">json</option>
+                    <option value="yaml">yaml</option>
+                    <option value="html">html</option>
+                </select>
+            </template>
 
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
@@ -162,6 +164,7 @@ export default {
     mixins: [ DurationFormatter ],
     data() {
         return {
+            is_staff: timestrapConfig.USER.IS_STAFF,
             entries: null,
             subtotal: null,
             total: null,
