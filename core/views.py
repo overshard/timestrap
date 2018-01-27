@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template.defaultfilters import slugify
 
 from .admin import EntryResource
@@ -17,6 +17,9 @@ class AppView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def reports_export(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden('Not enough permissions to export.')
+
     query_dict = request.GET.copy()
     filters = {}
     filter_dict = {'min_date': 'date__gte', 'max_date': 'date__lte',

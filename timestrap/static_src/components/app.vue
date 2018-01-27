@@ -28,7 +28,7 @@
                             Tasks
                         </router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="is_staff">
                         <router-link id="nav-app-reports" class="nav-link" v-bind:to="reports">
                             <i class="fa fa-book mr-1" aria-hidden="true"></i>
                             Reports
@@ -82,7 +82,8 @@ export default {
             api: timestrapConfig.CORE_URLS.API,
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT,
-            site: timestrapConfig.SITE
+            site: timestrapConfig.SITE,
+            is_staff: timestrapConfig.USER.IS_STAFF
         };
     },
     methods: {

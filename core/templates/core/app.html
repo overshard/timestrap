@@ -46,7 +46,8 @@
                 timestrapConfig.USER = {
                     ID: {{ user.id }},
                     URL: "{% url 'user-detail' user.id %}",
-                    NAME: "{{ user.username }}"
+                    NAME: "{{ user.username }}",
+                    IS_STAFF: {{ user.is_staff|yesno:"true,false" }}
                 };
                 timestrapConfig.SITE = {
                     ID: {{ request.site.id }},
