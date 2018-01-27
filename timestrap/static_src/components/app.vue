@@ -28,7 +28,7 @@
                             Tasks
                         </router-link>
                     </li>
-                    <li class="nav-item" v-if="is_staff">
+                    <li class="nav-item">
                         <router-link id="nav-app-reports" class="nav-link" v-bind:to="reports">
                             <i class="fa fa-book mr-1" aria-hidden="true"></i>
                             Reports
