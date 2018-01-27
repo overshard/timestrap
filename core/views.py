@@ -34,8 +34,7 @@ def reports_export(request):
         queryset = Entry.objects.all()
         dataset = EntryResource().export(queryset)
 
-    allowed_formats = ['csv', 'xls', 'xlsx', 'tsv', 'ods', 'json', 'yaml',
-                       'html']
+    allowed_formats = ['csv', 'xls', 'tsv', 'ods', 'json', 'yaml', 'html']
     export_format = query_dict.get('export_format', 'csv')
     if export_format not in allowed_formats:
         export_format = 'csv'

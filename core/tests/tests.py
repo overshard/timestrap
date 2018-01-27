@@ -248,7 +248,7 @@ class ReportsTestCase(TestCase):
         self.assertFalse(Entry.objects.all().exists())
 
     def test_export_formats(self):
-        for f in ['csv', 'xls', 'xlsx', 'tsv', 'ods', 'json', 'yaml', 'html']:
+        for f in ['csv', 'xls', 'tsv', 'ods', 'json', 'yaml', 'html']:
             report = self.c.get('/reports/export/?export_format={0}'.format(f))
             self.assertEqual(report.status_code, 200)
             self.assertEqual(report.get('Content-Type'), 'text/{0}'.format(f))

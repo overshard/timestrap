@@ -13,7 +13,6 @@
             <select class="export-select custom-select form-control-sm" v-model="exportFormat">
                 <option value="csv">csv</option>
                 <option value="xls">xls</option>
-                <option value="xlsx">xlsx</option>
                 <option value="tsv">tsv</option>
                 <option value="ods">ods</option>
                 <option value="json">json</option>
