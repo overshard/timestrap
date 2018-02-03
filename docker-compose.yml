@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: python3 manage.py --settings=timestrap.settings.docker runserver 0.0.0.0:80
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - db
