@@ -5,7 +5,7 @@ services:
     image: postgres
   web:
     build: .
-    command: python3 manage.py --settings=timestrap.settings.docker runserver 0.0.0.0:80
+    command: python3 manage.py runserver 0.0.0.0:80 --settings=timestrap.settings.docker
     volumes:
       - .:/app
     ports:
