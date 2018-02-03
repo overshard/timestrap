@@ -1,5 +1,5 @@
 FROM node:8 as build
-WORKDIR /app
+WORKDIR /build
 
 COPY . /build/
 
