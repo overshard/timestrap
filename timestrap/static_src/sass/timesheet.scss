@@ -44,8 +44,14 @@
         text-overflow: ellipsis;
     }
 
-    .row:hover,
-    .row:focus {
+    .entry {
+        transition: transform 100ms ease-in-out;
+    }
+
+    .entry:hover,
+    .entry:focus {
+        transform: scale(1.05);
+
         .duration {
             display: none;
         }
