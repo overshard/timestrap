@@ -5,10 +5,8 @@ services:
     image: postgres
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:80 --settings=timestrap.settings.docker
-    volumes:
-      - .:/app
+    command: gunicorn timestrap.wsgi:application --timeout 30 --log-file -
     ports:
-      - "80:80"
+      - "80:8000"
     depends_on:
       - db
