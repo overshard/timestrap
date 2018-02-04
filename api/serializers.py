@@ -131,4 +131,4 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
         model = Entry
         fields = ('id', 'url', 'project', 'project_details', 'task',
                   'task_details', 'user', 'user_details', 'date', 'duration',
-                  'note',)
+                  'datetime_start', 'datetime_end', 'note',)

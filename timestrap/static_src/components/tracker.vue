@@ -63,6 +63,8 @@ export default {
             project: null,
             note: null,
             duration: null,
+            datetimeStart: null,
+            datetimeEnd: null,
 
             tasks: {},
             projects: {},
@@ -86,6 +88,8 @@ export default {
                 project: this.project,
                 note: this.note,
                 duration: this.duration,
+                datetime_start: this.datetimeStart,
+                datetime_end: this.datetimeEnd,
                 user: timestrapConfig.USER.URL
             };
             this.submitted = true;
@@ -111,9 +115,11 @@ export default {
         toggle() {
             this.running = !this.running;
             if (this.running) {
+                this.datetimeStart = new Date(Date.now());
                 this.reset();
                 this.interval = setInterval(this.tick, 1000, this);
             } else {
+                this.datetimeEnd = new Date(Date.now());
                 clearInterval(this.interval);
                 if (this.total < 60) {
                     this.reset();

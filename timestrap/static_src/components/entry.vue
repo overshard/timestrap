@@ -18,9 +18,19 @@
             {{ note }}
         </div>
     </div>
-    <div class="col-sm-1 d-flex align-self-center display-4 duration">
+    <div class="col-sm-1 align-self-center display-4 duration">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
         {{ duration }}
+    </div>
+    <div class="col-sm-1 align-self-center datetimes flex-column">
+        <div class="datetime-start small">
+            <i class="fa fa-hourglass-start text-muted mr-1" aria-hidden="true"></i>
+            {{ formatDateTime(datetime_start) }}
+        </div>
+        <div class="datetime-end small">
+            <i class="fa fa-hourglass-end text-muted mr-1" aria-hidden="true"></i>
+            {{ formatDateTime(datetime_end) }}
+        </div>
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end"
          v-if="editable">
@@ -87,6 +97,8 @@ export default {
             task_details: this.entry.task_details,
             note: this.entry.note,
             duration: this.durationToString(this.entry.duration),
+            datetime_start: this.entry.datetime_start,
+            datetime_end: this.entry.datetime_end,
         };
     },
     methods: {
@@ -99,6 +111,13 @@ export default {
                     $.growl.error({ message: 'Entry delete failed.' });
                 }
             }.bind(this));
+        },
+        formatDateTime(datetime) {
+            if (datetime) {
+                return moment(datetime).format('h:mm a');
+            } else {
+                return 'No Entry';
+            }
         }
     },
     components: {

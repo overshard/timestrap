@@ -126,6 +126,8 @@ class Entry(models.Model):
                              on_delete=models.CASCADE)
     date = models.DateField(blank=True)
     duration = models.DurationField(blank=True)
+    datetime_start = models.DateTimeField(blank=True, null=True)
+    datetime_end = models.DateTimeField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
     site = models.ForeignKey(Site, default=current_site_id(),
                              on_delete=models.CASCADE)

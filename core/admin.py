@@ -27,7 +27,7 @@ class EntryAdmin(admin.ModelAdmin):
             'fields': ('project', 'user',)
         }),
         ('Date Completed & Duration of Project', {
-            'fields': ('date', 'duration',)
+            'fields': ('date', 'duration', 'datetime_start', 'datetime_end',)
         }),
         ('Extra', {
             'fields': ('note', 'site',)

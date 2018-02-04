@@ -30,8 +30,33 @@
         }
     }
 
+    .duration {
+        display: flex;
+    }
+
+    .datetimes {
+        display: none;
+    }
+
+    .row:hover,
+    .row:focus {
+        .duration {
+            display: none;
+        }
+
+        .datetimes {
+            display: flex;
+        }
+    }
+
     .duration.display-4 {
         font-size: 1.5rem;
+    }
+
+    .entry-note {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .note {
