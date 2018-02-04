@@ -24,7 +24,7 @@ multiple formats and easily extensible.
    :caption: Installation
    :maxdepth: 2
 
-   Manual Installation <installation/manual>
+   Docker Installation <installation/docker>
    Development Installation <installation/development>
 
 .. toctree::

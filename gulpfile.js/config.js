@@ -3,7 +3,7 @@ module.exports = {
         'docs/introduction/lead.md',
         'docs/introduction/demo.md',
         'docs/introduction/quickstart.md',
-        'docs/installation/manual.md',
+        'docs/installation/docker.md',
         'docs/installation/development.md',
         'docs/introduction/further_reading.md'
     ],
