@@ -5,8 +5,9 @@ services:
     image: postgres
   web:
     build: .
-    command: gunicorn timestrap.wsgi:application --timeout 30 --log-file -
+    command: gunicorn timestrap.wsgi:application -b 0.0.0.0:80 --timeout 30 --log-file -
     ports:
-      - "80:8000"
+      - "80:80"
     depends_on:
       - db
+
