@@ -16,7 +16,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from faker import Factory
 
@@ -38,50 +39,23 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         cls.profile['password'] = fake.password()
         super(SeleniumTestCase, cls).setUpClass()
 
-        # Using saucelabs for CI testing since travis CI is inconsistent while
-        # using selenium.
-        if os.environ.get('SAUCE_USERNAME', None):
-            sauce_username = os.environ['SAUCE_USERNAME']
-            sauce_access_key = os.environ['SAUCE_ACCESS_KEY']
-            sauce_url = 'http://' + sauce_username + ':' + sauce_access_key + \
-                        '@ondemand.saucelabs.com/wd/hub'
-            desired_capabilities = {
-                'browserName': 'chrome',
-                'version': '58',
-                'platform': 'ANY',
-                'chromeOptions': {
-                    'prefs': {
-                        'credentials_enable_service': False,
-                        'profile': {
-                            'password_manager_enabled': False
-                        }
-                    }
-                }
-            }
-            if os.environ.get('TRAVIS_JOB_NUMBER', None):
-                desired_capabilities.update({
-                    'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER'],
-                    'build': os.environ['TRAVIS_BUILD_NUMBER'],
-                    'tags': [os.environ['TRAVIS_PYTHON_VERSION'], 'CI']
-                })
-            cls.driver = webdriver.Remote(
-                command_executor=sauce_url,
-                desired_capabilities=desired_capabilities
-            )
-        else:
-            try:
-                options = Options()
-                if os.environ.get('GOOGLE_CHROME_BINARY', None):
-                    options.binary_location = \
-                        os.environ['GOOGLE_CHROME_BINARY']
-                options.add_argument('--headless')
-                options.add_argument('--disable-gpu')
-                options.add_argument('--no-sandbox')
-                options.add_argument('--log-level=3')
-                options.add_argument('--window-size=1280,720')
-                cls.driver = webdriver.Chrome(chrome_options=options)
-            except WebDriverException:
-                cls.driver = webdriver.Firefox()
+        # Default to using firefox for selenium testing, if not try Chrome
+        try:
+            os.environ['MOZ_HEADLESS'] = '1'
+            options = FirefoxOptions()
+            options.add_argument('-headless')
+            cls.driver = webdriver.Firefox(firefox_options=options)
+        except WebDriverException:
+            options = ChromeOptions()
+            if os.environ.get('GOOGLE_CHROME_BINARY', None):
+                options.binary_location = \
+                    os.environ['GOOGLE_CHROME_BINARY']
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--log-level=3')
+            options.add_argument('--window-size=1280,720')
+            cls.driver = webdriver.Chrome(chrome_options=options)
 
         cls.driver.implicitly_wait(10)
         cls.wait_time = 5
