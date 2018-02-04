@@ -38,6 +38,12 @@
         display: none;
     }
 
+    .entry-note {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
     .row:hover,
     .row:focus {
         .duration {
@@ -47,16 +53,23 @@
         .datetimes {
             display: flex;
         }
+
+        .tasks .small {
+            display: none;
+        }
+
+        .tasks {
+            align-self: flex-start !important;
+
+            .entry-note {
+                overflow: show !important;
+                white-space: normal !important;
+            }
+        }
     }
 
     .duration.display-4 {
         font-size: 1.5rem;
-    }
-
-    .entry-note {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 
     .note {

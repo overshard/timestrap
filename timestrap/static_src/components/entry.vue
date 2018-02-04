@@ -116,7 +116,7 @@ export default {
             if (datetime) {
                 return moment(datetime).format('h:mm a');
             } else {
-                return 'No Entry';
+                return '-';
             }
         }
     },
