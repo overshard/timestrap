@@ -44,29 +44,26 @@ access, please change it via the admin panel after initial login:
 - Username: `admin`
 - Password: `admin`
 
-## Manual Installation
+## Docker Installation
 
-Follow the steps below to install Timestrap locally or on any server. This 
+Follow the steps below to install Timestrap locally or on any server. This
 process installs the minimal requirements to *run* Timestrap. For development
 requirements and procedures, see [Development Installation](#development-installation).
 
 1. Install the requirements:
-    - Python 3.4+
+    - Docker
+    - Docker Compose
 
-1. Initiate a virtual environment.
+1. Set any custom configuration options you need and run
 
-        pip install pipenv && pipenv install
+        docker-compose up -d
 
 1. Bootstrap the database and creates the initial site and user
 (username: admin, password: admin)
 
-        python manage.py migrate
+        docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
 
-1. Run the server!
-
-        python manage.py runserver
-
-The Timestrap application should now be running at [http://localhost:8000](http://localhost:8000).
+The Timestrap application should now be running at [http://localhost/](http://localhost/).
 If it is not, feel free to [create an issue](https://github.com/overshard/timestrap/issues)
 to seek assistance or report a bug! :bug:
 
