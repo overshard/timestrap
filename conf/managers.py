@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib.sites.managers import CurrentSiteManager as BaseCSM
 
 from .utils import current_site_id

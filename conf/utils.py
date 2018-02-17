@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division
-
 from .middleware.site import current_request
 from .models import Conf, Site
 

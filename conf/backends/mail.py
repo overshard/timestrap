@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from smtplib import SMTPResponseException
 from socket import error as socket_error
 

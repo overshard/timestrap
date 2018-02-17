@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import division
-
 from django.utils.duration import _get_duration_components
 
 from datetime import timedelta
