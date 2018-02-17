@@ -1,17 +1,16 @@
 <template>
 <div class="container">
     <div class="row py-2 mb-4 bg-light rounded">
-        <div class="col-12">
+        <div class="col-6">
             <template v-if="is_staff">
                 <button id="export-report"
-                        class="btn btn-primary btn-sm"
+                        class="btn btn-primary btn-sm mr-1"
                         v-block-during-fetch
                         v-on:click="exportReport">
                     <i class="fa fa-download" aria-hidden="true"></i>
                     Export Report
                 </button>
-
-                <select class="export-select custom-select form-control-sm" v-model="exportFormat">
+                <select class="export-select custom-select form-control-sm w-25" v-model="exportFormat">
                     <option value="csv">csv</option>
                     <option value="xls">xls</option>
                     <option value="tsv">tsv</option>
@@ -21,13 +20,13 @@
                     <option value="html">html</option>
                 </select>
             </template>
-
+        </div>
+        <div class="col-6">
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
                     v-on:click="refresh">
                 <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
             </button>
-
             <pager v-bind:next="next"
                    v-bind:previous="previous"
                    @next-page="getEntries(next)"
