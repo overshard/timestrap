@@ -21,4 +21,3 @@ RUN pipenv install --three --system
 COPY --from=build /build/timestrap/static /app/timestrap/static
 
 RUN python3 manage.py collectstatic --noinput
-

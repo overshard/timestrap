@@ -12,4 +12,3 @@ services:
       - db
     environment:
       - SECRET_KEY=CHANGE-ME
-
