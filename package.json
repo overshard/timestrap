@@ -44,6 +44,6 @@
         "vueify": "^9.4.1"
     },
     "scripts": {
-        "heroku-postbuild": "npm rebuild node-sass && gulp build"
+        "heroku-postbuild": "gulp build"
     }
 }
