@@ -6,7 +6,7 @@ const vueify = require('vueify');
 const browserify = require('browserify');
 const envify = require('envify/custom');
 
-const scriptsFiles = require('../config.js').scriptsFiles;
+const scriptsFiles = require('../../gulpfile.json').scriptsFiles;
 
 
 gulp.task('scripts', ['scripts:vendor', 'scripts:app']);

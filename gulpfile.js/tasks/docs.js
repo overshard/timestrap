@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const spawn = require('child_process').spawn;
 
-const docsReadmeFiles = require('../config.js').docsReadmeFiles;
+const docsReadmeFiles = require('../../gulpfile.json').docsReadmeFiles;
 
 
 gulp.task('docs', ['docs:build', 'docs:watch']);

@@ -5,7 +5,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const strip = require('gulp-strip-css-comments');
 
-const stylesFiles = require('../config.js').stylesFiles;
+const stylesFiles = require('../../gulpfile.json').stylesFiles;
 
 
 gulp.task('styles', ['styles:vendor', 'styles:sass']);

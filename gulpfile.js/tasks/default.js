@@ -3,19 +3,10 @@ const gulp = require('gulp');
 const spawn = require('child_process').spawn;
 
 
-gulp.task('default', ['build', 'watch'], function(cb) {
-    const command = [ 'run', 'python', 'manage.py', 'runserver' ];
-    const args = process.argv;
-
-    if (args[3] == '--public') {
-        command.push('0.0.0.0:80');
-    }
-
+gulp.task('default', ['build', 'watch'], cb => {
     spawn(
         'pipenv',
-        command,
-        {
-            stdio: 'inherit'
-        }
+        [ 'run', 'python', 'manage.py', 'runserver' ],
+        { stdio: 'inherit' }
     ).on('exit', cb);
 });

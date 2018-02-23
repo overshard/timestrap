@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 
-const extrasFiles = require('../config.js').extrasFiles;
+const extrasFiles = require('../../gulpfile.json').extrasFiles;
 
 
 gulp.task('extras', function() {
