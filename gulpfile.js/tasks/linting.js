@@ -15,7 +15,7 @@ gulp.task('lint:python', function(cb) {
         [
             'run',
             'flake8',
-            '--exclude=venv,.venv,node_modules,migrations'
+            '--exclude=node_modules,migrations'
         ],
         {
             stdio: 'inherit'
@@ -25,7 +25,7 @@ gulp.task('lint:python', function(cb) {
 
 
 gulp.task('lint:sass', function() {
-    return gulp.src('static_src/sass/**/*.s+(a|c)ss')
+    return gulp.src('static_src/sass/**/*.{scss|sass|css}')
         .pipe(sasslint({
             rules: {
                 'no-vendor-prefixes': 2,
@@ -33,7 +33,7 @@ gulp.task('lint:sass', function() {
                 'indentation': [
                     1,
                     {
-                        'size': 4  // TODO: Doesn't seem to always check?
+                        'size': 4
                     }
                 ],
                 'property-sort-order': 0,
@@ -48,10 +48,8 @@ gulp.task('lint:sass', function() {
 gulp.task('lint:es', function() {
     return gulp.src([
         'gulpfile.js/**/*.js',
-        'timestrap/static_src/app.js',
-        'timestrap/static_src/components/**/*.vue',
-        'timestrap/static_src/mixins/**/*.js',
-        'timestrap/static_src/plugins/**/*.js',])
+        'timestrap/static_src/**/*.js',
+        'timestrap/static_src/components/**/*.vue'])
         .pipe(eslint({
             'rules': {
                 'indent': [
