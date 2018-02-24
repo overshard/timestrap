@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const spawn = require('child_process').spawn;
 
 
-gulp.task('makemigrations', cb => {
+gulp.task('manage:makemigrations', cb => {
     spawn(
         'pipenv',
         [
@@ -19,7 +19,7 @@ gulp.task('makemigrations', cb => {
 });
 
 
-gulp.task('migrate', cb => {
+gulp.task('manage:migrate', cb => {
     spawn(
         'pipenv',
         [
@@ -35,7 +35,7 @@ gulp.task('migrate', cb => {
 });
 
 
-gulp.task('createsuperuser', cb => {
+gulp.task('manage:createsuperuser', cb => {
     spawn(
         'pipenv',
         [
@@ -51,7 +51,7 @@ gulp.task('createsuperuser', cb => {
 });
 
 
-gulp.task('reset', cb => {
+gulp.task('manage:reset', cb => {
     spawn(
         'pipenv',
         [
@@ -68,7 +68,7 @@ gulp.task('reset', cb => {
 });
 
 
-gulp.task('fake', cb => {
+gulp.task('manage:fake', cb => {
     spawn(
         'pipenv',
         [
