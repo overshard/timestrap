@@ -66,6 +66,22 @@
             </div>
         </div>
     </div>
+
+    <div class="row py-2 mb-4 bg-light rounded">
+        <div class="col-12">
+            <button class="btn btn-secondary btn-sm pull-right ml-2"
+                    v-block-during-fetch
+                    v-on:click.prevent
+                    v-on:click="refresh">
+                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+            </button>
+
+            <pager v-bind:next="next"
+                v-bind:previous="previous"
+                @next-page="getEntries(next)"
+                @previous-page="getEntries(previous)"></pager>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -169,6 +185,8 @@ export default {
                         }
                     }
                 });
+
+                window.scrollTo(0, 0);
             });
         },
         deleteEntry(blockIndex, entryIndex) {
