@@ -108,7 +108,9 @@ export default {
             this.seconds = '0';
         },
         tick() {
-            ++this.total;
+            this.total = Math.floor(
+                (Date.now() - this.datetimeStart.valueOf()) / 1000
+            );
             this.seconds = this.total % 3600 % 60;
             this.duration = this.secondsToString(this.total);
         },
