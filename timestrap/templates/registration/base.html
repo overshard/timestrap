@@ -1,4 +1,4 @@
-{% load static widget_tweaks %}
+{% load staticfiles widget_tweaks %}
 
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>{% block title %}{% endblock %} - {{ request.site.name }}</title>
+        <title>{% block title %}{% endblock %} — {{ request.site.name }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
         <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}"/>
