@@ -27,7 +27,7 @@
                  @refresh="refresh"
                  v-bind:config="modal_config"></entry-modal>
 
-    <div class="row chartjs-wrapper bg-light rounded my-4 pt-4 pb-2">
+    <div class="row chartjs-wrapper bg-secondary rounded my-4 pt-4 pb-2">
         <canvas id="chartjs-1" class="chartjs"></canvas>
     </div>
 
@@ -196,7 +196,22 @@ export default {
                         },
                         scales: {
                             yAxes: [{
-                                ticks: { beginAtZero: true }
+                                ticks: {
+                                    beginAtZero: true,
+                                    fontColor: 'rgba(255, 255, 255, 1)'
+                                },
+                                gridLines: {
+                                    color: 'rgba(255, 255, 255, .2)',
+                                    zeroLineColor: 'rgba(255, 255, 255, .6)',
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontColor: 'rgba(255, 255, 255, 1)'
+                                },
+                                gridLines: {
+                                    color: 'rgba(255, 255, 255, .2)'
+                                }
                             }]
                         }
                     }
