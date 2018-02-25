@@ -36,12 +36,12 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown dropdown-menu-right">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user-circle mr-2" aria-hidden="true"></i>
                             {{ username }}
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a id="nav-admin-api"
                                class="dropdown-item"
                                target="_blank"
