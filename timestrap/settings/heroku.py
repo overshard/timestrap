@@ -13,6 +13,11 @@ DEBUG = False
 SECRET_KEY = os.environ['SECRET_KEY']
 
 
+# SECURITY WARNING: set this to your domain name in production!
+
+ALLOWED_HOSTS = ['*']
+
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 

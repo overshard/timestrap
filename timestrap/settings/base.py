@@ -12,11 +12,6 @@ BASE_DIR = os.path.dirname(
 )
 
 
-# SECURITY WARNING: set this to your domain name in production!
-
-ALLOWED_HOSTS = ['*']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -109,6 +104,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/topics/email/
 
 EMAIL_BACKEND = 'conf.backends.mail.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
