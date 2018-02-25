@@ -113,6 +113,7 @@ export default {
             );
             this.seconds = this.total % 3600 % 60;
             this.duration = this.secondsToString(this.total);
+            document.title = this.duration + ' — ' + timestrapConfig.SITE.NAME;
         },
         toggle() {
             this.running = !this.running;
@@ -126,6 +127,7 @@ export default {
                 if (this.total < 60) {
                     this.reset();
                 }
+                document.title = 'Application — ' + timestrapConfig.SITE.NAME;
             }
         },
     },
