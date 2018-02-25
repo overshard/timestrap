@@ -14,7 +14,6 @@
                 <div class="modal-footer bg-light">
                     <slot name="footer"></slot>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -26,6 +25,6 @@
 export default {
     data() {
         return {};
-    },
+    }
 };
 </script>

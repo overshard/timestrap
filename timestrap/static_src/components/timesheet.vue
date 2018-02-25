@@ -32,7 +32,11 @@
     </div>
 
     <div v-if="this.$perms.view_entry" id="entry-rows">
-        <div class="mb-4" v-for="(entryBlock, blockIndex) in entries">
+        <div class="mb-4"
+             v-for="(entryBlock, blockIndex) in entries"
+             v-bind:item="entryBlock"
+             v-bind:index="blockIndex"
+             v-bind:key="entryBlock.id">
             <div class="row inset-row">
                 <div class="col-12">
                     <h2 class="display-4 text-muted">

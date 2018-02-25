@@ -79,7 +79,7 @@
                  v-bind:project="project"
                  v-bind:index="project_index"
                  v-bind:client_index="index"
-                 v-bind:key="client.projects.id"
+                 v-bind:key="project.id"
                  v-bind:toggleEditModal="toggleProjectEditModal"></project>
     </template>
 
