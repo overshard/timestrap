@@ -1,8 +1,8 @@
 ## Gulp Command Reference
 
 Although it is entirely optional, Timestrap makes extensive use of custom Gulp
-commands to ease the development process. Review the `gulpfile.js` directory 
-and files within for a complete understanding of available commands. The 
+commands to ease the development process. Review the `gulpfile.js` directory
+and files within for a complete understanding of available commands. The
 reference below outlines the basic function of each command.
 
 ### `gulp`
@@ -18,18 +18,9 @@ Effectively runs:
 1. `gulp scripts`
 1. `gulp extras`
 
-### `gulp coverage`
-
-Runs the `python manage.py test` command and prints a test coverage report when
-finished.
-
-### `gulp createsuperuser`
-
-A simple alias for Django's `python manage.py createsuperuser` command.
-
 ### `gulp docs`
 
-Build GitHub and RTD style documentation files and watching source files for 
+Build GitHub and RTD style documentation files and watching source files for
 changes, creating updated builds as necessary.
 
 ### `gulp extras`
@@ -40,15 +31,19 @@ Copies `extrasFiles` from vendor folders to `/timestrap/static/` folders.
 
 Executes Python, SASS and JavaScript ES6 linting on all source files.
 
-### `gulp makemigrations`
+### `gulp manage:makemigrations`
 
 A simple alias for Django's `python manage.py makemigrations` command.
 
-### `gulp migrate`
+### `gulp manage:migrate`
 
 A simple alias for Django's `python manage.py migrate` command.
 
-### `gulp reset`
+### `gulp manage:createsuperuser`
+
+A simple alias for Django's `python manage.py createsuperuser` command.
+
+### `gulp manage:reset`
 
 This command effectively runs:
 
@@ -61,15 +56,20 @@ The argument `--fake 0` can be used to bypass the fake data generation.
 
 ### `gulp scripts`
 
-Compiles JavaScript assets from Timestrap's VueJS files in to `bundle-app.js` 
-and vendor assets in to `bundle-vendor.js`, placing both in the 
+Compiles JavaScript assets from Timestrap's VueJS files in to `bundle-app.js`
+and vendor assets in to `bundle-vendor.js`, placing both in the
 `/timestrap/static/js/` folder.
 
 ### `gulp styles`
 
-Compiles vendor CSS in to `bundle-vendor.css` and Timestrap's SASS in to 
+Compiles vendor CSS in to `bundle-vendor.css` and Timestrap's SASS in to
 `bundle-scss.css`, placing both in the `/timestrap/static/css/` folder.
 
 ### `gulp test`
 
 A simple alias for Django's `python manage.py test` command.
+
+### `gulp coverage`
+
+Runs the `python manage.py test` command and prints a test coverage report when
+finished.

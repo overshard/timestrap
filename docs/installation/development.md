@@ -1,8 +1,8 @@
 ## Development Installation
 
-**:exclamation: Important Note:** Node is not required for Timestrap to function. Node is 
-used for building Timestrap's static files and improving the development 
-workflow. This installation procedure is only necessary for making changes to 
+**:exclamation: Important Note:** Node is not required for Timestrap to function. Node is
+used for building Timestrap's static files and improving the development
+workflow. This installation procedure is only necessary for making changes to
 static files.
 
 1. Install the requirements:
@@ -20,7 +20,7 @@ static files.
 1. Bootstrap the database and creates the initial site and user
 (username: admin, password: admin)
 
-        gulp migrate
+        gulp manage:migrate
 
 1. Run the server!
 
@@ -31,5 +31,5 @@ Gulp will automatically recognize and recompile changes to any static
 files, allowing quick modification and review without starting and stopping
 the application.
 
-[Pull requests](https://github.com/overshard/timestrap/pulls) are :+1: welcome 
+[Pull requests](https://github.com/overshard/timestrap/pulls) are :+1: welcome
 and :clap: encouraged!
