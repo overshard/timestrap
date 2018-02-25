@@ -162,6 +162,8 @@ export default {
                     totalTime = Math.round(totalTime * 10) / 10;
                     chartDurations.push(totalTime);
                 }
+                chartDates = chartDates.slice(0, 5);
+                chartDurations = chartDurations.slice(0, 5);
 
                 if (this.renderedChart) this.renderedChart.destroy();
                 this.renderedChart = new Chart(document.getElementById('chartjs-1'), {
@@ -169,7 +171,21 @@ export default {
                     data: {
                         labels: chartDates,
                         datasets: [{
-                            backgroundColor: '#17a2b8',
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1,
                             data: chartDurations
                         }]
                     },
