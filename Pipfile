@@ -3,6 +3,11 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 
+[requires]
+
+python_version = "3.6"
+
+
 [dev-packages]
 
 "flake8" = "*"
@@ -23,6 +28,6 @@ djangorestframework = "*"
 "django-import-export" = "*"
 faker = "*"
 "dj-database-url" = "*"
-"psycopg2" = "*"
+"psycopg2-binary" = "*"
 gunicorn = "*"
 ipaddress = "*"

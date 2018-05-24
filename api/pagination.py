@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 from django.db.models import Sum
 
-from rest_framework.pagination import LimitOffsetPagination, _get_count
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
 from core.utils import duration_decimal
@@ -22,7 +22,10 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
             return None
 
         self.offset = self.get_offset(request)
-        self.count = _get_count(queryset)
+        try:
+            self.count = queryset.count()
+        except (AttributeError, TypeError):
+            self.count = len(queryset)
         self.request = request
         if self.count > self.limit and self.template is not None:
             self.display_page_controls = True
