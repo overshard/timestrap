@@ -95,11 +95,11 @@
 
 
 <script>
-import Datepicker from './datepicker.vue';
-import DurationFormatter from '../mixins/durationformatter';
-import Entry from './entry.vue';
-import Pager from './pager.vue';
-import Select2 from './select2.vue';
+import Datepicker from '../datepicker.vue';
+import DurationFormatter from '../../mixins/durationformatter';
+import Entry from '../entry.vue';
+import Pager from '../pager.vue';
+import Select2 from '../select2.vue';
 import EntryModal from './entry-modal.vue';
 
 export default {

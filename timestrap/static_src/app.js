@@ -2,10 +2,10 @@ const Vue = require('vue');
 const VueRouter = require('vue-router');
 
 const App = require('./components/app.vue');
-const Clients = require('./components/clients.vue');
-const Tasks = require('./components/tasks.vue');
-const Timesheet = require('./components/timesheet.vue');
-const Reports = require('./components/reports.vue');
+const Clients = require('./components/clients/clients.vue');
+const Tasks = require('./components/tasks/tasks.vue');
+const Timesheet = require('./components/timesheet/timesheet.vue');
+const Reports = require('./components/reports/reports.vue');
 
 // quickFetch must be loaded first, as it is used by other plugins.
 const quickFetch = require('./plugins/quickfetch.js');

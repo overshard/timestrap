@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import Modal from './modal.vue';
-import Select2 from './select2.vue';
-import Datepicker from './datepicker.vue';
-import DurationFormatter from '../mixins/durationformatter';
+import Modal from '../modal.vue';
+import Select2 from '../select2.vue';
+import Datepicker from '../datepicker.vue';
+import DurationFormatter from '../../mixins/durationformatter';
 
 export default {
     mixins: [
