@@ -50,8 +50,8 @@
 
 
 <script>
-const Select2 = require('./select2.vue');
-const DurationFormatter = require('../mixins/durationformatter');
+import Select2 from './select2.vue';
+import DurationFormatter from '../mixins/durationformatter';
 
 export default {
     mixins: [

@@ -170,11 +170,11 @@
 
 
 <script>
-const Datepicker = require('./datepicker.vue');
-const DurationFormatter = require('../mixins/durationformatter');
-const Entry = require('./entry.vue');
-const Pager = require('./pager.vue');
-const Select2 = require('./select2.vue');
+import Datepicker from './datepicker.vue';
+import DurationFormatter from '../mixins/durationformatter';
+import Entry from './entry.vue';
+import Pager from './pager.vue';
+import Select2 from './select2.vue';
 
 export default {
     mixins: [ DurationFormatter ],

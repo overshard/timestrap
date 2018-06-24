@@ -51,8 +51,8 @@
 </template>
 
 <script>
-const Modal = require('./modal.vue');
-const Select2 = require('./select2.vue');
+import Modal from './modal.vue';
+import Select2 from './select2.vue';
 
 export default {
     props: ['config'],

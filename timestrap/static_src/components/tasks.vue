@@ -50,8 +50,8 @@
 
 
 <script>
-const Task = require('./task.vue');
-const TaskModal = require('./task-modal.vue');
+import Task from './task.vue';
+import TaskModal from './task-modal.vue';
 
 export default {
     data() {

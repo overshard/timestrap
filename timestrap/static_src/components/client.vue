@@ -87,7 +87,7 @@
 </template>
 
 <script>
-const Project = require('./project.vue');
+import Project from './project.vue';
 
 export default {
     props: ['client', 'index', 'key', 'toggleEditModal', 'toggleProjectEditModal', 'removeProject'],

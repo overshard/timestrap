@@ -56,9 +56,9 @@
 </template>
 
 <script>
-const Client = require('./client.vue');
-const ClientModal = require('./client-modal.vue');
-const ProjectModal = require('./project-modal.vue');
+import Client from './client.vue';
+import ClientModal from './client-modal.vue';
+import ProjectModal from './project-modal.vue';
 
 export default {
     data() {

@@ -69,7 +69,7 @@
 
 
 <script>
-const Tracker = require('./tracker.vue');
+import Tracker from './tracker.vue';
 
 export default {
     data () {
