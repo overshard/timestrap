@@ -44,7 +44,7 @@
 </template>
 
 <script>
-const Modal = require('./modal.vue');
+import Modal from './modal.vue';
 
 export default {
     props: ['config'],
