@@ -11,6 +11,7 @@ export default {
         $(this.$el).pickadate({
             format: 'yyyy-mm-dd',
             onStart: function() {
+                $('.picker').appendTo('body');
                 if (vm.default) {
                     this.set('select', vm.default);
                     vm.$emit('input', moment(vm.default).format('YYYY-MM-DD'));
