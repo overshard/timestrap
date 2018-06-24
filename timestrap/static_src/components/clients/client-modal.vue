@@ -58,6 +58,7 @@ export default {
             this.$quickFetch(url, method, body).then(data => {
                 this.$emit('updateClient', data, this.config.index);
                 this.name = null;
+                this.bus.$emit('updateProjects');
                 this.$emit('close');
             }).catch(error => console.log(error));
         }
