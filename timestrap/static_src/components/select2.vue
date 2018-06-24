@@ -13,6 +13,7 @@ export default {
     },
     watch: {
         options: function () {
+            this.destroy();
             this.update();
         },
     },
@@ -36,10 +37,14 @@ export default {
                 .on('change', function (e) {
                     this.$emit('input', e.target.value);
                 }.bind(this));
+        },
+        destroy() {
+            $(this.$el).off().select2('destroy');
+            $(this.$el).empty();
         }
     },
     destroyed() {
-        $(this.$el).off().select2('destroy');
+        this.destroy();
     }
 };
 </script>

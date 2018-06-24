@@ -82,6 +82,7 @@ export default {
                 this.client = null;
                 this.project_name = null;
                 this.project_estimate = null;
+                this.bus.$emit('updateProjects');
                 this.$emit('close');
             }).catch(error => console.log(error));
         }

@@ -7,8 +7,8 @@
                          v-bind:options="projects" placeholder="Project"></select2>
             </div>
             <div class="col-sm-2">
-                <select2 id="entry-task" v-model="task" v-bind:options="tasks"
-                         placeholder="Task" name="entry-task"></select2>
+                <select2 id="entry-task" v-model="task" name="entry-task"
+                         v-bind:options="tasks" placeholder="Task"></select2>
             </div>
             <div class="col-sm-4">
                 <input class="form-control form-control-sm w-100"
@@ -132,19 +132,25 @@ export default {
         },
     },
     mounted() {
-        this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
-            this.tasks = data.map(function(task) {
-                return { id: task.url, text: task.name };
-            });
-        });
-        this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
-            this.projects = data.map(function(client) {
-                let projects = client.projects.map(function(project) {
-                    return { id: project.url, text: project.name };
+        this.bus.$on('updateTasks', () => {
+            this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
+                this.tasks = data.map(function(task) {
+                    return { id: task.url, text: task.name };
                 });
-                return { text: client.name, children: projects };
             });
         });
+        this.bus.$on('updateProjects', () => {
+            this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
+                this.projects = data.map(function(client) {
+                    let clientProjects = client.projects.map(function(project) {
+                        return { id: project.url, text: project.name };
+                    });
+                    return { text: client.name, children: clientProjects };
+                });
+            });
+        });
+        this.bus.$emit('updateTasks');
+        this.bus.$emit('updateProjects');
     },
     components: {
         Select2,
