@@ -8,7 +8,7 @@ const strip = require('gulp-strip-css-comments');
 const stylesFiles = require('../../gulpfile.json').stylesFiles;
 
 
-gulp.task('styles', ['styles:vendor', 'styles:sass']);
+gulp.task('styles', ['styles:vendor']);
 
 
 gulp.task('styles:vendor', () => {
