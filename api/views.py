@@ -82,7 +82,7 @@ class EntryViewSet(viewsets.ModelViewSet):
     )
     ordering_fields = ('date', 'user__username', 'task__name', 'project__name',
                        'project__client__name',)
-    ordering = ('-date',)
+    ordering = ('-date', '-id')
     search_fields = ('id', 'date', 'note', 'user__username', 'task__name',
                      'project__name', 'project__client__name',)
 
