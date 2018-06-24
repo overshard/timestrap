@@ -20,6 +20,9 @@ export default {
                 vm.$emit('input', $(vm.$el).val());
             }
         });
+    },
+    destroyed() {
+        $(this.$el).stop();
     }
 };
 </script>
