@@ -17,15 +17,3 @@ gulp.task('styles:vendor', () => {
         .pipe(concat('bundle-vendor.css'))
         .pipe(gulp.dest('timestrap/static/css/'));
 });
-
-
-gulp.task('styles:sass', () => {
-    return gulp.src('timestrap/static_src/sass/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-        .pipe(concat('bundle-scss.css'))
-        .pipe(gulp.dest('timestrap/static/css/'));
-});

@@ -43,3 +43,24 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss">
+.select2-container--default .select2-selection--single {
+    border: 1px solid #d2d2d2;
+    height: 31px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 28px;
+    font-size: .875rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #636c72;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 31px;
+}
+</style>

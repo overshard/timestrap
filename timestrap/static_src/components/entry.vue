@@ -125,3 +125,101 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss">
+#entry-rows {
+    .row:not(.inset-row) {
+        border-top: 1px solid #eceeef;
+
+        &:first-child {
+            border-top-right-radius: .25rem;
+            border-top-left-radius: .25rem;
+        }
+
+        &:nth-of-type(2n+1) {
+            background-color: #fbf3e5 !important;
+        }
+
+        &:last-child {
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+            border-bottom: 1px solid #eceeef;
+        }
+
+        // Fix for override of striping-row-color above
+        &.bg-success {
+            background-color: #28a745 !important;
+        }
+    }
+
+    .duration {
+        display: flex;
+    }
+
+    .datetimes {
+        display: none;
+    }
+
+    .entry-note {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .entry:hover,
+    .entry:focus {
+        .duration {
+            display: none;
+        }
+
+        .datetimes {
+            display: flex;
+        }
+
+        .tasks .small {
+            display: none;
+        }
+
+        .tasks {
+            align-self: flex-start !important;
+
+            .entry-note {
+                overflow: show !important;
+                white-space: normal !important;
+            }
+        }
+    }
+
+    .duration.display-4 {
+        font-size: 1.5rem;
+    }
+
+    .note {
+        line-height: 1.3;
+        margin-bottom: 3px;
+    }
+
+    .username {
+        overflow-x: hidden;
+    }
+
+    .fa-clock-o {
+        line-height: 1.3em;
+    }
+
+    .client-project {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .inset-row {
+        margin-bottom: -.75rem;
+
+        .display-4 {
+            font-size: 2rem;
+        }
+    }
+}
+</style>

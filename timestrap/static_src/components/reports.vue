@@ -332,3 +332,15 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss">
+.report-filters {
+    label {
+        font-weight: bold;
+        font-size: .7em;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+}
+</style>

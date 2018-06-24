@@ -264,3 +264,10 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss">
+.chartjs-wrapper {
+    height: 250px;
+}
+</style>

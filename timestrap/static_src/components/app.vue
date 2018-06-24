@@ -105,3 +105,53 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss">
+// Fix bootstrap v4 not using pointer on some objects
+a,
+button {
+    cursor: pointer;
+}
+
+// Fix bootstrap v4 making some field invalid before input
+input:required {
+    border-color: #ccc !important;
+    box-shadow: none !important;
+}
+
+// Make current active nav item more visible
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show > .nav-link {
+    font-weight: bold;
+}
+
+#github {
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    font-size: 2em;
+
+    a {
+        color: #000;
+    }
+}
+
+.btn,
+.export-select {
+    font-size: .7em;
+    line-height: 1.8em;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+// Remove arrow on the ellipsis icons on rows
+.btn-icon {
+    &::after {
+        display: none;
+    }
+}
+</style>
