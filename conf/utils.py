@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .middleware.site import current_request
 from .models import Conf, Site
 

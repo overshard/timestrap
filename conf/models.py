@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from pytz import all_timezones
 
 from django.conf import settings

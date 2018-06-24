@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from smtplib import SMTPResponseException
 from socket import error as socket_error
 

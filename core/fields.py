@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from datetime import timedelta
 
 from six import text_type
