@@ -43,7 +43,6 @@
             <div class="col-2"></div>
         </div>
         <task v-for="(task, index) in tasks"
-              @removeTask="removeTask"
               v-bind:task="task"
               v-bind:index="index"
               v-bind:key="task.id"
@@ -70,13 +69,13 @@ export default {
         };
     },
     computed: {
-        ...mapState([
-            'loading',
-            'tasks',
-        ]),
+        ...mapState({
+            loading: state => state.loading,
+            tasks: state => state.tasks.all,
+        }),
     },
     methods: {
-        ...mapActions([
+        ...mapActions('tasks', [
             'getTasks',
         ]),
         updateTask(task, index) {
@@ -88,9 +87,6 @@ export default {
             }
             this.modal_config.index = null;
             this.modal_config.task = null;
-        },
-        removeTask(index) {
-            this.tasks.splice(1, index);
         },
         toggleModal(task, index) {
             if (task && (index || index === 0)) {
@@ -105,9 +101,6 @@ export default {
         refresh() {
             this.getTasks();
         }
-    },
-    mounted() {
-        this.getTasks();
     },
     components: {
         Task,

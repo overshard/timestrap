@@ -50,6 +50,8 @@
 
 
 <script>
+import { mapGetters } from 'vuex';
+
 import Select2 from './select2.vue';
 import DurationFormatter from '../mixins/durationformatter';
 
@@ -66,7 +68,6 @@ export default {
             datetimeStart: null,
             datetimeEnd: null,
 
-            tasks: {},
             projects: {},
 
             running: false,
@@ -75,6 +76,11 @@ export default {
 
             submitted: false,
         };
+    },
+    computed: {
+        ...mapGetters({
+            tasks: 'tasks/getSelectTasks',
+        }),
     },
     methods: {
         submitEntry(e) {
@@ -132,13 +138,6 @@ export default {
         },
     },
     mounted() {
-        this.bus.$on('updateTasks', () => {
-            this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
-                this.tasks = data.map(function(task) {
-                    return { id: task.url, text: task.name };
-                });
-            });
-        });
         this.bus.$on('updateProjects', () => {
             this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
                 this.projects = data.map(function(client) {
@@ -149,7 +148,6 @@ export default {
                 });
             });
         });
-        this.bus.$emit('updateTasks');
         this.bus.$emit('updateProjects');
     },
     components: {

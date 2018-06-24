@@ -70,7 +70,6 @@ export default {
                 this.$emit('updateTask', data, this.config.index);
                 this.name = null;
                 this.hourly_rate = null;
-                this.bus.$emit('updateTasks');
                 this.$emit('close');
             }).catch(error => console.log(error));
         }

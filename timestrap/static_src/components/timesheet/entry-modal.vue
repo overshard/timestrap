@@ -75,6 +75,8 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 import Modal from '../modal.vue';
 import Select2 from '../select2.vue';
 import Datepicker from '../datepicker.vue';
@@ -90,7 +92,6 @@ export default {
     data() {
         return {
             projects: null,
-            tasks: null,
             users: null,
             user: this.config.entry ? this.config.entry.user : null,
             task: this.config.entry ? this.config.entry.task : null,
@@ -99,6 +100,11 @@ export default {
             entry_note: this.config.entry ? this.config.entry.note : null,
             entry_duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
         };
+    },
+    computed: {
+        ...mapGetters({
+            tasks: 'tasks/getSelectTasks',
+        }),
     },
     methods: {
         submit() {
@@ -135,11 +141,6 @@ export default {
                     return { id: project.url, text: project.name };
                 });
                 return { text: client.name, children: projects };
-            });
-        });
-        this.$quickFetch(timestrapConfig.API_URLS.TASKS).then(data => {
-            this.tasks = data.map(function(task) {
-                return { id: task.url, text: task.name };
             });
         });
         this.$quickFetch(timestrapConfig.API_URLS.USERS).then(data => {

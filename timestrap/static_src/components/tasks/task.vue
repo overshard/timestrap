@@ -47,7 +47,10 @@
 </div>
 </template>
 
+
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     props: ['task', 'index', 'key', 'toggleEditModal'],
     data() {
@@ -58,16 +61,9 @@ export default {
         };
     },
     methods: {
-        deleteTask() {
-            this.$quickFetch(this.task.url, 'delete').then(function(response) {
-                if (response.status === 204) {
-                    $.growl.notice({ message: 'Task deleted!' });
-                    this.$emit('removeTask', this.index);
-                } else {
-                    $.growl.error({ message: 'Task delete failed ):' });
-                }
-            }.bind(this));
-        }
+        ...mapActions({
+            deleteTask: 'tasks/deleteTask',
+        }),
     }
 };
 </script>

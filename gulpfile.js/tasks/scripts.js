@@ -20,9 +20,10 @@ gulp.task('scripts:vendor', () => {
 
 
 gulp.task('scripts:app', () => {
-    gulp.src('timestrap/static_src/app.js', { read: false })
+    gulp.src('timestrap/static_src/main.js', { read: false })
         .pipe(tap(function(file) {
             file.contents = browserify(file.path)
+                .transform("babelify")
                 .transform(vueify)
                 .transform(
                     { global: true },
