@@ -31,6 +31,10 @@
         <canvas id="chartjs-1" class="chartjs"></canvas>
     </div>
 
+    <div v-show="loading" class="container text-center py-4">
+        <i class="fa fa-spinner text-primary fa-spin display-3 text-center"></i>
+    </div>
+
     <div v-if="this.$perms.view_entry" id="entry-rows">
         <div class="mb-4"
              v-for="(entryBlock, blockIndex) in entries"
@@ -104,6 +108,8 @@ export default {
     ],
     data() {
         return {
+            loading: true,
+
             entries: null,
 
             subtotal: null,
@@ -222,6 +228,8 @@ export default {
                 });
 
                 window.scrollTo(0, 0);
+
+                this.loading = false;
             });
         },
         deleteEntry(blockIndex, entryIndex) {

@@ -20,6 +20,10 @@
         </div>
     </div>
 
+    <div v-show="loading" class="container text-center py-4">
+        <i class="fa fa-spinner text-primary fa-spin display-3 text-center"></i>
+    </div>
+
     <task-modal id="task-modal"
                 v-if="modal_config.show && (this.$perms.add_task || this.$perms.change_task)"
                 @updateTask="updateTask"
@@ -56,6 +60,7 @@ import TaskModal from './task-modal.vue';
 export default {
     data() {
         return {
+            loading: true,
             tasks: null,
             modal_config: {
                 index: null,
@@ -70,6 +75,8 @@ export default {
 
             this.$quickFetch(url).then(data => {
                 this.tasks = data;
+
+                this.loading = false;
             }).catch(error => console.log(error));
         },
         updateTask(task, index) {

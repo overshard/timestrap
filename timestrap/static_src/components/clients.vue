@@ -24,9 +24,14 @@
                     v-on:click.prevent
                     v-block-during-fetch
                     v-on:click="refresh">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Refresh
             </button>
         </div>
+    </div>
+
+    <div v-show="loading" class="container text-center py-4">
+        <i class="fa fa-spinner text-primary fa-spin display-3 text-center"></i>
     </div>
 
     <client-modal id="client-modal"
@@ -63,6 +68,7 @@ import ProjectModal from './project-modal.vue';
 export default {
     data() {
         return {
+            loading: true,
             clients: null,
             modal_config: {
                 project: {
@@ -84,6 +90,7 @@ export default {
             url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
             this.$quickFetch(url).then(data => {
                 this.clients = data;
+                this.loading = false;
             }).catch(error => console.log(error));
         },
         toggleClientModal(client, index) {
