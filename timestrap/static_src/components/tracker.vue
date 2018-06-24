@@ -13,12 +13,12 @@
             <div class="col-sm-4">
                 <input class="form-control form-control-sm w-100"
                        name="entry-note" placeholder="Note" type="text"
-                       v-model="note" />
+                       @keydown.enter="submitEntry" v-model="note" />
             </div>
             <div class="col-sm-2">
                 <input class="form-control form-control-sm text-right font-weight-bold w-100"
                        name="entry-duration" placeholder="0:00" type="text"
-                       v-model="duration" />
+                       @keydown.enter="submitEntry" v-model="duration" />
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-sm btn-success w-100"
