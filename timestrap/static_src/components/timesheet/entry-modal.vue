@@ -10,7 +10,7 @@
             <datepicker name="entry-date"
                         type="text"
                         class="form-control form-control-sm date-input"
-                        v-model="date"
+                        v-model="entry_date"
                         v-bind:default="new Date()"
                         placeholder="Date"></datepicker>
         </div>

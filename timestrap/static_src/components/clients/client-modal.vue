@@ -34,6 +34,7 @@
 </modal>
 </template>
 
+
 <script>
 import Modal from '../modal.vue';
 
