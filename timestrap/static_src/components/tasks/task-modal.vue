@@ -43,39 +43,34 @@
 </modal>
 </template>
 
+
 <script>
+import {mapActions} from 'vuex';
+
 import Modal from '../modal.vue';
+
 
 export default {
     props: ['config'],
-    data() {
+    data: function() {
         return {
+            id: this.config.task ? this.config.task.id : null,
+            url: this.config.task ? this.config.task.url : null,
             name: this.config.task ? this.config.task.name : null,
             hourly_rate: this.config.task ? this.config.task.hourly_rate : null
         };
     },
     methods: {
+        ...mapActions({
+            createTask: 'tasks/createTask',
+            editTask: 'tasks/editTask',
+        }),
         submit() {
-            let body = {
-                name: this.name,
-                hourly_rate: this.hourly_rate
-            };
-            let url = timestrapConfig.API_URLS.TASKS;
-            let method = 'post';
-            if (this.config.task) {
-                url = this.config.task.url;
-                method = 'put';
-            }
-            this.$quickFetch(url, method, body).then(data => {
-                this.$emit('updateTask', data, this.config.index);
-                this.name = null;
-                this.hourly_rate = null;
-                this.$emit('close');
-            }).catch(error => console.log(error));
+            if (!this.config.task) this.createTask(this.$data);
+            else this.editTask(this.$data);
+            this.$emit('close');
         }
     },
-    components: {
-        Modal
-    }
+    components: {Modal},
 };
 </script>

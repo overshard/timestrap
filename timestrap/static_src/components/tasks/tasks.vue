@@ -81,8 +81,7 @@ export default {
         updateTask(task, index) {
             if (task && (index || index === 0)) {
                 this.tasks[index] = task;
-            }
-            else {
+            } else {
                 this.tasks.unshift(task);
             }
             this.modal_config.index = null;
