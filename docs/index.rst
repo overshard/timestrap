@@ -43,6 +43,7 @@ multiple formats and easily extensible.
 
    Password Resets & Email <configuration/email>
    Localization <configuration/localization>
+   Security <configuration/security>
 
 .. toctree::
    :name: development
