@@ -54,14 +54,14 @@
 
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 import Task from './task.vue';
 import TaskModal from './task-modal.vue';
 
 export default {
     data() {
         return {
-            loading: true,
-            tasks: null,
             modal_config: {
                 index: null,
                 task: null,
@@ -69,16 +69,16 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapState([
+            'loading',
+            'tasks',
+        ]),
+    },
     methods: {
-        getTasks(url) {
-            url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.TASKS;
-
-            this.$quickFetch(url).then(data => {
-                this.tasks = data;
-
-                this.loading = false;
-            }).catch(error => console.log(error));
-        },
+        ...mapActions([
+            'getTasks',
+        ]),
         updateTask(task, index) {
             if (task && (index || index === 0)) {
                 this.tasks[index] = task;

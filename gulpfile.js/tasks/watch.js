@@ -3,6 +3,7 @@ const gulp = require('gulp');
 
 gulp.task('watch', [
     'watch:app',
+    'watch:store',
     'watch:components',
     'watch:plugins',
     'watch:mixins']);
@@ -10,6 +11,11 @@ gulp.task('watch', [
 
 gulp.task('watch:app', () => {
     return gulp.watch('timestrap/static_src/app.js', ['scripts:app']);
+});
+
+
+gulp.task('watch:store', () => {
+    return gulp.watch('timestrap/static_src/store.js', ['scripts:app']);
 });
 
 

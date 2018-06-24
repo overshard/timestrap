@@ -12,6 +12,8 @@ const quickFetch = require('./plugins/quickfetch.js');
 const perms = require('./plugins/permissions.js');
 const user = require('./plugins/user.js');
 
+const store = require('./store.js').default;
+
 
 // Set up event bus for app-wide communication.
 // @see: https://vuejs.org/v2/guide/components.html#Non-Parent-Child-Communication
@@ -49,6 +51,7 @@ router.beforeEach((to, from, next) => {
 
 const app = new Vue({
     router,
+    store,
     el: '#app',
     render(createElement) {
         return createElement(App);
