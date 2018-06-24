@@ -129,6 +129,9 @@ export default {
     },
     methods: {
         getEntries(url) {
+            this.loading = true;
+            this.entries = null;
+
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
