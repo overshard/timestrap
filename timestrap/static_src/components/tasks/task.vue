@@ -6,7 +6,12 @@
     </div>
     <div class="col-2 d-flex align-items-center">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-        ${{ task.hourly_rate }}
+        <template v-if="task.hourly_rate">
+            ${{ task.hourly_rate }}
+        </template>
+        <template v-else>
+            Not set
+        </template>
     </div>
     <div class="col-sm-2 d-flex align-self-center justify-content-end">
         <template v-if="this.$perms.change_task || this.$perms.delete_task">
