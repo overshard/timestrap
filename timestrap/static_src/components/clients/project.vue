@@ -12,10 +12,9 @@
         <i class="fa fa-list text-muted mr-2" aria-hidden="true"></i>
         <span class="mb-1">{{ project.total_entries }}</span>
     </div>
-    <div class="col-sm-3 d-flex align-items-center" v-if="project.percent_done">
+    <div class="col-sm-3 d-flex align-items-center" v-if="project.percent_done !== null">
         <div class="progress w-100">
-            <div v-if="project.percent_done"
-                 v-bind:class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
+            <div v-bind:class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
                  v-bind:style="{ width: project.percent_done + '%' }">
                 {{ project.percent_done }}%
             </div>

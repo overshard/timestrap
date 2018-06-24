@@ -92,8 +92,7 @@ class Project(models.Model):
         if self.estimate is not None:
             total_cost = Decimal(self.get_total_cost())
             total_estimate = Decimal(self.estimate)
-            if total_cost != 0 and total_estimate != 0:
-                return int(100 * (total_cost/total_estimate))
+            return int(100 * (total_cost/total_estimate))
         return None
 
 
