@@ -63,10 +63,13 @@
             </div>
         </template>
     </div>
-    <div class="col-sm-2 d-flex align-items-center justify-content-start"
-         v-else>
-         <i class="fa fa-user-circle text-muted mr-2" aria-hidden="true"></i>
-         {{ user_details.username }}
+    <div class="col-sm-2" v-else>
+        <div class="small">
+            <i class="fa fa-user-circle text-muted mr-2" aria-hidden="true"></i>
+            {{ user_details.username }}
+        </div>
+        <i class="fa fa-calendar-o text-muted mr-1" aria-hidden="true"></i>
+        {{ date }}
     </div>
 </div>
 </template>
@@ -99,6 +102,7 @@ export default {
             duration: this.durationToString(this.entry.duration),
             datetime_start: this.entry.datetime_start,
             datetime_end: this.entry.datetime_end,
+            date: moment(this.entry.date).format('LL'),
         };
     },
     methods: {

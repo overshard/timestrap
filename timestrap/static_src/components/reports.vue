@@ -119,19 +119,9 @@
     </form>
 
     <div v-if="this.$perms.view_entry" id="entry-rows">
-        <div class="mb-4"
-             v-for="entryBlock in entries"
-             v-bind:item="entryBlock"
-             v-bind:key="entryBlock.id">
-            <div class="row inset-row">
-                <div class="col-12">
-                    <h2 class="display-4 text-muted">
-                        {{ moment(entryBlock.date) }}
-                    </h2>
-                </div>
-            </div>
+        <div class="mb-4">
             <div class="entry-rows rounded">
-                <entry v-for="(entry, index) in entryBlock.entries"
+                <entry v-for="(entry, index) in entries"
                     v-bind:entry="entry"
                     v-bind:index="index"
                     v-bind:key="entry.id"
@@ -225,22 +215,7 @@ export default {
                 this.next = data.next;
                 this.previous = data.previous;
 
-                let uniqueDates = [];
-                $.each(data.results, function(i, entry) {
-                    if ($.inArray(entry.date, uniqueDates) === -1) {
-                        uniqueDates.push(entry.date);
-                    }
-                });
-
-                this.entries = [];
-                uniqueDates.forEach(date => {
-                    this.entries.push({
-                        date: date,
-                        entries: data.results.filter(entry => {
-                            return entry.date === date;
-                        })
-                    });
-                });
+                this.entries = data.results;
 
                 this.subtotal = this.durationToString(data.subtotal_duration);
                 this.total = this.durationToString(data.total_duration);
