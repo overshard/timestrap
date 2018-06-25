@@ -2,7 +2,7 @@
 <modal>
     <h5 slot="header">
         <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
-        {{ config.task ? 'Edit: ' + config.task.name : 'New Task' }}
+        {{ this.id ? 'Edit: ' + this.name : 'New Task' }}
     </h5>
 
     <div slot="body">
@@ -37,7 +37,7 @@
                 type="submit"
                 class="btn btn-primary"
                 @click="submit">
-            {{ config.task ? 'Save Changes' : 'Add Task' }}
+            {{ this.id ? 'Save Changes' : 'Add Task' }}
         </button>
     </div>
 </modal>
