@@ -30,7 +30,7 @@
                    href="#"
                    v-if="this.$perms.change_task"
                    v-on:click.prevent
-                   v-on:click="toggleEditModal(task, index)">
+                   v-on:click="toggleEditModal(task)">
                     Edit
                 </a>
                 <a id="task-menu-delete"
@@ -49,7 +49,8 @@
 
 
 <script>
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
+
 
 export default {
     props: ['task', 'index', 'key', 'toggleEditModal'],

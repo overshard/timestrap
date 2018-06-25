@@ -66,7 +66,7 @@ export default {
             editTask: 'tasks/editTask',
         }),
         submit() {
-            if (!this.config.task) this.createTask(this.$data);
+            if (!this.id) this.createTask(this.$data);
             else this.editTask(this.$data);
             this.$emit('close');
         }

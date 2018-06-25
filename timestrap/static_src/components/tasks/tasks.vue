@@ -25,10 +25,9 @@
     </div>
 
     <task-modal id="task-modal"
-                v-if="modal_config.show && (this.$perms.add_task || this.$perms.change_task)"
-                @updateTask="updateTask"
+                v-if="modal.show && (this.$perms.add_task || this.$perms.change_task)"
                 @close="toggleModal"
-                v-bind:config="modal_config"></task-modal>
+                v-bind:config="modal"></task-modal>
 
     <div v-if="this.$perms.view_task" id="task-rows" class="rounded">
         <div class="task-head bg-secondary text-white row py-2">
@@ -42,11 +41,8 @@
             </div>
             <div class="col-2"></div>
         </div>
-        <task v-for="(task, index) in tasks"
-              v-bind:task="task"
-              v-bind:index="index"
-              v-bind:key="task.id"
-              v-bind:toggleEditModal="toggleModal"></task>
+        <task v-for="(task, index) in tasks" v-bind:task="task" v-bind:index="index"
+              v-bind:key="task.id" v-bind:toggleEditModal="toggleModal"></task>
     </div>
 </div>
 </template>
@@ -61,8 +57,7 @@ import TaskModal from './task-modal.vue';
 export default {
     data() {
         return {
-            modal_config: {
-                index: null,
+            modal: {
                 task: null,
                 show: false,
             },
@@ -78,24 +73,10 @@ export default {
         ...mapActions('tasks', [
             'getTasks',
         ]),
-        updateTask(task, index) {
-            if (task && (index || index === 0)) {
-                this.tasks[index] = task;
-            } else {
-                this.tasks.unshift(task);
-            }
-            this.modal_config.index = null;
-            this.modal_config.task = null;
-        },
-        toggleModal(task, index) {
-            if (task && (index || index === 0)) {
-                this.modal_config.task = task;
-                this.modal_config.index = index;
-            } else {
-                this.modal_config.task = null;
-                this.modal_config.index = null;
-            }
-            this.modal_config.show = !this.modal_config.show;
+        toggleModal(task) {
+            if (task) this.modal.task = task;
+            else this.modal.task = null;
+            this.modal.show = !this.modal.show;
         },
         refresh() {
             this.getTasks();
