@@ -52,12 +52,12 @@ import Modal from '../modal.vue';
 
 export default {
     props: ['config'],
-    data: function() {
+    data() {
         return {
             id: this.config.task ? this.config.task.id : null,
             url: this.config.task ? this.config.task.url : null,
             name: this.config.task ? this.config.task.name : null,
-            hourly_rate: this.config.task ? this.config.task.hourly_rate : null
+            hourly_rate: this.config.task ? this.config.task.hourly_rate : null,
         };
     },
     methods: {
@@ -69,7 +69,7 @@ export default {
             if (!this.id) this.createTask(this.$data);
             else this.editTask(this.$data);
             this.$emit('close');
-        }
+        },
     },
     components: {Modal},
 };

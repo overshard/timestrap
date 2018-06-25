@@ -72,7 +72,7 @@
 import Tracker from './tracker.vue';
 
 export default {
-    data () {
+    data() {
         return {
             timesheet: timestrapConfig.CORE_URLS.TIMESHEET,
             clients: timestrapConfig.CORE_URLS.CLIENTS,
