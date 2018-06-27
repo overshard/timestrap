@@ -39,8 +39,6 @@ export default {
                 totalTime = Math.round(totalTime * 10) / 10;
                 chartDurations.push(totalTime);
             }
-            chartDates = chartDates.slice(0, 5);
-            chartDurations = chartDurations.slice(0, 5);
 
             this.renderedChart = new Chart(document.getElementById('chartjs-1'), {
                 type: 'bar',
@@ -96,6 +94,9 @@ export default {
         destroy() {
             if (this.renderedChart) this.renderedChart.destroy();
         },
+    },
+    mounted() {
+        this.update();
     },
     destroyed() {
         this.destroy();

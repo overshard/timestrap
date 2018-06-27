@@ -83,7 +83,7 @@ export default {
             admin: timestrapConfig.CORE_URLS.ADMIN,
             logout: timestrapConfig.CORE_URLS.LOGOUT,
             site: timestrapConfig.SITE,
-            is_staff: timestrapConfig.USER.IS_STAFF
+            is_staff: timestrapConfig.USER.IS_STAFF,
         };
     },
     methods: {
@@ -91,8 +91,8 @@ export default {
             this.$router.push({
                 name: 'reports',
                 query: {
-                    search: this.search
-                }
+                    search: this.search,
+                },
             });
             this.bus.$emit('search');
         }

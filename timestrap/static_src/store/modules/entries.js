@@ -6,7 +6,6 @@ import fetch from '../../fetch';
 export default {
     namespaced: true,
     state: {
-        start: moment().format('YYYY-MM-DD'),
         all: [],
         subtotal: 0,
         total: 0,
@@ -17,16 +16,14 @@ export default {
         },
         getEntriesByDay: state => {
             let allDays = [];
-            for (let i = 0; i < 7; i++) {
-                let day = moment(state.start).subtract(i, 'day').format('YYYY-MM-DD');
+            for (let i = 0; i < 5; i++) {
+                let day = moment().subtract(i, 'day').format('YYYY-MM-DD');
                 allDays.push(day)
             }
             return allDays.map(day => {
                 return {
                     date: day,
-                    entries: state.all.filter(entry => {
-                        return entry.date == day;
-                    }),
+                    entries: state.all.filter(entry => {return entry.date == day}),
                 };
             });
         },
@@ -40,9 +37,16 @@ export default {
         removeEntry: (state, index) => Vue.delete(state.all, index),
     },
     actions: {
-        getEntries({commit, state}) {
+        getEntries({commit}) {
             commit('setLoading', true, {root: true});
-            fetch.get(timestrapConfig.API_URLS.ENTRIES, {params: {user: timestrapConfig.USER.ID, max_date: state.start, min_date: moment(state.start).subtract(7, 'day').format('YYYY-MM-DD')}}).then(response => {
+            let getOptions = {
+                params: {
+                    user: timestrapConfig.USER.ID,
+                    min_date: moment().subtract(5, 'day').format('YYYY-MM-DD'),
+                    max_date: moment().format('YYYY-MM-DD'),
+                },
+            }
+            fetch.get(timestrapConfig.API_URLS.ENTRIES, getOptions).then(response => {
                 commit('setEntries', response.data.results);
                 commit('setTotal', response.data.total_duration);
                 commit('setSubtotal', response.data.subtotal_duration);

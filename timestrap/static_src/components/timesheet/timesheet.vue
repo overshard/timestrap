@@ -10,7 +10,8 @@
             <button class="btn btn-secondary btn-sm pull-right ml-2"
                     v-on:click.prevent
                     v-on:click="getEntries">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Refresh
             </button>
         </div>
     </div>
@@ -57,27 +58,12 @@
 
         <div class="row bg-success text-white py-2 mb-4 rounded">
             <div class="ml-auto col-sm-2 text-right">
-                Subtotal
-                <br>
                 <strong>Total</strong>
             </div>
             <div class="col-sm-3">
                 <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                {{ subtotal }}
-                <br>
-                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                <strong>{{ total }}</strong>
+                <strong>{{ durationToString(total) }}</strong>
             </div>
-        </div>
-    </div>
-
-    <div class="row py-2 mb-4 bg-light rounded">
-        <div class="col-12">
-            <button class="btn btn-secondary btn-sm pull-right ml-2"
-                    v-on:click.prevent
-                    v-on:click="getEntries">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
-            </button>
         </div>
     </div>
 </div>
@@ -129,7 +115,7 @@ export default {
         },
         moment(date) {
             return moment(date).format('MMMM Do');
-        }
+        },
     },
     components: {
         Datepicker,
