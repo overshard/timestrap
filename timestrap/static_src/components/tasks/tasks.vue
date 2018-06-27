@@ -49,7 +49,7 @@
 
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 
 import Task from './task.vue';
 import TaskModal from './task-modal.vue';

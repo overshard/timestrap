@@ -91,7 +91,6 @@ export default {
     ],
     data() {
         return {
-            projects: null,
             users: null,
             user: this.config.entry ? this.config.entry.user : null,
             task: this.config.entry ? this.config.entry.task : null,
@@ -104,6 +103,7 @@ export default {
     computed: {
         ...mapGetters({
             tasks: 'tasks/getSelectTasks',
+            projects: 'clients/getSelectProjects',
         }),
     },
     methods: {

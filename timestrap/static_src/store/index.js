@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import tasks from './modules/tasks';
+import clients from './modules/clients';
 
 
 // Setup Vuex plugin so we can add store to our Vue
@@ -20,5 +21,6 @@ export default new Vuex.Store({
     },
     modules: {
         tasks: tasks,
+        clients: clients,
     },
 });

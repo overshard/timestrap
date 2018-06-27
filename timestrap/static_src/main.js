@@ -34,6 +34,8 @@ router.beforeEach((to, from, next) => {
 // Run all store getters to start
 
 store.dispatch('tasks/getTasks');
+store.dispatch('clients/getClients');
+store.dispatch('clients/getProjects');
 
 
 

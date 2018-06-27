@@ -2,7 +2,7 @@
 <modal>
     <h5 slot="header">
         <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
-        {{ config.client ? 'Edit: ' + config.client.name : 'New Client' }}
+        {{ this.id ? 'Edit: ' + config.client.name : 'New Client' }}
     </h5>
 
     <div slot="body">
@@ -36,36 +36,31 @@
 
 
 <script>
+import {mapActions} from 'vuex';
+
 import Modal from '../modal.vue';
+
 
 export default {
     props: ['config'],
     data() {
         return {
+            id: this.config.client ? this.config.client.id : null,
+            url: this.config.client ? this.config.client.url : null,
             name: this.config.client ? this.config.client.name : null
         };
     },
     methods: {
+        ...mapActions({
+            createClient: 'clients/createClient',
+            editClient: 'clients/editClient',
+        }),
         submit() {
-            let body = {
-                name: this.name
-            };
-            let url = timestrapConfig.API_URLS.CLIENTS;
-            let method = 'post';
-            if (this.config.client) {
-                url = this.config.client.url;
-                method = 'put';
-            }
-            this.$quickFetch(url, method, body).then(data => {
-                this.$emit('updateClient', data, this.config.index);
-                this.name = null;
-                this.bus.$emit('updateProjects');
-                this.$emit('close');
-            }).catch(error => console.log(error));
-        }
+            if (!this.id) this.createClient(this.$data);
+            else this.editClient(this.$data);
+            this.$emit('close');
+        },
     },
-    components: {
-        Modal
-    }
+    components: {Modal},
 };
 </script>

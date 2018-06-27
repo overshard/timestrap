@@ -1,45 +1,117 @@
 import Vue from 'vue';
 
+import fetch from '../../fetch';
+
 
 export default {
     namespaced: true,
     state: {
+        // Clients
         allClients: [],
+
+        // Projects
         allProjects: [],
     },
     getters: {
+        // Clients
         getSelectClients: state => {
-            return state.clientsAll.map(client => {return {id: client.url, text: client.name}});
+            return state.allClients.map(client => {return {id: client.url, text: client.name}});
+        },
+
+        // Projects
+        getSelectProjects: state => {
+            return state.allClients.map(client => {
+                // TODO: Should use getClientProjects getter instead to reduce code
+                const projects = state.allProjects.filter(project => {
+                    return project.client == client.url;
+                });
+                return {
+                    text: client.name,
+                    children: projects.map(project => {
+                        return {
+                            id: project.url,
+                            text: project.name,
+                        };
+                    }),
+                };
+            });
+            this.projects = data.map(function(client) {
+                let clientProjects = client.projects.map(function(project) {
+                    return { id: project.url, text: project.name };
+                });
+                return { text: client.name, children: clientProjects };
+            });
+            return state.allProjects.map(project => {return {id: project.url, text: project.name}});
+        },
+
+        // Clients & Projects
+        getClientProjects: state => clientUrl => {
+            return state.allProjects.filter(project => {return project.client == clientUrl})
         },
     },
     mutations: {
+        // Clients
         setClients: (state, clients) => state.allClients = clients,
         addClient: (state, client) => state.allClients.unshift(client),
         updateClient: (state, opts) => Vue.set(state.allClients, opts.index, opts.client),
         removeClient: (state, index) => Vue.delete(state.allClients, index),
+
+        // Projects
+        setProjects: (state, projects) => state.allProjects = projects,
+        addProject: (state, project) => state.allProjects.unshift(project),
+        updateProject: (state, opts) => Vue.set(state.allProjects, opts.index, opts.project),
+        removeProject: (state, index) => Vue.delete(state.allProjects, index),
     },
     actions: {
+        // Clients
         getClients({commit}) {
             commit('setLoading', true, {root: true});
-            Vue.prototype.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
-                commit('setClients', data);
+            fetch.get(timestrapConfig.API_URLS.CLIENTS).then(response => {
+                commit('setClients', response.data);
                 commit('setLoading', false, {root: true});
-            }).catch(error => console.error(error));
+            }).catch(error => console.log(error));
         },
         createClient({commit}, client) {
-            Vue.prototype.$quickFetch(timestrapConfig.API_URLS.CLIENTS, 'post', client).then(data => {
-                commit('addClient', data);
+            fetch.post(timestrapConfig.API_URLS.CLIENTS, client).then(response => {
+                commit('addClient', response.data);
             }).catch(error => console.log(error));
         },
         editClient({commit, state}, client) {
-            Vue.prototype.$quickFetch(client.url, 'put', client).then(data => {
-                const index = state.allClients.findIndex(item => {return item.id === data.id});
-                commit('updateClient', {index: index, client:data});
+            fetch.put(client.url, client).then(response => {
+                const index = state.allClients.findIndex(item => {return item.id === response.data.id});
+                commit('updateClient', {index: index, client: response.data});
             }).catch(error => console.log(error));
+
         },
         deleteClient({commit, state}, index) {
-            Vue.prototype.$quickFetch(state.allClients[index].url, 'delete').then(data => {
+            fetch.delete(state.allClients[index].url).then(response => {
                 commit('removeClient', index);
+            }).catch(error => console.log(error));
+        },
+
+        // Projects
+        getProjects({commit}) {
+            commit('setLoading', true, {root: true});
+            fetch.get(timestrapConfig.API_URLS.PROJECTS).then(response => {
+                commit('setProjects', response.data);
+                commit('setLoading', false, {root: true});
+            }).catch(error => console.log(error));
+        },
+        createProject({commit}, project) {
+            fetch.post(timestrapConfig.API_URLS.PROJECTS, project).then(response => {
+                commit('addProject', response.data);
+            }).catch(error => console.log(error));
+        },
+        editProject({commit, state}, project) {
+            fetch.put(project.url, project).then(response => {
+                const index = state.allProjects.findIndex(item => {return item.id === response.data.id});
+                commit('updateProject', {index: index, project: response.data});
+            }).catch(error => console.log(error));
+
+        },
+        deleteProject({commit, state}, index) {
+            fetch.delete(state.allProjects[index].url).then(response => {
+                commit('removeProject', index);
             }).catch(error => console.log(error));
         },
     }

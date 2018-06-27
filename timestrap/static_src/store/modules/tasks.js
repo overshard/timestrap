@@ -26,7 +26,6 @@ export default {
                 commit('setTasks', response.data);
                 commit('setLoading', false, {root: true});
             }).catch(error => console.log(error));
-
         },
         createTask({commit}, task) {
             fetch.post(timestrapConfig.API_URLS.TASKS, task).then(response => {

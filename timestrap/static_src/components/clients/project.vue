@@ -39,58 +39,36 @@
                    href="#"
                    v-if="this.$perms.change_project"
                    v-on:click.prevent
-                   v-on:click="toggleEditModal(project, index, client_index)">Edit</a>
+                   v-on:click="toggleProjectModal(project)">Edit</a>
                 <a id="project-menu-delete"
                    class="dropdown-item"
                    href="#"
                    v-if="this.$perms.delete_project"
                    v-on:click.prevent
-                   v-on:click="deleteProject">Delete</a>
-                <a id="project-menu-archive"
+                   v-on:click="deleteProject(index)">Delete</a>
+                <!-- <a id="project-menu-archive"
                    class="dropdown-item"
                    href="#"
                    v-if="this.$perms.change_project"
                    v-on:click.prevent
-                   v-on:click="archiveProject">Archive</a>
+                   v-on:click="archiveProject">Archive</a> -->
             </div>
         </template>
     </div>
 </div>
 </template>
 
+
 <script>
+import {mapActions} from 'vuex';
+
+
 export default {
-    props: ['project', 'index', 'client_index', 'key', 'toggleEditModal'],
-    data() {
-        return {
-            estimate: this.project.estimate,
-            name: this.project.name
-        };
-    },
+    props: ['project', 'index', 'key', 'toggleProjectModal'],
     methods: {
-        deleteProject() {
-            this.$quickFetch(this.project.url, 'delete').then(function(response) {
-                if (response.status === 204) {
-                    $.growl.notice({ message: 'Project deleted!' });
-                    this.$emit('removeProject', this.client_index, this.index);
-                } else {
-                    $.growl.error({ message: 'Project delete failed ):' });
-                }
-            }.bind(this));
-        },
-        archiveProject() {
-            const body = {
-                name: this.project.name,
-                client: this.project.client,
-                archive: true
-            };
-            this.$quickFetch(this.project.url, 'put', body).then(data => {
-                if (data.id) {
-                    $.growl.notice({ message: 'Project archived!' });
-                    this.$emit('removeProject', this.client_index, this.index);
-                }
-            }).catch(error => console.log(error));
-        }
-    }
+        ...mapActions({
+            deleteProject: 'clients/deleteProject',
+        }),
+    },
 };
 </script>

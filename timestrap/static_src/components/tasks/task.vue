@@ -54,13 +54,6 @@ import {mapActions} from 'vuex';
 
 export default {
     props: ['task', 'index', 'key', 'toggleEditModal'],
-    data() {
-        return {
-            edit: false,
-            name: this.task.name,
-            hourly_rate: this.task.hourly_rate
-        };
-    },
     methods: {
         ...mapActions({
             deleteTask: 'tasks/deleteTask',

@@ -35,129 +35,78 @@
     </div>
 
     <client-modal id="client-modal"
-                   v-if="modal_config.client.show"
-                   @updateClient="updateClient"
+                   v-if="modalClient.show"
                    @close="toggleClientModal"
-                   v-bind:config="modal_config.client"></client-modal>
+                   v-bind:config="modalClient"></client-modal>
 
     <project-modal id="project-modal"
-                   v-if="modal_config.project.show"
-                   @updateProject="updateProject"
+                   v-if="modalProject.show"
                    @close="toggleProjectModal"
-                   v-bind:config="modal_config.project"></project-modal>
+                   v-bind:config="modalProject"></project-modal>
 
     <div v-if="this.$perms.view_client" id="client-rows">
-        <client v-for="(client, index) in clients"
-                v-bind:client="client"
-                v-bind:index="index"
-                v-bind:key="client.id"
-                v-bind:toggleEditModal="toggleClientModal"
-                @removeClient="removeClient"
-                v-bind:toggleProjectEditModal="toggleProjectModal"
-                v-bind:removeProject="removeProject"></client>
+        <client v-for="(client, index) in clients" v-bind:client="client"
+                v-bind:index="index" v-bind:key="client.id"
+                v-bind:toggleClientModal="toggleClientModal"
+                v-bind:toggleProjectModal="toggleProjectModal"></client>
     </div>
-
 </div>
 </template>
 
+
 <script>
+import {mapState, mapActions} from 'vuex';
+
 import Client from './client.vue';
 import ClientModal from './client-modal.vue';
 import ProjectModal from './project-modal.vue';
 
+
 export default {
     data() {
         return {
-            loading: true,
-            clients: null,
-            modal_config: {
-                project: {
-                    index: null,
-                    project: null,
-                    client_index: null,
-                    show: false
-                },
-                client: {
-                    index: null,
-                    client: null,
-                    show: false
-                }
-            }
+            modalClient: {
+                client: null,
+                show: false,
+            },
+            modalProject: {
+                project: null,
+                show: false,
+            },
         };
     },
+    computed: {
+        ...mapState({
+            loading: state => state.loading,
+            clients: state => state.clients.allClients,
+        }),
+    },
     methods: {
-        getClients(url) {
-            url = (typeof url !== 'undefined') ? url : timestrapConfig.API_URLS.CLIENTS;
-            this.$quickFetch(url).then(data => {
-                this.clients = data;
-                this.loading = false;
-            }).catch(error => console.log(error));
+        ...mapActions('clients', [
+            'getClients',
+        ]),
+        toggleClientModal(client) {
+            if (client) this.modalClient.client = client;
+            else this.modalClient.client = null;
+            this.modalClient.show = !this.modalClient.show;
         },
-        toggleClientModal(client, index) {
-            if (client && (index || index === 0)) {
-                this.modal_config.client.client = client;
-                this.modal_config.client.index = index;
-            }
-            else {
-                this.modal_config.client.client = null;
-                this.modal_config.client.index = null;
-            }
-            this.modal_config.client.show = !this.modal_config.client.show;
-        },
-        updateClient(client, index) {
-            if (client && (index || index === 0)) {
-                this.clients[index] = client;
-            }
-            else {
-                this.clients.unshift(client);
-            }
-        },
-        removeClient(index) {
-            this.$delete(this.clients, index);
-        },
-        toggleProjectModal(project, index, client_index) {
-            if (project && (index || index === 0) && (client_index || client_index === 0)) {
-                this.modal_config.project.project = project;
-                this.modal_config.project.index = index;
-                this.modal_config.project.client_index = client_index;
-            }
-            else {
-                this.modal_config.project.project = null;
-                this.modal_config.project.index = null;
-                this.modal_config.project.client_index = null;
-            }
-            this.modal_config.project.show = !this.modal_config.project.show;
-        },
-        updateProject(project, index, client_index) {
-            if (project && (index || index === 0) && (client_index || client_index === 0)) {
-                this.$set(this.clients[client_index].projects, index, project);
-            }
-            else {
-                for (const [client_index, client] of this.clients.entries()) {
-                    if (client.url == project.client) {
-                        this.clients[client_index].projects.unshift(project);
-                        break;
-                    }
-                }
-            }
-        },
-        removeProject(client_index, index) {
-            this.$delete(this.clients[client_index].projects, index);
+        toggleProjectModal(project) {
+            if (project) this.modalProject.project = project;
+            else this.modalProject.project = null;
+            this.modalProject.show = !this.modalProject.show;
         },
         refresh() {
-            return this.getClients();
+            this.getClients();
         }
-    },
-    mounted() {
-        return this.getClients();
     },
     components: {
         Client,
         ClientModal,
-        ProjectModal
-    }
+        ProjectModal,
+    },
 };
 </script>
+
 
 <style lang="scss">
 .client {
