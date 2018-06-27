@@ -37,7 +37,6 @@ export default {
                 const index = state.all.findIndex(item => {return item.id === response.data.id});
                 commit('updateTask', {index: index, task: response.data});
             }).catch(error => console.log(error));
-
         },
         deleteTask({commit, state}, index) {
             fetch.delete(state.all[index].url).then(response => {

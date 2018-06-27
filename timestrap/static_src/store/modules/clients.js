@@ -74,7 +74,6 @@ export default {
                 const index = state.allClients.findIndex(item => {return item.id === response.data.id});
                 commit('updateClient', {index: index, client: response.data});
             }).catch(error => console.log(error));
-
         },
         deleteClient({commit, state}, index) {
             fetch.delete(state.allClients[index].url).then(response => {
@@ -100,7 +99,6 @@ export default {
                 const index = state.allProjects.findIndex(item => {return item.id === response.data.id});
                 commit('updateProject', {index: index, project: response.data});
             }).catch(error => console.log(error));
-
         },
         deleteProject({commit, state}, index) {
             fetch.delete(state.allProjects[index].url).then(response => {

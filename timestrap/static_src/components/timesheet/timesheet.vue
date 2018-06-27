@@ -43,6 +43,7 @@
                 </div>
             </div>
             <div class="rounded">
+                <template v-if="entryBlock.entries.length > 0">
                 <entry v-for="(entry, entryIndex) in entryBlock.entries"
                        v-on:delete-entry="deleteEntry(blockIndex, entryIndex)"
                        v-bind:entry="entry"
@@ -50,6 +51,14 @@
                        v-bind:key="entry.id"
                        v-bind:editable="editable"
                        v-bind:toggleEditModal="toggleModal"></entry>
+                </template>
+                <template v-else>
+                    <div class="entry row py-3 bg-light small">
+                        <div class="col">
+                            <strong>No entries</strong> for this day.
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
 
@@ -89,6 +98,8 @@
 
 
 <script>
+import {mapGetters, mapActions, mapState} from 'vuex';
+
 import Datepicker from '../datepicker.vue';
 import DurationFormatter from '../../mixins/durationformatter';
 import Entry from '../entry.vue';
@@ -104,11 +115,6 @@ export default {
     ],
     data() {
         return {
-            entries: [],
-
-            subtotal: null,
-            total: null,
-
             next: null,
             previous: null,
 
@@ -120,44 +126,16 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapState({
+            total: state => state.entries.total,
+            subtotal: state => state.entries.subtotal,
+        }),
+        ...mapGetters({
+            entries: 'entries/getEntriesByDay',
+        }),
+    },
     methods: {
-        getEntries(url) {
-            let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
-            url = (typeof url !== 'undefined') ? url : userEntries;
-
-            let entriesFetch = this.$quickFetch(url);
-
-            entriesFetch.then(data => {
-                this.next = data.next;
-                this.previous = data.previous;
-
-                let uniqueDates = [];
-                $.each(data.results, function(i, entry) {
-                    if ($.inArray(entry.date, uniqueDates) === -1) {
-                        uniqueDates.push(entry.date);
-                    }
-                });
-
-                this.entries = [];
-                uniqueDates.forEach(date => {
-                    let entryBlock = Object;
-                    this.entries.push({
-                        date: date,
-                        entries: data.results.filter(entry => {
-                            return entry.date === date;
-                        })
-                    });
-                });
-
-                this.subtotal = this.durationToString(data.subtotal_duration);
-                this.total = this.durationToString(data.total_duration);
-
-                window.scrollTo(0, 0);
-            });
-        },
-        deleteEntry(blockIndex, entryIndex) {
-            this.refresh();
-        },
         toggleModal(entry, index) {
             if (entry && (index || index === 0)) {
                 this.modal_config.entry = entry;
@@ -170,18 +148,7 @@ export default {
         },
         moment(date) {
             return moment(date).format('MMMM Do');
-        },
-        refresh() {
-            this.getEntries();
         }
-    },
-    mounted() {
-        this.getEntries();
-    },
-    created() {
-        this.bus.$on('refreshEntries', function() {
-            this.refresh();
-        }.bind(this));
     },
     components: {
         Datepicker,
