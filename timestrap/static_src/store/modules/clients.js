@@ -35,13 +35,6 @@ export default {
                     }),
                 };
             });
-            this.projects = data.map(function(client) {
-                let clientProjects = client.projects.map(function(project) {
-                    return { id: project.url, text: project.name };
-                });
-                return { text: client.name, children: clientProjects };
-            });
-            return state.allProjects.map(project => {return {id: project.url, text: project.name}});
         },
 
         // Clients & Projects
