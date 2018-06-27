@@ -27,13 +27,7 @@
                  @refresh="refresh"
                  v-bind:config="modal_config"></entry-modal>
 
-    <div class="row chartjs-wrapper bg-secondary rounded my-4 pt-4 pb-2">
-        <canvas id="chartjs-1" class="chartjs"></canvas>
-    </div>
-
-    <div v-show="loading" class="container text-center py-4">
-        <i class="fa fa-spinner text-primary fa-spin display-3 text-center"></i>
-    </div>
+    <chart v-bind:entries="entries"></chart>
 
     <div v-if="this.$perms.view_entry" id="entry-rows">
         <div class="mb-4"
@@ -101,6 +95,8 @@ import Entry from '../entry.vue';
 import Pager from '../pager.vue';
 import Select2 from '../select2.vue';
 import EntryModal from './entry-modal.vue';
+import Chart from './chart.vue';
+
 
 export default {
     mixins: [
@@ -108,9 +104,7 @@ export default {
     ],
     data() {
         return {
-            loading: true,
-
-            entries: null,
+            entries: [],
 
             subtotal: null,
             total: null,
@@ -124,14 +118,10 @@ export default {
                 entry: null,
                 show: false,
             },
-            renderedChart: false,
         };
     },
     methods: {
         getEntries(url) {
-            this.loading = true;
-            this.entries = null;
-
             let userEntries = timestrapConfig.API_URLS.ENTRIES + '?user=' + timestrapConfig.USER.ID;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
@@ -162,77 +152,7 @@ export default {
                 this.subtotal = this.durationToString(data.subtotal_duration);
                 this.total = this.durationToString(data.total_duration);
 
-                let chartDates = [];
-                let chartDurations = [];
-                let entryBlock;
-                for (entryBlock in this.entries) {
-                    chartDates.push(this.moment(this.entries[entryBlock].date));
-                    let entry;
-                    let totalTime = 0;
-                    for (entry in this.entries[entryBlock].entries) {
-                        totalTime = totalTime + this.entries[entryBlock].entries[entry].duration;
-                    }
-                    totalTime = Math.round(totalTime * 10) / 10;
-                    chartDurations.push(totalTime);
-                }
-                chartDates = chartDates.slice(0, 5);
-                chartDurations = chartDurations.slice(0, 5);
-
-                if (this.renderedChart) this.renderedChart.destroy();
-                this.renderedChart = new Chart(document.getElementById('chartjs-1'), {
-                    type: 'bar',
-                    data: {
-                        labels: chartDates,
-                        datasets: [{
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)'
-                            ],
-                            borderWidth: 1,
-                            data: chartDurations
-                        }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    fontColor: 'rgba(255, 255, 255, 1)'
-                                },
-                                gridLines: {
-                                    color: 'rgba(255, 255, 255, .2)',
-                                    zeroLineColor: 'rgba(255, 255, 255, .6)',
-                                }
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    fontColor: 'rgba(255, 255, 255, 1)'
-                                },
-                                gridLines: {
-                                    color: 'rgba(255, 255, 255, .2)'
-                                }
-                            }]
-                        }
-                    }
-                });
-
                 window.scrollTo(0, 0);
-
-                this.loading = false;
             });
         },
         deleteEntry(blockIndex, entryIndex) {
@@ -271,14 +191,8 @@ export default {
         Entry,
         Pager,
         Select2,
-        EntryModal
+        EntryModal,
+        Chart,
     }
 };
 </script>
-
-
-<style lang="scss">
-.chartjs-wrapper {
-    height: 250px;
-}
-</style>
