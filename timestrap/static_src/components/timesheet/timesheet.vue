@@ -183,9 +183,6 @@ export default {
             this.refresh();
         }.bind(this));
     },
-    destroyed() {
-        this.renderedChart.destroy();
-    },
     components: {
         Datepicker,
         Entry,
