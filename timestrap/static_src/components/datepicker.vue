@@ -10,6 +10,7 @@ export default {
         let vm = this;
         $(this.$el).pickadate({
             format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd',
             onStart: function() {
                 $('.picker').appendTo('body');
                 if (vm.default) {
@@ -24,6 +25,6 @@ export default {
     },
     destroyed() {
         $(this.$el).stop();
-    }
+    },
 };
 </script>

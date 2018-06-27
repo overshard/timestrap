@@ -10,7 +10,7 @@
             <datepicker name="entry-date"
                         type="text"
                         class="form-control form-control-sm date-input"
-                        v-model="entry_date"
+                        v-model="date"
                         v-bind:default="new Date()"
                         placeholder="Date"></datepicker>
         </div>
@@ -43,7 +43,7 @@
             <input name="entry-note"
                     type="text"
                     class="form-control form-control-sm"
-                    v-model.trim="entry_note"
+                    v-model.trim="note"
                     placeholder="Entry Note"
                     required />
         </div>
@@ -53,7 +53,7 @@
                     type="text"
                     class="form-control form-control-sm"
                     placeholder="0:00"
-                    v-model.number="entry_duration" />
+                    v-model.number="duration" />
         </div>
     </div>
 
@@ -75,12 +75,13 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 import Modal from '../modal.vue';
 import Select2 from '../select2.vue';
 import Datepicker from '../datepicker.vue';
 import DurationFormatter from '../../mixins/durationformatter';
+
 
 export default {
     mixins: [
@@ -91,13 +92,16 @@ export default {
     ],
     data() {
         return {
-            users: null,
+            id: this.config.entry ? this.config.entry.id : null,
+            url: this.config.entry ? this.config.entry.url : null,
             user: this.config.entry ? this.config.entry.user : null,
             task: this.config.entry ? this.config.entry.task : null,
             project: this.config.entry ? this.config.entry.project : null,
-            entry_date: this.config.entry ? this.config.entry.date : null,
-            entry_note: this.config.entry ? this.config.entry.note : null,
-            entry_duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
+            date: this.config.entry ? this.config.entry.date : null,
+            note: this.config.entry ? this.config.entry.note : null,
+            duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
+
+            users: null,
         };
     },
     computed: {
@@ -107,42 +111,17 @@ export default {
         }),
     },
     methods: {
+        ...mapActions({
+            createEntry: 'entries/createEntry',
+            editEntry: 'entries/editEntry',
+        }),
         submit() {
-            let body = {
-                note: this.entry_note,
-                duration: this.entry_duration,
-                date: this.entry_date,
-                project: this.project,
-                task: this.task,
-                user: this.user,
-            };
-            let url = timestrapConfig.API_URLS.ENTRIES;
-            let method = 'post';
-            if (this.config.entry) {
-                url = this.config.entry.url;
-                method = 'put';
-            }
-            this.$quickFetch(url, method, body).then(data => {
-                this.task = null;
-                this.project = null;
-                this.user = null;
-                this.entry_date = null;
-                this.entry_note = null;
-                this.entry_duration = null;
-                this.$emit('refresh');
-                this.$emit('close');
-            }).catch(error => console.log(error));
-        }
+            if (!this.id) this.createEntry(this.$data);
+            else this.editEntry(this.$data);
+            this.$emit('close');
+        },
     },
     created() {
-        this.$quickFetch(timestrapConfig.API_URLS.CLIENTS).then(data => {
-            this.projects = data.map(function(client) {
-                let projects = client.projects.map(function(project) {
-                    return { id: project.url, text: project.name };
-                });
-                return { text: client.name, children: projects };
-            });
-        });
         this.$quickFetch(timestrapConfig.API_URLS.USERS).then(data => {
             this.users = data.map(function(user) {
                 return { id: user.url, text: user.username };

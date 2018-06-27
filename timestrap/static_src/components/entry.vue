@@ -50,14 +50,14 @@
                     href="#"
                     v-if="this.$perms.change_entry"
                     v-on:click.prevent
-                    v-on:click="toggleEditModal(entry, index)">
+                    v-on:click="toggleEditModal(entry)">
                     Edit
                 </a>
                 <a class="dropdown-item entry-menu-delete"
                     href="#"
                     v-if="this.$perms.delete_entry"
                     v-on:click.prevent
-                    v-on:click="deleteEntry">
+                    v-on:click="deleteEntry(index)">
                     Delete
                 </a>
             </div>
@@ -76,8 +76,11 @@
 
 
 <script>
+import {mapActions} from 'vuex';
+
 import DurationFormatter from '../mixins/durationformatter';
 import Select2 from './select2.vue';
+
 
 export default {
     props: [
@@ -106,22 +109,12 @@ export default {
         };
     },
     methods: {
-        deleteEntry() {
-            this.$quickFetch(this.url, 'delete').then(function(response) {
-                if (response.status === 204) {
-                    $.growl.notice({ message: 'Entry deleted!' });
-                    this.$emit('delete-entry');
-                } else {
-                    $.growl.error({ message: 'Entry delete failed.' });
-                }
-            }.bind(this));
-        },
+        ...mapActions({
+            deleteEntry: 'entries/deleteEntry',
+        }),
         formatDateTime(datetime) {
-            if (datetime) {
-                return moment(datetime).format('h:mm a');
-            } else {
-                return '-';
-            }
+            if (datetime) return moment(datetime).format('h:mm a');
+            else return '-';
         }
     },
     components: {

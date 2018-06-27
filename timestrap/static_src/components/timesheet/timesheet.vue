@@ -8,24 +8,17 @@
             </router-link>
 
             <button class="btn btn-secondary btn-sm pull-right ml-2"
-                    v-block-during-fetch
                     v-on:click.prevent
-                    v-on:click="refresh">
+                    v-on:click="getEntries">
                 <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
             </button>
-
-            <pager v-bind:next="next"
-                   v-bind:previous="previous"
-                   @next-page="getEntries(next)"
-                   @previous-page="getEntries(previous)"></pager>
         </div>
     </div>
 
     <entry-modal id="entry-modal"
-                 v-if="modal_config.show && (this.$perms.add_entry || this.$perms.change_entry)"
+                 v-if="modal.show && (this.$perms.add_entry || this.$perms.change_entry)"
                  @close="toggleModal"
-                 @refresh="refresh"
-                 v-bind:config="modal_config"></entry-modal>
+                 v-bind:config="modal"></entry-modal>
 
     <chart v-bind:entries="entries"></chart>
 
@@ -81,16 +74,10 @@
     <div class="row py-2 mb-4 bg-light rounded">
         <div class="col-12">
             <button class="btn btn-secondary btn-sm pull-right ml-2"
-                    v-block-during-fetch
                     v-on:click.prevent
-                    v-on:click="refresh">
+                    v-on:click="getEntries">
                 <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
             </button>
-
-            <pager v-bind:next="next"
-                v-bind:previous="previous"
-                @next-page="getEntries(next)"
-                @previous-page="getEntries(previous)"></pager>
         </div>
     </div>
 </div>
@@ -115,12 +102,8 @@ export default {
     ],
     data() {
         return {
-            next: null,
-            previous: null,
-
             editable: true,
-            modal_config: {
-                index: null,
+            modal: {
                 entry: null,
                 show: false,
             },
@@ -136,15 +119,13 @@ export default {
         }),
     },
     methods: {
-        toggleModal(entry, index) {
-            if (entry && (index || index === 0)) {
-                this.modal_config.entry = entry;
-                this.modal_config.index = index;
-            } else {
-                this.modal_config.entry = null;
-                this.modal_config.index = null;
-            }
-            this.modal_config.show = !this.modal_config.show;
+        ...mapActions('entries', [
+            'getEntries',
+        ]),
+        toggleModal(entry) {
+            if (entry) this.modal.entry = entry;
+            else this.modal.entry = null;
+            this.modal.show = !this.modal.show;
         },
         moment(date) {
             return moment(date).format('MMMM Do');
