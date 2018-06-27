@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import entries from './modules/entries';
 import tasks from './modules/tasks';
 import clients from './modules/clients';
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         setLoading: (state, status) => state.loading = status,
     },
     modules: {
+        entries: entries,
         tasks: tasks,
         clients: clients,
     },
