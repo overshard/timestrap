@@ -1,10 +1,12 @@
-// Enable sending and receiving form the django-rest-framework API.
-module.exports = {
-    install: function(Vue, options) {
-        Vue.prototype.$perms = Vue.prototype.$quickFetch(timestrapConfig.API_URLS.PERMISSIONS).then(data => {
+import fetch from '../fetch';
+
+
+export default {
+    install: Vue => {
+        Vue.prototype.$perms = fetch(timestrapConfig.API_URLS.PERMISSIONS).then(response => {
             let perms = Object;
-            for (let i = 0; i < data.length; i++) {
-                perms[data[i].codename] = data[i];
+            for (let i = 0; i < response.data.length; i++) {
+                perms[response.data[i].codename] = response.data[i];
             }
             Vue.prototype.$perms = perms;
         }).catch(error => console.error(error));

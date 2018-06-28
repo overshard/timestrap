@@ -1,8 +1,10 @@
-// Retrieve Django User object data.
-module.exports = {
-    install: function(Vue, options) {
-        Vue.prototype.$user = Vue.prototype.$quickFetch(timestrapConfig.USER.URL).then(data => {
-            Vue.prototype.$user = data;
+import fetch from '../fetch';
+
+
+export default {
+    install: Vue => {
+        Vue.prototype.$user = fetch(timestrapConfig.USER.URL).then(response => {
+            Vue.prototype.$user = response.data;
         }).catch(error => console.log(error));
     }
 };
