@@ -164,14 +164,21 @@
 
 
 <script>
+import {mapGetters} from 'vuex';
+
 import Datepicker from '../datepicker.vue';
 import DurationFormatter from '../../mixins/durationformatter';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
 import Select2 from '../select2.vue';
 
+import fetch from '../../fetch';
+
+
 export default {
-    mixins: [ DurationFormatter ],
+    mixins: [
+        DurationFormatter
+    ],
     data() {
         return {
             loading: true,
@@ -200,30 +207,32 @@ export default {
             dateMax: null,
             editable: false,
             user: null,
-            users: {},
             client: null,
-            clients: {},
             project: null,
-            projects: {},
             task: null,
-            tasks: {}
         };
+    },
+    computed: {
+        ...mapGetters({
+            tasks: 'tasks/getSelectTasks',
+            projects: 'clients/getSelectProjects',
+            clients: 'clients/getSelectClients',
+            users: 'users/getSelectUsers',
+        }),
     },
     methods: {
         getEntries(url) {
             let userEntries = timestrapConfig.API_URLS.ENTRIES;
             url = (typeof url !== 'undefined') ? url : userEntries;
 
-            let entriesFetch = this.$quickFetch(url);
+            fetch(url).then(response => {
+                this.next = response.data.next;
+                this.previous = response.data.previous;
 
-            entriesFetch.then(data => {
-                this.next = data.next;
-                this.previous = data.previous;
+                this.entries = response.data.results;
 
-                this.entries = data.results;
-
-                this.subtotal = this.durationToString(data.subtotal_duration);
-                this.total = this.durationToString(data.total_duration);
+                this.subtotal = this.durationToString(response.data.subtotal_duration);
+                this.total = this.durationToString(response.data.total_duration);
 
                 window.scrollTo(0, 0);
 
@@ -264,28 +273,6 @@ export default {
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
-        loadSelect2Options() {
-            let users = this.$quickFetch(timestrapConfig.API_URLS.USERS);
-            let clients = this.$quickFetch(timestrapConfig.API_URLS.CLIENTS);
-            let tasks = this.$quickFetch(timestrapConfig.API_URLS.TASKS);
-            Promise.all([users, clients, tasks]).then(data => {
-                this.users = data[0].map(function(user) {
-                    return { id: user.id, text: user.username };
-                });
-                this.clients = data[1].map(function(client) {
-                    return { id: client.id, text: client.name };
-                });
-                this.projects = data[1].map(function(client) {
-                    let projects = client.projects.map(function(project) {
-                        return { id: project.id, text: project.name };
-                    });
-                    return { text: client.name, children: projects };
-                });
-                this.tasks = data[2].map(function(task) {
-                    return { id: task.id, text: task.name };
-                });
-            });
-        },
         moment(date) {
             return moment(date).format('LL');
         },
@@ -294,7 +281,6 @@ export default {
         }
     },
     mounted() {
-        this.loadSelect2Options();
         return this.getEntries();
     },
     created() {

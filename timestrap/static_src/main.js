@@ -2,7 +2,6 @@ import Vue from 'vue';
 
 import App from './components/app.vue';
 
-import quickFetch from './plugins/quickfetch';
 import perms from './plugins/permissions';
 import user from './plugins/user';
 
@@ -17,7 +16,6 @@ Vue.prototype.bus = new Vue();
 
 // Plugins
 
-Vue.use(quickFetch);
 Vue.use(perms);
 Vue.use(user);
 
@@ -37,6 +35,7 @@ store.dispatch('tasks/getTasks');
 store.dispatch('clients/getClients');
 store.dispatch('clients/getProjects');
 store.dispatch('entries/getEntries');
+store.dispatch('users/getUsers');
 
 
 

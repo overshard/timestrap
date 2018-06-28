@@ -100,14 +100,13 @@ export default {
             date: this.config.entry ? this.config.entry.date : null,
             note: this.config.entry ? this.config.entry.note : null,
             duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
-
-            users: null,
         };
     },
     computed: {
         ...mapGetters({
             tasks: 'tasks/getSelectTasks',
             projects: 'clients/getSelectProjects',
+            users: 'users/getSelectUsers',
         }),
     },
     methods: {
@@ -121,17 +120,10 @@ export default {
             this.$emit('close');
         },
     },
-    created() {
-        this.$quickFetch(timestrapConfig.API_URLS.USERS).then(data => {
-            this.users = data.map(function(user) {
-                return { id: user.url, text: user.username };
-            });
-        });
-    },
     components: {
         Modal,
         Select2,
         Datepicker,
-    }
+    },
 };
 </script>
