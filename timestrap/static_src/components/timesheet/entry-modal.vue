@@ -11,7 +11,7 @@
                         type="text"
                         class="form-control form-control-sm date-input"
                         v-model="date"
-                        v-bind:default="new Date()"
+                        v-bind:default="date"
                         placeholder="Date"></datepicker>
         </div>
         <div class="form-group">
