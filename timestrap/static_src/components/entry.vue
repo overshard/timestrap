@@ -20,7 +20,7 @@
     </div>
     <div class="col-sm-1 align-self-center display-4 duration">
         <i class="fa fa-clock-o text-muted mr-2" aria-hidden="true"></i>
-        {{ duration }}
+        {{ durationString }}
     </div>
     <div class="col-sm-1 align-self-center datetimes flex-column">
         <div class="datetime-start small">
@@ -69,7 +69,7 @@
             {{ user_details.username }}
         </div>
         <i class="fa fa-calendar-o text-muted mr-1" aria-hidden="true"></i>
-        {{ date }}
+        {{ dateFormatted }}
     </div>
 </div>
 </template>
@@ -102,11 +102,19 @@ export default {
             task: this.entry.task,
             task_details: this.entry.task_details,
             note: this.entry.note,
-            duration: this.durationToString(this.entry.duration),
+            duration: this.entry.duration,
             datetime_start: this.entry.datetime_start,
             datetime_end: this.entry.datetime_end,
-            date: moment(this.entry.date).format('LL'),
+            date: this.entry.date,
         };
+    },
+    computed: {
+        durationString() {
+            return this.durationToString(this.entry.duration);
+        },
+        dateFormatted() {
+            return moment(this.date).format('LL');
+        },
     },
     methods: {
         ...mapActions({

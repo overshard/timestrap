@@ -53,7 +53,7 @@
                     type="text"
                     class="form-control form-control-sm"
                     placeholder="0:00"
-                    v-model.number="duration" />
+                    v-model="duration" />
         </div>
     </div>
 
