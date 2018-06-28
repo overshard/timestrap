@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'conf',
     'core',
     'api',
+    'client',
 
     'widget_tweaks',
     'django_filters',

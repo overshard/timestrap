@@ -15,5 +15,5 @@ gulp.task('styles:vendor', () => {
     return gulp.src(stylesFiles)
         .pipe(strip())
         .pipe(concat('bundle-vendor.css'))
-        .pipe(gulp.dest('timestrap/static/css/'));
+        .pipe(gulp.dest('client/static/css/'));
 });

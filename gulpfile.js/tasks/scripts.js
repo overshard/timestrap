@@ -15,12 +15,12 @@ gulp.task('scripts', ['scripts:vendor', 'scripts:app']);
 gulp.task('scripts:vendor', () => {
     return gulp.src(scriptsFiles)
         .pipe(concat('bundle-vendor.js'))
-        .pipe(gulp.dest('timestrap/static/js/'));
+        .pipe(gulp.dest('client/static/js/'));
 });
 
 
 gulp.task('scripts:app', () => {
-    gulp.src('timestrap/static_src/main.js', { read: false })
+    gulp.src('client/static_src/main.js', { read: false })
         .pipe(tap(function(file) {
             file.contents = browserify(file.path)
                 .transform("babelify")
@@ -37,5 +37,5 @@ gulp.task('scripts:app', () => {
         }))
         .pipe(buffer())
         .pipe(concat('bundle-app.js'))
-        .pipe(gulp.dest('timestrap/static/js/'));
+        .pipe(gulp.dest('client/static/js/'));
 });
