@@ -23,22 +23,20 @@
             <div class="col-sm-2">
                 <button class="btn btn-sm btn-success w-100"
                         v-on:click="toggle" v-block-during-fetch
-                        v-if="!this.running && !this.duration"
-                        v-bind:disabled="submitted">
+                        v-if="!this.running && !this.duration">
                     <i class="fa fa-play" aria-hidden="true"></i>
                     Start
                 </button>
                 <button class="btn btn-sm btn-danger w-100"
                         v-on:click="toggle" v-block-during-fetch
-                        v-if="this.running" v-bind:disabled="submitted">
+                        v-if="this.running">
                     <i class="fa fa-stop" aria-hidden="true"></i>
                     Stop ({{ this.seconds }})
                 </button>
                 <button class="btn btn-sm btn-info w-100"
                         name="entry-add-submit"
                         v-on:click="submitEntry" v-block-during-fetch
-                        v-if="!this.running && this.duration"
-                        v-bind:disabled="submitted">
+                        v-if="!this.running && this.duration">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Add
                 </button>
@@ -50,7 +48,7 @@
 
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 import Select2 from './select2.vue';
 import DurationFormatter from '../mixins/durationformatter';
@@ -72,8 +70,6 @@ export default {
             running: false,
             total: 0,
             seconds: '0',
-
-            submitted: false,
         };
     },
     computed: {
@@ -83,13 +79,11 @@ export default {
         }),
     },
     methods: {
-        submitEntry(e) {
-            if (!this.project) {
-                return $.growl.error({ message: 'Need to select a project.' });
-            } else if (!this.duration) {
-                return $.growl.error({ message: 'Need to add a duration.' });
-            }
-            let body = {
+        ...mapActions({
+            createEntry: 'entries/createEntry',
+        }),
+        submitEntry() {
+            this.createEntry({
                 task: this.task,
                 project: this.project,
                 note: this.note,
@@ -97,19 +91,12 @@ export default {
                 datetime_start: this.datetimeStart,
                 datetime_end: this.datetimeEnd,
                 user: timestrapConfig.USER.URL
-            };
-            this.submitted = true;
-            this.$quickFetch(timestrapConfig.API_URLS.ENTRIES, 'post', body).then(data => {
-                $.growl.notice({ message: 'New entry added!' });
-                this.reset();
-                this.note = null;
-                this.bus.$emit('refreshEntries');
-                this.submitted = false;
-            }).catch(error => console.log(error));
+            });
+            this.reset();
+            this.note = null;
         },
         reset() {
             this.duration = null;
-
             this.total = 0;
             this.seconds = '0';
         },
@@ -130,9 +117,7 @@ export default {
             } else {
                 this.datetimeEnd = new Date(Date.now());
                 clearInterval(this.interval);
-                if (this.total < 60) {
-                    this.reset();
-                }
+                if (this.total < 60) this.reset();
                 document.title = 'Application — ' + timestrapConfig.SITE.NAME;
             }
         },
