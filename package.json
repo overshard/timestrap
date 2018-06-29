@@ -1,77 +1,66 @@
 {
-    "name": "timestrap",
-    "author": "Timestrap's Contributors",
-    "description": "Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.",
-    "repository": "https://github.com/overshard/timestrap",
-    "keywords": [
-        "python",
-        "django",
-        "web",
-        "timetracking"
-    ],
-    "version": "1.0.0-alpha",
-    "license": "BSD-2-Clause",
-    "engines": {
-        "node": "^8.10.0",
-        "npm": "^6.1.0"
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not ie <= 10"
-    ],
-    "babel": {
-        "presets": [
-            "env",
-            "react",
-            "stage-0"
-        ],
-        "plugins": [
-            "transform-class-properties",
-            "transform-decorators",
-            "transform-react-constant-elements",
-            "transform-react-inline-elements"
-        ]
-    },
-    "dependencies": {
-        "axios": "^0.18.0",
-        "babel-core": "^6.26.3",
-        "babel-env": "^2.4.1",
-        "babel-loader": "^7.1.4",
-        "babel-plugin-transform-runtime": "^6.23.0",
-        "babel-polyfill": "^6.26.0",
-        "bootstrap": "^4.1.1",
-        "chart.js": "^2.7.2",
-        "css-loader": "^0.28.11",
-        "eslint-plugin-html": "^4.0.5",
-        "file-loader": "^1.1.11",
-        "font-awesome": "^4.7.0",
-        "gulp": "^3.9.1",
-        "gulp-clean-css": "^3.9.4",
-        "gulp-concat": "^2.6.0",
-        "gulp-eslint": "^4.0.2",
-        "gulp-sass": "^4.0.1",
-        "gulp-sass-lint": "^1.3.4",
-        "jquery": "^3.3.1",
-        "moment": "^2.22.2",
-        "moment-timezone": "^0.5.21",
-        "pickadate": "^3.5.0",
-        "popper.js": "^1.13.0",
-        "require-dir": "^1.0.0",
-        "sass-loader": "^7.0.3",
-        "select2": "^4.0.6-rc.1",
-        "style-loader": "^0.21.0",
-        "uglifyjs-webpack-plugin": "^1.2.7",
-        "vue": "^2.5.13",
-        "vue-loader": "^15.2.4",
-        "vue-router": "^3.0.1",
-        "vue-template-compiler": "^2.5.16",
-        "vueify": "^9.4.1",
-        "vuex": "^3.0.1",
-        "webpack": "^4.13.0",
-        "webpack-stream": "^4.0.3"
-    },
-    "scripts": {
-        "heroku-postbuild": "gulp build"
-    }
+  "name": "timestrap",
+  "author": "Timestrap's Contributors",
+  "description": "Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.",
+  "repository": "https://github.com/overshard/timestrap",
+  "keywords": [
+    "python",
+    "django",
+    "web",
+    "timetracking"
+  ],
+  "version": "1.0.0-alpha",
+  "license": "BSD-2-Clause",
+  "engines": {
+    "node": "^8.10.0",
+    "npm": "^6.1.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ],
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-env": "^2.4.1",
+    "babel-eslint": "^8.2.5",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "bootstrap": "^4.1.1",
+    "chart.js": "^2.7.2",
+    "css-loader": "^0.28.11",
+    "eslint-plugin-vue": "^4.5.0",
+    "file-loader": "^1.1.11",
+    "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^4.0.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-sass-lint": "^1.3.4",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
+    "pickadate": "^3.5.0",
+    "popper.js": "^1.13.0",
+    "require-dir": "^1.0.0",
+    "sass-loader": "^7.0.3",
+    "select2": "^4.0.6-rc.1",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "vue": "^2.5.13",
+    "vue-eslint-parser": "^2.0.3",
+    "vue-loader": "^15.2.4",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.16",
+    "vueify": "^9.4.1",
+    "vuex": "^3.0.1",
+    "webpack": "^4.13.0",
+    "webpack-stream": "^4.0.3"
+  },
+  "scripts": {
+    "heroku-postbuild": "gulp build"
+  }
 }

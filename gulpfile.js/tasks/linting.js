@@ -25,23 +25,18 @@ gulp.task('lint:python', function(cb) {
 
 
 gulp.task('lint:sass', function() {
-    return gulp.src('static_src/sass/**/*.{scss|sass|css}')
-        .pipe(sasslint({
-            rules: {
-                'no-vendor-prefixes': 2,
-                'no-ids': 0,
-                'indentation': [
-                    1,
-                    {
-                        'size': 4
-                    }
-                ],
-                'property-sort-order': 0,
-                'force-element-nesting': 0
-            }
-        }))
-        .pipe(sasslint.format())
-        .pipe(sasslint.failOnError());
+    // return gulp.src('client/static_src/components/**/*.vue')
+    //     .pipe(sasslint({
+    //         rules: {
+    //             'no-vendor-prefixes': 2,
+    //             'no-ids': 0,
+    //             'indentation': [1, {'size': 4}],
+    //             'property-sort-order': 0,
+    //             'force-element-nesting': 0,
+    //         },
+    //     }))
+    //     .pipe(sasslint.format())
+    //     .pipe(sasslint.failOnError());
 });
 
 
@@ -50,40 +45,7 @@ gulp.task('lint:es', function() {
         'gulpfile.js/**/*.js',
         'client/static_src/**/*.js',
         'client/static_src/components/**/*.vue'])
-        .pipe(eslint({
-            'rules': {
-                'indent': [
-                    'error',
-                    4
-                ],
-                'linebreak-style': [
-                    'error',
-                    'unix'
-                ],
-                'quotes': [
-                    'error',
-                    'single'
-                ],
-                'semi': [
-                    'error',
-                    'always'
-                ]
-            },
-            'globals': [
-                '$'
-            ],
-            'env': {
-                'browser': true
-            },
-            'extends': 'eslint:recommended',
-            'plugins': [
-                'html'
-            ],
-            'parserOptions': {
-                'ecmaVersion': 6,
-                'sourceType': 'module'
-            }
-        }))
+        .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });
