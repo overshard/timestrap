@@ -44,7 +44,7 @@
                          v-model="user"
                          v-bind:options="users"
                          placeholder="User"
-                         allowclear="true"></select2>
+                         allowclear></select2>
             </div>
             <div class="form-group">
                 <label>Client</label>
@@ -52,7 +52,7 @@
                          v-model="client"
                          v-bind:options="clients"
                          placeholder="Client"
-                         allowclear="true"></select2>
+                         allowclear></select2>
             </div>
             <div class="form-group pb-4">
                 <label>Project</label>
@@ -60,7 +60,7 @@
                          v-model="project"
                          v-bind:options="projects"
                          placeholder="Project"
-                         allowclear="true"></select2>
+                         allowclear></select2>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -88,7 +88,7 @@
                          v-model="task"
                          v-bind:options="tasks"
                          placeholder="Task"
-                         allowclear="true"></select2>
+                         allowclear></select2>
             </div>
             <div class="form-group">
                 <label>Min. Date</label>
@@ -97,7 +97,7 @@
                             class="form-control form-control-sm date-input"
                             v-model="dateMin"
                             placeholder="Min. date"
-                            allowclear="true"></datepicker>
+                            allowclear></datepicker>
             </div>
             <div class="form-group pb-4">
                 <label>Max. Date</label>
@@ -106,7 +106,7 @@
                             class="form-control form-control-sm date-input"
                             v-model="dateMax"
                             placeholder="Max. date"
-                            allowclear="true"></datepicker>
+                            allowclear></datepicker>
             </div>
             <button id="generate-report"
                     type="submit"

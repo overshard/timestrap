@@ -7,7 +7,12 @@
 
 <script>
 export default {
-    props: ['options', 'selected', 'placeholder', 'allowclear'],
+    props: [
+        'options',
+        'selected',
+        'placeholder',
+        'allowclear',
+    ],
     mounted() {
         this.update();
     },
@@ -19,18 +24,13 @@ export default {
     },
     methods: {
         update() {
-            if (this.allowclear == 'true') {
-                this.allowclear = true;
-            } else {
-                this.allowclear = false;
-            }
             $(this.$el)
                 .select2({
                     data: this.options,
                     placeholder: this.placeholder,
                     width: '100%',
                     dropdownAutoWidth: true,
-                    allowClear: this.allowclear
+                    allowClear: this.allowclear !== undefined ? true : false
                 })
                 .val(this.selected)
                 .trigger('change')
@@ -45,7 +45,7 @@ export default {
     },
     destroyed() {
         this.destroy();
-    }
+    },
 };
 </script>
 
