@@ -4,7 +4,7 @@ import 'moment-timezone';
 
 const VueMoment = {
     install: Vue => {
-        moment.locale(timestrapConfig.SITE.LOCALE)
+        moment.locale(timestrapConfig.SITE.LOCALE);
         Vue.prototype.$moment = moment;
     }
 };

@@ -15,7 +15,9 @@ export default {
     getters: {
         // Clients
         getSelectClients: state => {
-            return state.allClients.map(client => {return {id: client.url, text: client.name}});
+            return state.allClients.map(client => {
+                return {id: client.url, text: client.name};
+            });
         },
 
         // Projects
@@ -39,7 +41,9 @@ export default {
 
         // Clients & Projects
         getClientProjects: state => clientUrl => {
-            return state.allProjects.filter(project => {return project.client == clientUrl})
+            return state.allProjects.filter(project => {
+                return project.client == clientUrl;
+            });
         },
     },
     mutations: {
@@ -71,12 +75,14 @@ export default {
         },
         editClient({commit, state}, client) {
             fetch.put(client.url, client).then(response => {
-                const index = state.allClients.findIndex(item => {return item.id === response.data.id});
+                const index = state.allClients.findIndex(item => {
+                    return item.id === response.data.id;
+                });
                 commit('updateClient', {index: index, client: response.data});
             }).catch(error => console.log(error));
         },
         deleteClient({commit, state}, index) {
-            fetch.delete(state.allClients[index].url).then(response => {
+            fetch.delete(state.allClients[index].url).then(() => {
                 commit('removeClient', index);
             }).catch(error => console.log(error));
         },
@@ -96,12 +102,14 @@ export default {
         },
         editProject({commit, state}, project) {
             fetch.put(project.url, project).then(response => {
-                const index = state.allProjects.findIndex(item => {return item.id === response.data.id});
+                const index = state.allProjects.findIndex(item => {
+                    return item.id === response.data.id;
+                });
                 commit('updateProject', {index: index, project: response.data});
             }).catch(error => console.log(error));
         },
         deleteProject({commit, state}, index) {
-            fetch.delete(state.allProjects[index].url).then(response => {
+            fetch.delete(state.allProjects[index].url).then(() => {
                 commit('removeProject', index);
             }).catch(error => console.log(error));
         },

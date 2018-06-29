@@ -10,7 +10,9 @@ export default {
     },
     getters: {
         getSelectTasks: state => {
-            return state.all.map(task => {return {id: task.url, text: task.name}});
+            return state.all.map(task => {
+                return {id: task.url, text: task.name};
+            });
         },
     },
     mutations: {
@@ -34,12 +36,14 @@ export default {
         },
         editTask({commit, state}, task) {
             fetch.put(task.url, task).then(response => {
-                const index = state.all.findIndex(item => {return item.id === response.data.id});
+                const index = state.all.findIndex(item => {
+                    return item.id === response.data.id;
+                });
                 commit('updateTask', {index: index, task: response.data});
             }).catch(error => console.log(error));
         },
         deleteTask({commit, state}, index) {
-            fetch.delete(state.all[index].url).then(response => {
+            fetch.delete(state.all[index].url).then(() => {
                 commit('removeTask', index);
             }).catch(error => console.log(error));
         },

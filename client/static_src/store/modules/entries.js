@@ -12,18 +12,22 @@ export default {
     },
     getters: {
         getSelectEntries: state => {
-            return state.all.map(entry => {return {id: entry.url, text: entry.name}});
+            return state.all.map(entry => {
+                return {id: entry.url, text: entry.name};
+            });
         },
         getEntriesByDay: state => {
             let allDays = [];
             for (let i = 0; i < 5; i++) {
                 let day = Vue.prototype.$moment().subtract(i, 'day').format('YYYY-MM-DD');
-                allDays.push(day)
+                allDays.push(day);
             }
             return allDays.map(day => {
                 return {
                     date: day,
-                    entries: state.all.filter(entry => {return entry.date == day}),
+                    entries: state.all.filter(entry => {
+                        return entry.date == day;
+                    }),
                 };
             });
         },
@@ -45,7 +49,7 @@ export default {
                     min_date: Vue.prototype.$moment().subtract(5, 'day').format('YYYY-MM-DD'),
                     max_date: Vue.prototype.$moment().format('YYYY-MM-DD'),
                 },
-            }
+            };
             fetch.get(timestrapConfig.API_URLS.ENTRIES, getOptions).then(response => {
                 commit('setEntries', response.data.results);
                 commit('setTotal', response.data.total_duration);
@@ -60,12 +64,14 @@ export default {
         },
         editEntry({commit, state}, entry) {
             fetch.put(entry.url, entry).then(response => {
-                const index = state.all.findIndex(item => {return item.id === response.data.id});
+                const index = state.all.findIndex(item => {
+                    return item.id === response.data.id;
+                });
                 commit('updateEntry', {index: index, entry: response.data});
             }).catch(error => console.log(error));
         },
         deleteEntry({commit, state}, index) {
-            fetch.delete(state.all[index].url).then(response => {
+            fetch.delete(state.all[index].url).then(() => {
                 commit('removeEntry', index);
             }).catch(error => console.log(error));
         },

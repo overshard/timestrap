@@ -10,7 +10,9 @@ export default {
     },
     getters: {
         getSelectUsers: state => {
-            return state.all.map(user => {return {id: user.url, text: user.username}});
+            return state.all.map(user => {
+                return {id: user.url, text: user.username};
+            });
         },
     },
     mutations: {
@@ -34,12 +36,14 @@ export default {
         },
         editUser({commit, state}, user) {
             fetch.put(user.url, user).then(response => {
-                const index = state.all.findIndex(item => {return item.id === response.data.id});
+                const index = state.all.findIndex(item => {
+                    return item.id === response.data.id;
+                });
                 commit('updateUser', {index: index, user: response.data});
             }).catch(error => console.log(error));
         },
         deleteUser({commit, state}, index) {
-            fetch.delete(state.all[index].url).then(response => {
+            fetch.delete(state.all[index].url).then(() => {
                 commit('removeUser', index);
             }).catch(error => console.log(error));
         },

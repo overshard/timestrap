@@ -1,15 +1,19 @@
 {
   "rules": {
-    "indent": ["error", 4],
     "linebreak-style": ["error", "unix"],
+    "indent": ["error", 4],
     "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "no-console": "off"
   },
   "env": {
     "browser": true,
     "commonjs": true,
     "es6": true,
     "jquery": true
+  },
+  "globals": {
+    "timestrapConfig": true
   },
   "parser": "vue-eslint-parser",
   "extends": [
