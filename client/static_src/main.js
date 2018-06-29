@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import App from './components/app.vue';
 
+import VueMoment from './plugins/moment';
 import perms from './plugins/permissions';
 import user from './plugins/user';
 
@@ -16,6 +17,7 @@ Vue.prototype.bus = new Vue();
 
 // Plugins
 
+Vue.use(VueMoment);
 Vue.use(perms);
 Vue.use(user);
 

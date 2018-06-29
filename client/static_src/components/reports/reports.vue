@@ -271,9 +271,6 @@ export default {
             };
             document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
         },
-        moment(date) {
-            return moment(date).format('LL');
-        },
         refresh() {
             return this.getEntries();
         }

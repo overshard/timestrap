@@ -22,15 +22,12 @@ export default {
         },
     },
     methods: {
-        moment(date) {
-            return moment(date).format('MMMM Do');
-        },
         update() {
             let chartDates = [];
             let chartDurations = [];
             let entryBlock;
             for (entryBlock in this.entries) {
-                chartDates.push(this.moment(this.entries[entryBlock].date));
+                chartDates.push(this.$moment(this.entries[entryBlock].date).format('MMMM Do'));
                 let entry;
                 let totalTime = 0;
                 for (entry in this.entries[entryBlock].entries) {

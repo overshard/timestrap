@@ -32,7 +32,7 @@
             <div class="row inset-row">
                 <div class="col-12">
                     <h2 class="display-4 text-muted">
-                        {{ moment(entryBlock.date) }}
+                        {{ $moment(entryBlock.date).format('MMMM Do') }}
                     </h2>
                 </div>
             </div>
@@ -112,9 +112,6 @@ export default {
             if (entry) this.modal.entry = entry;
             else this.modal.entry = null;
             this.modal.show = !this.modal.show;
-        },
-        moment(date) {
-            return moment(date).format('MMMM Do');
         },
     },
     components: {

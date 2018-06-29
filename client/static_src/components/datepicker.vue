@@ -14,7 +14,7 @@ export default {
                 $('.picker').appendTo('body');
                 if (vm.default) {
                     this.set('select', vm.default);
-                    vm.$emit('input', moment(vm.default).format('YYYY-MM-DD'));
+                    vm.$emit('input', vm.$moment(vm.default).format('YYYY-MM-DD'));
                 }
             },
             onSet: function() {

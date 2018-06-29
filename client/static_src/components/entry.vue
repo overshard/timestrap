@@ -113,7 +113,7 @@ export default {
             return this.durationToString(this.entry.duration);
         },
         dateFormatted() {
-            return moment(this.date).format('LL');
+            return this.$moment(this.date).format('LL');
         },
     },
     methods: {
@@ -121,7 +121,7 @@ export default {
             deleteEntry: 'entries/deleteEntry',
         }),
         formatDateTime(datetime) {
-            if (datetime) return moment(datetime).format('h:mm a');
+            if (datetime) return this.$moment(datetime).format('h:mm a');
             else return '-';
         }
     },

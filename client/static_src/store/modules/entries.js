@@ -17,7 +17,7 @@ export default {
         getEntriesByDay: state => {
             let allDays = [];
             for (let i = 0; i < 5; i++) {
-                let day = moment().subtract(i, 'day').format('YYYY-MM-DD');
+                let day = Vue.prototype.$moment().subtract(i, 'day').format('YYYY-MM-DD');
                 allDays.push(day)
             }
             return allDays.map(day => {
@@ -42,8 +42,8 @@ export default {
             let getOptions = {
                 params: {
                     user: timestrapConfig.USER.ID,
-                    min_date: moment().subtract(5, 'day').format('YYYY-MM-DD'),
-                    max_date: moment().format('YYYY-MM-DD'),
+                    min_date: Vue.prototype.$moment().subtract(5, 'day').format('YYYY-MM-DD'),
+                    max_date: Vue.prototype.$moment().format('YYYY-MM-DD'),
                 },
             }
             fetch.get(timestrapConfig.API_URLS.ENTRIES, getOptions).then(response => {
