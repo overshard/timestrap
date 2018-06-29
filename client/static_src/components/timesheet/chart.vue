@@ -109,6 +109,6 @@ export default {
 
 <style lang="scss">
 .chartjs-wrapper {
-    height: 250px;
+  height: 250px;
 }
 </style>
