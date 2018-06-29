@@ -47,5 +47,5 @@ export default {
                 commit('removeTask', index);
             }).catch(error => console.log(error));
         },
-    }
+    },
 };

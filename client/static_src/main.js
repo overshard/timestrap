@@ -49,5 +49,5 @@ new Vue({
     el: '#app',
     render(createElement) {
         return createElement(App);
-    }
+    },
 });

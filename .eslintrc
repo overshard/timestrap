@@ -4,7 +4,10 @@
     "indent": ["error", 4],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "no-console": "off"
+    "no-console": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "array-bracket-spacing": ["error", "never"],
+    "object-curly-spacing": ["error", "never"]
   },
   "env": {
     "browser": true,

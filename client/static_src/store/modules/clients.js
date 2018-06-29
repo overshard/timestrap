@@ -113,5 +113,5 @@ export default {
                 commit('removeProject', index);
             }).catch(error => console.log(error));
         },
-    }
+    },
 };

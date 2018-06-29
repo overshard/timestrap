@@ -47,5 +47,5 @@ export default {
                 commit('removeUser', index);
             }).catch(error => console.log(error));
         },
-    }
+    },
 };

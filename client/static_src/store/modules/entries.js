@@ -75,5 +75,5 @@ export default {
                 commit('removeEntry', index);
             }).catch(error => console.log(error));
         },
-    }
+    },
 };
