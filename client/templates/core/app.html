@@ -3,62 +3,65 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Application — {{ request.site.name }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
-    </head>
-    <body>
-        <div id="app"></div>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Application — {{ request.site.name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <div id="github">
-            <a href="https://github.com/overshard/timestrap" target="_blank">
-                <i class="fa fa-github" aria-hidden="true"></i>
-            </a>
-        </div>
+  <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
+</head>
 
-        <script>
-            (function(document, window) {
-                window.timestrapConfig = window.timestrapConfig || {};
-                timestrapConfig.CORE_URLS = {
-                    LOGIN: "{% url 'login' %}",
-                    LOGOUT: "{% url 'logout' %}",
-                    API: "{% url 'api-root' %}",
-                    ADMIN: "{% url 'admin:index' %}",
-                    REPORTS: "{% url 'reports' %}",
-                    REPORTS_EXPORT: "{% url 'reports-export' %}",
-                    CLIENTS: "{% url 'clients' %}",
-                    TIMESHEET: "{% url 'timesheet' %}",
-                    TASKS: "{% url 'tasks' %}"
-                };
-                timestrapConfig.API_URLS = {
-                    USERS: "{% url 'user-list' %}",
-                    PERMISSIONS: "{% url 'permission-list' %}",
-                    CLIENTS: "{% url 'client-list' %}",
-                    PROJECTS: "{% url 'project-list' %}",
-                    ENTRIES: "{% url 'entry-list' %}",
-                    TASKS: "{% url 'task-list' %}"
-                };
-                timestrapConfig.USER = {
-                    ID: {{ user.id }},
-                    URL: "{% url 'user-detail' user.id %}",
-                    NAME: "{{ user.username }}",
-                    IS_STAFF: {{ user.is_staff|yesno:"true,false" }}
-                };
-                timestrapConfig.SITE = {
-                    ID: {{ request.site.id }},
-                    DOMAIN: "{{ request.site.domain }}",
-                    NAME: "{{ request.site.name }}",
-                    LOCALE: "{{ request.site.conf.i18n_language_code }}",
-                    TIMEZONE: "{{ request.site.conf.i18n_timezone }}"
-                };
-            })(document, window);
-        </script>
+<body>
+  <div id="app"></div>
 
-        <script src="{% static 'js/bundle-vendor.js' %}"></script>
-        <script src="{% static 'js/bundle-app.js' %}"></script>
-    </body>
+  <div id="github">
+    <a href="https://github.com/overshard/timestrap" target="_blank">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <script>
+    (function(document, window) {
+      window.timestrapConfig = window.timestrapConfig || {};
+      timestrapConfig.CORE_URLS = {
+        LOGIN: "{% url 'login' %}",
+        LOGOUT: "{% url 'logout' %}",
+        API: "{% url 'api-root' %}",
+        ADMIN: "{% url 'admin:index' %}",
+        REPORTS: "{% url 'reports' %}",
+        REPORTS_EXPORT: "{% url 'reports-export' %}",
+        CLIENTS: "{% url 'clients' %}",
+        TIMESHEET: "{% url 'timesheet' %}",
+        TASKS: "{% url 'tasks' %}",
+      };
+      timestrapConfig.API_URLS = {
+        USERS: "{% url 'user-list' %}",
+        PERMISSIONS: "{% url 'permission-list' %}",
+        CLIENTS: "{% url 'client-list' %}",
+        PROJECTS: "{% url 'project-list' %}",
+        ENTRIES: "{% url 'entry-list' %}",
+        TASKS: "{% url 'task-list' %}",
+      };
+      timestrapConfig.USER = {
+        ID: {{ user.id }},
+        URL: "{% url 'user-detail' user.id %}",
+        NAME: "{{ user.username }}",
+        IS_STAFF: {{ user.is_staff|yesno:"true,false" }},
+      };
+      timestrapConfig.SITE = {
+        ID: {{ request.site.id }},
+        DOMAIN: "{{ request.site.domain }}",
+        NAME: "{{ request.site.name }}",
+        LOCALE: "{{ request.site.conf.i18n_language_code }}",
+        TIMEZONE: "{{ request.site.conf.i18n_timezone }}",
+      };
+    })(document, window);
+  </script>
+
+  <script src="{% static 'js/bundle-vendor.js' %}"></script>
+  <script src="{% static 'js/bundle-app.js' %}"></script>
+</body>
+
 </html>
