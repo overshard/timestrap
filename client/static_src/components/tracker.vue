@@ -22,20 +22,20 @@
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-sm btn-success w-100"
-                        v-on:click="toggle" v-block-during-fetch
+                        v-on:click="toggle"
                         v-if="!this.running && !this.duration">
                     <i class="fa fa-play" aria-hidden="true"></i>
                     Start
                 </button>
                 <button class="btn btn-sm btn-danger w-100"
-                        v-on:click="toggle" v-block-during-fetch
+                        v-on:click="toggle"
                         v-if="this.running">
                     <i class="fa fa-stop" aria-hidden="true"></i>
                     Stop ({{ this.seconds }})
                 </button>
                 <button class="btn btn-sm btn-info w-100"
                         name="entry-add-submit"
-                        v-on:click="submitEntry" v-block-during-fetch
+                        v-on:click="submitEntry"
                         v-if="!this.running && this.duration">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Add

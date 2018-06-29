@@ -5,7 +5,6 @@
             <template v-if="is_staff">
                 <button id="export-report"
                         class="btn btn-primary btn-sm mr-1"
-                        v-block-during-fetch
                         v-on:click="exportReport">
                     <i class="fa fa-download" aria-hidden="true"></i>
                     Export Report
@@ -111,8 +110,7 @@
             </div>
             <button id="generate-report"
                     type="submit"
-                    class="btn btn-primary btn-sm w-100"
-                    v-block-during-fetch>
+                    class="btn btn-primary btn-sm w-100">
                 Generate Report
             </button>
         </div>
