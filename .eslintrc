@@ -17,7 +17,8 @@
     "jquery": true
   },
   "globals": {
-    "timestrapConfig": true
+    "timestrapConfig": true,
+    "process": true
   },
   "parser": "vue-eslint-parser",
   "extends": [

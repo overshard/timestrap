@@ -12,28 +12,28 @@ gulp.task('docs:build', ['docs:github', 'docs:rtd']);
 
 
 gulp.task('docs:watch', function() {
-    gulp.watch(['docs/**/*.md', 'docs/**/*.rst'], ['docs:github', 'docs:rtd']);
+  gulp.watch(['docs/**/*.md', 'docs/**/*.rst'], ['docs:github', 'docs:rtd']);
 });
 
 
 gulp.task('docs:github', function() {
-    gulp.src(docsReadmeFiles)
-        .pipe(concat('README.md'))
-        .pipe(gulp.dest('.'));
+  gulp.src(docsReadmeFiles)
+    .pipe(concat('README.md'))
+    .pipe(gulp.dest('.'));
 });
 
 
 gulp.task('docs:rtd', function(cb) {
-    spawn(
-        'pipenv',
-        [
-            'run',
-            'sphinx-build',
-            'docs',
-            'docs/_build'
-        ],
-        {
-            stdio: 'inherit'
-        }
-    ).on('exit', cb);
+  spawn(
+    'pipenv',
+    [
+      'run',
+      'sphinx-build',
+      'docs',
+      'docs/_build',
+    ],
+    {
+      stdio: 'inherit',
+    }
+  ).on('exit', cb);
 });
