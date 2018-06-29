@@ -2,7 +2,8 @@ const gulp = require('gulp');
 
 const concat = require('gulp-concat');
 
-const webpack = require('webpack-stream');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
 
 const scriptsFiles = require('../../gulpfile.json').scriptsFiles;
 
@@ -19,7 +20,7 @@ gulp.task('scripts:vendor', () => {
 
 gulp.task('scripts:app', () => {
     gulp.src('client/static_src/main.js')
-        .pipe(webpack(require('../../webpack.config.js')))
+        .pipe(webpackStream(require('../../webpack.config.js'), webpack))
         .pipe(concat('bundle-app.js'))
         .pipe(gulp.dest('client/static/js/'));
 });

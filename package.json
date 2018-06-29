@@ -49,6 +49,7 @@
         "sass-loader": "^7.0.3",
         "select2": "^4.0.6-rc.1",
         "style-loader": "^0.21.0",
+        "uglifyjs-webpack-plugin": "^1.2.7",
         "vue": "^2.5.13",
         "vue-loader": "^15.2.4",
         "vue-router": "^3.0.1",
