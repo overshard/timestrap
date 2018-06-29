@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 import moment from 'moment';
 import 'moment-timezone';
 
@@ -8,5 +10,6 @@ const VueMoment = {
     Vue.prototype.$moment = moment;
   },
 };
+
 
 export default VueMoment;

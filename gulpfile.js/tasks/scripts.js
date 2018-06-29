@@ -18,9 +18,10 @@ gulp.task('scripts:vendor', () => {
 });
 
 
-gulp.task('scripts:app', () => {
+gulp.task('scripts:app', cb => {
   gulp.src('client/static_src/main.js')
     .pipe(webpackStream(require('../../webpack.config.js'), webpack))
     .pipe(concat('bundle-app.js'))
-    .pipe(gulp.dest('client/static/js/'));
+    .pipe(gulp.dest('client/static/js/'))
+    .on('end', cb);
 });

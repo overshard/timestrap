@@ -73,7 +73,7 @@
                   API Browser
                 </a>
                 <a
-                  v-if="this.$user.is_staff"
+                  v-if="isStaff"
                   id="nav-admin-admin"
                   :href="admin"
                   class="dropdown-item"
@@ -103,7 +103,10 @@
 
 
 <script>
+import {mapState} from 'vuex';
+
 import Tracker from './tracker.vue';
+
 
 export default {
   components: {
@@ -120,7 +123,7 @@ export default {
       admin: timestrapConfig.CORE_URLS.ADMIN,
       logout: timestrapConfig.CORE_URLS.LOGOUT,
       site: timestrapConfig.SITE,
-      is_staff: timestrapConfig.USER.IS_STAFF,
+      isStaff: timestrapConfig.USER.IS_STAFF,
     };
   },
   methods: {
