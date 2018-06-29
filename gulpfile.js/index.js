@@ -1,6 +1,10 @@
-const requireDir = require('require-dir');
-
-
-requireDir('./tasks', {
-    recurse: true
-});
+require('./tasks/build');
+require('./tasks/default');
+require('./tasks/docs');
+require('./tasks/extras');
+require('./tasks/linting');
+require('./tasks/manage');
+require('./tasks/scripts');
+require('./tasks/styles');
+require('./tasks/testing');
+require('./tasks/watch');
