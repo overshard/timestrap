@@ -1,35 +1,35 @@
 {
-    "name": "Timestrap",
-    "author": "Timestrap's Contributors",
-    "description": "Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.",
-    "repository": "https://github.com/overshard/timestrap",
-    "keywords": [
-        "python",
-        "django",
-        "web",
-        "timetracking"
-    ],
-    "version": "1.0.0-alpha",
-    "license": "BSD-2-Clause",
-    "buildpacks": [
-        {
-            "url": "heroku/nodejs"
-        },
-        {
-            "url": "heroku/python"
-        }
-    ],
-    "env": {
-        "DJANGO_SETTINGS_MODULE": {
-            "description": "We have a prebuilt config for Heroku",
-            "value": "timestrap.settings.heroku"
-        },
-        "SECRET_KEY": {
-            "description": "Used for the Django auth system",
-            "generator": "secret"
-        }
+  "name": "Timestrap",
+  "author": "Timestrap's Contributors",
+  "description": "Time tracking you can host anywhere. Full export support in multiple formats and easily extensible.",
+  "repository": "https://github.com/overshard/timestrap",
+  "keywords": [
+    "python",
+    "django",
+    "web",
+    "timetracking"
+  ],
+  "version": "1.0.0-alpha",
+  "license": "BSD-2-Clause",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
     },
-    "scripts": {
-        "postdeploy": "python manage.py migrate"
+    {
+      "url": "heroku/python"
     }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": {
+      "description": "We have a prebuilt config for Heroku",
+      "value": "timestrap.settings.heroku"
+    },
+    "SECRET_KEY": {
+      "description": "Used for the Django auth system",
+      "generator": "secret"
+    }
+  },
+  "scripts": {
+    "postdeploy": "python manage.py migrate"
+  }
 }
