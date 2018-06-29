@@ -1,70 +1,104 @@
 <template>
-<div id="app">
+  <div id="app">
     <div class="navbar navbar-expand-sm navbar-dark bg-primary">
-        <div class="container">
-            <router-link class="navbar-brand" v-bind:to="timesheet">
-                {{ site.NAME }}
-            </router-link>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul id="nav-app" class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link id="nav-app-timesheet" class="nav-link" v-bind:to="timesheet">
-                            <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
-                            Timesheet
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link id="nav-app-clients" class="nav-link" v-bind:to="clients">
-                            <i class="fa fa-address-book mr-1" aria-hidden="true"></i>
-                            Clients
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link id="nav-app-tasks" class="nav-link" v-bind:to="tasks">
-                            <i class="fa fa-tasks mr-1" aria-hidden="true"></i>
-                            Tasks
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link id="nav-app-reports" class="nav-link" v-bind:to="reports">
-                            <i class="fa fa-book mr-1" aria-hidden="true"></i>
-                            Reports
-                        </router-link>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user-circle mr-2" aria-hidden="true"></i>
-                            {{ username }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a id="nav-admin-api"
-                               class="dropdown-item"
-                               target="_blank"
-                               v-bind:href="api">API Browser</a>
-                            <a id="nav-admin-admin"
-                               class="dropdown-item"
-                               target="_blank"
-                               v-if="this.$user.is_staff"
-                               v-bind:href="admin">Admin</a>
-                            <a id="nav-admin-logout"
-                               class="dropdown-item"
-                               v-bind:href="logout">Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+      <div class="container">
+        <router-link
+          :to="timesheet"
+          class="navbar-brand">
+          {{ site.NAME }}
+        </router-link>
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"/>
+        </button>
+        <div
+          id="navbarCollapse"
+          class="collapse navbar-collapse">
+          <ul
+            id="nav-app"
+            class="navbar-nav">
+            <li class="nav-item">
+              <router-link
+                id="nav-app-timesheet"
+                :to="timesheet"
+                class="nav-link">
+                <i class="fa fa-clock-o mr-1"/>
+                Timesheet
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                id="nav-app-clients"
+                :to="clients"
+                class="nav-link">
+                <i class="fa fa-address-book mr-1"/>
+                Clients
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                id="nav-app-tasks"
+                :to="tasks"
+                class="nav-link">
+                <i class="fa fa-tasks mr-1"/>
+                Tasks
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                id="nav-app-reports"
+                :to="reports"
+                class="nav-link">
+                <i class="fa fa-book mr-1"/>
+                Reports
+              </router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown">
+                <i class="fa fa-user-circle mr-2"/>
+                {{ username }}
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a
+                  :href="api"
+                  class="dropdown-item"
+                  target="_blank">
+                  API Browser
+                </a>
+                <a
+                  v-if="this.$user.is_staff"
+                  id="nav-admin-admin"
+                  :href="admin"
+                  class="dropdown-item"
+                  target="_blank">
+                  Admin
+                </a>
+                <a
+                  id="nav-admin-logout"
+                  :href="logout"
+                  class="dropdown-item">
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
-    <tracker></tracker>
+    <tracker/>
     <div class="container my-4">
-        <router-view v-bind:id="['component-' + $route.name]" class="view"></router-view>
+      <router-view
+        :id="['component-' + $route.name]"
+        class="view"/>
     </div>
-</div>
+  </div>
 </template>
 
 
@@ -72,34 +106,34 @@
 import Tracker from './tracker.vue';
 
 export default {
-    data() {
-        return {
-            timesheet: timestrapConfig.CORE_URLS.TIMESHEET,
-            clients: timestrapConfig.CORE_URLS.CLIENTS,
-            tasks: timestrapConfig.CORE_URLS.TASKS,
-            reports: timestrapConfig.CORE_URLS.REPORTS,
-            username: timestrapConfig.USER.NAME,
-            api: timestrapConfig.CORE_URLS.API,
-            admin: timestrapConfig.CORE_URLS.ADMIN,
-            logout: timestrapConfig.CORE_URLS.LOGOUT,
-            site: timestrapConfig.SITE,
-            is_staff: timestrapConfig.USER.IS_STAFF,
-        };
+  components: {
+    Tracker,
+  },
+  data() {
+    return {
+      timesheet: timestrapConfig.CORE_URLS.TIMESHEET,
+      clients: timestrapConfig.CORE_URLS.CLIENTS,
+      tasks: timestrapConfig.CORE_URLS.TASKS,
+      reports: timestrapConfig.CORE_URLS.REPORTS,
+      username: timestrapConfig.USER.NAME,
+      api: timestrapConfig.CORE_URLS.API,
+      admin: timestrapConfig.CORE_URLS.ADMIN,
+      logout: timestrapConfig.CORE_URLS.LOGOUT,
+      site: timestrapConfig.SITE,
+      is_staff: timestrapConfig.USER.IS_STAFF,
+    };
+  },
+  methods: {
+    submitSearch() {
+      this.$router.push({
+        name: 'reports',
+        query: {
+          search: this.search,
+        },
+      });
+      this.bus.$emit('search');
     },
-    methods: {
-        submitSearch() {
-            this.$router.push({
-                name: 'reports',
-                query: {
-                    search: this.search,
-                },
-            });
-            this.bus.$emit('search');
-        }
-    },
-    components: {
-        Tracker
-    }
+  },
 };
 </script>
 
@@ -108,13 +142,13 @@ export default {
 // Fix bootstrap v4 not using pointer on some objects
 a,
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 // Fix bootstrap v4 making some field invalid before input
 input:required {
-    border-color: #ccc !important;
-    box-shadow: none !important;
+  border-color: #ccc !important;
+  box-shadow: none !important;
 }
 
 // Make current active nav item more visible
@@ -122,33 +156,33 @@ input:required {
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .show > .nav-link {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #github {
-    position: fixed;
-    bottom: 5px;
-    right: 15px;
-    font-size: 2em;
+  position: fixed;
+  bottom: 5px;
+  right: 15px;
+  font-size: 2em;
 
-    a {
-        color: #000;
-    }
+  a {
+    color: #000;
+  }
 }
 
 .btn,
 .export-select {
-    font-size: .7em;
-    line-height: 1.8em;
-    letter-spacing: 1px;
-    font-weight: bold;
-    text-transform: uppercase;
+  font-size: .7em;
+  line-height: 1.8em;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 // Remove arrow on the ellipsis icons on rows
 .btn-icon {
-    &::after {
-        display: none;
-    }
+  &::after {
+    display: none;
+  }
 }
 </style>
