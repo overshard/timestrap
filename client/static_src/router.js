@@ -11,13 +11,13 @@ Vue.use(VueRouter);
 
 
 export default new VueRouter({
-    mode: 'history',
-    hasbang: false,
-    linkActiveClass: 'active',
-    routes: [
-        {path: '/clients/', name: 'clients', component: Clients},
-        {path: '/tasks/', name: 'tasks', component: Tasks},
-        {path: '/timesheet/', name: 'timesheet', component: Timesheet},
-        {path: '/reports/', name: 'reports', component: Reports},
-    ],
+  mode: 'history',
+  hasbang: false,
+  linkActiveClass: 'active',
+  routes: [
+    {path: '/clients/', name: 'clients', component: Clients},
+    {path: '/tasks/', name: 'tasks', component: Tasks},
+    {path: '/timesheet/', name: 'timesheet', component: Timesheet},
+    {path: '/reports/', name: 'reports', component: Reports},
+  ],
 });

@@ -25,9 +25,9 @@ Vue.use(user);
 // Promise user and permissions to all routes
 
 router.beforeEach((to, from, next) => {
-    Promise.all([Vue.prototype.$user, Vue.prototype.$perms]).then(function() {
-        next();
-    });
+  Promise.all([Vue.prototype.$user, Vue.prototype.$perms]).then(function() {
+    next();
+  });
 });
 
 
@@ -44,10 +44,10 @@ store.dispatch('users/getUsers');
 // Start vue app
 
 new Vue({
-    router,
-    store,
-    el: '#app',
-    render(createElement) {
-        return createElement(App);
-    },
+  router,
+  store,
+  el: '#app',
+  render(createElement) {
+    return createElement(App);
+  },
 });

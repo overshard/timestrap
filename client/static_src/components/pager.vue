@@ -1,23 +1,29 @@
 <template>
-<div class="pull-right">
-    <button class="btn btn-primary btn-sm mr-1"
-            v-if="previous" @click="$emit('previous-page')">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
+  <div class="pull-right">
+    <button
+      v-if="previous"
+      class="btn btn-primary btn-sm mr-1"
+      @click="$emit('previous-page')">
+      <i class="fa fa-arrow-left"/>
+      Previous
     </button>
 
-    <button class="btn btn-primary btn-sm"
-            v-if="next" @click="$emit('next-page')">
-        Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    <button
+      v-if="next"
+      class="btn btn-primary btn-sm"
+      @click="$emit('next-page')">
+      Next
+      <i class="fa fa-arrow-right"/>
     </button>
-</div>
+  </div>
 </template>
 
 
 <script>
 export default {
-    props: [
-        'next',
-        'previous'
-    ]
+  props: [
+    'next',
+    'previous',
+  ],
 };
 </script>

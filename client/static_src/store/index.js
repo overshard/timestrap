@@ -15,16 +15,16 @@ Vue.use(Vuex);
 // Create and export store with all modules for use in main
 
 export default new Vuex.Store({
-    state: {
-        loading: true,
-    },
-    mutations: {
-        setLoading: (state, status) => state.loading = status,
-    },
-    modules: {
-        entries: entries,
-        tasks: tasks,
-        clients: clients,
-        users: users,
-    },
+  state: {
+    loading: true,
+  },
+  mutations: {
+    setLoading: (state, status) => state.loading = status,
+  },
+  modules: {
+    entries: entries,
+    tasks: tasks,
+    clients: clients,
+    users: users,
+  },
 });
