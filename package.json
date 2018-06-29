@@ -20,6 +20,19 @@
         "last 2 versions",
         "not ie <= 10"
     ],
+    "babel": {
+        "presets": [
+            "env",
+            "react",
+            "stage-0"
+        ],
+        "plugins": [
+            "transform-class-properties",
+            "transform-decorators",
+            "transform-react-constant-elements",
+            "transform-react-inline-elements"
+        ]
+    },
     "dependencies": {
         "axios": "^0.18.0",
         "babel-core": "^6.26.3",
