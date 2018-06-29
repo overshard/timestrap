@@ -1,10 +1,8 @@
 const gulp = require('gulp');
+
 const concat = require('gulp-concat');
-const tap = require('gulp-tap');
-const buffer = require('gulp-buffer');
-const vueify = require('vueify');
-const browserify = require('browserify');
-const envify = require('envify/custom');
+
+const webpack = require('webpack-stream');
 
 const scriptsFiles = require('../../gulpfile.json').scriptsFiles;
 
@@ -20,22 +18,8 @@ gulp.task('scripts:vendor', () => {
 
 
 gulp.task('scripts:app', () => {
-    gulp.src('client/static_src/main.js', { read: false })
-        .pipe(tap(function(file) {
-            file.contents = browserify(file.path)
-                .transform("babelify")
-                .transform(vueify)
-                .transform(
-                    { global: true },
-                    envify({ NODE_ENV: 'production' })
-                )
-                .bundle()
-                .on('error', function(err) {
-                    console.log(err.toString());
-                    this.emit('end');
-                });
-        }))
-        .pipe(buffer())
+    gulp.src('client/static_src/main.js')
+        .pipe(webpack(require('../../webpack.config.js')))
         .pipe(concat('bundle-app.js'))
         .pipe(gulp.dest('client/static/js/'));
 });
