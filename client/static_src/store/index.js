@@ -16,10 +16,33 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loading: true,
+    maxLoading: 0,
+    loading: [],
+  },
+  getters: {
+    loadingPercent: (state) => {
+      if (state.loading.length > 0) return (1 - (state.loading.length / state.maxLoading)) * 100;
+      else return 100;
+    },
+    doneLoading: (state) => {
+      if (state.maxLoading === 0) return true;
+      else return false;
+    },
   },
   mutations: {
-    setLoading: (state, status) => state.loading = status,
+    addLoading: (state, module) => {
+      state.loading.push(module);
+      state.maxLoading++;
+    },
+    removeLoading: (state, module) => {
+      Vue.delete(
+        state.loading,
+        state.loading.indexOf(module),
+      );
+      setTimeout(() => {
+        if (state.loading.length === 0) state.maxLoading = 0;
+      }, 1000);
+    },
   },
   modules: {
     entries: entries,

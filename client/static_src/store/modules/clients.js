@@ -62,10 +62,10 @@ export default {
   actions: {
     // Clients
     getClients({commit}) {
-      commit('setLoading', true, {root: true});
+      commit('addLoading', 'clients', {root: true});
       fetch.get(timestrapConfig.API_URLS.CLIENTS).then(response => {
         commit('setClients', response.data);
-        commit('setLoading', false, {root: true});
+        commit('removeLoading', 'clients', {root: true});
       }).catch(error => console.log(error));
     },
     createClient({commit}, client) {
@@ -96,10 +96,10 @@ export default {
 
     // Projects
     getProjects({commit}) {
-      commit('setLoading', true, {root: true});
+      commit('addLoading', 'projects', {root: true});
       fetch.get(timestrapConfig.API_URLS.PROJECTS).then(response => {
         commit('setProjects', response.data);
-        commit('setLoading', false, {root: true});
+        commit('removeLoading', 'projects', {root: true});
       }).catch(error => console.log(error));
     },
     createProject({commit}, project) {

@@ -42,7 +42,7 @@ export default {
   },
   actions: {
     getEntries({commit}) {
-      commit('setLoading', true, {root: true});
+      commit('addLoading', 'entries', {root: true});
       let getOptions = {
         params: {
           user: timestrapConfig.USER.ID,
@@ -54,7 +54,7 @@ export default {
         commit('setEntries', response.data.results);
         commit('setTotal', response.data.total_duration);
         commit('setSubtotal', response.data.subtotal_duration);
-        commit('setLoading', false, {root: true});
+        commit('removeLoading', 'entries', {root: true});
       }).catch(error => console.log(error));
     },
     createEntry({commit}, entry) {

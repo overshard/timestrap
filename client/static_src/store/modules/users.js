@@ -23,10 +23,10 @@ export default {
   },
   actions: {
     getUsers({commit}) {
-      commit('setLoading', true, {root: true});
+      commit('addLoading', 'users', {root: true});
       fetch.get(timestrapConfig.API_URLS.USERS).then(response => {
         commit('setUsers', response.data);
-        commit('setLoading', false, {root: true});
+        commit('removeLoading', 'users', {root: true});
       }).catch(error => console.log(error));
     },
     createUser({commit}, user) {

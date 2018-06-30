@@ -33,12 +33,6 @@
       </div>
     </div>
 
-    <div
-      v-show="loading"
-      class="container text-center py-4">
-      <i class="fa fa-spinner text-primary fa-spin display-3 text-center"/>
-    </div>
-
     <client-modal
       v-if="modalClient.show"
       id="client-modal"
@@ -94,7 +88,6 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: state => state.loading,
       clients: state => state.clients.allClients,
     }),
   },

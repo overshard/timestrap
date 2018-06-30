@@ -23,12 +23,6 @@
       </div>
     </div>
 
-    <div
-      v-show="loading"
-      class="container text-center py-4">
-      <i class="fa fa-spinner text-primary fa-spin display-3 text-center"/>
-    </div>
-
     <task-modal
       v-if="modal.show && (this.$perms.add_task || this.$perms.change_task)"
       id="task-modal"
@@ -82,7 +76,6 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: state => state.loading,
       tasks: state => state.tasks.all,
     }),
   },

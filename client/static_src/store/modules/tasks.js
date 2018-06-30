@@ -23,10 +23,10 @@ export default {
   },
   actions: {
     getTasks({commit}) {
-      commit('setLoading', true, {root: true});
+      commit('addLoading', 'tasks', {root: true});
       fetch.get(timestrapConfig.API_URLS.TASKS).then(response => {
         commit('setTasks', response.data);
-        commit('setLoading', false, {root: true});
+        commit('removeLoading', 'tasks', {root: true});
       }).catch(error => console.log(error));
     },
     createTask({commit}, task) {

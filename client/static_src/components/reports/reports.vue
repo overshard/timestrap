@@ -132,12 +132,6 @@
     </form>
 
     <div
-      v-show="loading"
-      class="container text-center py-4">
-      <i class="fa fa-spinner text-primary fa-spin display-3 text-center"/>
-    </div>
-
-    <div
       v-if="this.$perms.view_entry"
       id="entry-rows">
       <div class="mb-4">
@@ -206,7 +200,6 @@ export default {
   ],
   data() {
     return {
-      loading: true,
       is_staff: timestrapConfig.USER.IS_STAFF,
       entries: null,
       subtotal: null,
@@ -272,8 +265,6 @@ export default {
         this.total = this.durationToString(response.data.total_duration);
 
         window.scrollTo(0, 0);
-
-        this.loading = false;
       });
     },
     getReport() {

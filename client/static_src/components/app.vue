@@ -1,5 +1,16 @@
 <template>
   <div id="app">
+    <transition name="fade">
+      <div
+        v-if="!doneLoading"
+        id="loading"
+        class="progress">
+        <div
+          :style="'width:' + loadingPercent + '%;'"
+          class="progress-bar bg-info"/>
+      </div>
+    </transition>
+
     <div class="navbar navbar-expand-sm navbar-dark bg-primary">
       <div class="container">
         <router-link
@@ -99,6 +110,8 @@
 
 
 <script>
+import {mapGetters} from 'vuex';
+
 import Tracker from './tracker.vue';
 
 
@@ -119,6 +132,12 @@ export default {
       site: timestrapConfig.SITE,
       isStaff: timestrapConfig.USER.IS_STAFF,
     };
+  },
+  computed: {
+    ...mapGetters([
+      'loadingPercent',
+      'doneLoading',
+    ]),
   },
   methods: {
     submitSearch() {
@@ -146,6 +165,25 @@ button {
 input:required {
   border-color: #ccc !important;
   box-shadow: none !important;
+}
+
+#loading {
+  height: 3px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 
 // Make current active nav item more visible

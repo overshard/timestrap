@@ -129,7 +129,7 @@ class ClientsTestCase(SeleniumTestCase):
         project_id = 'project-%s' % (project.id,)
         project_element = self.find(project_id)
         project_menu = self.find('project-menu', project_element)
-        project_menu_archive = self.find('project-menu-archive', project_element)
+        project_menu_archive = self.find('project-menu-archive', project_element)  # noqa: E501
 
         project_menu.click()
         project_menu_archive.click()
