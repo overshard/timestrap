@@ -46,7 +46,10 @@ class EntriesTestCase(SeleniumTestCase):
         tracker_submit = self.find('tracker-submit')
         tracker_submit.click()
 
+        # TODO: Find the entry and not the view?
         view_timesheet = self.find('view-timesheet')
+        self.contains(project.name, view_timesheet)
+        self.contains(task.name, view_timesheet)
         self.contains('new entry note', view_timesheet)
         self.contains('3:50', view_timesheet)
 
