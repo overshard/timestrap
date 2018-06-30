@@ -2,36 +2,40 @@
   <modal>
     <h5 slot="header">
       <i class="fa fa-address-book mr-1"/>
-      {{ id ? 'Edit: ' + config.client.name : 'New Client' }}
+      {{ id ? 'Edit: ' + name : 'New Client' }}
     </h5>
 
     <div slot="body">
-      <div class="form-group">
-        <label>Client Name</label>
-        <input
-          v-model.trim="name"
-          name="client-name"
-          placeholder="Client Name"
-          type="text"
-          class="form-control form-control-sm"
-          required >
-      </div>
+      <form
+        @submit.prevent
+        @keyup.enter="submit">
+        <div class="form-group">
+          <label>Client Name</label>
+          <input
+            id="client-modal-name"
+            v-model.trim="name"
+            placeholder="Client Name"
+            type="text"
+            class="form-control form-control-sm"
+            required >
+        </div>
+      </form>
     </div>
 
     <div slot="footer">
       <button
-        name="client-modal-cancel"
+        id="client-modal-close"
         type="button"
         class="btn btn-secondary"
         @click="$emit('close')">
         Close
       </button>
       <button
-        name="client-modal-submit"
+        id="client-modal-submit"
         type="submit"
         class="btn btn-primary"
         @click="submit">
-        {{ config.client ? 'Save Changes' : 'Add Client' }}
+        {{ id ? 'Save Changes' : 'Add Client' }}
       </button>
     </div>
   </modal>

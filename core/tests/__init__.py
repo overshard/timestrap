@@ -13,7 +13,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        options.add_argument('-headless')
+        # options.add_argument('-headless')
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
         cls.driver.implicitly_wait(2.5)

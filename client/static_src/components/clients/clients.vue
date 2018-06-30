@@ -6,7 +6,7 @@
       <div class="col-12">
         <button
           v-if="this.$perms.add_client"
-          name="client-add"
+          id="client-add"
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleClientModal">
@@ -15,7 +15,7 @@
         </button>
         <button
           v-if="this.$perms.add_project"
-          name="project-add"
+          id="project-add"
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleProjectModal">

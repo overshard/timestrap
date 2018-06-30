@@ -1,5 +1,7 @@
 <template>
-  <div class="client">
+  <div
+    :id="'client-' + client.id"
+    class="client">
     <div class="row py-2 bg-secondary text-white">
       <div :class="['col-sm-4', 'd-flex', 'align-items-center']">
         <i class="fa fa-address-book mr-2"/>

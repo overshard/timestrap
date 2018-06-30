@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="!project.archive"
+    :id="'project-' + project.id"
     class="project row py-1 bg-light">
     <div :class="['col-sm-4', 'mb-1', 'project-name']">
       <i class="fa fa-briefcase text-muted mr-1"/>

@@ -5,47 +5,51 @@
     </h5>
 
     <div slot="body">
-      <div class="form-group">
+      <form
+        @submit.prevent
+        @keyup.enter="submit">
         <div class="form-group">
-          <label>Client</label>
-          <select2
-            id="project-client"
-            v-model="client"
-            :options="clients"
-            placeholder="Clients"/>
+          <div class="form-group">
+            <label>Client</label>
+            <select2
+              id="project-modal-client"
+              v-model="client"
+              :options="clients"
+              placeholder="Clients"/>
+          </div>
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              id="project-modal-name"
+              v-model.trim="name"
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Project Name"
+              required>
+          </div>
+          <div class="form-group">
+            <label>Estimate</label>
+            <input
+              id="project-modal-estimate"
+              v-model.number="estimate"
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Cost Estimate">
+          </div>
         </div>
-        <div class="form-group">
-          <label>Name</label>
-          <input
-            v-model.trim="name"
-            name="project-name"
-            type="text"
-            class="form-control form-control-sm"
-            placeholder="Project Name"
-            required >
-        </div>
-        <div class="form-group">
-          <label>Estimate</label>
-          <input
-            v-model.number="estimate"
-            name="project-estimate"
-            type="text"
-            class="form-control form-control-sm"
-            placeholder="Cost Estimate" >
-        </div>
-      </div>
+      </form>
     </div>
 
     <div slot="footer">
       <button
-        name="project-modal-cancel"
+        id="project-modal-close"
         type="button"
         class="btn btn-secondary"
         @click="$emit('close')">
         Close
       </button>
       <button
-        name="project-modal-submit"
+        id="project-modal-submit"
         type="submit"
         class="btn btn-primary"
         @click="submit">
