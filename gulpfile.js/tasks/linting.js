@@ -1,12 +1,11 @@
 const gulp = require('gulp');
 
 const eslint = require('gulp-eslint');
-const sasslint = require('gulp-sass-lint');
 
 const spawn  = require('child_process').spawn;
 
 
-gulp.task('lint', ['lint:python', 'lint:sass', 'lint:es']);
+gulp.task('lint', ['lint:python', 'lint:es']);
 
 
 gulp.task('lint:python', function(cb) {
@@ -21,22 +20,6 @@ gulp.task('lint:python', function(cb) {
       stdio: 'inherit',
     }
   ).on('exit', cb);
-});
-
-
-gulp.task('lint:sass', function() {
-  // return gulp.src('client/static_src/components/**/*.vue')
-  //     .pipe(sasslint({
-  //         rules: {
-  //             'no-vendor-prefixes': 2,
-  //             'no-ids': 0,
-  //             'indentation': [1, {'size': 4}],
-  //             'property-sort-order': 0,
-  //             'force-element-nesting': 0,
-  //         },
-  //     }))
-  //     .pipe(sasslint.format())
-  //     .pipe(sasslint.failOnError());
 });
 
 
