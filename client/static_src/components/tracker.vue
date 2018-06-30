@@ -3,7 +3,7 @@
     <form
       id="tracker"
       class="container"
-      @submit.prevent>
+      @submit.prevent="submitEntry">
       <div class="row">
         <div
           class="col-sm-2"
@@ -30,7 +30,6 @@
             id="tracker-note"
             v-model="note"
             class="form-control form-control-sm w-100"
-            name="entry-note"
             placeholder="Note"
             type="text">
         </div>
@@ -44,29 +43,84 @@
             required>
         </div>
         <div class="col-sm-2">
-          <button
-            v-if="!running && !duration"
-            class="btn btn-sm btn-success w-100"
-            @click="toggle">
-            <i class="fa fa-play"/>
-            Start
-          </button>
-          <button
-            v-if="running"
-            class="btn btn-sm btn-danger w-100"
-            @click="toggle">
-            <i class="fa fa-stop"/>
-            Stop ({{ seconds }})
-          </button>
-          <button
-            v-if="!running && duration"
-            id="tracker-submit"
-            class="btn btn-sm btn-info w-100"
-            type="submit"
-            @click="submitEntry">
-            <i class="fa fa-plus"/>
-            Add
-          </button>
+          <div class="row">
+            <div class="col-9 pr-1">
+              <button
+                v-if="!running && !duration"
+                class="btn btn-sm btn-success w-100"
+                @click.prevent
+                @click="toggle">
+                <i class="fa fa-play"/>
+                Start
+              </button>
+              <button
+                v-if="running"
+                class="btn btn-sm btn-danger w-100"
+                @click.prevent
+                @click="toggle">
+                <i class="fa fa-stop"/>
+                Stop ({{ seconds }})
+              </button>
+              <button
+                v-if="!running && duration"
+                id="tracker-submit"
+                class="btn btn-sm btn-info w-100"
+                type="submit">
+                <i class="fa fa-plus"/>
+                Add
+              </button>
+            </div>
+            <div class="col-3 pl-0">
+              <button
+                id="tracker-extras"
+                class="btn btn-faded btn-sm w-100"
+                @click.prevent
+                @click="toggleExtras">
+                <i class="fa fa-ellipsis-v"/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showExtras"
+        class="row pt-2">
+        <div class="col-sm-2">
+          <select2
+            id="tracker-user"
+            v-model="user"
+            :options="users"
+            placeholder="User"
+            allowclear
+            required/>
+        </div>
+        <div class="col-sm-2">
+          <datepicker
+            id="tracker-date"
+            v-model="date"
+            :default="$moment().toDate()"
+            type="text"
+            class="form-control form-control-sm date-input"
+            placeholder="Date"
+            @keyup.enter.prevent/>
+        </div>
+        <div class="col-sm-2 offset-sm-4">
+          <input
+            id="tracker-datetime-start"
+            :value="(datetimeStart) ? $moment(datetimeStart).format('HH:mm') : ''"
+            disabled
+            class="form-control form-control-sm w-100 text-right"
+            placeholder="Datetime Start"
+            type="text">
+        </div>
+        <div class="col-sm-2">
+          <input
+            id="tracker-datetime-end"
+            :value="(datetimeEnd) ? $moment(datetimeEnd).format('HH:mm') : ''"
+            disabled
+            class="form-control form-control-sm w-100 text-right"
+            placeholder="Datetime End"
+            type="text">
         </div>
       </div>
     </form>
@@ -78,30 +132,37 @@
 import {mapGetters, mapActions} from 'vuex';
 
 import Select2 from './select2.vue';
+import Datepicker from './datepicker.vue';
 
 
 export default {
   components: {
     Select2,
+    Datepicker,
   },
   data() {
     return {
       task: null,
       project: null,
+      user: null,
       note: null,
       duration: null,
+      date: null,
       datetimeStart: null,
       datetimeEnd: null,
 
       running: false,
       total: 0,
       seconds: '0',
+
+      showExtras: false,
     };
   },
   computed: {
     ...mapGetters({
       tasks: 'tasks/getSelectTasks',
       projects: 'clients/getSelectProjects',
+      users: 'users/getSelectUsers',
     }),
   },
   methods: {
@@ -116,7 +177,8 @@ export default {
         duration: this.duration,
         datetime_start: this.datetimeStart,
         datetime_end: this.datetimeEnd,
-        user: timestrapConfig.USER.URL,
+        user: this.user ? this.user : timestrapConfig.USER.URL,
+        date: this.date ? this.date : this.$moment().format('YYYY-MM-DD'),
       });
       this.reset();
       this.note = null;
@@ -146,6 +208,9 @@ export default {
         if (this.total < 60) this.reset();
         document.title = 'Application — ' + timestrapConfig.SITE.NAME;
       }
+    },
+    toggleExtras() {
+      this.showExtras = !this.showExtras;
     },
   },
 };

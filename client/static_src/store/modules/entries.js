@@ -59,7 +59,7 @@ export default {
     },
     createEntry({commit}, entry) {
       fetch.post(timestrapConfig.API_URLS.ENTRIES, entry).then(response => {
-        commit('addEntry', response.data);
+        if (response.data.user_details.id == timestrapConfig.USER.ID) commit('addEntry', response.data);
       }).catch(error => console.log(error));
     },
     editEntry({commit, state}, entry) {
