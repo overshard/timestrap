@@ -26,7 +26,7 @@
     </div>
     <div class="col-sm-1 align-self-center display-4 duration">
       <i class="fa fa-clock-o text-muted mr-2"/>
-      {{ durationString }}
+      {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
     </div>
     <div class="col-sm-1 align-self-center datetimes flex-column">
       <div class="datetime-start small">
@@ -88,7 +88,6 @@
 <script>
 import {mapActions} from 'vuex';
 
-import DurationFormatter from '../mixins/durationformatter';
 import Select2 from './select2.vue';
 
 
@@ -96,20 +95,12 @@ export default {
   components: {
     Select2,
   },
-  mixins: [
-    DurationFormatter,
-  ],
   props: [
     'entry',
     'index',
     'editable',
     'toggleEditModal',
   ],
-  computed: {
-    durationString() {
-      return this.durationToString(this.entry.duration);
-    },
-  },
   methods: {
     ...mapActions({
       deleteEntry: 'entries/deleteEntry',

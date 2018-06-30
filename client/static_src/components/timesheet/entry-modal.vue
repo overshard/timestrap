@@ -94,7 +94,6 @@ import {mapGetters, mapActions} from 'vuex';
 import Modal from '../modal.vue';
 import Select2 from '../select2.vue';
 import Datepicker from '../datepicker.vue';
-import DurationFormatter from '../../mixins/durationformatter';
 
 
 export default {
@@ -103,9 +102,6 @@ export default {
     Select2,
     Datepicker,
   },
-  mixins: [
-    DurationFormatter,
-  ],
   props: [
     'config',
   ],
@@ -118,7 +114,7 @@ export default {
       project: this.config.entry ? this.config.entry.project : null,
       date: this.config.entry ? this.config.entry.date : null,
       note: this.config.entry ? this.config.entry.note : null,
-      duration: this.config.entry ? this.durationToString(this.config.entry.duration) : null,
+      duration: this.config.entry ? this.$moment.duration(this.config.entry.duration, 'hours').format('h:mm', {trim: false}) : null,
     };
   },
   computed: {

@@ -69,13 +69,13 @@
 
       <div class="row bg-success text-white py-2 mb-4 rounded">
         <div class="ml-auto col-sm-2 text-right">
-          <strong>Total</strong>
+          <strong>Subtotal</strong>
         </div>
         <div class="col-sm-3">
           <i
             class="fa fa-clock-o mr-2"
             aria-hidden="true"/>
-          <strong>{{ durationToString(total) }}</strong>
+          <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>
       </div>
     </div>
@@ -87,7 +87,6 @@
 import {mapGetters, mapActions, mapState} from 'vuex';
 
 import Datepicker from '../datepicker.vue';
-import DurationFormatter from '../../mixins/durationformatter';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
 import Select2 from '../select2.vue';
@@ -104,9 +103,6 @@ export default {
     EntryModal,
     Chart,
   },
-  mixins: [
-    DurationFormatter,
-  ],
   data() {
     return {
       editable: true,

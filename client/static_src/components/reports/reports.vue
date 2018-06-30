@@ -180,7 +180,6 @@
 import {mapGetters} from 'vuex';
 
 import Datepicker from '../datepicker.vue';
-import DurationFormatter from '../../mixins/durationformatter';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
 import Select2 from '../select2.vue';
@@ -195,9 +194,6 @@ export default {
     Pager,
     Select2,
   },
-  mixins: [
-    DurationFormatter,
-  ],
   data() {
     return {
       is_staff: timestrapConfig.USER.IS_STAFF,
@@ -261,8 +257,8 @@ export default {
 
         this.entries = response.data.results;
 
-        this.subtotal = this.durationToString(response.data.subtotal_duration);
-        this.total = this.durationToString(response.data.total_duration);
+        this.subtotal = this.$moment.duration(response.data.subtotal_duration, 'hours').format('d[d] h[h] m[m]');
+        this.total = this.$moment.duration(response.data.total_duration, 'hours').format('d[d] h[h] m[m]');
 
         window.scrollTo(0, 0);
       });

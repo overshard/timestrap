@@ -78,16 +78,12 @@
 import {mapGetters, mapActions} from 'vuex';
 
 import Select2 from './select2.vue';
-import DurationFormatter from '../mixins/durationformatter';
 
 
 export default {
   components: {
     Select2,
   },
-  mixins: [
-    DurationFormatter,
-  ],
   data() {
     return {
       task: null,
@@ -135,7 +131,7 @@ export default {
         (Date.now() - this.datetimeStart.valueOf()) / 1000
       );
       this.seconds = this.total % 3600 % 60;
-      this.duration = this.secondsToString(this.total);
+      this.duration = this.$moment.duration(this.total, 'seconds').format('h:mm', {trim: false});
       document.title = this.duration + ' — ' + timestrapConfig.SITE.NAME;
     },
     toggle() {
