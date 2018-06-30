@@ -86,6 +86,13 @@ export default {
         commit('removeClient', index);
       }).catch(error => console.log(error));
     },
+    archiveClient({commit, state}, index) {
+      let client = state.allClients[index];
+      client.archive = true;
+      fetch.put(client.url, client).then(() => {
+        commit('removeClient', index);
+      }).catch(error => console.log(error));
+    },
 
     // Projects
     getProjects({commit}) {
@@ -110,6 +117,13 @@ export default {
     },
     deleteProject({commit, state}, index) {
       fetch.delete(state.allProjects[index].url).then(() => {
+        commit('removeProject', index);
+      }).catch(error => console.log(error));
+    },
+    archiveProject({commit, state}, index) {
+      let project = state.allProjects[index];
+      project.archive = true;
+      fetch.put(project.url, project).then(() => {
         commit('removeProject', index);
       }).catch(error => console.log(error));
     },

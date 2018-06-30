@@ -55,12 +55,13 @@
             href="#"
             @click.prevent
             @click="deleteProject(index)">Delete</a>
-            <!-- <a id="project-menu-archive"
-                   class="dropdown-item"
-                   href="#"
-                   v-if="this.$perms.change_project"
-                   v-on:click.prevent
-                   v-on:click="archiveProject">Archive</a> -->
+          <a
+            v-if="this.$perms.change_project"
+            id="project-menu-archive"
+            class="dropdown-item"
+            href="#"
+            @click.prevent
+            @click="archiveProject(index)">Archive</a>
         </div>
       </template>
     </div>
@@ -76,12 +77,12 @@ export default {
   props: [
     'project',
     'index',
-    'key',
     'toggleProjectModal',
   ],
   methods: {
     ...mapActions({
       deleteProject: 'clients/deleteProject',
+      archiveProject: 'clients/archiveProject',
     }),
   },
 };

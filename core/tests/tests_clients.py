@@ -107,6 +107,36 @@ class ClientsTestCase(SeleniumTestCase):
         self.assertRaises(NoSuchElementException, self.find, project_id)
         self.assertRaises(Project.DoesNotExist, Project.objects.get, id=project.id)  # noqa: E501
 
+    def test_clients_archive(self):
+        self.test_clients_navigation()
+
+        client = Client.objects.first()
+        client_id = 'client-%s' % (client.id,)
+        client_element = self.find(client_id)
+        client_menu = self.find('client-menu', client_element)
+        client_menu_archive = self.find('client-menu-archive', client_element)
+
+        client_menu.click()
+        client_menu_archive.click()
+
+        self.assertRaises(NoSuchElementException, self.find, client_id)
+        self.assertEqual(Client.objects.get(id=client.id).archive, True)
+
+    def test_projects_archive(self):
+        self.test_clients_navigation()
+
+        project = Project.objects.first()
+        project_id = 'project-%s' % (project.id,)
+        project_element = self.find(project_id)
+        project_menu = self.find('project-menu', project_element)
+        project_menu_archive = self.find('project-menu-archive', project_element)
+
+        project_menu.click()
+        project_menu_archive.click()
+
+        self.assertRaises(NoSuchElementException, self.find, project_id)
+        self.assertEqual(Project.objects.get(id=project.id).archive, True)
+
     def test_clients_change(self):
         self.test_clients_navigation()
 

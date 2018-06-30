@@ -43,12 +43,13 @@
               href="#"
               @click.prevent
               @click="deleteClient(index)">Delete</a>
-              <!-- <a id="client-menu-archive"
-                        class="dropdown-item"
-                        href="#"
-                        v-if="this.$perms.change_client"
-                        v-on:click.prevent
-                        v-on:click="archiveClient">Archive</a> -->
+            <a
+              v-if="this.$perms.change_client"
+              id="client-menu-archive"
+              class="dropdown-item"
+              href="#"
+              @click.prevent
+              @click="archiveClient(index)">Archive</a>
           </div>
         </template>
       </div>
@@ -80,7 +81,6 @@ export default {
   props: [
     'client',
     'index',
-    'key',
     'toggleClientModal',
     'toggleProjectModal',
     'removeProject',
@@ -93,6 +93,7 @@ export default {
   methods: {
     ...mapActions({
       deleteClient: 'clients/deleteClient',
+      archiveClient: 'clients/archiveClient',
     }),
   },
 };
