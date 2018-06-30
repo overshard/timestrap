@@ -67,7 +67,10 @@ Compiles vendor CSS in to `bundle-vendor.css` and Timestrap's SASS in to
 
 ### `gulp test`
 
-A simple alias for Django's `python manage.py test` command.
+A alias for Django's `python manage.py test` command. If you wish to run a
+specific test you can do so with `--test` as in
+`--test core.tests.tests_login.LoginTestCase`. You can also disable headless
+mode of see what's going on during the tests with `--head`.
 
 ### `gulp coverage`
 

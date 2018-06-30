@@ -1,3 +1,4 @@
+from os import environ
 from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -15,7 +16,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        options.add_argument('-headless')
+        # Delete MOZ_HEADLESS entirely if it's set to 0 to since Firefox will
+        # go into headless mode if the variable exists at all.
+        if environ.get('FIREFOX_HEADLESS') is not '0':
+            options.add_argument('-headless')
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
         cls.driver.implicitly_wait(2.5)

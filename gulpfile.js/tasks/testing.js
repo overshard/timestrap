@@ -6,12 +6,15 @@ const spawn = require('child_process').spawn;
 gulp.task('test', (cb) => {
   const command = ['run', 'python', 'manage.py', 'test'];
   const args = process.argv;
+  const env = process.env;
 
-  if (args[3] == '--test' && args[4]) {
-    command.push(args[4]);
-  }
+  const test = args.indexOf('--test');
+  if (test !== -1) command.push(args[test+1]);
 
-  spawn('pipenv', command, {stdio: 'inherit'})
+  const head = args.indexOf('--head');
+  if (head !== -1) env.FIREFOX_HEADLESS = 0;
+
+  spawn('pipenv', command, {stdio: 'inherit', env: env})
     .on('exit', (code) => {
       process.exit(code);
     })

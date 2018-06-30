@@ -16,6 +16,12 @@ export default new VueRouter({
   linkActiveClass: 'active',
   routes: [
     {
+      path: '/timesheet/',
+      name: 'timesheet',
+      component: Timesheet,
+      meta: {title: 'Timesheet — ' + timestrapConfig.SITE.NAME},
+    },
+    {
       path: '/clients/',
       name: 'clients',
       component: Clients,
@@ -26,12 +32,6 @@ export default new VueRouter({
       name: 'tasks',
       component: Tasks,
       meta: {title: 'Tasks — ' + timestrapConfig.SITE.NAME},
-    },
-    {
-      path: '/timesheet/',
-      name: 'timesheet',
-      component: Timesheet,
-      meta: {title: 'Timesheet — ' + timestrapConfig.SITE.NAME},
     },
     {
       path: '/reports/',

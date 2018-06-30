@@ -1,9 +1,9 @@
 import Vue from 'vue';
 
-import App from './components/app.vue';
-
 import VueMoment from './plugins/moment';
-import perms from './plugins/permissions';
+import VuePermissions from './plugins/permissions';
+
+import App from './components/app.vue';
 
 import router from './router';
 import store from './store';
@@ -17,10 +17,10 @@ Vue.prototype.bus = new Vue();
 // Plugins
 
 Vue.use(VueMoment);
-Vue.use(perms);
+Vue.use(VuePermissions);
 
 
-// Promise user and permissions to all routes
+// Promise permissions to all routes, update document title on route
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
