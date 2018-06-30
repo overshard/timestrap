@@ -99,8 +99,6 @@
 
 
 <script>
-import {mapState} from 'vuex';
-
 import Tracker from './tracker.vue';
 
 

@@ -12,8 +12,8 @@
         <div class="form-group">
           <label>Task Name</label>
           <input
-            v-model.trim="name"
             id="task-modal-name"
+            v-model.trim="name"
             placeholder="Task Name"
             type="text"
             class="form-control form-control-sm"
@@ -22,8 +22,8 @@
         <div class="form-group">
           <label>Hourly Rate</label>
           <input
-            v-model.number="hourly_rate"
             id="task-modal-hourly-rate"
+            v-model.number="hourly_rate"
             placeholder="Hourly Rate"
             type="text"
             class="form-control form-control-sm"

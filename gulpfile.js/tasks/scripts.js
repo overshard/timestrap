@@ -5,7 +5,7 @@ const concat = require('gulp-concat');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 
-const webpackConfig = require('../../webpack.config.js')
+const webpackConfig = require('../../webpack.config.js');
 
 const scriptsFiles = require('../../gulpfile.json').scriptsFiles;
 

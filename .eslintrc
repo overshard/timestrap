@@ -2,13 +2,14 @@
   "rules": {
     "linebreak-style": ["error", "unix"],
     "indent": ["error", 2],
-    "vue/html-indent": ["error", 2],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-console": "off",
     "comma-dangle": ["error", "always-multiline"],
     "array-bracket-spacing": ["error", "never"],
-    "object-curly-spacing": ["error", "never"]
+    "object-curly-spacing": ["error", "never"],
+    "vue/html-indent": ["error", 2],
+    "vue/require-prop-types": "off"
   },
   "env": {
     "browser": true,

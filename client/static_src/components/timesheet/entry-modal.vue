@@ -11,9 +11,9 @@
         <div class="form-group">
           <label>Date</label>
           <datepicker
+            id="entry-modal-date"
             v-model="date"
             :default="date"
-            id="entry-modal-date"
             type="text"
             class="form-control form-control-sm date-input"
             placeholder="Date"
@@ -50,8 +50,8 @@
         <div class="form-group">
           <label>Note</label>
           <input
-            v-model.trim="note"
             id="entry-modal-note"
+            v-model.trim="note"
             type="text"
             class="form-control form-control-sm"
             placeholder="Entry Note"
@@ -60,8 +60,8 @@
         <div class="form-group">
           <label>Duration</label>
           <input
-            v-model="duration"
             id="entry-modal-duration"
+            v-model="duration"
             type="text"
             class="form-control form-control-sm"
             placeholder="0:00" >
