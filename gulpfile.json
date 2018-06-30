@@ -10,6 +10,9 @@
   "extrasFiles": [
     "node_modules/font-awesome/fonts/*"
   ],
+  "imagesFiles": [
+    "client/static_src/imgs/*"
+  ],
   "scriptsFiles": [
     "node_modules/jquery/dist/jquery.min.js",
     "node_modules/popper.js/dist/umd/popper.min.js",

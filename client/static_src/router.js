@@ -15,9 +15,9 @@ export default new VueRouter({
   hasbang: false,
   linkActiveClass: 'active',
   routes: [
-    {path: '/clients/', name: 'clients', component: Clients},
-    {path: '/tasks/', name: 'tasks', component: Tasks},
-    {path: '/timesheet/', name: 'timesheet', component: Timesheet},
-    {path: '/reports/', name: 'reports', component: Reports},
+    {path: '/clients/', name: 'clients', component: Clients, meta: {title: 'Clients — ' + timestrapConfig.SITE.NAME}},
+    {path: '/tasks/', name: 'tasks', component: Tasks, meta: {title: 'Tasks — ' + timestrapConfig.SITE.NAME}},
+    {path: '/timesheet/', name: 'timesheet', component: Timesheet, meta: {title: 'Timesheet — ' + timestrapConfig.SITE.NAME}},
+    {path: '/reports/', name: 'reports', component: Reports, meta: {title: 'Reports — ' + timestrapConfig.SITE.NAME}},
   ],
 });

@@ -23,6 +23,7 @@ Vue.use(perms);
 // Promise user and permissions to all routes
 
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
   Promise.all([Vue.prototype.$perms]).then(function() {
     next();
   });

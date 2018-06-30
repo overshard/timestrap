@@ -2,6 +2,7 @@ require('./tasks/build');
 require('./tasks/default');
 require('./tasks/docs');
 require('./tasks/extras');
+require('./tasks/images');
 require('./tasks/linting');
 require('./tasks/manage');
 require('./tasks/scripts');
