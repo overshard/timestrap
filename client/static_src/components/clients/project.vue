@@ -34,7 +34,7 @@
     <div class="col-sm-1 d-flex align-self-center justify-content-end">
       <template v-if="this.$perms.change_project || this.$perms.delete_project">
         <button
-          name="project-menu"
+          id="project-menu"
           class="btn btn-faded btn-sm btn-icon dropdown-toggle"
           type="button"
           data-toggle="dropdown">

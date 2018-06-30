@@ -73,7 +73,7 @@ class EntriesTestCase(SeleniumTestCase):
         self.assertRaises(Task.DoesNotExist, Task.objects.get, id=entry.id)
 
     def test_entries_change(self):
-        # TODO: This is incomplete, need to test select fields and date
+        # TODO: Test select field changes (project, task) and date
         self.test_entries_navigation()
 
         entry = Entry.objects.filter(user=User.objects.get(username='admin')).first()  # noqa: E501

@@ -1,3 +1,5 @@
+from time import sleep
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 from django.core.management import call_command
@@ -13,7 +15,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        # options.add_argument('-headless')
+        options.add_argument('-headless')
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
         cls.driver.implicitly_wait(2.5)
@@ -32,6 +34,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
 
         super().setUp()
+
+    def tearDown(self):
+        # Issue moving too fast between tests sometimes causes an
+        # OperationalError with database locks on SQLite.
+        sleep(1)
+
+        super().tearDown()
 
     def logIn(self):
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))

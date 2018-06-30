@@ -22,7 +22,7 @@
       <div class="col-sm-1 d-flex align-self-center justify-content-end">
         <template v-if="this.$perms.change_client || this.$perms.delete_client">
           <button
-            name="client-menu"
+            id="client-menu"
             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
             type="button"
             data-toggle="dropdown">
