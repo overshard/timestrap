@@ -1,22 +1,29 @@
 <template>
   <div class="bg-light py-2">
-    <div
+    <form
       id="tracker"
-      class="container">
+      class="container"
+      @submit.prevent>
       <div class="row">
-        <div class="col-sm-2">
+        <div
+          class="col-sm-2"
+          @keyup.enter.prevent>
           <select2
             id="tracker-project"
             v-model="project"
             :options="projects"
-            placeholder="Project"/>
+            placeholder="Project"
+            required/>
         </div>
-        <div class="col-sm-2">
+        <div
+          class="col-sm-2"
+          @keyup.enter.prevent>
           <select2
             id="tracker-task"
             v-model="task"
             :options="tasks"
-            placeholder="Task"/>
+            placeholder="Task"
+            required/>
         </div>
         <div class="col-sm-4">
           <input
@@ -25,8 +32,7 @@
             class="form-control form-control-sm w-100"
             name="entry-note"
             placeholder="Note"
-            type="text"
-            @keyup.enter="submitEntry">
+            type="text">
         </div>
         <div class="col-sm-2">
           <input
@@ -35,7 +41,7 @@
             class="form-control form-control-sm text-right font-weight-bold w-100"
             placeholder="0:00"
             type="text"
-            @keyup.enter="submitEntry">
+            required>
         </div>
         <div class="col-sm-2">
           <button
@@ -56,13 +62,14 @@
             v-if="!running && duration"
             id="tracker-submit"
             class="btn btn-sm btn-info w-100"
+            type="submit"
             @click="submitEntry">
             <i class="fa fa-plus"/>
             Add
           </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
