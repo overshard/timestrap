@@ -150,7 +150,7 @@ class ClientsTestCase(SeleniumTestCase):
         project_modal_estimate = self.find('project-modal-estimate')
         project_modal_submit = self.find('project-modal-submit')
 
-        self.assertEqual(project.name, project_modal_name.get_attribute('value'))
+        self.assertEqual(project.name, project_modal_name.get_attribute('value'))  # noqa: E501
         self.assertEqual(project.estimate or Decimal(0), Decimal(project_modal_estimate.get_attribute('value') or 0))  # noqa: E501
 
         self.clear(project_modal_name)

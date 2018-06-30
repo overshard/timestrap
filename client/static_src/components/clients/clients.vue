@@ -118,29 +118,3 @@ export default {
   },
 };
 </script>
-
-
-<style lang="scss">
-.client {
-  font-size: .9em;
-
-  .row {
-    border-top: 1px solid #eee;
-
-    &:not(.bg-secondary) {
-      &:nth-of-type(2n+1) {
-        background-color: #fbf3e5 !important;
-      }
-    }
-
-    &:last-child {
-      border-bottom: 1px solid #eee;
-      margin-bottom: 1rem;
-    }
-  }
-}
-
-.project {
-  background: #fff;
-}
-</style>

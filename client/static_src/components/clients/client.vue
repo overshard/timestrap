@@ -1,8 +1,8 @@
 <template>
   <div
-    :id="'client-' + client.id"
-    class="client">
-    <div class="row py-2 bg-secondary text-white">
+    v-if="!client.archive"
+    :id="'client-' + client.id">
+    <div class="client row py-2 bg-secondary text-white">
       <div :class="['col-sm-4', 'd-flex', 'align-items-center']">
         <i class="fa fa-address-book mr-2"/>
         <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>

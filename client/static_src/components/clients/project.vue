@@ -3,17 +3,17 @@
     v-if="!project.archive"
     :id="'project-' + project.id"
     class="project row py-1 bg-light">
-    <div :class="['col-sm-4', 'mb-1', 'project-name']">
-      <i class="fa fa-briefcase text-muted mr-1"/>
+    <div class="col-sm-4 project-name d-flex align-items-center">
+      <i class="fa fa-briefcase text-muted mr-2"/>
       {{ project.name }}
     </div>
     <div class="col-sm-2 d-flex align-items-center">
       <i class="fa fa-clock-o text-muted mr-2"/>
-      <span class="mb-1">{{ project.total_duration }}</span>
+      {{ project.total_duration }}
     </div>
     <div class="col-sm-2 d-flex align-items-center">
       <i class="fa fa-list text-muted mr-2"/>
-      <span class="mb-1">{{ project.total_entries }}</span>
+      {{ project.total_entries }}
     </div>
     <div
       v-if="project.percent_done !== null"
@@ -86,3 +86,23 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss">
+.project {
+  font-size: .9em;
+  line-height: .9em;
+  border-top: 1px solid #eee;
+
+  &:not(.bg-secondary) {
+    &:nth-of-type(2n+1) {
+      background-color: #fbf3e5 !important;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+  }
+}
+</style>
