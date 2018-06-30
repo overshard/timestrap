@@ -1,5 +1,7 @@
 <template>
-  <div class="task row bg-light py-1">
+  <div
+    :id="'task-' + task.id"
+    class="task row bg-light py-1">
     <div :class="[[this.$perms.change_task ? 'col-8' : 'col-10'], 'd-flex', 'align-items-center']">
       <i class="fa fa-tasks text-muted mr-2"/>
       {{ task.name }}
@@ -16,7 +18,7 @@
     <div class="col-sm-2 d-flex align-self-center justify-content-end">
       <template v-if="this.$perms.change_task || this.$perms.delete_task">
         <button
-          name="task-menu"
+          id="task-menu"
           class="btn btn-faded btn-sm btn-icon dropdown-toggle"
           type="button"
           data-toggle="dropdown">
@@ -56,7 +58,6 @@ export default {
   props: [
     'task',
     'index',
-    'key',
     'toggleEditModal',
   ],
   methods: {
@@ -66,3 +67,23 @@ export default {
   },
 };
 </script>
+
+
+
+<style lang="scss">
+.task {
+  font-size: .9em;
+  border-top: 1px solid #eee;
+
+  &:not(.bg-secondary) {
+    &:nth-of-type(2n+1) {
+      background-color: #fbf3e5 !important;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+  }
+}
+</style>

@@ -36,7 +36,6 @@
       id="entry-rows">
       <div
         v-for="(entryBlock, blockIndex) in entries"
-        :item="entryBlock"
         :index="blockIndex"
         :key="entryBlock.id"
         class="mb-4">

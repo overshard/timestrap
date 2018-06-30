@@ -17,12 +17,10 @@
         <div
           id="navbarCollapse"
           class="collapse navbar-collapse">
-          <ul
-            id="nav-app"
-            class="navbar-nav">
+          <ul class="navbar-nav">
             <li class="nav-item">
               <router-link
-                id="nav-app-timesheet"
+                id="nav-timesheet"
                 :to="timesheet"
                 class="nav-link">
                 <i class="fa fa-clock-o mr-1"/>
@@ -31,7 +29,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                id="nav-app-clients"
+                id="nav-clients"
                 :to="clients"
                 class="nav-link">
                 <i class="fa fa-address-book mr-1"/>
@@ -40,7 +38,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                id="nav-app-tasks"
+                id="nav-tasks"
                 :to="tasks"
                 class="nav-link">
                 <i class="fa fa-tasks mr-1"/>
@@ -49,7 +47,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                id="nav-app-reports"
+                id="nav-reports"
                 :to="reports"
                 class="nav-link">
                 <i class="fa fa-book mr-1"/>
@@ -94,9 +92,7 @@
     </div>
     <tracker/>
     <div class="container my-4">
-      <router-view
-        :id="['component-' + $route.name]"
-        class="view"/>
+      <router-view :id="'view-' + $route.name"/>
     </div>
   </div>
 </template>

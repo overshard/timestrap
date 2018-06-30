@@ -6,37 +6,36 @@
       <div class="row">
         <div class="col-sm-2">
           <select2
-            id="entry-project"
+            id="tracker-project"
             v-model="project"
             :options="projects"
-            name="entry-project"
             placeholder="Project"/>
         </div>
         <div class="col-sm-2">
           <select2
-            id="entry-task"
+            id="tracker-task"
             v-model="task"
             :options="tasks"
-            name="entry-task"
             placeholder="Task"/>
         </div>
         <div class="col-sm-4">
           <input
+            id="tracker-note"
             v-model="note"
             class="form-control form-control-sm w-100"
             name="entry-note"
             placeholder="Note"
             type="text"
-            @keydown.enter="submitEntry">
+            @keyup.enter="submitEntry">
         </div>
         <div class="col-sm-2">
           <input
+            id="tracker-duration"
             v-model="duration"
             class="form-control form-control-sm text-right font-weight-bold w-100"
-            name="entry-duration"
             placeholder="0:00"
             type="text"
-            @keydown.enter="submitEntry">
+            @keyup.enter="submitEntry">
         </div>
         <div class="col-sm-2">
           <button
@@ -55,8 +54,8 @@
           </button>
           <button
             v-if="!running && duration"
+            id="tracker-submit"
             class="btn btn-sm btn-info w-100"
-            name="entry-add-submit"
             @click="submitEntry">
             <i class="fa fa-plus"/>
             Add

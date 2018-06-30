@@ -6,38 +6,42 @@
     </h5>
 
     <div slot="body">
-      <div class="form-group">
-        <label>Task Name</label>
-        <input
-          v-model.trim="name"
-          name="task-name"
-          placeholder="Task Name"
-          type="text"
-          class="form-control form-control-sm"
-          required >
-      </div>
-      <div class="form-group">
-        <label>Hourly Rate</label>
-        <input
-          v-model.number="hourly_rate"
-          name="task-hourly-rate"
-          placeholder="Hourly Rate"
-          type="text"
-          class="form-control form-control-sm"
-          required >
-      </div>
+      <form
+        @submit.prevent
+        @keyup.enter="submit">
+        <div class="form-group">
+          <label>Task Name</label>
+          <input
+            v-model.trim="name"
+            id="task-modal-name"
+            placeholder="Task Name"
+            type="text"
+            class="form-control form-control-sm"
+            required >
+        </div>
+        <div class="form-group">
+          <label>Hourly Rate</label>
+          <input
+            v-model.number="hourly_rate"
+            id="task-modal-hourly-rate"
+            placeholder="Hourly Rate"
+            type="text"
+            class="form-control form-control-sm"
+            required >
+        </div>
+      </form>
     </div>
 
     <div slot="footer">
       <button
-        name="task-modal-cancel"
+        id="task-modal-close"
         type="button"
         class="btn btn-secondary"
         @click="$emit('close')">
         Close
       </button>
       <button
-        name="task-modal-submit"
+        id="task-modal-submit"
         type="submit"
         class="btn btn-primary"
         @click="submit">

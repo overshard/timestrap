@@ -1,25 +1,27 @@
 <template>
-  <div class="entry row py-2 bg-light small">
+  <div
+    :id="'entry-' + entry.id"
+    class="entry row py-2 bg-light small">
     <div class="col-sm-3 client-project">
       <div class="small">
         <i class="fa fa-address-book text-muted mr-2"/>
-        {{ project_details.client_details.name }}
+        {{ entry.project_details.client_details.name }}
       </div>
       <i class="fa fa-briefcase text-muted mr-1"/>
-      {{ project_details.name }}
+      {{ entry.project_details.name }}
     </div>
     <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-6']">
       <div
-        v-if="task"
+        v-if="entry.task"
         class="small">
         <i class="fa fa-tasks text-muted mr-2"/>
-        {{ task_details.name }}
+        {{ entry.task_details.name }}
       </div>
       <div
-        v-if="note"
+        v-if="entry.note"
         class="entry-note">
         <i class="fa fa-comment text-muted mr-1"/>
-        {{ note }}
+        {{ entry.note }}
       </div>
     </div>
     <div class="col-sm-1 align-self-center display-4 duration">
@@ -29,11 +31,11 @@
     <div class="col-sm-1 align-self-center datetimes flex-column">
       <div class="datetime-start small">
         <i class="fa fa-hourglass-start text-muted mr-1"/>
-        {{ formatDateTime(datetime_start) }}
+        {{ formatDateTime(entry.datetime_start) }}
       </div>
       <div class="datetime-end small">
         <i class="fa fa-hourglass-end text-muted mr-1"/>
-        {{ formatDateTime(datetime_end) }}
+        {{ formatDateTime(entry.datetime_end) }}
       </div>
     </div>
     <div
@@ -41,7 +43,7 @@
       class="col-sm-2 d-flex align-self-center justify-content-end">
       <template v-if="this.$perms.change_entry || this.$perms.delete_entry">
         <button
-          name="entry-menu"
+          id="entry-menu"
           type="button"
           data-toggle="dropdown"
           class="btn btn-faded btn-sm btn-icon dropdown-toggle">
@@ -59,7 +61,8 @@
           </a>
           <a
             v-if="this.$perms.delete_entry"
-            class="dropdown-item entry-menu-delete"
+            id="entry-menu-delete"
+            class="dropdown-item"
             href="#"
             @click.prevent
             @click="deleteEntry(index)">
@@ -73,10 +76,10 @@
       class="col-sm-2">
       <div class="small">
         <i class="fa fa-user-circle text-muted mr-2"/>
-        {{ user_details.username }}
+        {{ entry.user_details.username }}
       </div>
       <i class="fa fa-calendar-o text-muted mr-1"/>
-      {{ dateFormatted }}
+      {{ $moment(entry.date).format('LL') }}
     </div>
   </div>
 </template>
@@ -102,28 +105,9 @@ export default {
     'editable',
     'toggleEditModal',
   ],
-  data() {
-    return {
-      url: this.entry.url,
-      user: this.entry.user,
-      user_details: this.entry.user_details,
-      project: this.entry.project,
-      project_details: this.entry.project_details,
-      task: this.entry.task,
-      task_details: this.entry.task_details,
-      note: this.entry.note,
-      duration: this.entry.duration,
-      datetime_start: this.entry.datetime_start,
-      datetime_end: this.entry.datetime_end,
-      date: this.entry.date,
-    };
-  },
   computed: {
     durationString() {
       return this.durationToString(this.entry.duration);
-    },
-    dateFormatted() {
-      return this.$moment(this.date).format('LL');
     },
   },
   methods: {

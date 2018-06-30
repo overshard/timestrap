@@ -18,10 +18,13 @@ class Command(migrate.Command):
 
         superusers = User.objects.filter(is_superuser=True)
         if len(superusers) == 0:
-            default_user = User.objects.create_user('admin', password='admin')
-            default_user.is_superuser = True
-            default_user.is_staff = True
-            default_user.save()
-            site_permission = SitePermission.objects.create(user=default_user)
+            default_superuser = User.objects.create_superuser(
+                username='admin',
+                password='admin',
+                email='admin@example.com'
+            )
+            site_permission = SitePermission.objects.create(
+                user=default_superuser
+            )
             site_permission.sites.set(Site.objects.filter(id=1))
             site_permission.save()

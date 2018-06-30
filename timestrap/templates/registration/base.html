@@ -3,63 +3,65 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>{% block title %}{% endblock %} — {{ request.site.name }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}"/>
-        <style>
-            .registration {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{% block title %}{% endblock %} — {{ request.site.name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-            .registration-wrapper {
-                max-width: 400px;
-                margin: 0 auto;
-                background-color: #fff;
-            }
+  <link rel="stylesheet" href="{% static 'css/bundle-vendor.css' %}" />
+  <style>
+    #registration {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-            .registration-wrapper .bg-light {
-                border-top: 1px solid #eaeaea;
-            }
+    .registration-wrapper {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+    }
 
-            .btn {
-                font-size: .7em;
-                line-height: 1.8em;
-                letter-spacing: 1px;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
+    .registration-wrapper .bg-light {
+      border-top: 1px solid #eaeaea;
+    }
 
-            @keyframes fade-in {
-                from {
-                    opacity: 0;
-                }
+    .btn {
+      font-size: .7em;
+      line-height: 1.8em;
+      letter-spacing: 1px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-                to {
-                    opacity: 1;
-                }
-            }
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
 
-            .fade-in {
-                animation: fade-in .3s ease-in-out;
-            }
-        </style>
-    </head>
+      to {
+        opacity: 1;
+      }
+    }
 
-    <body class="bg-primary registration">
-        <div id="view-{{ request.resolver_match.view_name }}" class="container">
-            <div class="text-center mb-4">
-                <h1 class="display-3 mb-3 text-white">{{ request.site.name }}</h1>
-            </div>
-            <div class="registration-wrapper rounded">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
-    </body>
+    .fade-in {
+      animation: fade-in .3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body id="registration" class="bg-primary">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h1 class="display-3 mb-3 text-white">{{ request.site.name }}</h1>
+    </div>
+    <div class="registration-wrapper rounded">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+
 </html>

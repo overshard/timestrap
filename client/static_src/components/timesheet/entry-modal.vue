@@ -5,74 +5,80 @@
     </h5>
 
     <div slot="body">
-      <div class="form-group">
-        <label>Date</label>
-        <datepicker
-          v-model="date"
-          :default="date"
-          name="entry-date"
-          type="text"
-          class="form-control form-control-sm date-input"
-          placeholder="Date"/>
-      </div>
-      <div class="form-group">
-        <label>User</label>
-        <select2
-          id="entry-user"
-          v-model="user"
-          :options="users"
-          :selected="user"
-          placeholder="Users"/>
-      </div>
-      <div class="form-group">
-        <label>Projects</label>
-        <select2
-          id="entry-projects"
-          v-model="project"
-          :options="projects"
-          :selected="project"
-          placeholder="Projects"/>
-      </div>
-      <div class="form-group">
-        <label>Tasks</label>
-        <select2
-          id="entry-tasks"
-          v-model="task"
-          :options="tasks"
-          :selected="task"
-          placeholder="Tasks"/>
-      </div>
-      <div class="form-group">
-        <label>Note</label>
-        <input
-          v-model.trim="note"
-          name="entry-note"
-          type="text"
-          class="form-control form-control-sm"
-          placeholder="Entry Note"
-          required >
-      </div>
-      <div class="form-group">
-        <label>Duration</label>
-        <input
-          v-model="duration"
-          name="entry-duration"
-          type="text"
-          class="form-control form-control-sm"
-          placeholder="0:00" >
-      </div>
+      <form
+        @submit.prevent
+        @keyup.enter="submit">
+        <div class="form-group">
+          <label>Date</label>
+          <datepicker
+            v-model="date"
+            :default="date"
+            id="entry-modal-date"
+            type="text"
+            class="form-control form-control-sm date-input"
+            placeholder="Date"
+            @keyup.enter.prevent/>
+        </div>
+        <div class="form-group">
+          <label>User</label>
+          <select2
+            id="entry-modal-user"
+            v-model="user"
+            :options="users"
+            :selected="user"
+            placeholder="Users"
+            @keyup.enter.prevent/>
+        </div>
+        <div class="form-group">
+          <label>Projects</label>
+          <select2
+            id="entry-modal-project"
+            v-model="project"
+            :options="projects"
+            :selected="project"
+            placeholder="Projects"/>
+        </div>
+        <div class="form-group">
+          <label>Tasks</label>
+          <select2
+            id="entry-modal-task"
+            v-model="task"
+            :options="tasks"
+            :selected="task"
+            placeholder="Tasks"/>
+        </div>
+        <div class="form-group">
+          <label>Note</label>
+          <input
+            v-model.trim="note"
+            id="entry-modal-note"
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="Entry Note"
+            required >
+        </div>
+        <div class="form-group">
+          <label>Duration</label>
+          <input
+            v-model="duration"
+            id="entry-modal-duration"
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="0:00" >
+        </div>
+      </form>
     </div>
 
     <div slot="footer">
       <button
-        name="entry-modal-cancel"
+        id="entry-modal-close"
         type="button"
         class="btn btn-secondary"
         @click="$emit('close')">
         Close
       </button>
       <button
-        name="entry-modal-submit"
+        id="entry-modal-submit"
         type="submit"
         class="btn btn-primary"
         @click="submit">

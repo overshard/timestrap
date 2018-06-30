@@ -6,7 +6,7 @@
       <div class="col-12">
         <button
           v-if="this.$perms.add_task"
-          name="task-add"
+          id="task-add"
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleModal">
@@ -37,7 +37,6 @@
 
     <div
       v-if="this.$perms.view_task"
-      id="task-rows"
       class="rounded">
       <div class="task-head bg-secondary text-white row py-2">
         <div class="col-8 d-flex align-items-center">
@@ -66,6 +65,7 @@ import {mapState, mapActions} from 'vuex';
 
 import Task from './task.vue';
 import TaskModal from './task-modal.vue';
+
 
 export default {
   components: {
@@ -101,24 +101,3 @@ export default {
   },
 };
 </script>
-
-
-<style lang="scss">
-#task-rows {
-  .task {
-    font-size: .9em;
-    border-top: 1px solid #eee;
-
-    &:not(.bg-secondary) {
-      &:nth-of-type(2n+1) {
-        background-color: #fbf3e5 !important;
-      }
-    }
-
-    &:last-child {
-      border-bottom: 1px solid #eee;
-      margin-bottom: 1rem;
-    }
-  }
-}
-</style>

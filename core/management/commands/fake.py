@@ -80,7 +80,7 @@ class Command(BaseCommand):
             entry_iterations = randint(iterations*2, iterations*4)
             for i in range(entry_iterations):
                 date = fake.date_time_between(
-                    start_date='-30d',
+                    start_date='-5d',
                     end_date='now',
                     tzinfo=None
                 )
