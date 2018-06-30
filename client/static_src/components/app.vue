@@ -69,6 +69,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
               <a
+                id="nav-user"
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown">
                 <i class="fa fa-user-circle mr-2"/>
@@ -76,6 +77,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a
+                  id="nav-user-api"
                   :href="api"
                   class="dropdown-item"
                   target="_blank">
@@ -83,14 +85,14 @@
                 </a>
                 <a
                   v-if="isStaff"
-                  id="nav-admin-admin"
+                  id="nav-user-admin"
                   :href="admin"
                   class="dropdown-item"
                   target="_blank">
                   Admin
                 </a>
                 <a
-                  id="nav-admin-logout"
+                  id="nav-user-logout"
                   :href="logout"
                   class="dropdown-item">
                   Logout

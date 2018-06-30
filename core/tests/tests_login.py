@@ -6,7 +6,11 @@ class LoginTestCase(SeleniumTestCase):
     def test_logout_success(self):
         self.logIn()
 
-        self.driver.get('%s%s' % (self.live_server_url, '/logout/'))
+        nav_user = self.find('nav-user')
+        nav_user_logout = self.find('nav-user-logout')
+
+        nav_user.click()
+        nav_user_logout.click()
 
         self.find('registration')
 
