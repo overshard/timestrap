@@ -1,21 +1,20 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 
 from rest_framework import routers
 
-from .views import (UserViewSet, PermissionViewSet, ClientViewSet,
-                    ProjectViewSet, EntryViewSet, TaskViewSet,)
+from . import views
 
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'permissions', PermissionViewSet)
-router.register(r'clients', ClientViewSet)
-router.register(r'projects', ProjectViewSet)
-router.register(r'entries', EntryViewSet)
-router.register(r'tasks', TaskViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'permissions', views.PermissionViewSet)
+router.register(r'clients', views.ClientViewSet)
+router.register(r'projects', views.ProjectViewSet)
+router.register(r'entries', views.EntryViewSet)
+router.register(r'tasks', views.TaskViewSet)
 
 
 urlpatterns = [
-    url(r'^api/auth/', include('rest_framework.urls')),
-    url(r'^api/', include(router.urls)),
+    path(r'api/auth/', include('rest_framework.urls')),
+    path(r'api/', include(router.urls)),
 ]
