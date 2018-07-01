@@ -39,9 +39,11 @@ export default new Vuex.Store({
         state.loading,
         state.loading.indexOf(module),
       );
-      setTimeout(() => {
-        if (state.loading.length === 0) state.maxLoading = 0;
-      }, 1000);
+      if (state.loading.length === 0) {
+        setTimeout(() => {
+          state.maxLoading = 0;
+        }, 500);
+      }
     },
   },
   modules: {
