@@ -11,7 +11,7 @@ class SitePermissionBackend(ModelBackend):
     Checks for permission to the current site for the logging in user.
     """
     def authenticate(self, request, username=None, password=None, **kwargs):
-        user = super(SitePermissionBackend, self).authenticate(
+        user = super().authenticate(
             request, username, password, **kwargs)
 
         if user and user.is_active and hasattr(user, 'sitepermission'):
@@ -26,4 +26,4 @@ class SitePermissionBackend(ModelBackend):
                 raise PermissionDenied
 
     def get_user(self, user_id):
-        return super(SitePermissionBackend, self).get_user(user_id)
+        return super().get_user(user_id)

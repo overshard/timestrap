@@ -11,7 +11,7 @@ class EmailBackend(DjangoEmailBackend):
     Handles emails using Site-based settings from Conf.
     """
     def __init__(self, fail_silently=False, **kwargs):
-        super(EmailBackend, self).__init__(
+        super().__init__(
             host=get_site_setting('smtp_host'),
             port=get_site_setting('smtp_port'),
             username=get_site_setting('smtp_user'),
@@ -31,7 +31,7 @@ class EmailBackend(DjangoEmailBackend):
             for message in email_messages:
                 message.from_email = get_site_setting('smtp_from_address')
         try:
-            super(EmailBackend, self).send_messages(email_messages)
+            super().send_messages(email_messages)
         except (SMTPResponseException, socket_error) as e:
             # TODO: Determine how to handle failures gracefully.
             raise e

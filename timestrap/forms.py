@@ -15,4 +15,4 @@ class TimestrapPasswordResetForm(PasswordResetForm):
             'domain': site.domain,
             'site_name': site.name,
         }
-        super(TimestrapPasswordResetForm, self).save(**kwargs)
+        super().save(**kwargs)

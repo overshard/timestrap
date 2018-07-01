@@ -141,7 +141,7 @@ class Entry(models.Model):
             self.date = date.today()
         if not self.site:
             self.site = Site.objects.get(id=current_site_id())
-        super(Entry, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return 'Entry for ' + self.project.name + ' by ' + self.user.username

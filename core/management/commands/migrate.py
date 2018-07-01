@@ -8,7 +8,7 @@ class Command(migrate.Command):
     help = 'Creates an initial Site and User (admin/admin) for Timestrap.'
 
     def handle(self, *args, **kwargs):
-        super(Command, self).handle(*args, **kwargs)
+        super().handle(*args, **kwargs)
 
         default_site = Site.objects.get(id=1)
         Conf.objects.get_or_create(site=default_site)

@@ -93,7 +93,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
                   'percent_done',)
 
     def get_queryset(self):
-        queryset = super(ProjectSerializer, self).get_queryset()
+        queryset = super().get_queryset()
         return queryset.filter(archive=False)
 
     def get_total_entries(self, obj):
