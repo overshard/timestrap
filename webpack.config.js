@@ -12,7 +12,11 @@ module.exports = {
     filename: 'bundle.js',
   },
   performance: {
-    hints: false,
+    maxEntrypointSize: 5000000,
+    maxAssetSize: 5000000,
+  },
+  stats: {
+    entrypoints: false,
   },
   devtool: 'source-map',
   resolve: {
