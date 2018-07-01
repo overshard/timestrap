@@ -7,11 +7,6 @@
 
 {% block content %}
 <div class="p-4">
-  <div class="text-center mb-4">
-    <p class="mb-0">Please login, if you need help check out our
-      <a href="https://github.com/overshard/timestrap">documentation</a>.</p>
-  </div>
-
   {% if messages %}
     {% for message in messages %}
       {% if message.extra_tags == 'no_sitepermission' %}
