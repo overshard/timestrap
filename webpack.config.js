@@ -53,15 +53,6 @@ module.exports = {
           publicPath: '/static/imgs/',
         },
       },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'fonts/',
-          publicPath: '/static/fonts/',
-        },
-      },
     ],
   },
 };

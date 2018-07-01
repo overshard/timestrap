@@ -21,6 +21,11 @@
     "not ie <= 10"
   ],
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0",
+    "@fortawesome/free-brands-svg-icons": "^5.1.0",
+    "@fortawesome/free-regular-svg-icons": "^5.1.0",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0",
+    "@fortawesome/vue-fontawesome": "^0.1.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-env": "^2.4.1",
@@ -32,7 +37,6 @@
     "del": "^3.0.0",
     "eslint-plugin-vue": "^4.5.0",
     "file-loader": "^1.1.11",
-    "font-awesome": "^4.7.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^4.0.2",

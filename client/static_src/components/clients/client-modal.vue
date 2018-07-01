@@ -1,7 +1,9 @@
 <template>
   <modal>
     <h5 slot="header">
-      <i class="fa fa-address-book mr-1"/>
+      <icon
+        :icon="['fas', 'address-book']"
+        class="mr-1"/>
       {{ id ? 'Edit: ' + name : 'New Client' }}
     </h5>
 

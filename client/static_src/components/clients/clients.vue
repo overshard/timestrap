@@ -10,7 +10,9 @@
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleClientModal">
-          <i class="fa fa-plus mr-1"/>
+          <icon
+            :icon="['fas', 'plus']"
+            class="mr-1"/>
           New Client
         </button>
         <button
@@ -19,16 +21,20 @@
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleProjectModal">
-          <i class="fa fa-plus mr-1"/>
+          <icon
+            :icon="['fas', 'plus']"
+            class="mr-1"/>
           New Project
         </button>
 
         <button
-          class="btn btn-secondary btn-sm pull-right ml-2"
+          class="btn btn-secondary btn-sm float-right ml-2"
           @click.prevent
           @click="refresh">
-          <i class="fa fa-refresh"/>
-          Refresh
+          <icon
+            :icon="['fas', 'sync']"
+            class="mr-1"/>
+          Sync
         </button>
       </div>
     </div>

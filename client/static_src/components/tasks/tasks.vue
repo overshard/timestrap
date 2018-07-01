@@ -10,7 +10,9 @@
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleModal">
-          <i class="fa fa-plus mr-1"/>
+          <icon
+            :icon="['fas', 'plus']"
+            class="mr-1"/>
           New Task
         </button>
 
@@ -18,7 +20,10 @@
           class="btn btn-secondary btn-sm pull-right ml-2"
           @click.prevent
           @click="refresh">
-          <i class="fa fa-refresh"/> Refresh
+          <icon
+            :icon="['fas', 'sync']"
+            class="mr-1"/>
+          Sync
         </button>
       </div>
     </div>
@@ -34,11 +39,15 @@
       class="rounded">
       <div class="task-head bg-secondary text-white row py-2">
         <div class="col-8 d-flex align-items-center">
-          <i class="fa fa-tasks mr-2"/>
+          <icon
+            :icon="['fas', 'tasks']"
+            class="mr-2"/>
           <strong>Task Name</strong>
         </div>
         <div class="col-2 d-flex align-items-center">
-          <i class="fa fa-clock-o mr-2"/>
+          <icon
+            :icon="['far', 'clock']"
+            class="mr-2"/>
           <strong>Hourly Rate</strong>
         </div>
         <div class="col-2"/>

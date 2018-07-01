@@ -5,20 +5,20 @@
         <router-link
           to="/reports/"
           class="btn btn-primary btn-sm">
-          <i
-            class="fa fa-book"
-            aria-hidden="true"/>
+          <icon
+            :icon="['fas', 'book']"
+            class="mr-1"/>
           Create Reports
         </router-link>
 
         <button
-          class="btn btn-secondary btn-sm pull-right ml-2"
+          class="btn btn-secondary btn-sm float-right ml-2"
           @click.prevent
           @click="getEntries">
-          <i
-            class="fa fa-refresh"
-            aria-hidden="true"/>
-          Refresh
+          <icon
+            :icon="['fas', 'sync']"
+            class="mr-1"/>
+          Sync
         </button>
       </div>
     </div>
@@ -72,9 +72,9 @@
           <strong>Subtotal</strong>
         </div>
         <div class="col-sm-3">
-          <i
-            class="fa fa-clock-o mr-2"
-            aria-hidden="true"/>
+          <icon
+            :icon="['far', 'clock']"
+            class="mr-2"/>
           <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>
       </div>

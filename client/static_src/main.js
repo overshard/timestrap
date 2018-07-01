@@ -11,6 +11,7 @@ import router from './router';
 import store from './store';
 
 
+
 // Global event bus
 
 Vue.prototype.bus = new Vue();

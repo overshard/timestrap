@@ -4,15 +4,21 @@
     :id="'project-' + project.id"
     class="project row py-1 bg-light">
     <div class="col-sm-4 project-name d-flex align-items-center">
-      <i class="fa fa-briefcase text-muted mr-2"/>
+      <icon
+        :icon="['fas', 'briefcase']"
+        class="mr-2 text-muted"/>
       {{ project.name }}
     </div>
     <div class="col-sm-2 d-flex align-items-center">
-      <i class="fa fa-clock-o text-muted mr-2"/>
+      <icon
+        :icon="['far', 'clock']"
+        class="mr-2 text-muted"/>
       {{ project.total_duration }}
     </div>
     <div class="col-sm-2 d-flex align-items-center">
-      <i class="fa fa-list text-muted mr-2"/>
+      <icon
+        :icon="['fas', 'list']"
+        class="mr-2 text-muted"/>
       {{ project.total_entries }}
     </div>
     <div
@@ -38,7 +44,8 @@
           class="btn btn-faded btn-sm btn-icon dropdown-toggle"
           type="button"
           data-toggle="dropdown">
-          <i class="fa fa-ellipsis-v"/>
+          <icon
+            :icon="['fas', 'ellipsis-v']"/>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
           <a

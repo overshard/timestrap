@@ -1,7 +1,9 @@
 <template>
   <modal>
     <h5 slot="header">
-      <i class="fa fa-tasks mr-1"/>
+      <icon
+        :icon="['fas', 'tasks']"
+        class="mr-1"/>
       {{ id ? 'Edit: ' + name : 'New Task' }}
     </h5>
 

@@ -50,7 +50,9 @@
                 class="btn btn-sm btn-success w-100"
                 @click.prevent
                 @click="toggle">
-                <i class="fa fa-play"/>
+                <icon
+                  :icon="['fas', 'play']"
+                  class="mr-1"/>
                 Start
               </button>
               <button
@@ -58,7 +60,9 @@
                 class="btn btn-sm btn-danger w-100"
                 @click.prevent
                 @click="toggle">
-                <i class="fa fa-stop"/>
+                <icon
+                  :icon="['fas', 'stop']"
+                  class="mr-1"/>
                 Stop ({{ seconds }})
               </button>
               <button
@@ -66,7 +70,9 @@
                 id="tracker-submit"
                 class="btn btn-sm btn-info w-100"
                 type="submit">
-                <i class="fa fa-plus"/>
+                <icon
+                  :icon="['fas', 'plus']"
+                  class="mr-1"/>
                 Add
               </button>
             </div>
@@ -76,7 +82,8 @@
                 class="btn btn-faded btn-sm w-100"
                 @click.prevent
                 @click="toggleExtras">
-                <i class="fa fa-ellipsis-v"/>
+                <icon
+                  :icon="['fas', 'ellipsis-v']"/>
               </button>
             </div>
           </div>

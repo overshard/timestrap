@@ -4,37 +4,51 @@
     class="entry row py-2 bg-light small">
     <div class="col-sm-3 client-project">
       <div class="small">
-        <i class="fa fa-address-book text-muted mr-2"/>
+        <icon
+          :icon="['fas', 'address-book']"
+          class="mr-2 text-muted"/>
         {{ entry.project_details.client_details.name }}
       </div>
-      <i class="fa fa-briefcase text-muted mr-1"/>
+      <icon
+        :icon="['fas', 'briefcase']"
+        class="mr-1 text-muted"/>
       {{ entry.project_details.name }}
     </div>
     <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-6']">
       <div
         v-if="entry.task"
         class="small">
-        <i class="fa fa-tasks text-muted mr-2"/>
+        <icon
+          :icon="['fas', 'tasks']"
+          class="mr-2 text-muted"/>
         {{ entry.task_details.name }}
       </div>
       <div
         v-if="entry.note"
         class="entry-note">
-        <i class="fa fa-comment text-muted mr-1"/>
+        <icon
+          :icon="['fas', 'comment']"
+          class="mr-1 text-muted"/>
         {{ entry.note }}
       </div>
     </div>
     <div class="col-sm-1 align-self-center display-4 duration">
-      <i class="fa fa-clock-o text-muted mr-2"/>
+      <icon
+        :icon="['far', 'clock']"
+        class="mr-2 text-muted"/>
       {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
     </div>
     <div class="col-sm-1 align-self-center datetimes flex-column">
       <div class="datetime-start small">
-        <i class="fa fa-hourglass-start text-muted mr-1"/>
+        <icon
+          :icon="['fas', 'hourglass-start']"
+          class="mr-1 text-muted"/>
         {{ formatDateTime(entry.datetime_start) }}
       </div>
       <div class="datetime-end small">
-        <i class="fa fa-hourglass-end text-muted mr-1"/>
+        <icon
+          :icon="['fas', 'hourglass-end']"
+          class="mr-1 text-muted"/>
         {{ formatDateTime(entry.datetime_end) }}
       </div>
     </div>
@@ -47,7 +61,8 @@
           type="button"
           data-toggle="dropdown"
           class="btn btn-faded btn-sm btn-icon dropdown-toggle">
-          <i class="fa fa-ellipsis-v"/>
+          <icon
+            :icon="['fas', 'ellipsis-v']"/>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
           <a
@@ -75,10 +90,14 @@
       v-else
       class="col-sm-2">
       <div class="small">
-        <i class="fa fa-user-circle text-muted mr-2"/>
+        <icon
+          :icon="['fas', 'user-circle']"
+          class="mr-2 text-muted"/>
         {{ entry.user_details.username }}
       </div>
-      <i class="fa fa-calendar-o text-muted mr-1"/>
+      <icon
+        :icon="['fas', 'calendar']"
+        class="mr-1 text-muted"/>
       {{ $moment(entry.date).format('LL') }}
     </div>
   </div>
@@ -189,10 +208,6 @@ export default {
 
   .username {
     overflow-x: hidden;
-  }
-
-  .fa-clock-o {
-    line-height: 1.3em;
   }
 
   .client-project {

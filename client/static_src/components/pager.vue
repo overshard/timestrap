@@ -1,10 +1,12 @@
 <template>
-  <div class="pull-right">
+  <div class="float-right">
     <button
       v-if="previous"
       class="btn btn-primary btn-sm mr-1"
       @click="$emit('previous-page')">
-      <i class="fa fa-arrow-left"/>
+      <icon
+        :icon="['fas', 'arrow-left']"
+        class="mr-1"/>
       Previous
     </button>
 
@@ -13,7 +15,9 @@
       class="btn btn-primary btn-sm"
       @click="$emit('next-page')">
       Next
-      <i class="fa fa-arrow-right"/>
+      <icon
+        :icon="['fas', 'arrow-right']"
+        class="mr-1"/>
     </button>
   </div>
 </template>

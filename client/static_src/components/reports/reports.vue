@@ -7,7 +7,9 @@
             id="export-report"
             class="btn btn-primary btn-sm mr-1"
             @click="exportReport">
-            <i class="fa fa-download"/>
+            <icon
+              :icon="['fas', 'download']"
+              class="mr-1"/>
             Export Report
           </button>
           <select
@@ -25,10 +27,13 @@
       </div>
       <div class="col-6">
         <button
-          class="btn btn-secondary btn-sm pull-right ml-2"
+          class="btn btn-secondary btn-sm float-right ml-2"
           @click.prevent
           @click="refresh">
-          <i class="fa fa-refresh"/> Refresh
+          <icon
+            :icon="['fas', 'sync']"
+            class="mr-1"/>
+          Sync
         </button>
         <pager
           :next="next"
@@ -160,10 +165,13 @@
     <div class="row py-2 mb-4 bg-light rounded">
       <div class="col-12">
         <button
-          class="btn btn-secondary btn-sm pull-right ml-2"
+          class="btn btn-secondary btn-sm float-right ml-2"
           @click.prevent
           @click="refresh">
-          <i class="fa fa-refresh"/> Refresh
+          <icon
+            :icon="['fas', 'sync']"
+            class="mr-1"/>
+          Sync
         </button>
         <pager
           :next="next"

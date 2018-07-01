@@ -4,19 +4,27 @@
     :id="'client-' + client.id">
     <div class="client row py-2 bg-secondary text-white">
       <div :class="['col-sm-4', 'd-flex', 'align-items-center']">
-        <i class="fa fa-address-book mr-2"/>
+        <icon
+          :icon="['fas', 'address-book']"
+          class="mr-2"/>
         <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>
       </div>
       <div class="col-sm-2 d-flex align-items-center">
-        <i class="fa fa-clock-o mr-2"/>
+        <icon
+          :icon="['far', 'clock']"
+          class="mr-2"/>
         <strong>Total Time</strong>
       </div>
       <div class="col-sm-2 d-flex align-items-center">
-        <i class="fa fa-list mr-2"/>
+        <icon
+          :icon="['fas', 'list']"
+          class="mr-2"/>
         <strong>Entries</strong>
       </div>
       <div class="col-sm-3 d-flex align-items-center">
-        <i class="fa fa-percent mr-2"/>
+        <icon
+          :icon="['fas', 'percent']"
+          class="mr-2"/>
         <strong>Progress</strong>
       </div>
       <div class="col-sm-1 d-flex align-self-center justify-content-end">
@@ -26,7 +34,8 @@
             class="btn btn-faded btn-sm btn-icon dropdown-toggle"
             type="button"
             data-toggle="dropdown">
-            <i class="fa fa-ellipsis-v"/>
+            <icon
+              :icon="['fas', 'ellipsis-v']"/>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <a
