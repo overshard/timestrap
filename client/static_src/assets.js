@@ -22,7 +22,7 @@ import {
   faBook,
   faUserCircle,
   faList,
-  faPercent,
+  faPercentage,
   faEllipsisV,
   faPlus,
   faSync,
@@ -36,13 +36,11 @@ import {
   faDownload,
   faPlay,
   faStop,
-} from '@fortawesome/free-solid-svg-icons';
-import {
+  faCodeBranch,
   faClock,
-} from '@fortawesome/free-regular-svg-icons';
-import {
-  faGithub,
-} from '@fortawesome/free-brands-svg-icons';
+  faStopwatch,
+  faHandHoldingUsd,
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faAddressBook,
@@ -50,7 +48,7 @@ library.add(
   faBook,
   faUserCircle,
   faList,
-  faPercent,
+  faPercentage,
   faEllipsisV,
   faPlus,
   faSync,
@@ -64,10 +62,10 @@ library.add(
   faDownload,
   faPlay,
   faStop,
-
+  faCodeBranch,
+  faStopwatch,
   faClock,
-
-  faGithub,
+  faHandHoldingUsd,
 );
 
 Vue.component('icon', FontAwesomeIcon);

@@ -11,7 +11,7 @@
       </div>
       <div class="col-sm-2 d-flex align-items-center">
         <icon
-          :icon="['far', 'clock']"
+          :icon="['fas', 'clock']"
           class="mr-2"/>
         <strong>Total Time</strong>
       </div>
@@ -23,7 +23,7 @@
       </div>
       <div class="col-sm-3 d-flex align-items-center">
         <icon
-          :icon="['fas', 'percent']"
+          :icon="['fas', 'percentage']"
           class="mr-2"/>
         <strong>Progress</strong>
       </div>

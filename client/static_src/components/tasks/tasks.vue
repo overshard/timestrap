@@ -46,7 +46,7 @@
         </div>
         <div class="col-2 d-flex align-items-center">
           <icon
-            :icon="['far', 'clock']"
+            :icon="['fas', 'hand-holding-usd']"
             class="mr-2"/>
           <strong>Hourly Rate</strong>
         </div>

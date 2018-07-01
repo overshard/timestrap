@@ -14,7 +14,7 @@
         class="mr-1 text-muted"/>
       {{ entry.project_details.name }}
     </div>
-    <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-6']">
+    <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-5']">
       <div
         v-if="entry.task"
         class="small">
@@ -32,13 +32,13 @@
         {{ entry.note }}
       </div>
     </div>
-    <div class="col-sm-1 align-self-center display-4 duration">
+    <div class="col-sm-2 align-items-center display-4 duration">
       <icon
-        :icon="['far', 'clock']"
-        class="mr-2 text-muted"/>
+        :icon="['fas', 'clock']"
+        class="mr-2 text-muted small mb-1"/>
       {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
     </div>
-    <div class="col-sm-1 align-self-center datetimes flex-column">
+    <div class="col-sm-2 align-self-center datetimes flex-column">
       <div class="datetime-start small">
         <icon
           :icon="['fas', 'hourglass-start']"
@@ -161,6 +161,7 @@ export default {
 
   .duration {
     display: flex;
+    font-weight: lighter;
   }
 
   .datetimes {
@@ -198,7 +199,7 @@ export default {
   }
 
   .duration.display-4 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   .note {

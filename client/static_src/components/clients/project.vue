@@ -11,7 +11,7 @@
     </div>
     <div class="col-sm-2 d-flex align-items-center">
       <icon
-        :icon="['far', 'clock']"
+        :icon="['fas', 'clock']"
         class="mr-2 text-muted"/>
       {{ project.total_duration }}
     </div>
@@ -24,17 +24,21 @@
     <div
       v-if="project.percent_done !== null"
       class="col-sm-3 d-flex align-items-center">
+      <icon
+        :icon="['fas', 'percentage']"
+        class="mr-2 text-muted"/>
       <div class="progress w-100">
         <div
           :class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
-          :style="{ width: project.percent_done + '%' }">
-          {{ project.percent_done }}%
-        </div>
+          :style="{ width: project.percent_done + '%' }"/>
       </div>
     </div>
     <div
       v-else
       class="col-sm-3 d-flex align-items-center">
+      <icon
+        :icon="['fas', 'percentage']"
+        class="mr-2 text-muted"/>
       No Estimate
     </div>
     <div class="col-sm-1 d-flex align-self-center justify-content-end">

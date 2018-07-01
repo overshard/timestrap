@@ -40,10 +40,17 @@
         :key="entryBlock.id"
         class="mb-4">
         <div class="row inset-row">
-          <div class="col-12">
+          <div class="col-6">
             <h2 class="display-4 text-muted">
-              {{ $moment(entryBlock.date).format('MMMM Do') }}
+              {{ $moment(entryBlock.date).format('ddd[,] MMMM Do') }}
             </h2>
+          </div>
+          <div class="col-6">
+            <h5 class="float-right">
+              <span class="badge badge-success">
+                {{ $moment.duration(entryBlock.duration, 'hours').format('h[h] m[m]') }}
+              </span>
+            </h5>
           </div>
         </div>
         <div class="rounded">
@@ -73,7 +80,7 @@
         </div>
         <div class="col-sm-3">
           <icon
-            :icon="['far', 'clock']"
+            :icon="['fas', 'clock']"
             class="mr-2"/>
           <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>

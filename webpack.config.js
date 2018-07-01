@@ -5,13 +5,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development',
   watch: true,
-  devtool: 'source-map',
+  watchOptions: {
+    ignored: /node_modules/,
+  },
   output: {
     filename: 'bundle.js',
   },
   performance: {
     hints: false,
   },
+  devtool: 'source-map',
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',

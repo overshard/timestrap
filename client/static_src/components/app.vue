@@ -35,7 +35,7 @@
                 :to="timesheet"
                 class="nav-link">
                 <icon
-                  :icon="['far', 'clock']"
+                  :icon="['fas', 'clock']"
                   class="mr-1"/>
                 Timesheet
               </router-link>
@@ -118,10 +118,12 @@
       <router-view :id="'view-' + $route.name"/>
     </div>
     <div id="github">
-      <a href="https://github.com/overshard/timestrap" target="_blank">
+      <a
+        href="https://github.com/overshard/timestrap"
+        target="_blank">
         <icon
-          :icon="['fab', 'github']"
-          class="mr-1"/>
+          :icon="['fas', 'code-branch']"
+          class="mr-1 text-muted"/>
       </a>
     </div>
   </div>

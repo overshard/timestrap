@@ -22,13 +22,19 @@ export default {
         let day = Vue.prototype.$moment().subtract(i, 'day').format('YYYY-MM-DD');
         allDays.push(day);
       }
-      return allDays.map(day => {
-        return {
-          date: day,
+
+      return allDays.map(date => {
+        let day = {
+          date: date,
+          duration: 0,
           entries: state.all.filter(entry => {
-            return entry.date == day;
+            return entry.date == date;
           }),
         };
+        day.entries.forEach(entry => {
+          day.duration += entry.duration;
+        });
+        return day;
       });
     },
   },
