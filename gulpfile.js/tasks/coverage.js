@@ -1,7 +1,5 @@
 const gulp = require('gulp');
 
-const del = require('del');
-
 const spawn = require('child_process').spawn;
 
 
@@ -10,7 +8,9 @@ gulp.task('coverage:test', gulp.series('build:webpack:production', () => {
     'pipenv',
     ['run', 'coverage', 'run', '--source=conf,core,api', 'manage.py', 'test'],
     {stdio: 'inherit'}
-  );
+  ).on('exit', code => {
+    if (code !== 0) process.exit(code);
+  });
 }));
 
 
