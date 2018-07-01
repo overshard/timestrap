@@ -4,14 +4,14 @@
       <div
         v-if="!doneLoading"
         id="loading"
-        class="progress">
+        class="progress bg-dark">
         <div
           :style="'width:' + loadingPercent + '%;'"
-          class="progress-bar bg-info"/>
+          class="progress-bar bg-primary"/>
       </div>
     </transition>
 
-    <div class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <div class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container">
         <router-link
           :to="timesheet"
