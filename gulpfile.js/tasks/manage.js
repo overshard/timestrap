@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const spawn = require('child_process').spawn;
 
 
-gulp.task('manage:test', gulp.series('build:webpack:production', cb => {
+gulp.task('manage:test', gulp.series('build:webpack:production', () => {
   const command = ['run', 'python', 'manage.py', 'test'];
 
   const test = process.argv.indexOf('--test');
@@ -18,7 +18,6 @@ gulp.task('manage:test', gulp.series('build:webpack:production', cb => {
     {stdio: 'inherit',env: process.env}
   ).on('exit', code => {
     if (code !== 0) process.exit(code);
-    return cb;
   });
 }));
 
