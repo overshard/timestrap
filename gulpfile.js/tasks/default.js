@@ -1,4 +1,4 @@
 const gulp = require('gulp');
 
 
-gulp.task('default', gulp.parallel('build', 'manage:runserver'));
+gulp.task('default', gulp.parallel('build:development', 'manage:runserver'));

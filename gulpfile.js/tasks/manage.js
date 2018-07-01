@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const spawn = require('child_process').spawn;
 
 
-gulp.task('manage:test', cb => {
+gulp.task('manage:test', gulp.series('build:webpack:production', () => {
   const command = ['run', 'python', 'manage.py', 'test'];
 
   const test = process.argv.indexOf('--test');
@@ -16,80 +16,59 @@ gulp.task('manage:test', cb => {
     'pipenv',
     command,
     {stdio: 'inherit',env: process.env}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
-});
+  );
+}));
 
 
-gulp.task('manage:runserver', cb => {
+gulp.task('manage:runserver', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'runserver'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 
-gulp.task('manage:makemigrations', cb => {
+gulp.task('manage:makemigrations', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'makemigrations'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 
-gulp.task('manage:migrate', cb => {
+gulp.task('manage:migrate', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'migrate'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 
-gulp.task('manage:createsuperuser', cb => {
+gulp.task('manage:createsuperuser', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'createsuperuser'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 
-gulp.task('manage:fake', cb => {
+gulp.task('manage:fake', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'fake'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 
-gulp.task('manage:reset', cb => {
+gulp.task('manage:reset', () => {
   return spawn(
     'pipenv',
     ['run', 'python', 'manage.py', 'reset', '--no-input'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });

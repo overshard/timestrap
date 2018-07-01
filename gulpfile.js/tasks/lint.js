@@ -5,15 +5,12 @@ const eslint = require('gulp-eslint');
 const spawn  = require('child_process').spawn;
 
 
-gulp.task('lint:python', cb => {
+gulp.task('lint:python', () => {
   return spawn(
     'pipenv',
     ['run', 'flake8', '--exclude=node_modules,migrations'],
     {stdio: 'inherit'}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-    return cb;
-  });
+  );
 });
 
 

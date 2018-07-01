@@ -15,13 +15,7 @@ gulp.task('build:clean', () => {
 });
 
 
-gulp.task('build:webpack', () => {
-  const production = process.argv.indexOf('--production');
-  if (production !== -1) {
-    webpackConfig.mode = 'production';
-    webpackConfig.watch = false;
-  }
-
+gulp.task('build:webpack:development', () => {
   return gulp.src('client/static_src/main.js')
     .pipe(webpackStream(webpackConfig, webpack))
     .on('error', function handleError() {
@@ -31,4 +25,17 @@ gulp.task('build:webpack', () => {
 });
 
 
-gulp.task('build', gulp.series('build:clean', 'build:webpack'));
+gulp.task('build:webpack:production', () => {
+  webpackConfig.mode = 'production';
+  webpackConfig.watch = false;
+
+  return gulp.src('client/static_src/main.js')
+    .pipe(webpackStream(webpackConfig, webpack))
+    .pipe(gulp.dest('client/static/'));
+});
+
+
+gulp.task('build:development', gulp.series('build:clean', 'build:webpack:development'));
+
+
+gulp.task('build:production', gulp.series('build:clean', 'build:webpack:production'));

@@ -19,7 +19,7 @@ gulp.task('docs:github', () => {
 
 
 gulp.task('docs:rtd', cb => {
-  return spawn(
+  spawn(
     'pipenv',
     ['run', 'sphinx-build', 'docs', 'docs/_build'],
     {stdio: 'inherit'}
