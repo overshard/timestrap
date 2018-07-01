@@ -76,12 +76,17 @@
 
       <div class="row bg-success text-white py-2 mb-4 rounded">
         <div class="ml-auto col-sm-2 text-right">
-          <strong>Subtotal</strong>
+          Subtotal<br>
+          <strong>Total</strong>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <icon
             :icon="['fas', 'clock']"
-            class="mr-2"/>
+            class="mr-1"/>
+          {{ $moment.duration(subtotal, 'hours').format('d[d] h[h] m[m]') }}<br>
+          <icon
+            :icon="['fas', 'clock']"
+            class="mr-1"/>
           <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>
       </div>
@@ -122,10 +127,10 @@ export default {
   computed: {
     ...mapState({
       total: state => state.entries.total,
-      subtotal: state => state.entries.subtotal,
     }),
     ...mapGetters({
       entries: 'entries/getEntriesByDay',
+      subtotal: 'entries/getEntriesByDayTotal',
     }),
   },
   methods: {

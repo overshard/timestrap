@@ -155,9 +155,15 @@
           Subtotal<br>
           <strong>Total</strong>
         </div>
-        <div class="col-sm-2 text-right">
-          {{ subtotal }}<br>
-          <strong>{{ total }}</strong>
+        <div class="col-sm-4">
+          <icon
+            :icon="['fas', 'clock']"
+            class="mr-1"/>
+          {{ $moment.duration(subtotal, 'hours').format('d[d] h[h] m[m]') }}<br>
+          <icon
+            :icon="['fas', 'clock']"
+            class="mr-1"/>
+          <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>
       </div>
     </div>
@@ -265,8 +271,8 @@ export default {
 
         this.entries = response.data.results;
 
-        this.subtotal = this.$moment.duration(response.data.subtotal_duration, 'hours').format('d[d] h[h] m[m]');
-        this.total = this.$moment.duration(response.data.total_duration, 'hours').format('d[d] h[h] m[m]');
+        this.subtotal = response.data.subtotal_duration;
+        this.total = response.data.total_duration;
 
         window.scrollTo(0, 0);
       });

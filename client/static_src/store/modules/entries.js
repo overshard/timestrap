@@ -37,6 +37,13 @@ export default {
         return day;
       });
     },
+    getEntriesByDayTotal: (state, getters) => {
+      let entriesByDayTotal = 0;
+      getters.getEntriesByDay.forEach(day => {
+        entriesByDayTotal += day.duration;
+      });
+      return entriesByDayTotal;
+    },
   },
   mutations: {
     setEntries: (state, entries) => state.all = entries,
