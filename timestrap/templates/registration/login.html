@@ -46,17 +46,17 @@
       name="next"
       value="{{ next }}">
 
-    <div class="input-group mb-3 fade-in">
-      <div class="input-group-prepend">
-        <i class="fa fa-user input-group-text"></i>
-      </div>
+    <div class="form-group mb-3 fade-in">
+      <label for="input-username">
+        {{ form.username.label }}
+      </label>
       {% render_field form.username id="input-username" name="username" class+="form-control" placeholder=form.username.label %}
     </div>
 
-    <div class="input-group mb-3 fade-in">
-      <div class="input-group-prepend">
-        <i class="fa fa-lock input-group-text"></i>
-      </div>
+    <div class="form-group mb-3 fade-in">
+      <label for="input-password">
+        {{ form.password.label }}
+      </label>
       {% render_field form.password id="input-password" name="password" class+="form-control" placeholder=form.password.label %}
     </div>
 
@@ -64,7 +64,7 @@
       id="button-submit"
       name="login"
       type="submit"
-      class="btn btn-primary w-100 fade-in">
+      class="btn btn-primary w-100 mt-3 fade-in">
       Login
     </button>
   </form>
