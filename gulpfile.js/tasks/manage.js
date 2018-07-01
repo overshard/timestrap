@@ -16,9 +16,7 @@ gulp.task('manage:test', gulp.series('build:webpack:production', () => {
     'pipenv',
     command,
     {stdio: 'inherit',env: process.env}
-  ).on('exit', code => {
-    if (code !== 0) process.exit(code);
-  });
+  );
 }));
 
 

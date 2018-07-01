@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 from django.urls import reverse_lazy
 
-from .views import AppView, reports_export
+from . import views
 
 
 # Instead of using a wildcard for our app views we insert them one at a time
@@ -11,17 +11,18 @@ from .views import AppView, reports_export
 urlpatterns = [
     path(
         '',
-        RedirectView.as_view(
-            url=reverse_lazy('timesheet'),
-            permanent=False,
-        ),
+        RedirectView.as_view(url=reverse_lazy('timesheet'), permanent=False),
         name='dashboard',
     ),
 
-    path('reports/export/', reports_export, name='reports-export'),
+    path(
+        'reports/export/',
+        views.ReportExportView.as_view(),
+        name='reports-export'
+    ),
 
-    path('timesheet/', AppView.as_view(), name='timesheet'),
-    path('clients/', AppView.as_view(), name='clients'),
-    path('tasks/', AppView.as_view(), name='tasks'),
-    path('reports/', AppView.as_view(), name='reports'),
+    path('timesheet/', views.AppView.as_view(), name='timesheet'),
+    path('clients/', views.AppView.as_view(), name='clients'),
+    path('tasks/', views.AppView.as_view(), name='tasks'),
+    path('reports/', views.AppView.as_view(), name='reports'),
 ]

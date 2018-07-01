@@ -1,7 +1,7 @@
+from django.conf import settings
+
 from .middleware.site import current_request
 from .models import Conf, Site
-
-from django.conf import settings
 
 
 def current_site_id():
