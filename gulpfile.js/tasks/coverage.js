@@ -23,12 +23,4 @@ gulp.task('coverage:report', () => {
 });
 
 
-gulp.task('coverage:clean', gulp.series('build:clean', () => {
-  return del([
-    '.coverage',
-    'geckodriver.log',
-  ]);
-}));
-
-
-gulp.task('coverage', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:clean'));
+gulp.task('coverage', gulp.series('lint', 'coverage:test', 'coverage:report'));
