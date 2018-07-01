@@ -1,4 +1,4 @@
 const gulp = require('gulp');
 
 
-gulp.task('build', ['styles', 'scripts', 'images', 'extras']);
+gulp.task('build', ['scripts']);

@@ -1,11 +1,8 @@
 require('./tasks/build');
 require('./tasks/default');
+require('./tasks/watch');
 require('./tasks/docs');
-require('./tasks/extras');
-require('./tasks/images');
 require('./tasks/linting');
 require('./tasks/manage');
 require('./tasks/scripts');
-require('./tasks/styles');
 require('./tasks/testing');
-require('./tasks/watch');

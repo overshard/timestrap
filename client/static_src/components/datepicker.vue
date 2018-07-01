@@ -4,6 +4,15 @@
 
 
 <script>
+import $ from 'jquery';
+
+import 'picker';
+import 'picker-date';
+
+import 'pickadate/lib/themes/default.css';
+import 'pickadate/lib/themes/default.date.css';
+
+
 export default {
   props: [
     'default',

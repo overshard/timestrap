@@ -1,3 +1,5 @@
+import './assets';
+
 import Vue from 'vue';
 
 import VueMoment from './plugins/moment';
