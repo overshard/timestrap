@@ -20,7 +20,7 @@ install:
   - pip install pipenv && pipenv install --dev --system
 before_script:
   - gulp lint
-  - gulp build
+  - gulp build --production
 script:
   - travis_retry gulp coverage
 after_success:

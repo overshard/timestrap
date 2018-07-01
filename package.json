@@ -26,8 +26,6 @@
     "babel-env": "^2.4.1",
     "babel-eslint": "^8.2.5",
     "babel-loader": "^7.1.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
     "css-loader": "^0.28.11",

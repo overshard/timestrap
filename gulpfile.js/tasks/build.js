@@ -17,8 +17,10 @@ gulp.task('build:clean', () => {
 
 gulp.task('build:webpack', () => {
   const production = process.argv.indexOf('--production');
-  if (production !== -1) webpackConfig.mode = 'production';
-  webpackConfig.watch = true;
+  if (production !== -1) {
+    webpackConfig.mode = 'production';
+    webpackConfig.watch = false;
+  }
 
   return gulp.src('client/static_src/main.js')
     .pipe(webpackStream(webpackConfig, webpack))
