@@ -57,6 +57,6 @@
     "webpack-stream": "^4.0.3"
   },
   "scripts": {
-    "heroku-postbuild": "gulp build --production"
+    "heroku-postbuild": "gulp build:production"
   }
 }
