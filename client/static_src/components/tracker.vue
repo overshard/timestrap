@@ -83,7 +83,7 @@
                 @click.prevent
                 @click="toggleExtras">
                 <icon
-                  :icon="['fas', 'ellipsis-v']"/>
+                  :icon="['fas', [showExtras ? 'caret-up' : 'caret-down']]"/>
               </button>
             </div>
           </div>

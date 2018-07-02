@@ -38,8 +38,9 @@ import {
   faStop,
   faCodeBranch,
   faClock,
-  faStopwatch,
   faHandHoldingUsd,
+  faCaretDown,
+  faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -63,9 +64,10 @@ library.add(
   faPlay,
   faStop,
   faCodeBranch,
-  faStopwatch,
   faClock,
   faHandHoldingUsd,
+  faCaretDown,
+  faCaretUp,
 );
 
 Vue.component('icon', FontAwesomeIcon);
