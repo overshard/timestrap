@@ -17,12 +17,19 @@ export default {
   props: [
     'default',
   ],
+  data() {
+    return {
+      picker: null,
+    };
+  },
   mounted() {
     let vm = this;
     $(this.$el).pickadate({
       format: 'yyyy-mm-dd',
       onStart: function() {
-        $('.picker').appendTo('body');
+        vm.picker = '#' + $(vm.$el).attr('id') + '_root';
+        $(vm.picker).appendTo('body');
+        // $('.picker').appendTo('body');
         if (vm.default) {
           this.set('select', vm.default);
           vm.$emit('input', vm.$moment(vm.default).format('YYYY-MM-DD'));
@@ -35,6 +42,7 @@ export default {
   },
   destroyed() {
     $(this.$el).stop();
+    $(this.picker).remove();
   },
 };
 </script>
