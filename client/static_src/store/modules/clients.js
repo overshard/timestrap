@@ -14,6 +14,9 @@ export default {
   },
   getters: {
     // Clients
+    getNumberOfClients: state => {
+      return state.allClients.length;
+    },
     getSelectClients: state => {
       return state.allClients.map(client => {
         return {id: client.url, text: client.name};
@@ -21,6 +24,9 @@ export default {
     },
 
     // Projects
+    getNumberOfProjects: state => {
+      return state.allProjects.length;
+    },
     getSelectProjects: state => {
       return state.allClients.map(client => {
         // TODO: Should use getClientProjects getter instead to reduce code

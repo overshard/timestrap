@@ -2,14 +2,10 @@
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
-
 [requires]
-
 python_version = "3.6"
 
-
 [dev-packages]
-
 "flake8" = "*"
 coveralls = "*"
 selenium = "*"
@@ -17,9 +13,7 @@ sphinx = "*"
 recommonmark = "*"
 "sphinx-rtd-theme" = "*"
 
-
 [packages]
-
 django = "*"
 "django-widget-tweaks" = "*"
 whitenoise = "*"
@@ -29,5 +23,5 @@ djangorestframework = "*"
 faker = "*"
 "dj-database-url" = "*"
 "psycopg2-binary" = "*"
-gunicorn = "*"
 ipaddress = "*"
+channels = "*"

@@ -1,1 +1,1 @@
-web: gunicorn timestrap.wsgi:application --timeout 30 --log-file -
+web: daphne timestrap.asgi:application --port $PORT --bind 0.0.0.0 -v2

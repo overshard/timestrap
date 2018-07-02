@@ -15,14 +15,16 @@ BASE_DIR = os.path.dirname(
 # Application definition
 
 INSTALLED_APPS = [
+    'client',
     'conf',
     'core',
     'api',
-    'client',
+    'sockets',
 
     'widget_tweaks',
     'django_filters',
     'rest_framework',
+    'channels',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -136,6 +138,12 @@ REST_FRAMEWORK = {
     ],
     'UNICODE_JSON': False
 }
+
+
+# Channels
+# https://channels.readthedocs.io/en/latest/
+
+ASGI_APPLICATION = 'timestrap.routing.application'
 
 
 # Logging

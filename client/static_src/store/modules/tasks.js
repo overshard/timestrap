@@ -9,6 +9,9 @@ export default {
     all: [],
   },
   getters: {
+    getNumberOfTasks: state => {
+      return state.all.length;
+    },
     getSelectTasks: state => {
       return state.all.map(task => {
         return {id: task.url, text: task.name};
