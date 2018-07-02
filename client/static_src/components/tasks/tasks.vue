@@ -17,7 +17,7 @@
         </button>
 
         <button
-          class="btn btn-secondary btn-sm pull-right ml-2"
+          class="btn btn-secondary btn-sm float-right ml-2"
           @click.prevent
           @click="refresh">
           <icon
@@ -25,6 +25,13 @@
             class="mr-1"/>
           Sync
         </button>
+
+        <input
+          id="task-search"
+          v-model="search"
+          placeholder="Filter Tasks"
+          class="form-control form-control-sm float-right w-25"
+          type="text">
       </div>
     </div>
 
@@ -53,7 +60,7 @@
         <div class="col-2"/>
       </div>
       <task
-        v-for="(task, index) in tasks"
+        v-for="(task, index) in tasks(search)"
         :task="task"
         :index="index"
         :key="task.id"
@@ -64,7 +71,7 @@
 
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 import Task from './task.vue';
 import TaskModal from './task-modal.vue';
@@ -81,11 +88,12 @@ export default {
         task: null,
         show: false,
       },
+      search: '',
     };
   },
   computed: {
-    ...mapState({
-      tasks: state => state.tasks.all,
+    ...mapGetters({
+      tasks: 'tasks/getSearchTasks',
     }),
   },
   methods: {

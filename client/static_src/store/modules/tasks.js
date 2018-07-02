@@ -14,6 +14,11 @@ export default {
         return {id: task.url, text: task.name};
       });
     },
+    getSearchTasks: state => search => {
+      return state.all.filter(task => {
+        return task.name.toLowerCase().includes(search);
+      });
+    },
   },
   mutations: {
     setTasks: (state, tasks) => state.all = tasks,

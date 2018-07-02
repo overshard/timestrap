@@ -36,6 +36,13 @@
             class="mr-1"/>
           Sync
         </button>
+
+        <input
+          id="client-search"
+          v-model="search"
+          placeholder="Filter Projects"
+          class="form-control form-control-sm float-right w-25"
+          type="text">
       </div>
     </div>
 
@@ -59,6 +66,7 @@
         :client="client"
         :index="index"
         :key="client.id"
+        :search="search"
         :toggle-client-modal="toggleClientModal"
         :toggle-project-modal="toggleProjectModal"/>
     </div>
@@ -90,6 +98,7 @@ export default {
         project: null,
         show: false,
       },
+      search: '',
     };
   },
   computed: {

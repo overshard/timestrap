@@ -45,6 +45,11 @@ export default {
         return project.client == clientUrl;
       });
     },
+    getClientProjectsSearch: state => (clientUrl, search) => {
+      return state.allProjects.filter(project => {
+        return project.client == clientUrl && project.name.toLowerCase().includes(search);
+      });
+    },
   },
   mutations: {
     // Clients

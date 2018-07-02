@@ -66,7 +66,7 @@
 
     <template v-if="this.$perms.view_project">
       <project
-        v-for="(project, project_index) in projects(client.url)"
+        v-for="(project, project_index) in projects(client.url, search)"
         :project="project"
         :index="project_index"
         :key="project.id"
@@ -93,10 +93,11 @@ export default {
     'toggleClientModal',
     'toggleProjectModal',
     'removeProject',
+    'search',
   ],
   computed: {
     ...mapGetters({
-      projects: 'clients/getClientProjects',
+      projects: 'clients/getClientProjectsSearch',
     }),
   },
   methods: {
