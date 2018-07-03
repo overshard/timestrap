@@ -1,5 +1,5 @@
 from random import randint, choice
-from datetime import timedelta
+from datetime import datetime, timedelta
 from decimal import Decimal
 
 from django.core.management.base import BaseCommand
@@ -25,26 +25,23 @@ class Command(BaseCommand):
         fake = Factory.create()
         verbosity = kwargs['verbosity']
         iterations = kwargs['iterations']
-        if not iterations:
-            iterations = 5
 
-        for i in range(randint(iterations, iterations*2)):
+        for _ in range(iterations):
             task_name = (fake
                          .sentence(nb_words=3, variable_nb_words=True)
                          .replace('.', '')
-                         .capitalize())
+                         .title())
             Task.objects.create(
                 name=task_name,
                 hourly_rate=Decimal(
-                    '%d.%d' % (randint(0, 200), randint(0, 99)))
+                    '%d.%d' % (randint(1, 200), randint(1, 99)))
             )
 
-        for i in range(iterations):
+        for _ in range(iterations):
             Client.objects.create(name=fake.company())
 
         for client in Client.objects.iterator():
-            project_iterations = randint(iterations, iterations*2)
-            for i in range(project_iterations):
+            for i in range(randint(1, iterations)):
                 estimated = choice([True, False])
                 estimate = None
                 if estimated:
@@ -52,14 +49,14 @@ class Command(BaseCommand):
                 project_name = (fake
                                 .sentence(nb_words=3, variable_nb_words=True)
                                 .replace('.', '')
-                                .capitalize())
+                                .title())
                 Project.objects.create(
                     client=client,
                     estimate=estimate,
                     name=project_name
                 )
 
-        for i in range(iterations):
+        for _ in range(iterations):
             fake_user = fake.simple_profile(sex=None)
             username = fake_user['username']
             email = fake_user['mail']
@@ -76,26 +73,19 @@ class Command(BaseCommand):
         projects = Project.objects.all()
         tasks = Task.objects.all()
 
-        for project in projects:
-            entry_iterations = randint(iterations*2, iterations*4)
-            for i in range(entry_iterations):
-                date = fake.date_time_between(
-                    start_date='-5d',
-                    end_date='now',
-                    tzinfo=None
-                )
-                duration = timedelta(
-                    hours=randint(0, 3),
-                    minutes=randint(1, 60)
-                )
-                Entry.objects.create(
-                    project=project,
-                    user=choice(users),
-                    task=choice(tasks),
-                    date=date,
-                    duration=duration,
-                    note=fake.sentence(nb_words=6, variable_nb_words=True)
-                )
+        for user in users:
+            for day in range(iterations):
+                date = (datetime.now() - timedelta(days=day)).date()
+                for _ in range(randint(1, iterations)):
+                    duration = timedelta(minutes=randint(1, 180))
+                    Entry.objects.create(
+                        project=choice(projects),
+                        task=choice(tasks),
+                        user=user,
+                        date=date,
+                        duration=duration,
+                        note=fake.sentence(nb_words=6, variable_nb_words=True)
+                    )
 
         if verbosity > 0:
             self.stdout.write(
