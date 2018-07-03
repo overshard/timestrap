@@ -1,5 +1,4 @@
 from os import environ
-from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
@@ -36,13 +35,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
 
         super().setUp()
-
-    def tearDown(self):
-        # Issue moving too fast between tests sometimes causes an
-        # OperationalError with database locks on SQLite.
-        sleep(1)
-
-        super().tearDown()
 
     def logIn(self):
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
