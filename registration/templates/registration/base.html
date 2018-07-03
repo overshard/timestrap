@@ -13,47 +13,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'imgs/favicon.ico' %}" />
 
   <link rel="stylesheet" href="{% static 'bundle.css' %}" />
-  <style>
-    #registration {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .registration-wrapper {
-      max-width: 400px;
-      margin: 0 auto;
-      background-color: #fff;
-    }
-
-    .registration-wrapper .bg-light {
-      border-top: 1px solid #eaeaea;
-    }
-
-    .btn,
-    label {
-      font-size: .7em;
-      line-height: 1.8em;
-      letter-spacing: 1px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .fade-in {
-      animation: fade-in .3s ease-in-out;
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'registration.css' %}" />
 </head>
 
 <body id="registration" class="bg-dark">

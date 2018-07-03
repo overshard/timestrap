@@ -1,5 +1,3 @@
-import os
-
 from .base import *  # noqa: F401,F403
 
 
@@ -8,7 +6,7 @@ DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']  # noqa: F405
 
 
 # SECURITY WARNING: set this to your domain name in production!
@@ -17,7 +15,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'core',
     'api',
     'sockets',
+    'registration',
 
     'widget_tweaks',
     'django_filters',
@@ -32,7 +33,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'django.contrib.sites',
 ]
 
@@ -74,9 +74,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'timestrap.wsgi.application'
 
+ASGI_APPLICATION = 'timestrap.routing.application'
+
 
 # Authentication
-# https://docs.djangoproject.com/en/1.11/topics/auth/default/
+# https://docs.djangoproject.com/en/2.0/topics/auth/default/
 
 AUTHENTICATION_BACKENDS = [
     'conf.backends.auth.SitePermissionBackend',
@@ -90,7 +92,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
+# https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en'
 
@@ -104,13 +106,13 @@ USE_TZ = True
 
 
 # Email settings
-# https://docs.djangoproject.com/en/1.11/topics/email/
+# https://docs.djangoproject.com/en/2.0/topics/email/
 
 EMAIL_BACKEND = 'conf.backends.mail.EmailBackend'
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -136,41 +138,5 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    'UNICODE_JSON': False
-}
-
-
-# Channels
-# https://channels.readthedocs.io/en/latest/
-
-ASGI_APPLICATION = 'timestrap.routing.application'
-
-
-# Logging
-# https://docs.djangoproject.com/en/1.11/topics/logging/
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'filters': ['require_debug_false']
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-        }
-    }
+    'UNICODE_JSON': False,
 }
