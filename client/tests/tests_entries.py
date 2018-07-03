@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 from selenium.common.exceptions import NoSuchElementException
 
-from . import SeleniumTestCase
+from core.models import Entry, Project, Task
+from core.utils import parse_duration
 
-from ..models import Entry, Project, Task
-from ..utils import parse_duration
+from . import SeleniumTestCase
 
 
 class EntriesTestCase(SeleniumTestCase):

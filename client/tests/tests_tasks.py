@@ -2,9 +2,9 @@ from decimal import Decimal
 
 from selenium.common.exceptions import NoSuchElementException
 
-from . import SeleniumTestCase
+from core.models import Task
 
-from ..models import Task
+from . import SeleniumTestCase
 
 
 class TasksTestCase(SeleniumTestCase):
