@@ -21,4 +21,16 @@ gulp.task('coverage:report', () => {
 });
 
 
-gulp.task('coverage', gulp.series('lint', 'coverage:test', 'coverage:report'));
+gulp.task('coverage:coveralls', () => {
+  return spawn(
+    'pipenv',
+    ['run', 'coveralls'],
+    {stdio: 'inherit'}
+  );
+});
+
+
+gulp.task('coverage:development', gulp.series('lint', 'coverage:test', 'coverage:report'));
+
+
+gulp.task('coverage:production', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:coveralls'));
