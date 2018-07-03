@@ -1,5 +1,7 @@
 const gulp = require('gulp');
 
+const del = require('del');
+
 const spawn = require('child_process').spawn;
 
 
@@ -30,7 +32,16 @@ gulp.task('coverage:coveralls', () => {
 });
 
 
-gulp.task('coverage:development', gulp.series('lint', 'coverage:test', 'coverage:report'));
+gulp.task('coverage:clean', () => {
+  return del([
+    'client/static/**/*',
+    '.coverage',
+    'geckodriver.log',
+  ]);
+});
+
+
+gulp.task('coverage:development', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:clean'));
 
 
 gulp.task('coverage:production', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:coveralls'));
