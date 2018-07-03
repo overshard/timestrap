@@ -13,6 +13,9 @@
   "license": "BSD-2-Clause",
   "buildpacks": [
     {
+      "url": "https://github.com/heroku/heroku-buildpack-pgbouncer"
+    },
+    {
       "url": "heroku/nodejs"
     },
     {
