@@ -20,7 +20,7 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=500, ssl_require=True)
+    'default': dj_database_url.config(conn_max_age=500)
 }
 
 
