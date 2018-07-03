@@ -5,7 +5,7 @@ services:
     image: postgres
   web:
     build: .
-    command: gunicorn timestrap.wsgi:application -b 0.0.0.0:80 --timeout 30 --log-file -
+    command: daphne timestrap.asgi:application --port 80 --bind 0.0.0.0 -v2
     ports:
       - "80:80"
     depends_on:
