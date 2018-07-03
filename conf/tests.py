@@ -1,15 +1,10 @@
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
-from ..models import Conf, Site, SitePermission
+from .models import Conf, Site, SitePermission
 
 
-@override_settings(
-    STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
-)
 class ConfTestCase(TestCase):
-    def setUp(self):
-        pass
 
     def test_conf_created(self):
         site = Site.objects.create(domain='test.site', name='Test Site')
@@ -17,6 +12,7 @@ class ConfTestCase(TestCase):
 
 
 class SitePermissionTestCase(TestCase):
+
     def setUp(self):
         self.user = User.objects.create_user('Test User', 'test@user.com',
                                              'test')

@@ -30,4 +30,5 @@
 /.vscode
 
 # code coverage
-/.coverage
+/.coverage*
+!/.coveragerc

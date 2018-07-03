@@ -16,8 +16,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        # Delete MOZ_HEADLESS entirely if it's set to 0 to since Firefox will
-        # go into headless mode if the variable exists at all.
         if environ.get('FIREFOX_HEADLESS') is not '0':
             options.add_argument('-headless')
         cls.driver = FirefoxDriver(firefox_options=options)
@@ -60,7 +58,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.find('app')
 
     def clear(self, element):
-        # Selenium's clear command doesn't always work
+        # Selenium's clear command doesn't work
         value = element.get_attribute('value')
         for character in value:
             element.send_keys(Keys.BACK_SPACE)

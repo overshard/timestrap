@@ -4,7 +4,10 @@ const spawn = require('child_process').spawn;
 
 
 gulp.task('manage:test', gulp.series('build:webpack:production', () => {
-  const command = ['run', 'python', 'manage.py', 'test'];
+  let command = ['run', 'python', 'manage.py', 'test'];
+
+  const parallel = process.argv.indexOf('--parallel');
+  if (parallel !== -1) command.push(command.push('--parallel'));
 
   const test = process.argv.indexOf('--test');
   if (test !== -1) command.push(process.argv[test+1]);
@@ -15,7 +18,7 @@ gulp.task('manage:test', gulp.series('build:webpack:production', () => {
   return spawn(
     'pipenv',
     command,
-    {stdio: 'inherit',env: process.env}
+    {stdio: 'inherit', env: process.env}
   );
 }));
 

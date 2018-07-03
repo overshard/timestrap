@@ -1,0 +1,23 @@
+[run]
+branch = True
+parallel = true
+concurrency = multiprocessing
+source =
+    conf
+    core
+    api
+    sockets
+    registration
+omit =
+    */__init__.py
+    */admin.py
+    */apps.py
+    */urls.py
+    */tests*.py
+    */migrations/*
+    */management/*
+
+[report]
+precision = 1
+show_missing = True
+ignore_errors = True

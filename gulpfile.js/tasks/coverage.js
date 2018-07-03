@@ -6,18 +6,39 @@ const spawn = require('child_process').spawn;
 
 
 gulp.task('coverage:test', gulp.series('build:webpack:production', () => {
+  let command = [
+    'run',
+    'coverage',
+    'run',
+    '--parallel-mode',
+    '--concurrency=multiprocessing',
+    '--rcfile=.coveragerc',
+    'manage.py',
+    'test',
+    '--parallel',
+  ];
+
   return spawn(
     'pipenv',
-    ['run', 'coverage', 'run', '--source=conf,core,api', 'manage.py', 'test'],
+    command,
     {stdio: 'inherit'}
   );
 }));
 
 
+gulp.task('coverage:combine', () => {
+  return spawn(
+    'pipenv',
+    ['run', 'coverage', 'combine'],
+    {stdio: 'inherit'}
+  );
+});
+
+
 gulp.task('coverage:report', () => {
   return spawn(
     'pipenv',
-    ['run', 'coverage', 'report', '-m'],
+    ['run', 'coverage', 'report', '-m', '--rcfile=.coveragerc'],
     {stdio: 'inherit'}
   );
 });
@@ -35,13 +56,26 @@ gulp.task('coverage:coveralls', () => {
 gulp.task('coverage:clean', () => {
   return del([
     'client/static/**/*',
-    '.coverage',
     'geckodriver.log',
+    '.coverage*',
+    '!.coveragerc',
   ]);
 });
 
 
-gulp.task('coverage:development', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:clean'));
+gulp.task('coverage:development', gulp.series(
+  'lint',
+  'coverage:test',
+  'coverage:combine',
+  'coverage:report',
+  'coverage:clean'
+));
 
 
-gulp.task('coverage:production', gulp.series('lint', 'coverage:test', 'coverage:report', 'coverage:coveralls'));
+gulp.task('coverage:production', gulp.series(
+  'lint',
+  'coverage:test',
+  'coverage:combine',
+  'coverage:report',
+  'coverage:coveralls'
+));

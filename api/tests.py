@@ -37,14 +37,13 @@ def init_api_test_data():
 
 
 class AppTestCase(TestCase):
-    def setUp(self):
-        pass
 
     def test_api_config(self):
         self.assertEqual(apps.get_app_config('api').name, 'api')
 
 
 class ClientBrowseableApiTestCase(TestCase):
+
     def setUp(self):
         self.c, self.user = init_api_test_data()
 
@@ -83,6 +82,7 @@ class ClientBrowseableApiTestCase(TestCase):
 
 
 class ProjectBrowseableApiTestCase(TestCase):
+
     def setUp(self):
         self.c, self.user = init_api_test_data()
 
@@ -137,6 +137,7 @@ class ProjectBrowseableApiTestCase(TestCase):
 
 
 class EntryBrowseableApiTestCase(TestCase):
+
     def setUp(self):
         self.c, self.user = init_api_test_data()
 
@@ -180,6 +181,7 @@ class EntryBrowseableApiTestCase(TestCase):
 
 
 class UserBrowseableApiTestCase(TestCase):
+
     def setUp(self):
         self.c, self.user = init_api_test_data()
 
@@ -189,6 +191,7 @@ class UserBrowseableApiTestCase(TestCase):
 
 
 class PermissionBrowseableApiTestCase(TestCase):
+
     def setUp(self):
         self.c, self.user = init_api_test_data()
 

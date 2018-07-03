@@ -1,68 +1,25 @@
 from datetime import timedelta
-
 from decimal import Decimal
+from io import StringIO
+from csv import DictReader
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.test import Client as HttpClient
 from django.contrib.auth.models import User
 from django.core.management import call_command
+
+from faker import Factory
 
 from conf.models import Site, SitePermission
 from ..models import Client, Project, Entry, Task
 from ..utils import parse_duration, duration_string, duration_decimal
 
-from csv import DictReader
-
-from io import StringIO
-
-from faker import Factory
-
 
 fake = Factory.create()
 
 
-@override_settings(
-    STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
-)
-class ViewsTestCase(TestCase):
-    def setUp(self):
-        call_command('migrate', verbosity=0)
-        self.c = HttpClient()
-
-        fake_user = fake.simple_profile()
-        fake_password = fake.password()
-        user = User.objects.create_user(fake_user['username'],
-                                        fake_user['mail'], fake_password)
-        site_permission = SitePermission.objects.create(user=user)
-        site_permission.sites.set(Site.objects.filter(id=1))
-        site_permission.save()
-
-        self.c.login(username=fake_user['username'], password=fake_password)
-
-    def test_clients_view(self):
-        # Test with and without data in the database
-        page = self.c.get('/clients/')
-        self.assertEqual(page.status_code, 200)
-
-        call_command('fake', verbosity=0, iterations=1)
-        page = self.c.get('/clients/')
-        self.assertEqual(page.status_code, 200)
-
-    def test_timesheets_view(self):
-        # Test with and without data in the database
-        page = self.c.get('/timesheet/')
-        self.assertEqual(page.status_code, 200)
-
-        call_command('fake', verbosity=0, iterations=1)
-        page = self.c.get('/timesheet/')
-        self.assertEqual(page.status_code, 200)
-
-    def test_reports_export_view(self):
-        page = self.c.get('/reports/export/')
-        self.assertEqual(page.status_code, 403)
-
-
 class ClientTestCase(TestCase):
+
     def setUp(self):
         call_command('migrate', verbosity=0)
 
@@ -87,10 +44,11 @@ class ClientTestCase(TestCase):
 
 
 class ProjectTestCase(TestCase):
+
     def setUp(self):
+        call_command('migrate', verbosity=0)
+        self.user = User.objects.first()
         self.client = Client.objects.create(name='Timestrap')
-        self.user = User.objects.create_user('testuser', 'test@example.com',
-                                             'testpassword')
 
     def test_project_created(self):
         Project.objects.create(client=self.client, name='Testing')
@@ -125,12 +83,12 @@ class ProjectTestCase(TestCase):
 
 
 class EntryTestCase(TestCase):
+
     def setUp(self):
         call_command('migrate', verbosity=0)
+        self.user = User.objects.first()
         client = Client.objects.create(name='Timestrap')
         self.project = Project.objects.create(client=client, name='Testing')
-        self.user = User.objects.create_user('testuser', 'test@example.com',
-                                             'testpassword')
 
         Entry.objects.create(
             project=self.project,
@@ -191,6 +149,7 @@ class EntryTestCase(TestCase):
 
 
 class ReportsTestCase(TestCase):
+
     def setUp(self):
         call_command('migrate', verbosity=0)
         self.c = HttpClient()
@@ -266,11 +225,3 @@ class ReportsTestCase(TestCase):
             'date__gte': str(dates[0]),
             'date__lte': str(dates[1])
         })
-
-
-class CommandsTestCase(TestCase):
-    def setUp(self):
-        pass
-
-    def test_fake(self):
-        call_command('fake', verbosity=0)
