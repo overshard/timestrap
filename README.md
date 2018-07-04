@@ -65,17 +65,31 @@ Make sure to update the environmental variables in `docker-compose.yml` and
 check the `timestrap/settings/docker.py` file to see if you'd like to change
 anything then run:
 
-    docker-compose up -d
+    sudo docker-compose up --detach
 
 To migrate the database, create your first superuser, and create the initial
 site configuration you then need to run:
 
-    docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
+    sudo docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
 
 The Timestrap application should now be running on port 80 of whatever system
 you ran these commands on, if you ran this locally then that would be
 [http://localhost/](http://localhost/).
 
+### Docker Data
+
+All data should be stored in the timestrap_db volume. If you wish to rebuild
+Timestrap at the latest you can do the following from the timestrap repo you
+cloned:
+
+    git pull
+    sudo docker-compose down
+    sudo docker-compose build
+    sudo docker-compose up --detach
+    sudo docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
+
+All data will be kept during this process and you'll have the latest version
+of Timestrap.
 
 ## Development Installation
 
