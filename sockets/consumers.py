@@ -1,32 +1,34 @@
 import json
 
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 
 from core.models import Task, Client, Project
 
 
-class UpdateConsumer(WebsocketConsumer):
+class UpdateConsumer(AsyncWebsocketConsumer):
     # TODO: This really should use channel layers and not something as janky as
     # storing everything currently avaliable on connection and double check on
     # polling. That defeats the purpose of using websockets.
 
-    tasks = 0
-    clients = 0
-    projects = 0
+    async def connect(self):
+        await self.accept()
 
-    def connect(self):
-        self.accept()
-
-    def disconnect(self, close_code):
-        pass
-
-    def receive(self, text_data):
-        self.tasks = Task.objects.count()
-        self.clients = Client.objects.filter(archive=False).count()
-        self.projects = Project.objects.filter(archive=False).count()
-
-        self.send(json.dumps({
-            'tasks': self.tasks,
-            'clients': self.clients,
-            'projects': self.projects,
+    async def receive(self, text_data):
+        await self.send(json.dumps({
+            'tasks': await self.get_task_count(),
+            'clients': await self.get_client_count(),
+            'projects': await self.get_project_count(),
         }))
+
+    @database_sync_to_async
+    async def get_task_count(self):
+        return Task.objects.count()
+
+    @database_sync_to_async
+    async def get_client_count(self):
+        return Client.objects.filter(archive=False).count()
+
+    @database_sync_to_async
+    async def get_project_count(self):
+        return Project.objects.filter(archive=False).count()

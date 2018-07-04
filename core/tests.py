@@ -11,8 +11,9 @@ from django.core.management import call_command
 from faker import Factory
 
 from conf.models import Site, SitePermission
-from ..models import Client, Project, Entry, Task
-from ..utils import parse_duration, duration_string, duration_decimal
+
+from .models import Client, Project, Entry, Task
+from .utils import parse_duration, duration_string, duration_decimal
 
 
 fake = Factory.create()

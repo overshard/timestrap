@@ -12,6 +12,8 @@ selenium = "*"
 sphinx = "*"
 recommonmark = "*"
 "sphinx-rtd-theme" = "*"
+pytest-django = "*"
+pytest-asyncio = "*"
 
 [packages]
 django = "*"

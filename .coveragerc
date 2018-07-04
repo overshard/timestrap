@@ -13,6 +13,7 @@ omit =
     */admin.py
     */apps.py
     */urls.py
+    */routing.py
     */tests*.py
     */migrations/*
     */management/*
