@@ -3,10 +3,10 @@ WORKDIR /build
 
 COPY . /build
 
-RUN npm i -g gulp-cli
-RUN npm i
+RUN npm i -g npm
+RUN npm i --production
 
-RUN gulp build
+RUN npx webpack
 
 
 FROM python:3
@@ -18,6 +18,6 @@ COPY . /app
 RUN pip install pipenv
 RUN pipenv install --three --system
 
-COPY --from=build /build/timestrap/static /app/timestrap/static
+COPY --from=build /build/client/static /app/client/static
 
 RUN python3 manage.py collectstatic --noinput
