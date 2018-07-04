@@ -1,4 +1,3 @@
-require('./tasks/docs');
 require('./tasks/build');
 require('./tasks/lint');
 require('./tasks/manage');

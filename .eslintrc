@@ -19,7 +19,8 @@
   },
   "globals": {
     "timestrapConfig": true,
-    "process": true
+    "process": true,
+    "__dirname": true
   },
   "parser": "vue-eslint-parser",
   "extends": [

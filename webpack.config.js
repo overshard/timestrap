@@ -1,15 +1,19 @@
+const path = require('path');
+
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
-  mode: 'development',
-  watch: true,
+  mode: 'production',
+  entry: './client/static_src/main.js',
+  output: {
+    path: path.resolve(__dirname, 'client/static/'),
+    filename: 'bundle.js',
+  },
+  watch: false,
   watchOptions: {
     ignored: /node_modules/,
-  },
-  output: {
-    filename: 'bundle.js',
   },
   performance: {
     maxEntrypointSize: 5000000,

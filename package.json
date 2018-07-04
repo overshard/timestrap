@@ -15,11 +15,14 @@
     "node": "^8.10.0",
     "npm": "^6.1.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ],
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-eslint": "^4.0.2",
+    "del": "^3.0.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "vue-eslint-parser": "^2.0.3",
+    "webpack-stream": "^4.0.3"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
@@ -32,12 +35,7 @@
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
     "css-loader": "^0.28.11",
-    "del": "^3.0.0",
-    "eslint-plugin-vue": "^4.5.0",
     "file-loader": "^1.1.11",
-    "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-eslint": "^4.0.2",
     "jquery": "^3.3.1",
     "mini-css-extract-plugin": "^0.4.1",
     "moment": "^2.22.2",
@@ -49,16 +47,16 @@
     "sass-loader": "^7.0.3",
     "select2": "^4.0.6-rc.1",
     "vue": "^2.5.13",
-    "vue-eslint-parser": "^2.0.3",
     "vue-loader": "^15.2.4",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.16",
     "vueify": "^9.4.1",
     "vuex": "^3.0.1",
     "webpack": "^4.13.0",
-    "webpack-stream": "^4.0.3"
+    "webpack-command": "^0.4.0"
   },
   "scripts": {
-    "heroku-postbuild": "gulp build:production"
+    "build": "webpack",
+    "heroku-postbuild": "webpack"
   }
 }

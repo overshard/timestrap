@@ -16,6 +16,9 @@ gulp.task('build:clean', () => {
 
 
 gulp.task('build:webpack:development', () => {
+  webpackConfig.mode = 'development';
+  webpackConfig.watch = true;
+
   return gulp.src('client/static_src/main.js')
     .pipe(webpackStream(webpackConfig, webpack))
     .on('error', function handleError() {
@@ -26,9 +29,6 @@ gulp.task('build:webpack:development', () => {
 
 
 gulp.task('build:webpack:production', () => {
-  webpackConfig.mode = 'production';
-  webpackConfig.watch = false;
-
   return gulp.src('client/static_src/main.js')
     .pipe(webpackStream(webpackConfig, webpack))
     .pipe(gulp.dest('client/static/'));
