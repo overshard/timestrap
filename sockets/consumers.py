@@ -22,13 +22,13 @@ class UpdateConsumer(AsyncWebsocketConsumer):
         }))
 
     @database_sync_to_async
-    async def get_task_count(self):
+    def get_task_count(self):
         return Task.objects.count()
 
     @database_sync_to_async
-    async def get_client_count(self):
+    def get_client_count(self):
         return Client.objects.filter(archive=False).count()
 
     @database_sync_to_async
-    async def get_project_count(self):
+    def get_project_count(self):
         return Project.objects.filter(archive=False).count()
