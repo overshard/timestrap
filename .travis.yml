@@ -8,8 +8,6 @@ cache:
 python:
   - 3.5
   - 3.6
-env:
-  - MOZ_HEADLESS=1
 addons:
   firefox: latest
 install:
@@ -18,14 +16,12 @@ install:
   - npm install -g gulp-cli npm && npm install
   - pip install pipenv && pipenv install --dev --system
 script:
-  - travis_retry gulp coverage
-after_success:
-  - pipenv run coveralls
+  - travis_retry gulp coverage:production
 notifications:
   email: false
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/103776b2181f986558f7
+      - https://webhooks.gitter.im/e/472a0b23105e5b1ecde4
     on_success: change
     on_failure: always
     on_start: never
