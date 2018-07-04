@@ -66,9 +66,14 @@
 </div>
 
 <div class="bg-light text-center px-4 py-3 rounded-bottom">
+  {% if EMAIL_ENABLED %}
   <a
     href="{% url 'password_reset' %}">
     Forgot your password?
   </a>
+  {% else %}
+    <div class="text-muted">Forgot your password?<br>
+    Please contact your Timestrap administrator.</div>
+  {% endif %}
 </div>
 {% endblock %}

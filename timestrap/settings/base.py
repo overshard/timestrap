@@ -67,6 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'timestrap.context_processors.template_settings',
             ],
         },
     },
@@ -109,6 +111,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/topics/email/
 
 EMAIL_BACKEND = 'conf.backends.mail.EmailBackend'
+
+EMAIL_ENABLED = True
 
 
 # Static files (CSS, JavaScript, Images)

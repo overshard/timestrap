@@ -203,8 +203,23 @@ per-site basis. These settings must be supplied to support features such as
 password reset. To access the settings, navigate to `/admin/sites/site/` and
 select the site to modify.
 
-If you are using Heroku you can add `sendgrid` to your apps addons on the
-Heroku admin panel or by running:
+#### Email Docker
+
+You can configure email by setting environmental variables in the
+`docker-compose` config for `web`. These would be:
+
+- **EMAIL_HOST**
+- **EMAIL_HOST_USER**
+- **EMAIL_HOST_PASSWORD**
+- **EMAIL_PORT** defaults to port `25`
+- **EMAIL_USE_TLS** defaults to `False`, you can set this to `True`
+
+These would go where the `SECRET_KEY` environmental variable is set
+
+#### Email Heroku
+
+You can add `sendgrid` to your apps addons on the Heroku admin panel or by
+running:
 
     heroku addons:create sendgrid
 
