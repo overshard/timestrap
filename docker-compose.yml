@@ -16,9 +16,6 @@ services:
       - db
     environment:
       - SECRET_KEY=CHANGE-ME
-    volumes:
-      - web:/app
 
 volumes:
   db:
-  web:
