@@ -220,7 +220,7 @@ either `superuser` or the various `site` and `conf` permissions. Sites are
 based on domain and use two primary settings, `domain` and `name` in addition
 to the various configuration options available.
 
-###$ Data Sharing
+#### Data Sharing
 
 All Timestrap data will be related to either one or multiple sites.
 
