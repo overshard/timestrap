@@ -84,6 +84,7 @@ If you'd like to contribute code to Timestrap you'll need to do this!
 ### Development Requirements
 
 - Python 3.5+
+- Python Dev
 - Node 8+
 - pipenv
 - npm
@@ -91,7 +92,9 @@ If you'd like to contribute code to Timestrap you'll need to do this!
 - geckodriver
 
 Python 3.5+ is required because we use async/await with Channels to support
-WebSockets and add realtime updates to the client.
+WebSockets and add realtime updates to the client. Python Dev is not required
+on macOS but if you are on Linux, like Ubuntu, you will need to install it with
+`sudo apt install python3-dev`.
 
 Node 8+ isn't exactly required, you might be able to get away with an older
 version and we only use node for building the client.
