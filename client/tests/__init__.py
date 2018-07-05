@@ -1,11 +1,12 @@
 from os import environ
+from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 from django.core.management import call_command
 
-from selenium.webdriver import Firefox as FirefoxDriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver import Chrome as ChromeDriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.keys import Keys
 
 
@@ -14,12 +15,12 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        options = FirefoxOptions()
-        if environ.get('FIREFOX_HEADLESS') is not '0':
-            options.add_argument('-headless')
-        cls.driver = FirefoxDriver(firefox_options=options)
-        cls.driver.maximize_window()
-        cls.driver.implicitly_wait(2.5)
+        options = ChromeOptions()
+        if environ.get('BROWSER_HEADLESS') is not '0':
+            options.add_argument('--headless')
+        options.add_argument('--window-size=1280,720')
+        cls.driver = ChromeDriver(chrome_options=options)
+        cls.driver.implicitly_wait(2)
 
         super().setUpClass()
 
@@ -35,6 +36,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.logIn()
 
         super().setUp()
+
+    def tearDown(self):
+        sleep(1)
+
+        super().tearDown()
 
     def logIn(self):
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))

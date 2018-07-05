@@ -1,3 +1,4 @@
+from time import sleep
 from decimal import Decimal
 
 from selenium.common.exceptions import NoSuchElementException
@@ -57,6 +58,8 @@ class TasksTestCase(SeleniumTestCase):
 
         task_menu.click()
         task_menu_delete.click()
+
+        sleep(2)
 
         self.assertRaises(NoSuchElementException, self.find, task_id)
         self.assertRaises(Task.DoesNotExist, Task.objects.get, id=task.id)

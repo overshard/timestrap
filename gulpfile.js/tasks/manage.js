@@ -13,7 +13,7 @@ gulp.task('manage:test', gulp.series('build:webpack:production', () => {
   if (test !== -1) command.push(process.argv[test+1]);
 
   const head = process.argv.indexOf('--head');
-  if (head !== -1) process.env.FIREFOX_HEADLESS = 0;
+  if (head !== -1) process.env.BROWSER_HEADLESS = 0;
 
   return spawn(
     'pipenv',
