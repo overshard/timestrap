@@ -160,17 +160,6 @@ export default {
       'doneLoading',
     ]),
   },
-  methods: {
-    submitSearch() {
-      this.$router.push({
-        name: 'reports',
-        query: {
-          search: this.search,
-        },
-      });
-      this.bus.$emit('search');
-    },
-  },
 };
 </script>
 

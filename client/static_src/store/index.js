@@ -5,6 +5,7 @@ import entries from './modules/entries';
 import tasks from './modules/tasks';
 import clients from './modules/clients';
 import users from './modules/users';
+import reports from './modules/reports';
 
 
 // Setup Vuex plugin so we can add store to our Vue
@@ -51,5 +52,6 @@ export default new Vuex.Store({
     tasks: tasks,
     clients: clients,
     users: users,
+    reports: reports,
   },
 });

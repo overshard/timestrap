@@ -111,7 +111,7 @@
           <label>Min. Date</label>
           <datepicker
             id="report-filter-min-date"
-            v-model="dateMin"
+            v-model="minDate"
             type="text"
             class="form-control form-control-sm date-input"
             placeholder="Min. date"
@@ -121,7 +121,7 @@
           <label>Max. Date</label>
           <datepicker
             id="report-filter-max-date"
-            v-model="dateMax"
+            v-model="maxDate"
             type="text"
             class="form-control form-control-sm date-input"
             placeholder="Max. date"
@@ -191,7 +191,8 @@
 
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapState, mapActions, mapMutations} from 'vuex';
+import $ from 'jquery';
 
 import Datepicker from '../datepicker.vue';
 import Entry from '../entry.vue';
@@ -211,12 +212,12 @@ export default {
   data() {
     return {
       is_staff: timestrapConfig.USER.IS_STAFF,
-      entries: null,
-      subtotal: null,
-      total: null,
+      editable: false,
       next: null,
       previous: null,
+
       exportFormat: 'csv',
+
       orderByOptions: [
         {id: 'project__client__name', text: 'Client'},
         {id: 'date', text: 'Date'},
@@ -224,16 +225,16 @@ export default {
         {id: 'task__name', text: 'Task'},
         {id: 'user__username', text: 'User'},
       ],
-      orderBy: 'date',
       orderDirOptions: [
         {id: 'asc', text: 'Ascending'},
         {id: 'desc', text: 'Descending'},
       ],
+
+      orderBy: 'date',
       orderDir: 'desc',
-      project__client: null,
-      dateMin: null,
-      dateMax: null,
-      editable: false,
+
+      minDate: null,
+      maxDate: null,
       user: null,
       client: null,
       project: null,
@@ -241,6 +242,11 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      entries: state => state.reports.all,
+      total: state => state.reports.total,
+      subtotal: state => state.reports.subtotal,
+    }),
     ...mapGetters({
       tasks: 'tasks/getSelectTasks',
       projects: 'clients/getSelectProjects',
@@ -249,50 +255,31 @@ export default {
     }),
   },
   mounted() {
-    return this.getEntries();
-  },
-  created() {
-    this.bus.$on('search', () => {
-      const params = {
-        search: this.$route.query.search,
-      };
-      const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(params);
-      this.getEntries(url);
-    });
+    return this.getReport();
   },
   methods: {
-    getEntries(url) {
-      let userEntries = timestrapConfig.API_URLS.ENTRIES;
-      url = (typeof url !== 'undefined') ? url : userEntries;
+    ...mapMutations('reports', [
+      'setOrderBy',
+      'setOrderDir',
 
-      fetch(url).then(response => {
-        this.next = response.data.next;
-        this.previous = response.data.previous;
-
-        this.entries = response.data.results;
-
-        this.subtotal = response.data.subtotal_duration;
-        this.total = response.data.total_duration;
-
-        window.scrollTo(0, 0);
-      });
-    },
+      'setUser',
+      'setClient',
+      'setProject',
+      'setTask',
+      'setMinDate',
+      'setMaxDate',
+    ]),
     getReport() {
-      let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
-      if (this.orderBy != 'date') {
-        ordering += ',-date';
-      }
-      const query = {
-        ordering: ordering,
-        user: this.user,
-        project: this.project,
-        project__client: this.client,
-        min_date: this.dateMin,
-        max_date: this.dateMax,
-        task: this.task,
-      };
-      const url = timestrapConfig.API_URLS.ENTRIES + '?' + $.param(query);
-      this.getEntries(url);
+      this.setOrderBy(this.orderBy);
+      this.setOrderDir(this.orderDir);
+
+      this.setUser(this.user);
+      this.setClient(this.client);
+      this.setProject(this.project);
+      this.setTask(this.task);
+      this.setMinDate(this.minDate);
+      this.setMaxDate(this.maxDate);
+      this.$store.dispatch('reports/getReport');
     },
     exportReport() {
       let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
@@ -304,8 +291,8 @@ export default {
         user: this.user,
         project: this.project,
         project__client: this.client,
-        min_date: this.dateMin,
-        max_date: this.dateMax,
+        min_date: this.minDate,
+        max_date: this.maxDate,
         task: this.task,
         exportFormat: this.exportFormat,
       };
