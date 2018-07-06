@@ -19,7 +19,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             options.add_argument('-headless')
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
-        cls.driver.implicitly_wait(2.5)
+        cls.driver.implicitly_wait(2)
+        cls.driver.set_page_load_timeout(4)
 
         super().setUpClass()
 
