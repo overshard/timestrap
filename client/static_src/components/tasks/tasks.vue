@@ -59,7 +59,7 @@
         </div>
         <div class="col-2"/>
       </div>
-      <template v-if="tasks(search).length !== 0">
+      <template v-if="this.$perms.view_task && tasks(search).length !== 0">
         <task
           v-for="(task, index) in tasks(search)"
           :task="task"

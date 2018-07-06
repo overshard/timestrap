@@ -29,7 +29,6 @@ export default {
       onStart: function() {
         vm.picker = '#' + $(vm.$el).attr('id') + '_root';
         $(vm.picker).appendTo('body');
-        // $('.picker').appendTo('body');
         if (vm.default) {
           this.set('select', vm.default);
           vm.$emit('input', vm.$moment(vm.default).format('YYYY-MM-DD'));
