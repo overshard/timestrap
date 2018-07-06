@@ -64,13 +64,19 @@
       </div>
     </div>
 
-    <template v-if="this.$perms.view_project">
+    <template v-if="this.$perms.view_project && projects(client.url, search).length !== 0">
       <project
         v-for="(project, project_index) in projects(client.url, search)"
         :project="project"
         :index="project_index"
         :key="project.id"
         :toggle-project-modal="toggleProjectModal"/>
+    </template>
+    <template v-else>
+      <div
+        class="project row bg-light py-2 px-3">
+        No projects added this this client or meet your filter.
+      </div>
     </template>
 
   </div>

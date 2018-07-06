@@ -59,7 +59,7 @@
       @close="toggleProjectModal"/>
 
     <div
-      v-if="this.$perms.view_client"
+      v-if="this.$perms.view_client && clients.length !== 0"
       id="client-rows">
       <client
         v-for="(client, index) in clients"
@@ -70,6 +70,12 @@
         :toggle-client-modal="toggleClientModal"
         :toggle-project-modal="toggleProjectModal"/>
     </div>
+    <template v-else>
+      <div
+        class="client row py-2 px-3 bg-secondary text-white font-weight-bold">
+        No clients added.
+      </div>
+    </template>
   </div>
 </template>
 
