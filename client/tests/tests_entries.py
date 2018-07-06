@@ -1,4 +1,3 @@
-from time import sleep
 from datetime import timedelta, datetime
 
 from django.contrib.auth.models import User
@@ -69,8 +68,6 @@ class EntriesTestCase(SeleniumTestCase):
 
         entry_menu.click()
         entry_menu_delete.click()
-
-        sleep(2)
 
         self.assertRaises(NoSuchElementException, self.find, entry_id)
         self.assertRaises(Task.DoesNotExist, Task.objects.get, id=entry.id)

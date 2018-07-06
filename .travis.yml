@@ -9,9 +9,9 @@ python:
   - 3.5
   - 3.6
 addons:
-  chrome: latest
+  firefox: latest
 install:
-  - wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip && unzip chromedriver_linux64.zip -d chromedriver && export PATH=$PATH:$PWD/chromedriver
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz && mkdir geckodriver && tar -zxf geckodriver-v0.21.0-linux64.tar.gz -C geckodriver && export PATH=$PATH:$PWD/geckodriver
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
   - npm install -g gulp-cli npm && npm install
   - pip install pipenv && pipenv install --dev --system

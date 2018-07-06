@@ -1,4 +1,3 @@
-from time import sleep
 from decimal import Decimal
 
 from selenium.common.exceptions import NoSuchElementException
@@ -90,8 +89,6 @@ class ClientsTestCase(SeleniumTestCase):
         client_menu.click()
         client_menu_delete.click()
 
-        sleep(2)
-
         self.assertRaises(NoSuchElementException, self.find, client_id)
         self.assertRaises(Client.DoesNotExist, Client.objects.get, id=client.id)  # noqa: E501
 
@@ -106,8 +103,6 @@ class ClientsTestCase(SeleniumTestCase):
 
         project_menu.click()
         project_menu_delete.click()
-
-        sleep(2)
 
         self.assertRaises(NoSuchElementException, self.find, project_id)
         self.assertRaises(Project.DoesNotExist, Project.objects.get, id=project.id)  # noqa: E501
@@ -124,8 +119,6 @@ class ClientsTestCase(SeleniumTestCase):
         client_menu.click()
         client_menu_archive.click()
 
-        sleep(2)
-
         self.assertRaises(NoSuchElementException, self.find, client_id)
         self.assertEqual(Client.objects.get(id=client.id).archive, True)
 
@@ -140,8 +133,6 @@ class ClientsTestCase(SeleniumTestCase):
 
         project_menu.click()
         project_menu_archive.click()
-
-        sleep(2)
 
         self.assertRaises(NoSuchElementException, self.find, project_id)
         self.assertEqual(Project.objects.get(id=project.id).archive, True)
