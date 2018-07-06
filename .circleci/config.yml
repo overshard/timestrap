@@ -9,7 +9,7 @@ jobs:
 
 
     docker:
-      - image: circleci/python:3.6.1-browsers
+      - image: circleci/python:3.6-stretch-node-browsers
         environment:
           PIPENV_VENV_IN_PROJECT: true
 
