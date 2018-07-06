@@ -19,7 +19,7 @@ jobs:
       - restore_cache:
           keys:
           - deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: npm install -g gulp-cli npm && npm install
+      - run: sudo npm install -g gulp-cli npm && npm install
       - run: sudo pip install pipenv && pipenv install --dev
 
       - save_cache:
