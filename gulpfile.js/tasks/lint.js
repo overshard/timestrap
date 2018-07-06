@@ -8,7 +8,7 @@ const spawn  = require('child_process').spawn;
 gulp.task('lint:python', () => {
   return spawn(
     'pipenv',
-    ['run', 'flake8', '--exclude=node_modules,migrations'],
+    ['run', 'flake8', '--exclude=node_modules,migrations,.venv'],
     {stdio: 'inherit'}
   );
 });
