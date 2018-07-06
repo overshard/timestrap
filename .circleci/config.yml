@@ -19,7 +19,6 @@ jobs:
       - restore_cache:
           keys:
           - deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
       - run: npm install -g gulp-cli npm && npm install
       - run: sudo pip install pipenv && pipenv install --dev
 
