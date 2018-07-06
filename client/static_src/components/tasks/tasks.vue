@@ -59,12 +59,20 @@
         </div>
         <div class="col-2"/>
       </div>
-      <task
-        v-for="(task, index) in tasks(search)"
-        :task="task"
-        :index="index"
-        :key="task.id"
-        :toggle-edit-modal="toggleModal"/>
+      <template v-if="tasks(search).length !== 0">
+        <task
+          v-for="(task, index) in tasks(search)"
+          :task="task"
+          :index="index"
+          :key="task.id"
+          :toggle-edit-modal="toggleModal"/>
+      </template>
+      <template v-else>
+        <div
+          class="task row bg-light py-2 px-3">
+          No tasks added or meet your filter.
+        </div>
+      </template>
     </div>
   </div>
 </template>
