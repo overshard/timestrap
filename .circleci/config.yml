@@ -1,0 +1,36 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    working_directory: ~/timestrap
+
+
+    docker:
+      - image: circleci/python:3.6.1-browsers
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run: rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
+      - run: npm install -g gulp-cli npm && npm install
+      - run: sudo pip install pipenv && pipenv install --dev
+
+      - save_cache:
+          key: deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ./venv
+            - ./node_modules
+
+      - run: gulp coverage:production
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
