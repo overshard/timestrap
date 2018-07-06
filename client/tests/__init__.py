@@ -19,9 +19,6 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         if environ.get('BROWSER_HEADLESS') is not '0':
             options.add_argument('--headless')
         options.add_argument('--window-size=1280,720')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--disable-gpu')
         cls.driver = ChromeDriver(chrome_options=options)
         cls.driver.implicitly_wait(2)
 
