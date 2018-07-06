@@ -1,4 +1,5 @@
-sudo: required
+sudo: false
+dist: trusty
 language: python
 cache:
   pip: true
@@ -8,7 +9,7 @@ python:
   - 3.5
   - 3.6
 addons:
-  chrome: stable
+  chrome: latest
 install:
   - wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip && unzip chromedriver_linux64.zip -d chromedriver && export PATH=$PATH:$PWD/chromedriver
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
