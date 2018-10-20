@@ -10,6 +10,8 @@ python:
   - 3.6
 addons:
   firefox: latest
+services:
+- redis-server
 install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz && mkdir geckodriver && tar -zxf geckodriver-v0.21.0-linux64.tar.gz -C geckodriver && export PATH=$PATH:$PWD/geckodriver
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8
