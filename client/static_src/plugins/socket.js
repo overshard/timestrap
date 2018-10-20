@@ -19,21 +19,12 @@ export default {
 
     updateSocket.onmessage = e => {
       let updateData = JSON.parse(e.data);
-      if (updateData.tasks != store.getters['tasks/getNumberOfTasks'])
+      if (updateData.model == 'Task')
         store.dispatch('tasks/getTasks');
-      if (updateData.clients != store.getters['clients/getNumberOfClients'])
+      if (updateData.model == 'Client')
         store.dispatch('clients/getClients');
-      if (updateData.projects != store.getters['clients/getNumberOfProjects'])
+      if (updateData.model == 'Project')
         store.dispatch('clients/getProjects');
     };
-
-    function checkForUpdates() {
-      setTimeout(() => {
-        updateSocket.send('');
-        checkForUpdates();
-      }, 5000);
-    }
-
-    checkForUpdates();
   },
 };
