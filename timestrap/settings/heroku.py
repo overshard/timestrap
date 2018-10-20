@@ -24,6 +24,19 @@ DATABASES = {
 }
 
 
+# Channels
+# https://channels.readthedocs.io/en/latest/
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [os.environ.get('REDIS_URL')],  # noqa: F405
+        },
+    },
+}
+
+
 # Email
 
 SENDGRID_USERNAME = os.environ.get('SENDGRID_USERNAME', None)  # noqa: F405

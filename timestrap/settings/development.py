@@ -20,6 +20,19 @@ DATABASES = {
 }
 
 
+# Channels
+# https://channels.readthedocs.io/en/latest/
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+    },
+}
+
+
 # Email
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
