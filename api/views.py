@@ -62,8 +62,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
 class EntryFilter(django_filters.rest_framework.FilterSet):
-    min_date = django_filters.DateFilter(name="date", lookup_expr="gte")
-    max_date = django_filters.DateFilter(name="date", lookup_expr="lte")
+    min_date = django_filters.DateFilter(field_name="date", lookup_expr="gte")
+    max_date = django_filters.DateFilter(field_name="date", lookup_expr="lte")
 
     class Meta:
         model = Entry
