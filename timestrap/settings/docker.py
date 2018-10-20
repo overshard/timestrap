@@ -28,6 +28,19 @@ DATABASES = {
 }
 
 
+# Channels
+# https://channels.readthedocs.io/en/latest/
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis', 6379)],
+        },
+    },
+}
+
+
 # Email
 
 if os.environ.get('EMAIL_HOST'):  # noqa: E501,F405

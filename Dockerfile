@@ -3,10 +3,11 @@ WORKDIR /build
 
 COPY . /build
 
-RUN npm i -g npm
-RUN npm i --production
+RUN npm i -g npm gulp-cli
+RUN npm i
+RUN npm rebuild node-sass --force
 
-RUN npx webpack
+RUN gulp build:production
 
 
 FROM python:3.6

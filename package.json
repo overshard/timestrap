@@ -12,8 +12,8 @@
   "version": "1.0.0-alpha",
   "license": "BSD-2-Clause",
   "engines": {
-    "node": "^8.10.0",
-    "npm": "^6.1.0"
+    "node": "^8.12.0",
+    "npm": "^6.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
