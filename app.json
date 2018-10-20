@@ -32,6 +32,14 @@
       "generator": "secret"
     }
   },
+  "addons": [
+    {
+      "plan": "heroku-postgresql"
+    },
+    {
+      "plan": "heroku-redis"
+    }
+  ],
   "scripts": {
     "postdeploy": "python manage.py migrate"
   }
