@@ -14,7 +14,7 @@ tblib = "*"
 [packages]
 django = "*"
 "django-widget-tweaks" = "*"
-whitenoise = "*"
+whitenoise = "==3.3.1"
 djangorestframework = "*"
 "django-filter" = "*"
 "django-import-export" = "*"
