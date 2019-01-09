@@ -1,4 +1,5 @@
 from os import environ
+from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
@@ -9,8 +10,30 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.keys import Keys
 
 
+def retry_flaky_test(method):
+    def wrapper(*args, **kwargs):
+        retries = 0
+        while retries < 3:
+            try:
+                return method(*args, **kwargs)
+            except Exception as e:
+                print('\nRetrying flaky test %s' % method.__name__)
+                retries += 1
+                lastException = e
+                sleep(1)
+        raise e
+    return wrapper
+
+
 @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')  # noqa: E501
 class SeleniumTestCase(StaticLiveServerTestCase):
+
+    def __init__(self, *args, **kwargs):
+        for method_name in dir(self):
+            if method_name.startswith('test_'):
+                method = getattr(self, method_name)
+                setattr(self, method_name, retry_flaky_test(method))
+        super().__init__(*args, **kwargs)
 
     @classmethod
     def setUpClass(cls):
