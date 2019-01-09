@@ -10,30 +10,27 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.keys import Keys
 
 
-def retry_flaky_test(method):
-    def wrapper(*args, **kwargs):
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')  # noqa: E501
+class SeleniumTestCase(StaticLiveServerTestCase):
+
+    def _flakyTestWrapper(self):
+        testMethod = getattr(self, self.flakyTestMethodName)
         retries = 0
         while retries < 3:
             try:
-                return method(*args, **kwargs)
+                return testMethod()
             except Exception as e:
-                print('\nRetrying flaky test %s' % method.__name__)
+                print('\nRetrying flaky test %s' % self.flakyTestMethodName)
                 retries += 1
                 lastException = e
                 sleep(1)
         raise lastException
-    return wrapper
 
-
-@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')  # noqa: E501
-class SeleniumTestCase(StaticLiveServerTestCase):
-
-    def __init__(self, *args, **kwargs):
-        for method_name in dir(self):
-            if method_name.startswith('test_'):
-                method = getattr(self, method_name)
-                setattr(self, method_name, retry_flaky_test(method))
-        super().__init__(*args, **kwargs)
+    def run(self, result=None):
+        self.flakyTestMethodName = self._testMethodName
+        self._testMethodName = '_flakyTestWrapper'
+        super().run(result)
+        self._testMethodName = self.flakyTestMethodName
 
     @classmethod
     def setUpClass(cls):
