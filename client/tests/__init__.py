@@ -21,7 +21,7 @@ def retry_flaky_test(method):
                 retries += 1
                 lastException = e
                 sleep(1)
-        raise e
+        raise lastException
     return wrapper
 
 
