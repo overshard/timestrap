@@ -15,7 +15,7 @@ import store from './store';
 
 // Global event bus
 
-Vue.prototype.bus = new Vue();
+Vue.prototype.$bus = new Vue();
 
 
 // Plugins

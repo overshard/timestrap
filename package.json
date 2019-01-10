@@ -40,7 +40,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "@fortawesome/vue-fontawesome": "^0.1.0",
     "axios": "^0.18.0",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.2.1",
     "chart.js": "^2.7.2",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",

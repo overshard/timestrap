@@ -73,6 +73,10 @@ export default {
     createEntry({commit}, entry) {
       fetch.post(timestrapConfig.API_URLS.ENTRIES, entry).then(response => {
         if (response.data.user_details.id == timestrapConfig.USER.ID) commit('addEntry', response.data);
+        Vue.prototype.$bus.$emit('toast', {
+          title: 'New Entry Added',
+          message: 'Your new entry has been successfully added.',
+        });
       }).catch(error => console.log(error));
     },
     editEntry({commit, state}, entry) {

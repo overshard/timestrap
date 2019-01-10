@@ -11,6 +11,8 @@
       </div>
     </transition>
 
+    <toast></toast>
+
     <div class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container">
         <router-link
@@ -134,11 +136,13 @@
 import {mapGetters} from 'vuex';
 
 import Tracker from './tracker.vue';
+import Toast from './toast.vue';
 
 
 export default {
   components: {
     Tracker,
+    Toast,
   },
   data() {
     return {
