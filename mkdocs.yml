@@ -1,0 +1,37 @@
+# Project information
+site_name: 'Timestrap Documentation'
+site_description: 'Documentation for the Timestrap project.'
+site_author: 'Isaac Bythewood'
+site_url: 'https://docs.gettimestrap.com/'
+
+# Repository
+repo_name: 'overshard/timestrap'
+repo_url: 'https://github.com/overshard/timestrap'
+
+# Copyright
+copyright: 'Copyright &copy; 2019 Isaac Bythewood'
+
+# Configuration
+docs_dir: 'docs/src'
+site_dir: 'docs/dist'
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+# Customization
+extra:
+  manifest: 'manifest.webmanifest'
+  social:
+    - type: 'github'
+      link: 'https://github.com/overshard'
+
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true

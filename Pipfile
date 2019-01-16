@@ -10,6 +10,8 @@ python_version = "3.6"
 coveralls = "*"
 selenium = "*"
 tblib = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [packages]
 django = "*"

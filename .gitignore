@@ -32,3 +32,6 @@
 # code coverage
 /.coverage*
 !/.coveragerc
+
+# mkdocs
+/docs/dist
