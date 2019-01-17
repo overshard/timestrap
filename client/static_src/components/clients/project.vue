@@ -2,79 +2,66 @@
   <div
     v-if="!project.archive"
     :id="'project-' + project.id"
-    class="project row py-1 bg-light">
-    <div class="col-sm-4 project-name d-flex align-items-center">
-      <icon
-        :icon="['fas', 'briefcase']"
-        class="mr-2 text-muted"/>
-      {{ project.name }}
-    </div>
-    <div class="col-sm-2 d-flex align-items-center">
-      <icon
-        :icon="['fas', 'clock']"
-        class="mr-2 text-muted"/>
-      {{ project.total_duration }}
-    </div>
-    <div class="col-sm-2 d-flex align-items-center">
-      <icon
-        :icon="['fas', 'list']"
-        class="mr-2 text-muted"/>
-      {{ project.total_entries }}
-    </div>
-    <div
-      v-if="project.percent_done !== null"
-      class="col-sm-3 d-flex align-items-center">
-      <icon
-        :icon="['fas', 'percentage']"
-        class="mr-2 text-muted"/>
-      <div class="progress w-100">
-        <div
-          :class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
-          :style="{ width: project.percent_done + '%' }"/>
-      </div>
-    </div>
-    <div
-      v-else
-      class="col-sm-3 d-flex align-items-center">
-      <icon
-        :icon="['fas', 'percentage']"
-        class="mr-2 text-muted"/>
-      No Estimate
-    </div>
-    <div class="col-sm-1 d-flex align-self-center justify-content-end">
-      <template v-if="this.$perms.change_project || this.$perms.delete_project">
-        <button
-          id="project-menu"
-          class="btn btn-faded btn-sm btn-icon dropdown-toggle"
-          type="button"
-          data-toggle="dropdown">
-          <icon
-            :icon="['fas', 'ellipsis-v']"/>
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a
-            v-if="this.$perms.change_project"
-            id="project-menu-change"
-            class="dropdown-item"
-            href="#"
-            @click.prevent
-            @click="toggleProjectModal(project)">Edit</a>
-          <a
-            v-if="this.$perms.delete_project"
-            id="project-menu-delete"
-            class="dropdown-item"
-            href="#"
-            @click.prevent
-            @click="deleteProject(index)">Delete</a>
-          <a
-            v-if="this.$perms.change_project"
-            id="project-menu-archive"
-            class="dropdown-item"
-            href="#"
-            @click.prevent
-            @click="archiveProject(index)">Archive</a>
+    class="col-md-4 col-lg-3 mb-4">
+    <div class="project card shadow">
+      <div class="card-body d-flex flex-column">
+        <div class="card-title">
+          <div class="float-right">
+            <template v-if="this.$perms.change_project || this.$perms.delete_project">
+              <button
+                id="project-menu"
+                class="btn btn-faded btn-sm btn-icon dropdown-toggle"
+                type="button"
+                data-toggle="dropdown">
+                <icon
+                  :icon="['fas', 'ellipsis-v']"/>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a
+                  v-if="this.$perms.change_project"
+                  id="project-menu-change"
+                  class="dropdown-item"
+                  href="#"
+                  @click.prevent
+                  @click.exact="toggleProjectModal(project)">Edit</a>
+                <a
+                  v-if="this.$perms.delete_project"
+                  id="project-menu-delete"
+                  class="dropdown-item"
+                  href="#"
+                  @click.prevent
+                  @click.exact="deleteProject(index)">Delete</a>
+                <a
+                  v-if="this.$perms.change_project"
+                  id="project-menu-archive"
+                  class="dropdown-item"
+                  href="#"
+                  @click.prevent
+                  @click.exact="archiveProject(index)">Archive</a>
+              </div>
+            </template>
+          </div>
+          <div class="h5 mb-3">
+            <icon :icon="['fas', 'briefcase']" class="my-2 text-muted d-block"/>
+            {{ project.name }}
+          </div>
         </div>
-      </template>
+        <div class="card-subtitle h6 text-muted mb-2">
+          <icon :icon="['fas', 'clock']" class="mr-1 text-muted"/>
+          {{ project.total_duration }}
+          <icon :icon="['fas', 'list']" class="ml-3 mr-1 text-muted"/>
+          {{ project.total_entries }}
+        </div>
+        <div v-if="project.percent_done !== null" class="card-subtitle h6 text-muted mt-auto">
+          <div class="progress w-100">
+            <div
+              :class="['progress-bar', [project.percent_done > 100 ? 'bg-danger' : '']]"
+              :style="{ width: project.percent_done + '%' }">
+              {{ project.percent_done }}%
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -101,20 +88,7 @@ export default {
 
 
 <style lang="scss">
-.project {
-  font-size: .9em;
-  line-height: .9em;
-  border-top: 1px solid #eee;
-
-  &:not(.bg-secondary) {
-    &:nth-of-type(2n+1) {
-      background-color: #fbf3e5 !important;
-    }
+  .project.card {
+    height: 17rem;
   }
-
-  &:last-child {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 1rem;
-  }
-}
 </style>

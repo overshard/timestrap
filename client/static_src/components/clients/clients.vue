@@ -1,48 +1,47 @@
 <template>
-  <div class="container">
-    <div
-      v-if="this.$perms.add_client || this.$perms.add_project"
-      class="row py-2 mb-4 bg-light rounded">
-      <div class="col-12">
-        <button
-          v-if="this.$perms.add_client"
-          id="client-add"
-          type="button"
-          class="btn btn-primary btn-sm"
-          @click="toggleClientModal">
-          <icon
-            :icon="['fas', 'plus']"
-            class="mr-1"/>
-          New Client
-        </button>
-        <button
-          v-if="this.$perms.add_project"
-          id="project-add"
-          type="button"
-          class="btn btn-primary btn-sm"
-          @click="toggleProjectModal">
-          <icon
-            :icon="['fas', 'plus']"
-            class="mr-1"/>
-          New Project
-        </button>
-
-        <button
-          class="btn btn-secondary btn-sm float-right ml-2"
-          @click.prevent
-          @click="refresh">
-          <icon
-            :icon="['fas', 'sync']"
-            class="mr-1"/>
-          Sync
-        </button>
-
+  <div>
+    <div class="row mb-4">
+      <div class="col-sm-8">
+        <h1 class="display-3 mb-0">
+          Clients
+        </h1>
+        <h2 class="display-4 text-muted mb-4">
+          With their projects
+        </h2>
+      </div>
+      <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
         <input
           id="client-search"
           v-model="search"
           placeholder="Filter Projects"
-          class="form-control form-control-sm float-right w-25"
+          class="form-control form-control-sm mb-2"
           type="text">
+
+        <div class="w-100 text-right">
+          <button
+            v-if="this.$perms.add_client"
+            id="client-add"
+            type="button"
+            class="btn btn-primary btn-sm"
+            @click="toggleClientModal">
+            <icon
+              :icon="['fas', 'plus']"
+              class="mr-1"/>
+            New Client
+          </button>
+
+          <button
+            v-if="this.$perms.add_project"
+            id="project-add"
+            type="button"
+            class="btn btn-primary btn-sm"
+            @click="toggleProjectModal">
+            <icon
+              :icon="['fas', 'plus']"
+              class="mr-1"/>
+            New Project
+          </button>
+        </div>
       </div>
     </div>
 
@@ -71,9 +70,23 @@
         :toggle-project-modal="toggleProjectModal"/>
     </div>
     <template v-else>
-      <div
-        class="client row py-2 px-3 bg-secondary text-white font-weight-bold">
-        No clients added.
+      <div class="row">
+        <div class="col-md-4 col-lg-3 mb-4">
+          <div class="client card shadow">
+            <div class="card-body">
+              <div class="card-title h5">
+                <icon :icon="['fas', 'briefcase']" class="my-2 text-muted d-block"/>
+                No clients
+              </div>
+              <div class="card-subtitle h6 text-muted mb-2">
+                Try adding one
+              </div>
+              <div class="card-text">
+                No clients added or match your filter
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </div>
@@ -126,9 +139,13 @@ export default {
       else this.modalProject.project = null;
       this.modalProject.show = !this.modalProject.show;
     },
-    refresh() {
-      this.getClients();
-    },
   },
 };
 </script>
+
+
+<style lang="scss">
+  .client.card {
+    height: 17rem;
+  }
+</style>

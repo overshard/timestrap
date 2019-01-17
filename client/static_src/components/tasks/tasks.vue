@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div>
     <div class="row mb-4">
       <div class="col-sm-8">
         <h1 class="display-3 mb-0">
           Tasks
         </h1>
         <h2 class="display-4 text-muted mb-4">
-          What you do and how much you charge
+          With your rates
         </h2>
       </div>
       <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
@@ -45,7 +45,7 @@
           :toggle-edit-modal="toggleModal"/>
       </template>
       <template v-else>
-        <div class="col-sm-3 col-md-4 mb-4">
+        <div class="col-mb-4 col-lg-3 mb-4">
           <div class="task card shadow">
             <div class="card-body">
               <div class="card-title h5">

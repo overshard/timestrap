@@ -2,36 +2,18 @@
   <div
     v-if="!client.archive"
     :id="'client-' + client.id">
-    <div class="client row py-2 bg-secondary text-white">
-      <div :class="['col-sm-4', 'd-flex', 'align-items-center']">
-        <icon
-          :icon="['fas', 'address-book']"
-          class="mr-2"/>
-        <span class="font-weight-bold text-uppercase client-name">{{ client.name }}</span>
-      </div>
-      <div class="col-sm-2 d-flex align-items-center">
-        <icon
-          :icon="['fas', 'clock']"
-          class="mr-2"/>
-        <strong>Total Time</strong>
-      </div>
-      <div class="col-sm-2 d-flex align-items-center">
-        <icon
-          :icon="['fas', 'list']"
-          class="mr-2"/>
-        <strong>Entries</strong>
-      </div>
-      <div class="col-sm-3 d-flex align-items-center">
-        <icon
-          :icon="['fas', 'percentage']"
-          class="mr-2"/>
-        <strong>Progress</strong>
-      </div>
-      <div class="col-sm-1 d-flex align-self-center justify-content-end">
+    <div class="client row mb-2">
+      <div class="col">
+        <span class="display-4">
+          <icon :icon="['fas', 'address-book']" class="mr-2 text-muted"/>
+          <span class="client-name">
+            {{ client.name }}
+          </span>
+        </span>
         <template v-if="this.$perms.change_client || this.$perms.delete_client">
           <button
             id="client-menu"
-            class="btn btn-faded btn-sm btn-icon dropdown-toggle"
+            class="btn btn-faded btn-sm btn-icon dropdown-toggle mb-2"
             type="button"
             data-toggle="dropdown">
             <icon
@@ -44,41 +26,54 @@
               class="dropdown-item"
               href="#"
               @click.prevent
-              @click="toggleClientModal(client)">Edit</a>
+              @click.exact="toggleClientModal(client)">Edit</a>
             <a
               v-if="this.$perms.delete_client"
               id="client-menu-delete"
               class="dropdown-item"
               href="#"
               @click.prevent
-              @click="deleteClient(index)">Delete</a>
+              @click.exact="deleteClient(index)">Delete</a>
             <a
               v-if="this.$perms.change_client"
               id="client-menu-archive"
               class="dropdown-item"
               href="#"
               @click.prevent
-              @click="archiveClient(index)">Archive</a>
+              @click.exact="archiveClient(index)">Archive</a>
           </div>
         </template>
       </div>
     </div>
 
-    <template v-if="this.$perms.view_project && projects(client.url, search).length !== 0">
-      <project
-        v-for="(project, project_index) in projects(client.url, search)"
-        :project="project"
-        :index="project_index"
-        :key="project.id"
-        :toggle-project-modal="toggleProjectModal"/>
-    </template>
-    <template v-else>
-      <div
-        class="project row bg-light py-2 px-3">
-        No projects added this this client or meet your filter.
-      </div>
-    </template>
-
+    <div class="row mb-4">
+      <template v-if="this.$perms.view_project && projects(client.url, search).length !== 0">
+        <project
+          v-for="(project, project_index) in projects(client.url, search)"
+          :project="project"
+          :index="project_index"
+          :key="project.id"
+          :toggle-project-modal="toggleProjectModal"/>
+      </template>
+      <template v-else>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <div class="client card shadow">
+            <div class="card-body">
+              <div class="card-title h5">
+                <icon :icon="['fas', 'briefcase']" class="my-2 text-muted d-block"/>
+                No projects
+              </div>
+              <div class="card-subtitle h6 text-muted mb-2">
+                Try adding one
+              </div>
+              <div class="card-text">
+                No projects added or match your filter
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
