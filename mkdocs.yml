@@ -1,6 +1,6 @@
 # Project information
-site_name: 'Timestrap Documentation'
-site_description: 'Documentation for the Timestrap project.'
+site_name: 'Timestrap Docs'
+site_description: 'Docs for the Timestrap project.'
 site_author: 'Isaac Bythewood'
 site_url: 'https://docs.gettimestrap.com/'
 
@@ -14,6 +14,7 @@ copyright: 'Copyright &copy; 2019 Isaac Bythewood'
 # Configuration
 docs_dir: 'docs/src'
 site_dir: 'docs/dist'
+edit_uri: 'edit/master/docs/src/'
 theme:
   name: 'material'
   language: 'en'
