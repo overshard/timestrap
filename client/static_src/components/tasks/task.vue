@@ -1,5 +1,5 @@
 <template>
-  <div :id="'task-' + task.id" class="col-sm-3 mb-4">
+  <div :id="'task-' + task.id" class="col-md-4 col-lg-3 mb-4">
     <div class="task card shadow">
       <div class="card-body">
         <div class="float-right">

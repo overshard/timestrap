@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row mb-4">
-      <div class="col-8">
+      <div class="col-sm-8">
         <h1 class="display-3 mb-0">
           Tasks
         </h1>
@@ -9,7 +9,7 @@
           What you do and how much you charge
         </h2>
       </div>
-      <div class="col-4 d-flex flex-column align-items-end justify-content-center">
+      <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
         <input
           id="task-search"
           v-model="search"
@@ -45,7 +45,7 @@
           :toggle-edit-modal="toggleModal"/>
       </template>
       <template v-else>
-        <div class="col-sm-3 mb-4">
+        <div class="col-sm-3 col-md-4 mb-4">
           <div class="task card shadow">
             <div class="card-body">
               <div class="card-title h5">
