@@ -79,7 +79,7 @@
             <div class="col-3 pl-0">
               <button
                 id="tracker-extras"
-                class="btn btn-faded btn-sm w-100"
+                class="btn btn-secondary btn-sm w-100"
                 @click.prevent
                 @click="toggleExtras">
                 <icon
