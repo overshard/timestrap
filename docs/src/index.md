@@ -5,6 +5,8 @@
 Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
+![Timestrap](imgs/screenshot.png)
+
 
 ## Warning
 
@@ -157,133 +159,10 @@ if that is successful and you want to share your changes create a
 I've prebuilt a variety of build commands for development, you can see a list
 of them by running `gulp --tasks` and I will breifly cover some of them here.
 
-- **gulp** Will run a webserver with django and build the client with webpack
-- **gulp lint** Will check all code for style consistency
-- **gulp manage:makemigrations** Will generate new migrations if models changes
-- **gulp manage:migrate** Makes sure there is a superuser, runs migrations
-- **gulp manage:fake** Adds a bunch of fake data for testing
-- **gulp manage:reset** Resets the database and adds fake data with a superuser
-- **gulp coverage:development** Lints, runs tests, shows coverage report
-
-
-## User Permissions
-
-You can edit and add new users on the admin panel at `/admin/auth/user/`. You
-will need to give new users permissions based on the access you wish them to
-have. If you wish someone be able to see all clients and projects to be able to
-add them to an entry, but not edit or delete them, you need to give them view
-permissions under User permissions. These would be
-`core | project | Can view project` and `core | client | Can view client`.
-
-
-## Configuration
-
-### Security
-
-By default we don't enable TLS/SSL features since this project is often run on
-an intranet, locally, or in testing environments. If security is a concern of
-yours, and it should be, you will need to enable TLS/SSL on your reverse proxy
-and setup a certificate there. On Heroku you can run `heoku certs:auto:enable`
-to get a free LetsEncrypt certificate.
-
-You will need to configure two settings when you use TLS/SSL on this project.
-The first is to force TLS/SSL when people visit your site and the second is to
-make sure that Django REST framework returns corrected URLs behind a reverse
-proxy. These can be added to `timestrap/settings/base.py` anywhere:
-
-    SECURE_SSL_REDIRECT = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-### Email
-
-Email configuration options are available from the Timestrap admin on a
-per-site basis. These settings must be supplied to support features such as
-password reset. To access the settings, navigate to `/admin/sites/site/` and
-select the site to modify.
-
-#### Email Docker
-
-You can configure email by setting environmental variables in the
-`docker-compose` config for `web`. These would be:
-
-- **EMAIL_HOST**
-- **EMAIL_HOST_USER**
-- **EMAIL_HOST_PASSWORD**
-- **EMAIL_PORT** defaults to port `25`
-- **EMAIL_USE_TLS** defaults to `False`, you can set this to `True`
-
-These would go where the `SECRET_KEY` environmental variable is set
-
-#### Email Heroku
-
-You can add `sendgrid` to your apps addons on the Heroku admin panel or by
-running:
-
-    heroku addons:create sendgrid
-
-### Time and Date Localization
-
-Language and timezone settings are available on a per-site basis in the site
-configuration area (`/admin/sites/site/`). Timestrap uses [Moment.js](http://momentjs.com/)
-on the frontend so localization will be applied to all dates based on these
-settings. We'd like to eventually have localization of everything.
-
-## Sites
-
-Timestrap takes advantage of [Django's "sites" framework](https://docs.djangoproject.com/en/1.11/ref/contrib/sites/)
-to support running multiple Timestrap "sites" from a single instance of the
-application. This an optional enhancement, and the base Timestrap application
-will work fine as a single site without any advanced configuration.
-
-### Single Site
-
-Out of the box, Timestrap is a single site using the fake domain `time.strap`
-and name `Timestrap`. Both the name and the domain name are configurable on
-the admin.
-
-Any domain will fall back to the default site, but it is recommended to at
-least set the site domain setting be updated to match the actual site domain
-since emails will use this domain when sending.
-
-### Multiple Sites
-
-Timestrap supports setting up multiple sites with configurations options
-available on a per-site basis. This functionality may be useful if, for
-example, there is a need to separate departments or functional teams within a
-larger group of organization.
-
-Sites can be managed by any user with admin access and appropriate permissions:
-either `superuser` or the various `site` and `conf` permissions. Sites are
-based on domain and use two primary settings, `domain` and `name` in addition
-to the various configuration options available.
-
-#### Data Sharing
-
-All Timestrap data will be related to either one or multiple sites.
-
-- **Clients** and **Tasks** can be related to *multiple* sites.
-- **Entries** can be related to a *single* site.
-
-Data with a single-site relationship will automatically be related to the site
-it was entered on. This settings can be changed from the admin site.
-
-Currently, multiple site relationships can only be controlled from the admin
-site. To use a Client or Task on multiple sites, it must be added to one
-site and then modified in the admin site to be related to additional sites.
-
-#### Example: Big Project Builders, Inc.
-
-Big Project Builders, Inc. (BPB) uses Timestrap to keep track of its progress
-for various projects & clients. However, with many different teams a single
-Timestrap instance would have *a lot* of data and it may come difficulty for
-individual employees to keep track of progress. So BPB decides to break the
-instance in to multiple sites -
-
-- **timestrap.bpb.io** is the primary instance site, where admin superusers add
-the Clients and Projects that BPB is working on.
-- **design.timestrap.bpb.io** is used by BPB's designers to assign and track
-graphics and design work for projects.
-- **development.timestrap.bpb.io** is used by BPB's developers to assign and
-track project development.
-- **testing.timestrap.bpb.io** is used bu BPB's testing team to record time
-spent executing and reporting on project tests.
+- `gulp` Will run a webserver with django and build the client with webpack
+- `gulp lint` Will check all code for style consistency
+- `gulp manage:makemigrations` Will generate new migrations if models changes
+- `gulp manage:migrate` Makes sure there is a superuser, runs migrations
+- `gulp manage:fake` Adds a bunch of fake data for testing
+- `gulp manage:reset` Resets the database and adds fake data with a superuser
+- `gulp coverage:development` Lints, runs tests, shows coverage report
