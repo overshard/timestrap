@@ -1,37 +1,31 @@
 <template>
   <div class="container">
-    <div
-      v-if="this.$perms.add_task"
-      class="row py-2 mb-4 bg-light rounded">
-      <div class="col-12">
+    <div class="row mb-4">
+      <div class="col-8">
+        <h1 class="display-3 mb-0">
+          Tasks
+        </h1>
+        <h2 class="display-4 text-muted mb-4">
+          What you do and how much you charge
+        </h2>
+      </div>
+      <div class="col-4 d-flex flex-column align-items-end justify-content-center">
+        <input
+          id="task-search"
+          v-model="search"
+          placeholder="Filter Tasks"
+          class="form-control form-control-sm mb-2"
+          type="text">
+
         <button
           v-if="this.$perms.add_task"
           id="task-add"
           type="button"
           class="btn btn-primary btn-sm"
           @click="toggleModal">
-          <icon
-            :icon="['fas', 'plus']"
-            class="mr-1"/>
+          <icon :icon="['fas', 'plus']" class="mr-1"/>
           New Task
         </button>
-
-        <button
-          class="btn btn-secondary btn-sm float-right ml-2"
-          @click.prevent
-          @click="refresh">
-          <icon
-            :icon="['fas', 'sync']"
-            class="mr-1"/>
-          Sync
-        </button>
-
-        <input
-          id="task-search"
-          v-model="search"
-          placeholder="Filter Tasks"
-          class="form-control form-control-sm float-right w-25"
-          type="text">
       </div>
     </div>
 
@@ -41,24 +35,7 @@
       :config="modal"
       @close="toggleModal"/>
 
-    <div
-      v-if="this.$perms.view_task"
-      class="rounded">
-      <div class="task-head bg-secondary text-white row py-2">
-        <div class="col-8 d-flex align-items-center">
-          <icon
-            :icon="['fas', 'tasks']"
-            class="mr-2"/>
-          <strong>Task Name</strong>
-        </div>
-        <div class="col-2 d-flex align-items-center">
-          <icon
-            :icon="['fas', 'hand-holding-usd']"
-            class="mr-2"/>
-          <strong>Hourly Rate</strong>
-        </div>
-        <div class="col-2"/>
-      </div>
+    <div v-if="this.$perms.view_task" class="row">
       <template v-if="this.$perms.view_task && tasks(search).length !== 0">
         <task
           v-for="(task, index) in tasks(search)"
@@ -68,9 +45,21 @@
           :toggle-edit-modal="toggleModal"/>
       </template>
       <template v-else>
-        <div
-          class="task row bg-light py-2 px-3">
-          No tasks added or meet your filter.
+        <div class="col-sm-3 mb-4">
+          <div class="task card shadow">
+            <div class="card-body">
+              <div class="card-title h5">
+                <icon :icon="['fas', 'tasks']" class="my-2 text-muted d-block"/>
+                No tasks
+              </div>
+              <div class="card-subtitle h6 text-muted mb-2">
+                Try adding one
+              </div>
+              <div class="card-text">
+                No tasks added or match your filter
+              </div>
+            </div>
+          </div>
         </div>
       </template>
     </div>
@@ -113,9 +102,16 @@ export default {
       else this.modal.task = null;
       this.modal.show = !this.modal.show;
     },
-    refresh() {
-      this.getTasks();
-    },
   },
 };
 </script>
+
+
+<style lang="scss">
+  .display-3 {
+    font-size: 3.5rem;
+  }
+  .display-4 {
+    font-size: 2rem;
+  }
+</style>
