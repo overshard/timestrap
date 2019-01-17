@@ -13,12 +13,13 @@ copyright: 'Copyright &copy; 2019 Isaac Bythewood'
 
 # Navigation
 nav:
-  - Home: index.md
-  - Configuration: configuration.md
-  - Permissions: permissions.md
-  - Sites: sites.md
-  - Docs: docs.md
-  - License: license.md
+  - Home: 'index.md'
+  - Configuration: 'configuration.md'
+  - Permissions: 'permissions.md'
+  - Sites: 'sites.md'
+  - Docs: 'docs.md'
+  - Contributing: 'contributing.md'
+  - License: 'license.md'
 
 # Configuration
 docs_dir: 'docs/src'
