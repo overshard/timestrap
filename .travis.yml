@@ -6,7 +6,9 @@ cache:
   directories:
     - node_modules
 python:
+  - 3.5
   - 3.6
+  - 3.7
 addons:
   firefox: latest
 services:
