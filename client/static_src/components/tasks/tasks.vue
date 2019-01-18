@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="row mb-4">
-      <div class="col-sm-8">
-        <h1 class="display-3 mb-0">
+      <div class="col-md-9">
+        <h1 class="mb-0">
           Tasks
         </h1>
       </div>
-      <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
+      <div class="col-md-3 d-flex flex-column align-items-end justify-content-center">
         <input
           id="task-search"
           v-model="search"
-          placeholder="Filter Tasks"
-          class="form-control"
+          placeholder="Type to filter tasks..."
+          class="form-control shadow-sm"
           type="text">
       </div>
     </div>
@@ -51,7 +51,7 @@
       </template>
       <div class="col-md-4 col-lg-3 mb-4">
         <div
-          class="task new card shadow-sm border-info"
+          class="task new card shadow-sm"
           v-if="this.$perms.add_task"
           @click="toggleModal">
           <div class="card-body">
@@ -117,5 +117,6 @@ export default {
   }
   .task.card.new {
     cursor: pointer;
+    opacity: .7;
   }
 </style>
