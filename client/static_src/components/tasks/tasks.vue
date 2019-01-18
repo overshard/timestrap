@@ -24,7 +24,7 @@
           :task="task"
           :index="index"
           :key="task.id"/>
-        <task-new/>
+        <task/>
       </template>
       <template v-else>
         <div class="col-mb-4 col-lg-3 mb-4">
@@ -49,13 +49,11 @@
 import {mapGetters, mapActions} from 'vuex';
 
 import Task from './task.vue';
-import TaskNew from './task-new.vue';
 
 
 export default {
   components: {
     Task,
-    TaskNew,
   },
   data() {
     return {
