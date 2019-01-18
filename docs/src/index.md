@@ -1,6 +1,6 @@
 # Timestrap
 
-[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=for-the-badge)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=for-the-badge)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=for-the-badge)](https://github.com/overshard/timestrap/blob/master/LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=for-the-badge)](https://gitter.im/overshard/timestrap)
+[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=for-the-badge)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=for-the-badge)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=for-the-badge)](https://github.com/overshard/timestrap/blob/master/LICENSE.md) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=for-the-badge)](https://gitter.im/overshard/timestrap)
 
 Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
