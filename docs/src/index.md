@@ -5,14 +5,18 @@
 Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
-![Timestrap](imgs/screenshot.png)
-
 
 ## Warning
 
 This app is currently very unstable. Everything may, and probably will, change.
 All migrations are going to be wiped and setup properly before release 1.0 so
 you will not be able to upgrade to 1.0 from early development.
+
+
+## Documentation
+
+For more details and screenshots check out our main docs website:
+[https://docs.gettimestrap.com/](https://docs.gettimestrap.com/)
 
 
 ## Demo
