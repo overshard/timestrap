@@ -30,13 +30,13 @@ class TasksTestCase(SeleniumTestCase):
 
         task_add.click()
 
-        task_modal_name = self.find('task-modal-name')
-        task_modal_hourly_rate = self.find('task-modal-hourly-rate')
-        task_modal_submit = self.find('task-modal-submit')
+        task_name_new = self.find('task-name-new')
+        task_hourly_rate_new = self.find('task-hourly-rate-new')
+        task_submit_new = self.find('task-submit-new')
 
-        task_modal_name.send_keys('new task name')
-        task_modal_hourly_rate.send_keys('3.50')
-        task_modal_submit.click()
+        task_name_new.send_keys('new task name')
+        task_hourly_rate_new.send_keys('3.50')
+        task_submit_new.click()
 
         view_tasks = self.find('view-tasks')
         self.contains('new task name', view_tasks)
@@ -73,18 +73,18 @@ class TasksTestCase(SeleniumTestCase):
         task_menu.click()
         task_menu_change.click()
 
-        task_modal_name = self.find('task-modal-name')
-        task_modal_hourly_rate = self.find('task-modal-hourly-rate')
-        task_modal_submit = self.find('task-modal-submit')
+        task_name_edit = self.find('task-name-edit')
+        task_hourly_rate_edit = self.find('task-hourly-rate-edit')
+        task_submit_edit = self.find('task-submit-edit')
 
-        self.assertEqual(task.name, task_modal_name.get_attribute('value'))
-        self.assertEqual(task.hourly_rate, Decimal(task_modal_hourly_rate.get_attribute('value')))  # noqa: E501
+        self.assertEqual(task.name, task_name_edit.get_attribute('value'))
+        self.assertEqual(task.hourly_rate, Decimal(task_hourly_rate_edit.get_attribute('value')))  # noqa: E501
 
-        self.clear(task_modal_name)
-        task_modal_name.send_keys('new task name')
-        self.clear(task_modal_hourly_rate)
-        task_modal_hourly_rate.send_keys('3.50')
-        task_modal_submit.click()
+        self.clear(task_name_edit)
+        task_name_edit.send_keys('new task name')
+        self.clear(task_hourly_rate_edit)
+        task_hourly_rate_edit.send_keys('3.50')
+        task_submit_edit.click()
 
         self.contains('new task name', task_element)
         self.contains('3.50', task_element)

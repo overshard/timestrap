@@ -22,3 +22,8 @@ class UpdateConsumer(AsyncWebsocketConsumer):
         await self.send(json.dumps({
             'model': event['model'],
         }))
+
+    async def sync_clients_delete(self, event):
+        await self.send(json.dumps({
+            'model': event['model'],
+        }))

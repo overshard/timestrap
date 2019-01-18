@@ -1,5 +1,5 @@
 from django.contrib.sites.models import Site
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 from asgiref.sync import async_to_sync
@@ -24,7 +24,7 @@ def add_current_site(sender, instance, **kwargs):
 
 
 @receiver(post_save)
-def sync_clients(sender, instance, **kwargs):
+def sync_clients_save(sender, instance, **kwargs):
     """
     Use django channels to sync all our current clients.
     """
@@ -33,6 +33,21 @@ def sync_clients(sender, instance, **kwargs):
         'sync_clients',
         {
             'type': 'sync_clients.save',
+            'model': sender.__name__,
+        },
+    )
+
+
+@receiver(post_delete)
+def sync_clients_delete(sender, instance, **kwargs):
+    """
+    Use django channels to sync all our current clients.
+    """
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        'sync_clients',
+        {
+            'type': 'sync_clients.delete',
             'model': sender.__name__,
         },
     )

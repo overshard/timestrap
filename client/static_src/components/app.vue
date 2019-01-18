@@ -169,6 +169,10 @@ export default {
 
 
 <style lang="scss">
+body {
+  background-color: rgb(255, 254, 252);
+}
+
 // Fix bootstrap v4 not using pointer on some objects
 a,
 button {
@@ -233,5 +237,9 @@ input:required {
   &::after {
     display: none;
   }
+}
+
+.bg-dark {
+  background-color: rgb(19, 15, 11) !important;
 }
 </style>

@@ -222,3 +222,10 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss">
+.bg-light {
+  background-color: rgb(252, 248, 243) !important;
+}
+</style>
