@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Timestrap project.">
       
       
-        <link rel="canonical" href="https://docs.gettimestrap.com/configuration/">
+        <link rel="canonical" href="https://docs.gettimestrap.com/screenshots/">
       
       
         <meta name="author" content="Isaac Bythewood">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Configuration - Timestrap Docs</title>
+        <title>Screenshots - Timestrap Docs</title>
       
     
     
@@ -107,7 +107,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#configuration" tabindex="1" class="md-skip">
+      <a href="#screenshots" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -133,7 +133,7 @@
                 Timestrap Docs
               </span>
               <span class="md-header-nav__topic">
-                Configuration
+                Screenshots
               </span>
             
           
@@ -260,18 +260,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../screenshots/" title="Screenshots" class="md-nav__link">
-      Screenshots
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -283,11 +271,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Configuration
+        Screenshots
       </label>
     
-    <a href="./" title="Configuration" class="md-nav__link md-nav__link--active">
-      Configuration
+    <a href="./" title="Screenshots" class="md-nav__link md-nav__link--active">
+      Screenshots
     </a>
     
       
@@ -301,42 +289,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#security" title="Security" class="md-nav__link">
-    Security
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#email" title="Email" class="md-nav__link">
-    Email
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#email-docker" title="Email Docker" class="md-nav__link">
-    Email Docker
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#email-heroku" title="Email Heroku" class="md-nav__link">
-    Email Heroku
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#time-and-date-localization" title="Time and Date Localization" class="md-nav__link">
-    Time and Date Localization
+  <a href="#timesheet" title="Timesheet" class="md-nav__link">
+    Timesheet
   </a>
   
 </li>
@@ -349,6 +303,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
   </li>
 
     
@@ -433,42 +399,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#security" title="Security" class="md-nav__link">
-    Security
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#email" title="Email" class="md-nav__link">
-    Email
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#email-docker" title="Email Docker" class="md-nav__link">
-    Email Docker
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#email-heroku" title="Email Heroku" class="md-nav__link">
-    Email Heroku
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#time-and-date-localization" title="Time and Date Localization" class="md-nav__link">
-    Time and Date Localization
+  <a href="#timesheet" title="Timesheet" class="md-nav__link">
+    Timesheet
   </a>
   
 </li>
@@ -489,53 +421,16 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/overshard/timestrap/edit/master/docs/src/configuration.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/overshard/timestrap/edit/master/docs/src/screenshots.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
-<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
-<p>By default we don't enable TLS/SSL features since this project is often run on
-an intranet, locally, or in testing environments. If security is a concern of
-yours, and it should be, you will need to enable TLS/SSL on your reverse proxy
-and setup a certificate there. On Heroku you can run <code>heoku certs:auto:enable</code>
-to get a free LetsEncrypt certificate.</p>
-<p>You will need to configure two settings when you use TLS/SSL on this project.
-The first is to force TLS/SSL when people visit your site and the second is to
-make sure that Django REST framework returns corrected URLs behind a reverse
-proxy. These can be added to <code>timestrap/settings/base.py</code> anywhere:</p>
-<div class="codehilite"><pre><span></span>SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = (&#39;HTTP_X_FORWARDED_PROTO&#39;, &#39;https&#39;)
-</pre></div>
-
-
-<h2 id="email">Email<a class="headerlink" href="#email" title="Permanent link">&para;</a></h2>
-<p>Email configuration options are available from the Timestrap admin on a
-per-site basis. These settings must be supplied to support features such as
-password reset. To access the settings, navigate to <code>/admin/sites/site/</code> and
-select the site to modify.</p>
-<h3 id="email-docker">Email Docker<a class="headerlink" href="#email-docker" title="Permanent link">&para;</a></h3>
-<p>You can configure email by setting environmental variables in the
-<code>docker-compose</code> config for <code>web</code>. These would be:</p>
-<ul>
-<li><strong>EMAIL_HOST</strong></li>
-<li><strong>EMAIL_HOST_USER</strong></li>
-<li><strong>EMAIL_HOST_PASSWORD</strong></li>
-<li><strong>EMAIL_PORT</strong> defaults to port <code>25</code></li>
-<li><strong>EMAIL_USE_TLS</strong> defaults to <code>False</code>, you can set this to <code>True</code></li>
-</ul>
-<p>These would go where the <code>SECRET_KEY</code> environmental variable is set</p>
-<h3 id="email-heroku">Email Heroku<a class="headerlink" href="#email-heroku" title="Permanent link">&para;</a></h3>
-<p>You can add <code>sendgrid</code> to your apps addons on the Heroku admin panel or by
-running:</p>
-<div class="codehilite"><pre><span></span>heroku addons:create sendgrid
-</pre></div>
-
-
-<h2 id="time-and-date-localization">Time and Date Localization<a class="headerlink" href="#time-and-date-localization" title="Permanent link">&para;</a></h2>
-<p>Language and timezone settings are available on a per-site basis in the site
-configuration area (<code>/admin/sites/site/</code>). Timestrap uses <a href="http://momentjs.com/">Moment.js</a>
-on the frontend so localization will be applied to all dates based on these
-settings. We'd like to eventually have localization of everything.</p>
+                <h1 id="screenshots">Screenshots<a class="headerlink" href="#screenshots" title="Permanent link">&para;</a></h1>
+<p>Due to the constant design iterations this is a very incomplete page. There
+will be more screenshots in the future. You could always try our demo that
+we mention on the first page of the docs.</p>
+<h2 id="timesheet">Timesheet<a class="headerlink" href="#timesheet" title="Permanent link">&para;</a></h2>
+<p><img alt="Timesheet" src="../imgs/screenshot.png" /></p>
+<p>The primary page of Timestrap where you can see all your recent entries.</p>
                 
                   
                 
@@ -556,7 +451,7 @@ settings. We'd like to eventually have localization of everything.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../screenshots/" title="Screenshots" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -565,19 +460,19 @@ settings. We'd like to eventually have localization of everything.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Screenshots
+                Home
               </span>
             </div>
           </a>
         
         
-          <a href="../permissions/" title="Permissions" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Permissions
+                Configuration
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
