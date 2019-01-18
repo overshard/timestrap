@@ -5,27 +5,14 @@
         <h1 class="display-3 mb-0">
           Tasks
         </h1>
-        <h2 class="display-4 text-muted mb-4">
-          With your rates
-        </h2>
       </div>
       <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
         <input
           id="task-search"
           v-model="search"
           placeholder="Filter Tasks"
-          class="form-control form-control-sm mb-2"
+          class="form-control"
           type="text">
-
-        <button
-          v-if="this.$perms.add_task"
-          id="task-add"
-          type="button"
-          class="btn btn-primary btn-sm"
-          @click="toggleModal">
-          <icon :icon="['fas', 'plus']" class="mr-1"/>
-          New Task
-        </button>
       </div>
     </div>
 
@@ -46,7 +33,7 @@
       </template>
       <template v-else>
         <div class="col-mb-4 col-lg-3 mb-4">
-          <div class="task card shadow">
+          <div class="task card shadow-sm border-danger">
             <div class="card-body">
               <div class="card-title h5">
                 <icon :icon="['fas', 'tasks']" class="my-2 text-muted d-block"/>
@@ -62,6 +49,20 @@
           </div>
         </div>
       </template>
+      <div class="col-md-4 col-lg-3 mb-4">
+        <div
+          class="task new card shadow-sm border-info"
+          v-if="this.$perms.add_task"
+          @click="toggleModal">
+          <div class="card-body">
+            <icon :icon="['fas', 'plus']" class="my-2 text-muted float-right"/>
+            <div class="card-title h5">
+              <icon :icon="['fas', 'tasks']" class="my-2 text-muted d-block"/>
+              New task
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -113,5 +114,8 @@ export default {
   }
   .display-4 {
     font-size: 2rem;
+  }
+  .task.card.new {
+    cursor: pointer;
   }
 </style>

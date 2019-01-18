@@ -13,6 +13,7 @@ urlpatterns = [
     ),
 
     path('timesheet/', views.AppView.as_view(), name='timesheet'),
+    path('projects/', views.AppView.as_view(), name='projects'),
     path('clients/', views.AppView.as_view(), name='clients'),
     path('tasks/', views.AppView.as_view(), name='tasks'),
     path('reports/', views.AppView.as_view(), name='reports'),

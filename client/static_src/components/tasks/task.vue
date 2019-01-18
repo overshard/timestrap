@@ -1,6 +1,6 @@
 <template>
   <div :id="'task-' + task.id" class="col-md-4 col-lg-3 mb-4">
-    <div class="task card shadow">
+    <div class="task card shadow-sm">
       <div class="card-body">
         <div class="float-right">
           <template v-if="this.$perms.change_task || this.$perms.delete_task">
