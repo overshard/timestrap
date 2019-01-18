@@ -1,6 +1,4 @@
-# License
-
-## The BSD 2-Clause License
+# The BSD 2-Clause License
 
 Copyright (c) `2019`, `Isaac Bythewood`
 All rights reserved.
