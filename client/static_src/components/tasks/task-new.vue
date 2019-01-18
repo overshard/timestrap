@@ -2,16 +2,14 @@
   <div class="col-md-4 col-lg-3 mb-4">
     <div
       id="task-add"
-      :class="{ 'task': true, 'new': true, 'card': true, 'shadow-sm': true, 'edit': edit }"
+      :class="{ 'task': true, 'new': true, 'card': true, 'edit': edit }"
       v-if="this.$perms.add_task"
       @click.exact="editMode()">
-      <div class="card-body">
+      <div class="card-body d-flex justify-content-center align-items-center">
         <template v-if="!edit">
-          <div class="btn btn-light btn-sm btn-icon shadow-sm text-muted float-right">
-            <icon :icon="['fas', 'plus']"/>
-          </div>
-          <div class="card-title h5">
-            New task
+          <div class="text-muted">
+            <icon :icon="['fas', 'plus']" class="mr-1"/>
+            New
           </div>
         </template>
         <template v-else>

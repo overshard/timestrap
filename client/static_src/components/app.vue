@@ -44,6 +44,15 @@
             </li>
             <li class="nav-item">
               <router-link
+                id="nav-projects"
+                :to="projects"
+                class="nav-link">
+                <icon :icon="['fas', 'briefcase']" class="mr-1"/>
+                Projects
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
                 id="nav-clients"
                 :to="clients"
                 class="nav-link">
@@ -147,6 +156,7 @@ export default {
   data() {
     return {
       timesheet: timestrapConfig.CORE_URLS.TIMESHEET,
+      projects: timestrapConfig.CORE_URLS.PROJECTS,
       clients: timestrapConfig.CORE_URLS.CLIENTS,
       tasks: timestrapConfig.CORE_URLS.TASKS,
       reports: timestrapConfig.CORE_URLS.REPORTS,

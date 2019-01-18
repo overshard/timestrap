@@ -1,78 +1,82 @@
 <template>
   <div :id="'task-' + taskMutable.id" class="col-md-4 col-lg-3 mb-4">
     <div class="task card shadow-sm">
-      <div class="card-body">
-        <div v-if="!edit" class="float-right">
-          <template v-if="this.$perms.change_task || this.$perms.delete_task">
-            <button
-              id="task-menu"
-              class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
-              type="button"
-              data-toggle="dropdown">
-              <icon :icon="['fas', 'ellipsis-h']"/>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right shadow">
-              <button
-                v-if="this.$perms.change_task"
-                id="task-menu-change"
-                class="dropdown-item"
-                @click.prevent
-                @click.exact="editMode()">
-                Edit
-              </button>
-              <button
-                v-if="this.$perms.delete_task"
-                id="task-menu-delete"
-                class="dropdown-item"
-                @click.prevent
-                @click.exact="deleteTask(index)">
-                Delete
-              </button>
-            </div>
-          </template>
-        </div>
+      <div class="card-body d-flex flex-column align-items-start">
         <template v-if="!this.edit">
-          <div class="card-title h5">
-            {{ taskMutable.name }}
+          <div class="w-100 flex-grow-1">
+            <div class="float-right">
+              <template v-if="this.$perms.change_task || this.$perms.delete_task">
+                <button
+                  id="task-menu"
+                  class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
+                  type="button"
+                  data-toggle="dropdown">
+                  <icon :icon="['fas', 'ellipsis-h']"/>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right shadow">
+                  <button
+                    v-if="this.$perms.change_task"
+                    id="task-menu-change"
+                    class="dropdown-item"
+                    @click.prevent
+                    @click.exact="editMode()">
+                    Edit
+                  </button>
+                  <button
+                    v-if="this.$perms.delete_task"
+                    id="task-menu-delete"
+                    class="dropdown-item"
+                    @click.prevent
+                    @click.exact="deleteTask(index)">
+                    Delete
+                  </button>
+                </div>
+              </template>
+            </div>
+            <div class="card-title h5">
+              {{ taskMutable.name }}
+            </div>
           </div>
-          <div v-if="task.hourly_rate" class="card-subtitle h6 mb-2 text-muted">
+          <div v-if="task.hourly_rate" class="card-subtitle h6 mb-2 badge badge-pill badge-secondary">
             ${{ taskMutable.hourly_rate }}/hr
           </div>
         </template>
         <template v-else>
-          <div class="card-text">
-            <label for="task-name-edit" class="card-label">
-              <small class="text-muted font-weight-bold">Name</small>
-            </label>
-            <input
-              id="task-name-edit"
-              name="task-name-edit"
-              v-model="taskMutable.name"
-              class="form-control form-control-sm"
-              placeholder="Name"/>
-            <label for="task-hourly-rate-edit" class="card-label">
-              <small class="text-muted font-weight-bold">Hourly Rate</small>
-            </label>
-            <input
-              class="form-control form-control-sm"
-              id="task-hourly-rate-edit"
-              name="task-hourly-rate-edit"
-              v-model="taskMutable.hourly_rate"
-              placeholder="Hourly rate"/>
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="card-text">
+              <label for="task-name-edit" class="card-label">
+                <small class="text-muted font-weight-bold">Name</small>
+              </label>
+              <input
+                id="task-name-edit"
+                name="task-name-edit"
+                v-model="taskMutable.name"
+                class="form-control form-control-sm"
+                placeholder="Name"/>
+              <label for="task-hourly-rate-edit" class="card-label">
+                <small class="text-muted font-weight-bold">Hourly Rate</small>
+              </label>
+              <input
+                class="form-control form-control-sm"
+                id="task-hourly-rate-edit"
+                name="task-hourly-rate-edit"
+                v-model="taskMutable.hourly_rate"
+                placeholder="Hourly rate"/>
+              <button
+                id="task-submit-edit"
+                class="btn btn-sm btn-success mt-2"
+                type="submit"
+                @click.exact="submit()">
+                Save
+              </button>
+              <button
+                class="btn btn-sm btn-light mt-2"
+                type="button"
+                @click.exact="cancel()">
+                Cancel
+              </button>
+            </div>
           </div>
-          <button
-            id="task-submit-edit"
-            class="btn btn-sm btn-success mt-2"
-            type="submit"
-            @click.exact="submit()">
-            Save
-          </button>
-          <button
-            class="btn btn-sm btn-light mt-2"
-            type="button"
-            @click.exact="cancel()">
-            Cancel
-          </button>
         </template>
       </div>
     </div>
@@ -138,5 +142,17 @@ export default {
 .task.card {
   height: 17rem;
   transition: transform 300ms;
+}
+
+.task {
+  #task-menu {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  &:hover {
+    #task-menu {
+      opacity: 1;
+    }
+  }
 }
 </style>

@@ -1,28 +1,5 @@
 <template>
   <div class="container">
-    <div class="row py-2 mb-4 bg-light rounded">
-      <div class="col-12">
-        <router-link
-          to="/reports/"
-          class="btn btn-primary btn-sm">
-          <icon
-            :icon="['fas', 'book']"
-            class="mr-1"/>
-          Create Reports
-        </router-link>
-
-        <button
-          class="btn btn-secondary btn-sm float-right ml-2"
-          @click.prevent
-          @click="getEntries">
-          <icon
-            :icon="['fas', 'sync']"
-            class="mr-1"/>
-          Sync
-        </button>
-      </div>
-    </div>
-
     <entry-modal
       v-if="modal.show && (this.$perms.add_entry || this.$perms.change_entry)"
       id="entry-modal"

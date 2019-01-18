@@ -91,7 +91,6 @@ class Task(models.Model):
 
     class Meta:
         default_permissions = ('view', 'add', 'change', 'delete')
-        ordering = ['-id']
 
     def __str__(self):
         return 'Task: ' + self.name
