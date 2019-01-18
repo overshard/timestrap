@@ -2,12 +2,10 @@
   <div>
     <div class="row mb-4">
       <div class="col-sm-8">
-        <h1 class="display-3 mb-0">
+        <h1>
+          <icon :icon="['fas', 'address-book']" class="text-muted mr-2"/>
           Clients
         </h1>
-        <h2 class="display-4 text-muted mb-4">
-          With their projects
-        </h2>
       </div>
       <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
         <input

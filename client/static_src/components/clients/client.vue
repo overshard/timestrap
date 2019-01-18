@@ -4,8 +4,7 @@
     :id="'client-' + client.id">
     <div class="client row mb-2">
       <div class="col">
-        <span class="display-4">
-          <icon :icon="['fas', 'address-book']" class="mr-2 text-muted"/>
+        <span class="h4">
           <span class="client-name">
             {{ client.name }}
           </span>
