@@ -188,6 +188,10 @@ body {
   background-color: rgb(19, 15, 11) !important;
 }
 
+.text-muted {
+  color: #99a4ae !important
+}
+
 // Loading styles
 #loading {
   height: 3px;

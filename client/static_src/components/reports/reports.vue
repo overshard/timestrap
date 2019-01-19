@@ -1,5 +1,38 @@
 <template>
   <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-7">
+        <h1 class="mb-0 font-weight-bold">
+          <icon :icon="['fas', 'book']" class="text-muted mr-2"/>
+          Reports
+        </h1>
+      </div>
+      <div class="col-md-5 d-flex align-items-center justify-content-end">
+        <template v-if="is_staff">
+          <select
+            v-model="exportFormat"
+            class="export-select custom-select form-control-sm w-25">
+            <option value="csv">csv</option>
+            <option value="xls">xls</option>
+            <option value="tsv">tsv</option>
+            <option value="ods">ods</option>
+            <option value="json">json</option>
+            <option value="yaml">yaml</option>
+            <option value="html">html</option>
+          </select>
+          <button
+            id="export-report"
+            class="btn btn-dark ml-2"
+            @click="exportReport">
+            <icon
+              :icon="['fas', 'download']"
+              class="mr-1"/>
+            Export Report
+          </button>
+        </template>
+      </div>
+    </div>
+
     <form
       name="report-filters"
       class="row mb-4 pt-3 pb-1 bg-secondary text-white rounded report-filters"
@@ -92,31 +125,6 @@
         </button>
       </div>
     </form>
-
-    <div class="row mb-4 justify-content-end">
-      <template v-if="is_staff">
-        <select
-          v-model="exportFormat"
-          class="export-select custom-select form-control-sm w-25">
-          <option value="csv">csv</option>
-          <option value="xls">xls</option>
-          <option value="tsv">tsv</option>
-          <option value="ods">ods</option>
-          <option value="json">json</option>
-          <option value="yaml">yaml</option>
-          <option value="html">html</option>
-        </select>
-        <button
-          id="export-report"
-          class="btn btn-dark ml-2"
-          @click="exportReport">
-          <icon
-            :icon="['fas', 'download']"
-            class="mr-1"/>
-          Export Report
-        </button>
-      </template>
-    </div>
 
     <div
       v-if="this.$perms.view_entry"

@@ -6,7 +6,7 @@
         <slot name="modal-body"/>
         <button
           id="modal-submit"
-          class="btn btn-dark shadow-sm mt-5"
+          class="btn btn-lg btn-dark shadow-sm mt-5"
           type="submit">
           Save
         </button>

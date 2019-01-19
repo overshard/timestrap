@@ -4,31 +4,31 @@
   class="col-md-4 col-lg-3 mb-4"
   @dblclick="$emit('modal')">
   <div v-if="index !== null" class="card shadow-sm">
-    <div class="card-body">
-      <div class="card-options">
+    <div class="card-options">
+      <button
+        id="card-menu"
+        class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
+        type="button"
+        data-toggle="dropdown">
+        <icon :icon="['fas', 'ellipsis-h']"/>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right shadow">
         <button
-          id="card-menu"
-          class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
-          type="button"
-          data-toggle="dropdown">
-          <icon :icon="['fas', 'ellipsis-h']"/>
+          id="card-menu-change"
+          class="dropdown-item"
+          @click.exact="$emit('modal')">
+          Edit
         </button>
-        <div class="dropdown-menu dropdown-menu-right shadow">
-          <button
-            id="card-menu-change"
-            class="dropdown-item"
-            @click.exact="$emit('modal')">
-            Edit
-          </button>
-          <button
-            id="card-menu-delete"
-            class="dropdown-item"
-            @click.exact="$emit('delete')">
-            Delete
-          </button>
-        </div>
+        <button
+          id="card-menu-delete"
+          class="dropdown-item"
+          @click.exact="$emit('delete')">
+          Delete
+        </button>
       </div>
+    </div>
 
+    <div class="card-body">
       <slot name="card-body"/>
     </div>
   </div>
