@@ -8,28 +8,32 @@
         <div
           class="col-sm-2"
           @keyup.enter.prevent>
-          <select2
+          <selector
             id="tracker-project"
             v-model="project"
             :options="projects"
+            :selected="project"
+            :small="true"
             placeholder="Project"
             required/>
         </div>
         <div
           class="col-sm-2"
           @keyup.enter.prevent>
-          <select2
+          <selector
             id="tracker-task"
             v-model="task"
             :options="tasks"
+            :selected="task"
             placeholder="Task"
+            :small="true"
             required/>
         </div>
         <div class="col-sm-4">
           <input
             id="tracker-note"
             v-model="note"
-            class="form-control form-control-sm w-100"
+            class="form-control form-control-sm w-100 shadow-sm"
             placeholder="Note"
             type="text">
         </div>
@@ -37,7 +41,7 @@
           <input
             id="tracker-duration"
             v-model="duration"
-            class="form-control form-control-sm text-right font-weight-bold w-100"
+            class="form-control form-control-sm text-right font-weight-bold w-100 shadow-sm"
             placeholder="0:00"
             type="text"
             required>
@@ -93,13 +97,13 @@
         v-if="showExtras"
         class="row pt-2">
         <div class="col-sm-2">
-          <select2
+          <selector
             id="tracker-user"
             v-model="user"
             :options="users"
-            placeholder="User"
-            allowclear
-            required/>
+            :selected="user"
+            :small="true"
+            placeholder="User"/>
         </div>
         <div class="col-sm-2">
           <datepicker
@@ -107,7 +111,7 @@
             v-model="date"
             :default="$moment().toDate()"
             type="text"
-            class="form-control form-control-sm date-input"
+            class="form-control form-control-sm date-input shadow-sm"
             placeholder="Date"
             @keyup.enter.prevent/>
         </div>
@@ -116,7 +120,7 @@
             id="tracker-datetime-start"
             :value="(datetimeStart) ? $moment(datetimeStart).format('HH:mm') : ''"
             disabled
-            class="form-control form-control-sm w-100 text-right"
+            class="form-control form-control-sm w-100 text-right shadow-sm"
             placeholder="Datetime Start"
             type="text">
         </div>
@@ -125,7 +129,7 @@
             id="tracker-datetime-end"
             :value="(datetimeEnd) ? $moment(datetimeEnd).format('HH:mm') : ''"
             disabled
-            class="form-control form-control-sm w-100 text-right"
+            class="form-control form-control-sm w-100 text-right shadow-sm"
             placeholder="Datetime End"
             type="text">
         </div>
@@ -138,13 +142,13 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 
-import Select2 from './select2.vue';
+import Selector from './selector.vue';
 import Datepicker from './datepicker.vue';
 
 
 export default {
   components: {
-    Select2,
+    Selector,
     Datepicker,
   },
   data() {
@@ -168,7 +172,7 @@ export default {
   computed: {
     ...mapGetters({
       tasks: 'tasks/getSelectTasks',
-      projects: 'clients/getSelectProjects',
+      projects: 'projects/getSelectProjects',
       users: 'users/getSelectUsers',
     }),
   },
@@ -222,10 +226,3 @@ export default {
   },
 };
 </script>
-
-
-<style lang="scss">
-.bg-light {
-  background-color: rgb(252, 248, 243) !important;
-}
-</style>

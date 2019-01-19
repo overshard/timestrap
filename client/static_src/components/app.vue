@@ -188,6 +188,10 @@ body {
   background-color: rgb(19, 15, 11) !important;
 }
 
+.bg-light {
+  background-color: rgb(252, 248, 243) !important;
+}
+
 .text-muted {
   color: #99a4ae !important
 }

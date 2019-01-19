@@ -13,7 +13,7 @@
           ref="task-name"
           v-model="name"
           class="form-control-plaintext form-control-title"
-          placeholder="Empty"
+          placeholder="Unnamed"
           required>
       </div>
     </div>

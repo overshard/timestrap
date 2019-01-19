@@ -19,7 +19,7 @@ export default {
     },
     getSearchProjects: state => search => {
       return state.all.filter(project => {
-        return project.name.toLowerCase().includes(search);
+        return project.name.toLowerCase().includes(search) || project.client_details.name.toLowerCase().includes(search);
       });
     },
   },

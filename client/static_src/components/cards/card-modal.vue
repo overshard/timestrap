@@ -1,5 +1,5 @@
 <template>
-<div class="modal">
+<div class="modal" data-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <form @submit.prevent="submit" class="modal-content border-0 shadow">
       <div class="modal-body">

@@ -13,7 +13,7 @@
           ref="client-name"
           v-model="name"
           class="form-control-plaintext form-control-title"
-          placeholder="Empty"
+          placeholder="Unnamed"
           required>
       </div>
     </div>
@@ -58,7 +58,7 @@ export default {
       id: this.client ? this.client.id : null,
       url: this.client ? this.client.url : null,
       name: this.client ? this.client.name : null,
-      archive: this.client ? this.client.archive : null,
+      archive: this.client ? this.client.archive : false,
     }
   },
   methods: {

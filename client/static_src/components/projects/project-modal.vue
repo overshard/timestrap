@@ -22,12 +22,11 @@
         Client
       </label>
       <div class="col-sm-8">
-        <select2
+        <selector
           id="project-client"
           v-model="client"
           :options="clients"
-          :selected="client"
-          placeholder="Empty"/>
+          :selected="client"/>
       </div>
     </div>
     <div class="form-group row">
@@ -67,13 +66,13 @@
 <script>
 import {mapActions, mapGetters} from 'vuex';
 
-import Select2 from '../select2.vue';
+import Selector from '../selector.vue';
 import CardModal from '../cards/card-modal.vue';
 
 
 export default {
   components: {
-    Select2,
+    Selector,
     CardModal,
   },
   props: {
@@ -88,7 +87,7 @@ export default {
       name: this.project ? this.project.name : null,
       client: this.project ? this.project.client : null,
       estimate: this.project ? this.project.estimate : null,
-      archive: this.project ? this.project.archive : null,
+      archive: this.project ? this.project.archive : false,
     }
   },
   computed: {
