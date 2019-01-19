@@ -1,149 +1,62 @@
 <template>
-  <div>
-    <div class="row mb-4">
-      <div class="col-sm-8">
-        <h1>
-          <icon :icon="['fas', 'address-book']" class="text-muted mr-2"/>
-          Clients
-        </h1>
-      </div>
-      <div class="col-sm-4 d-flex flex-column align-items-end justify-content-center">
-        <input
-          id="client-search"
-          v-model="search"
-          placeholder="Filter Projects"
-          class="form-control form-control-sm mb-2"
-          type="text">
+<cards :number-of-elements="clients(search).length" @search="search = $event">
+  <template slot="cards-title">
+    <icon :icon="['fas', 'address-book']" class="text-muted mr-2"/>
+    Clients
+  </template>
 
-        <div class="w-100 text-right">
-          <button
-            v-if="this.$perms.add_client"
-            id="client-add"
-            type="button"
-            class="btn btn-primary btn-sm"
-            @click="toggleClientModal">
-            <icon
-              :icon="['fas', 'plus']"
-              class="mr-1"/>
-            New Client
-          </button>
+  <template slot="cards-list">
+    <client
+      v-for="(client, index) in clients(search)"
+      :key="client.id"
+      :client="client"
+      :index="index"
+      @modal="modalToggle(client)"/>
+    <client
+      @modal="modalToggle()"/>
+  </template>
 
-          <button
-            v-if="this.$perms.add_project"
-            id="project-add"
-            type="button"
-            class="btn btn-primary btn-sm"
-            @click="toggleProjectModal">
-            <icon
-              :icon="['fas', 'plus']"
-              class="mr-1"/>
-            New Project
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <client-modal
-      v-if="modalClient.show"
-      id="client-modal"
-      :config="modalClient"
-      @close="toggleClientModal"/>
-
-    <project-modal
-      v-if="modalProject.show"
-      id="project-modal"
-      :config="modalProject"
-      @close="toggleProjectModal"/>
-
-    <div
-      v-if="this.$perms.view_client && clients.length !== 0"
-      id="client-rows">
-      <client
-        v-for="(client, index) in clients"
-        :client="client"
-        :index="index"
-        :key="client.id"
-        :search="search"
-        :toggle-client-modal="toggleClientModal"
-        :toggle-project-modal="toggleProjectModal"/>
-    </div>
-    <template v-else>
-      <div class="row">
-        <div class="col-md-4 col-lg-3 mb-4">
-          <div class="client card shadow">
-            <div class="card-body">
-              <div class="card-title h5">
-                <icon :icon="['fas', 'briefcase']" class="my-2 text-muted d-block"/>
-                No clients
-              </div>
-              <div class="card-subtitle h6 text-muted mb-2">
-                Try adding one
-              </div>
-              <div class="card-text">
-                No clients added or match your filter
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-  </div>
+  <client-modal
+    slot="cards-modal"
+    v-if="modalShow"
+    :client="modalClient"
+    @close="modalShow = false"/>
+</cards>
 </template>
 
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
+import Cards from '../cards/cards.vue';
 import Client from './client.vue';
 import ClientModal from './client-modal.vue';
-import ProjectModal from './project-modal.vue';
 
 
 export default {
   components: {
+    Cards,
     Client,
     ClientModal,
-    ProjectModal,
   },
   data() {
     return {
-      modalClient: {
-        client: null,
-        show: false,
-      },
-      modalProject: {
-        project: null,
-        show: false,
-      },
       search: '',
+      modalClient: null,
+      modalShow: false,
     };
   },
   computed: {
-    ...mapState({
-      clients: state => state.clients.allClients,
+    ...mapGetters({
+      clients: 'clients/getSearchClients',
     }),
   },
   methods: {
-    ...mapActions('clients', [
-      'getClients',
-    ]),
-    toggleClientModal(client) {
-      if (client) this.modalClient.client = client;
-      else this.modalClient.client = null;
-      this.modalClient.show = !this.modalClient.show;
+    modalToggle: function(client) {
+      if (typeof(client) !== 'undefined') this.modalClient = client;
+      else this.modalClient = null;
+      this.modalShow = !this.modalShow;
     },
-    toggleProjectModal(project) {
-      if (project) this.modalProject.project = project;
-      else this.modalProject.project = null;
-      this.modalProject.show = !this.modalProject.show;
-    },
-  },
+  }
 };
 </script>
-
-
-<style lang="scss">
-  .client.card {
-    height: 17rem;
-  }
-</style>

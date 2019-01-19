@@ -41,6 +41,7 @@ store.dispatch('users/getUsers');
 store.dispatch('tasks/getTasks');
 store.dispatch('clients/getClients');
 store.dispatch('clients/getProjects');
+store.dispatch('projects/getProjects');
 store.dispatch('entries/getEntries');
 
 

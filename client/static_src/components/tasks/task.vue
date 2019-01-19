@@ -4,7 +4,7 @@
   @modal="$emit('modal')"
   @delete="deleteTask(index)">
   <template slot="card-body">
-    <div class="card-title h5">
+    <div class="card-title h5 font-weight-bold">
       {{ task.name }}
     </div>
     <div v-if="task.hourly_rate" class="card-subtitle h6 mb-2 badge badge-pill badge-secondary">
@@ -31,9 +31,6 @@ export default {
       default: () => {
         return {
           id: null,
-          url: null,
-          name: null,
-          hourly_rate: null,
         }
       },
     },

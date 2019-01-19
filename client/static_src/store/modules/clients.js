@@ -22,6 +22,11 @@ export default {
         return {id: client.url, text: client.name};
       });
     },
+    getSearchClients: state => search => {
+      return state.allClients.filter(client => {
+        return client.name.toLowerCase().includes(search);
+      });
+    },
 
     // Projects
     getNumberOfProjects: state => {

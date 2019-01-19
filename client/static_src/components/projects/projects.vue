@@ -1,32 +1,62 @@
 <template>
-  <div class="row mb-4">
-    <div class="col-md-7">
-      <h1 class="mb-0">
-        <icon :icon="['fas', 'briefcase']" class="text-muted mr-2"/>
-        Projects
-      </h1>
-    </div>
-    <div class="col-md-5 d-flex flex-column align-items-end justify-content-center">
-      <input
-        id="task-search"
-        v-model="search"
-        placeholder="Type to filter projects..."
-        class="form-control shadow-sm"
-        type="text">
-    </div>
-  </div>
+<cards :number-of-elements="projects(search).length" @search="search = $event">
+  <template slot="cards-title">
+    <icon :icon="['fas', 'briefcase']" class="text-muted mr-2"/>
+    Projects
+  </template>
+
+  <template slot="cards-list">
+    <project
+      v-for="(project, index) in projects(search)"
+      :key="project.id"
+      :project="project"
+      :index="index"
+      @modal="modalToggle(project)"/>
+    <project
+      @modal="modalToggle()"/>
+  </template>
+
+  <project-modal
+    slot="cards-modal"
+    v-if="modalShow"
+    :project="modalProject"
+    @close="modalShow = false"/>
+</cards>
 </template>
 
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
 
+import Cards from '../cards/cards.vue';
+import Project from './project.vue';
+import ProjectModal from './project-modal.vue';
+
 
 export default {
+  components: {
+    Cards,
+    Project,
+    ProjectModal,
+  },
   data() {
     return {
       search: '',
+      modalProject: null,
+      modalShow: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      projects: 'projects/getSearchProjects',
+    }),
+  },
+  methods: {
+    modalToggle: function(project) {
+      if (typeof(project) !== 'undefined') this.modalProject = project;
+      else this.modalProject = null;
+      this.modalShow = !this.modalShow;
+    },
+  }
 };
 </script>

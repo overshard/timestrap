@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import entries from './modules/entries';
 import tasks from './modules/tasks';
 import clients from './modules/clients';
+import projects from './modules/projects';
 import users from './modules/users';
 import reports from './modules/reports';
 
@@ -51,6 +52,7 @@ export default new Vuex.Store({
     entries: entries,
     tasks: tasks,
     clients: clients,
+    projects: projects,
     users: users,
     reports: reports,
   },

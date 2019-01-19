@@ -192,7 +192,6 @@ button {
 // Fix bootstrap v4 making some field invalid before input
 input:required {
   border-color: #ccc !important;
-  box-shadow: none !important;
 }
 
 #loading {

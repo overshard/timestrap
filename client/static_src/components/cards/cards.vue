@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row mb-4">
     <div class="col-md-7">
-      <h1 class="mb-0">
+      <h1 class="mb-0 font-weight-bold">
         <slot name="cards-title"/>
       </h1>
     </div>
@@ -24,7 +24,7 @@
       <div class="col-mb-4 col-lg-3 mb-4">
         <div class="task card shadow-sm border-danger" style="height: 15rem;">
           <div class="card-body">
-            <div class="card-title h5">
+            <div class="card-title h5 font-weight-bold">
               Nothing here
             </div>
             <div class="card-subtitle h6 text-muted mb-2">

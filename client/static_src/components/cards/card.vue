@@ -2,7 +2,7 @@
 <div :id="[index ? 'card-' + index : '']" class="col-md-4 col-lg-3 mb-4">
   <div v-if="index !== null" class="card shadow-sm">
     <div class="card-body">
-      <div class="float-right">
+      <div class="float-right ml-2">
         <button
           id="card-menu"
           class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
