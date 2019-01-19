@@ -5,28 +5,32 @@
   :create="createTask"
   @close="$emit('close')">
   <template slot="modal-body">
-    <div class="form-group">
-      <label for="task-name">
+    <div class="form-group row">
+      <label for="task-name" class="col-sm-4 col-form-label text-muted">
         Name
       </label>
-      <input
-        id="task-name"
-        name="task-name"
-        v-model="name"
-        class="form-control shadow-sm"
-        placeholder="Empty"
-        required/>
+      <div class="col-sm-8">
+        <input
+          id="task-name"
+          name="task-name"
+          v-model="name"
+          class="form-control shadow-sm"
+          placeholder="Empty"
+          required>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="task-hourly-rate">
+    <div class="form-group row">
+      <label for="task-hourly-rate" class="col-sm-4 col-form-label text-muted">
         Hourly Rate
       </label>
-      <input
-        class="form-control shadow-sm"
-        id="task-hourly-rate"
-        name="task-hourly-rate"
-        v-model="hourly_rate"
-        placeholder="Empty"/>
+      <div class="col-sm-8">
+        <input
+          class="form-control shadow-sm"
+          id="task-hourly-rate"
+          name="task-hourly-rate"
+          v-model="hourly_rate"
+          placeholder="Empty">
+      </div>
     </div>
   </template>
 </card-modal>

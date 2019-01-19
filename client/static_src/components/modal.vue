@@ -70,13 +70,6 @@ export default {
 
 .modal-body {
   margin: 0;
-
-  label {
-    font-weight: bold;
-    font-size: .7em;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
 }
 
 .modal-default-button {

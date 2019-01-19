@@ -2,7 +2,7 @@
 <div class="modal">
   <div class="modal-dialog modal-dialog-centered">
     <form @submit.prevent="submit" class="modal-content border-0 shadow">
-      <div class="modal-body">
+      <div class="modal-body pt-4">
         <slot name="modal-body"/>
       </div>
       <div class="modal-footer">

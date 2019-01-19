@@ -5,39 +5,61 @@
   :create="createProject"
   @close="$emit('close')">
   <template slot="modal-body">
-    <div class="form-group">
-      <label for="project-name">
+    <div class="form-group row">
+      <label for="project-name" class="col-sm-4 col-form-label text-muted">
         Name
       </label>
-      <input
-        id="project-name"
-        name="project-name"
-        v-model="name"
-        class="form-control shadow-sm"
-        placeholder="Empty"
-        required/>
+      <div class="col-sm-8">
+        <input
+          id="project-name"
+          name="project-name"
+          v-model="name"
+          class="form-control shadow-sm"
+          placeholder="Empty"
+          required/>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="project-name">
+    <div class="form-group row">
+      <label for="project-client" class="col-sm-4 col-form-label text-muted">
         Client
       </label>
-      <select2
-        id="project-client"
-        v-model="client"
-        :options="clients"
-        :selected="client"
-        placeholder="Empty"/>
+      <div class="col-sm-8">
+        <select2
+          id="project-client"
+          v-model="client"
+          :options="clients"
+          :selected="client"
+          placeholder="Empty"/>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="project-estimate">
+    <div class="form-group row">
+      <label for="project-estimate" class="col-sm-4 col-form-label text-muted">
         Estimate
       </label>
-      <input
-        class="form-control shadow-sm"
-        id="project-estimate"
-        name="project-estimate"
-        v-model="estimate"
-        placeholder="Empty"/>
+      <div class="col-sm-8">
+        <input
+          class="form-control shadow-sm"
+          id="project-estimate"
+          name="project-estimate"
+          v-model="estimate"
+          placeholder="Empty"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 text-muted">
+        Archive
+      </div>
+      <div class="col-sm-8">
+        <div class="custom-control custom-switch">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="project-archive"
+            name="project-archive"
+            v-model="archive">
+          <label class="custom-control-label text-muted" for="project-archive"/>
+        </div>
+      </div>
     </div>
   </template>
 </card-modal>
@@ -68,6 +90,7 @@ export default {
       name: this.project ? this.project.name : null,
       client: this.project ? this.project.client : null,
       estimate: this.project ? this.project.estimate : null,
+      archive: this.project ? this.project.archive : null,
     }
   },
   computed: {

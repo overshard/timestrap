@@ -89,6 +89,7 @@
             <li class="nav-item dropdown">
               <a
                 id="nav-user"
+                href="#"
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown">
                 <icon
@@ -183,17 +184,11 @@ body {
   background-color: rgb(255, 254, 252);
 }
 
-// Fix bootstrap v4 not using pointer on some objects
-a,
-button {
-  cursor: pointer;
+.bg-dark {
+  background-color: rgb(19, 15, 11) !important;
 }
 
-// Fix bootstrap v4 making some field invalid before input
-input:required {
-  border-color: #ccc !important;
-}
-
+// Loading styles
 #loading {
   height: 3px;
   position: absolute;
@@ -221,24 +216,12 @@ input:required {
   font-weight: bold;
 }
 
+// Github icon
 #github {
   position: fixed;
   bottom: 5px;
   right: 15px;
   font-size: 2em;
-
-  a {
-    color: #000;
-  }
-}
-
-.btn,
-.export-select {
-  font-size: .7em;
-  line-height: 1.8em;
-  letter-spacing: 1px;
-  font-weight: bold;
-  text-transform: uppercase;
 }
 
 // Remove arrow on the ellipsis icons on rows
@@ -246,9 +229,5 @@ input:required {
   &::after {
     display: none;
   }
-}
-
-.bg-dark {
-  background-color: rgb(19, 15, 11) !important;
 }
 </style>
