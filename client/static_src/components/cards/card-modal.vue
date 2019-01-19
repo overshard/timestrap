@@ -4,11 +4,9 @@
     <form @submit.prevent="submit" class="modal-content border-0 shadow">
       <div class="modal-body">
         <slot name="modal-body"/>
-      </div>
-      <div class="modal-footer">
         <button
           id="modal-submit"
-          class="btn btn-success shadow-sm"
+          class="btn btn-dark shadow-sm mt-5"
           type="submit">
           Save
         </button>
@@ -48,7 +46,7 @@ export default {
 
 <style lang="scss">
 .modal-body {
-  padding: 3rem;
+  padding: 4rem;
 }
 
 .form-control-title {
