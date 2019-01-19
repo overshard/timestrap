@@ -6,15 +6,13 @@
   @close="$emit('close')">
   <template slot="modal-body">
     <div class="form-group row">
-      <label for="client-name" class="col-sm-4 col-form-label text-muted">
-        Name
-      </label>
-      <div class="col-sm-8">
+      <div class="col">
         <input
           id="client-name"
           name="client-name"
+          ref="client-name"
           v-model="name"
-          class="form-control shadow-sm"
+          class="form-control-plaintext form-control-title"
           placeholder="Empty"
           required>
       </div>
@@ -68,6 +66,9 @@ export default {
       editClient: 'clients/editClient',
       createClient: 'clients/createClient',
     }),
+  },
+  mounted() {
+    this.$refs['client-name'].focus();
   },
 };
 </script>

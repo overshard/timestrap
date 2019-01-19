@@ -1,8 +1,8 @@
 <template>
 <div class="modal">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <form @submit.prevent="submit" class="modal-content border-0 shadow">
-      <div class="modal-body pt-4">
+      <div class="modal-body">
         <slot name="modal-body"/>
       </div>
       <div class="modal-footer">
@@ -44,3 +44,15 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss">
+.modal-body {
+  padding: 3rem;
+}
+
+.form-control-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+</style>

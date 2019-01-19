@@ -6,16 +6,14 @@
   @close="$emit('close')">
   <template slot="modal-body">
     <div class="form-group row">
-      <label for="project-name" class="col-sm-4 col-form-label text-muted">
-        Name
-      </label>
-      <div class="col-sm-8">
+      <div class="col">
         <input
           id="project-name"
           name="project-name"
+          ref="project-name"
           v-model="name"
-          class="form-control shadow-sm"
-          placeholder="Empty"
+          class="form-control-plaintext form-control-title"
+          placeholder="Unnamed"
           required/>
       </div>
     </div>
@@ -103,6 +101,9 @@ export default {
       editProject: 'projects/editProject',
       createProject: 'projects/createProject',
     }),
+  },
+  mounted() {
+    this.$refs['project-name'].focus();
   },
 };
 </script>
