@@ -1,53 +1,10 @@
 <template>
   <div class="container">
-    <div class="row py-2 mb-4 bg-light rounded">
-      <div class="col-6">
-        <template v-if="is_staff">
-          <button
-            id="export-report"
-            class="btn btn-primary btn-sm mr-1"
-            @click="exportReport">
-            <icon
-              :icon="['fas', 'download']"
-              class="mr-1"/>
-            Export Report
-          </button>
-          <select
-            v-model="exportFormat"
-            class="export-select custom-select form-control-sm w-25">
-            <option value="csv">csv</option>
-            <option value="xls">xls</option>
-            <option value="tsv">tsv</option>
-            <option value="ods">ods</option>
-            <option value="json">json</option>
-            <option value="yaml">yaml</option>
-            <option value="html">html</option>
-          </select>
-        </template>
-      </div>
-      <div class="col-6">
-        <button
-          class="btn btn-secondary btn-sm float-right ml-2"
-          @click.prevent
-          @click="refresh">
-          <icon
-            :icon="['fas', 'sync']"
-            class="mr-1"/>
-          Sync
-        </button>
-        <pager
-          :next="next"
-          :previous="previous"
-          @next-page="getEntries(next)"
-          @previous-page="getEntries(previous)"/>
-      </div>
-    </div>
-
     <form
       name="report-filters"
-      class="row mb-4 pt-3 pb-1 bg-light rounded report-filters"
+      class="row mb-4 pt-3 pb-1 bg-secondary text-white rounded report-filters"
       @submit.prevent
-      @submit="getReport">
+      @submit.exact="getReport">
       <div class="col-sm-6">
         <div class="form-group">
           <label>User</label>
@@ -130,11 +87,36 @@
         <button
           id="generate-report"
           type="submit"
-          class="btn btn-primary btn-sm w-100">
+          class="btn btn-dark btn-sm w-100">
           Generate Report
         </button>
       </div>
     </form>
+
+    <div class="row mb-4 justify-content-end">
+      <template v-if="is_staff">
+        <select
+          v-model="exportFormat"
+          class="export-select custom-select form-control-sm w-25">
+          <option value="csv">csv</option>
+          <option value="xls">xls</option>
+          <option value="tsv">tsv</option>
+          <option value="ods">ods</option>
+          <option value="json">json</option>
+          <option value="yaml">yaml</option>
+          <option value="html">html</option>
+        </select>
+        <button
+          id="export-report"
+          class="btn btn-dark ml-2"
+          @click="exportReport">
+          <icon
+            :icon="['fas', 'download']"
+            class="mr-1"/>
+          Export Report
+        </button>
+      </template>
+    </div>
 
     <div
       v-if="this.$perms.view_entry"
@@ -165,25 +147,6 @@
             class="mr-1"/>
           <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
         </div>
-      </div>
-    </div>
-
-    <div class="row py-2 mb-4 bg-light rounded">
-      <div class="col-12">
-        <button
-          class="btn btn-secondary btn-sm float-right ml-2"
-          @click.prevent
-          @click="refresh">
-          <icon
-            :icon="['fas', 'sync']"
-            class="mr-1"/>
-          Sync
-        </button>
-        <pager
-          :next="next"
-          :previous="previous"
-          @next-page="getEntries(next)"
-          @previous-page="getEntries(previous)"/>
       </div>
     </div>
   </div>
@@ -297,9 +260,6 @@ export default {
         exportFormat: this.exportFormat,
       };
       document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
-    },
-    refresh() {
-      return this.getEntries();
     },
   },
 };
