@@ -25,6 +25,10 @@ export default {
         store.dispatch('clients/getClients');
       if (updateData.model == 'Project')
         store.dispatch('clients/getProjects');
+      if (updateData.model == 'Project')
+        store.dispatch('projects/getProjects');
+      if (updateData.model == 'Client')
+        store.dispatch('projects/getProjects');
     };
   },
 };
