@@ -9,12 +9,16 @@ export default {
 
     let updateSocket = new WebSocket(updateSocketUrl);
 
+    updateSocket.onopen = () => {
+      console.info('Update socket opened.');
+    }
+
     updateSocket.onclose = () => {
-      console.error('Update socket closed unexpectedly.');
+      console.info('Update socket closed.');
     };
 
     updateSocket.onerror = () => {
-      console.error('Update socket errored unexpectedly.');
+      console.info('Update socket errored.');
     };
 
     updateSocket.onmessage = e => {

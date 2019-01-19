@@ -1,8 +1,11 @@
 <template>
-<div :id="[index ? 'card-' + index : '']" class="col-md-4 col-lg-3 mb-4">
+<div
+  :id="[index ? 'card-' + index : '']"
+  class="col-md-4 col-lg-3 mb-4"
+  v-on:dblclick="$emit('modal')">
   <div v-if="index !== null" class="card shadow-sm">
     <div class="card-body">
-      <div class="float-right ml-2">
+      <div class="card-options">
         <button
           id="card-menu"
           class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
@@ -61,10 +64,30 @@ export default {
 <style lang="scss">
 .card {
   height: 15rem;
+  cursor: pointer;
+  -webkit-user-select: none;  // TODO: Not being added automatically?
+  -moz-user-select: none;  // TODO: Not being added automatically?
+  user-select: none;
+
+  .card-options {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .dropdown-toggle {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  &:hover {
+    .dropdown-toggle {
+      opacity: 1;
+    }
+  }
 
   &.new {
-    cursor: pointer;
-    opacity: .7;
+    opacity: .5;
     transition: opacity 300ms, transform 300ms;
 
     &:hover, &.edit {

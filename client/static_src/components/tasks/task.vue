@@ -4,10 +4,11 @@
   @modal="$emit('modal')"
   @delete="deleteTask(index)">
   <template slot="card-body">
-    <div class="card-title h5 font-weight-bold">
+    <div class="card-title h5 font-weight-bold mb-4">
       {{ task.name }}
     </div>
-    <div v-if="task.hourly_rate" class="card-subtitle h6 mb-2 badge badge-pill badge-secondary">
+    <div v-if="task.hourly_rate" class="card-subtitle h6">
+      <icon :icon="['fas', 'hand-holding-usd']" class="mr-1 text-muted"/>
       ${{ task.hourly_rate }}/hr
     </div>
   </template>
