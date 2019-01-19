@@ -47,91 +47,36 @@
             required>
         </div>
         <div class="col-sm-2">
-          <div class="row">
-            <div class="col-9 pr-1">
-              <button
-                v-if="!running && !duration"
-                class="btn btn-sm btn-success w-100"
-                @click.prevent
-                @click="toggle">
-                <icon
-                  :icon="['fas', 'play']"
-                  class="mr-1"/>
-                Start
-              </button>
-              <button
-                v-if="running"
-                class="btn btn-sm btn-danger w-100"
-                @click.prevent
-                @click="toggle">
-                <icon
-                  :icon="['fas', 'stop']"
-                  class="mr-1"/>
-                Stop ({{ seconds }})
-              </button>
-              <button
-                v-if="!running && duration"
-                id="tracker-submit"
-                class="btn btn-sm btn-info w-100"
-                type="submit">
-                <icon
-                  :icon="['fas', 'plus']"
-                  class="mr-1"/>
-                Add
-              </button>
-            </div>
-            <div class="col-3 pl-0">
-              <button
-                id="tracker-extras"
-                class="btn btn-secondary btn-sm w-100"
-                @click.prevent
-                @click="toggleExtras">
-                <icon
-                  :icon="['fas', [showExtras ? 'caret-up' : 'caret-down']]"/>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        v-if="showExtras"
-        class="row pt-2">
-        <div class="col-sm-2">
-          <selector
-            id="tracker-user"
-            v-model="user"
-            :options="users"
-            :selected="user"
-            :small="true"
-            placeholder="User"/>
-        </div>
-        <div class="col-sm-2">
-          <datepicker
-            id="tracker-date"
-            v-model="date"
-            :default="$moment().toDate()"
-            type="text"
-            class="form-control form-control-sm date-input shadow-sm"
-            placeholder="Date"
-            @keyup.enter.prevent/>
-        </div>
-        <div class="col-sm-2 offset-sm-4">
-          <input
-            id="tracker-datetime-start"
-            :value="(datetimeStart) ? $moment(datetimeStart).format('HH:mm') : ''"
-            disabled
-            class="form-control form-control-sm w-100 text-right shadow-sm"
-            placeholder="Datetime Start"
-            type="text">
-        </div>
-        <div class="col-sm-2">
-          <input
-            id="tracker-datetime-end"
-            :value="(datetimeEnd) ? $moment(datetimeEnd).format('HH:mm') : ''"
-            disabled
-            class="form-control form-control-sm w-100 text-right shadow-sm"
-            placeholder="Datetime End"
-            type="text">
+          <button
+            v-if="!running && !duration"
+            class="btn btn-sm btn-success w-100"
+            @click.prevent
+            @click="toggle">
+            <icon
+              :icon="['fas', 'play']"
+              class="mr-1"/>
+            Start
+          </button>
+          <button
+            v-if="running"
+            class="btn btn-sm btn-danger w-100"
+            @click.prevent
+            @click="toggle">
+            <icon
+              :icon="['fas', 'stop']"
+              class="mr-1"/>
+            Stop ({{ seconds }})
+          </button>
+          <button
+            v-if="!running && duration"
+            id="tracker-submit"
+            class="btn btn-sm btn-info w-100"
+            type="submit">
+            <icon
+              :icon="['fas', 'plus']"
+              class="mr-1"/>
+            Add
+          </button>
         </div>
       </div>
     </form>
@@ -165,8 +110,6 @@ export default {
       running: false,
       total: 0,
       seconds: '0',
-
-      showExtras: false,
     };
   },
   computed: {
@@ -219,9 +162,6 @@ export default {
         if (this.total < 60) this.reset();
         document.title = 'Application — ' + timestrapConfig.SITE.NAME;
       }
-    },
-    toggleExtras() {
-      this.showExtras = !this.showExtras;
     },
   },
 };
