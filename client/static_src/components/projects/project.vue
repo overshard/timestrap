@@ -11,10 +11,10 @@
       for <strong>{{ project.client_details.name }}</strong>
     </div>
     <div v-if="project.total_duration && project.total_entries" class="card-subtitle h6 mb-5">
-      <icon :icon="['fas', 'clock']" class="mr-1 text-muted"/>
-      {{ project.total_duration }}
-      <icon :icon="['fas', 'list']" class="ml-3 mr-1 text-muted"/>
+      <icon :icon="['fas', 'list']" class="mr-1 text-muted"/>
       {{ project.total_entries }}
+      <icon :icon="['fas', 'clock']" class="ml-3 mr-1 text-muted"/>
+      {{ project.total_duration }}
     </div>
     <div v-if="project.percent_done" class="card-subtitle h6 w-100">
       <div class="progress w-100">

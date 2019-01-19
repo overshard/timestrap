@@ -67,6 +67,10 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'name', 'payment_id', 'archive', 'projects',
                   'total_projects', 'total_duration',)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(archive=False)
+
     def get_total_projects(self, obj):
         return obj.get_total_projects()
 
