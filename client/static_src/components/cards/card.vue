@@ -2,7 +2,7 @@
 <div
   :id="[index ? 'card-' + index : '']"
   class="col-md-4 col-lg-3 mb-4"
-  v-on:dblclick="$emit('modal')">
+  @dblclick="$emit('modal')">
   <div v-if="index !== null" class="card shadow-sm">
     <div class="card-body">
       <div class="card-options">
@@ -81,6 +81,8 @@ export default {
   }
 
   &:hover {
+    background-color: #f8f9fa;
+
     .dropdown-toggle {
       opacity: 1;
     }
