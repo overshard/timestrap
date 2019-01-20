@@ -106,18 +106,12 @@
 <script>
 import {mapActions} from 'vuex';
 
-import Select2 from './select2.vue';
-
 
 export default {
-  components: {
-    Select2,
-  },
   props: [
     'entry',
     'index',
     'editable',
-    'toggleEditModal',
   ],
   methods: {
     ...mapActions({

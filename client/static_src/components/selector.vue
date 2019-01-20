@@ -4,20 +4,10 @@
     class="focuser"
     v-if="edit"
     @click="toggleEdit()"/>
-  <div
-    v-if="!edit"
-    :class="['selected', 'form-control', 'shadow-sm', 'overflow-hidden', small ? 'form-control-sm' : '']"
-    tabindex="0"
-    ref="selected"
-    @click.prevent="toggleEdit()"
-    @keydown.up.prevent="toggleEdit()"
-    @keydown.down.prevent="toggleEdit()"
-    @keydown.enter.prevent="toggleEdit()">
-    {{ selectedObject.text }}
-  </div>
+
   <div
     class="select border shadow rounded w-100"
-    v-else
+    v-if="edit"
     @keydown.esc.prevent="toggleEdit()"
     @keydown.tab.prevent="toggleEdit()"
     @keydown.up.prevent="selectedUp()"
@@ -49,6 +39,17 @@
         <div class="list-group-item text-muted">Nothing matches your filter.</div>
       </template>
     </div>
+  </div>
+
+  <div
+    :class="['selected', 'form-control', 'shadow-sm', 'overflow-hidden', small ? 'form-control-sm' : '']"
+    tabindex="0"
+    ref="selected"
+    @click.prevent="toggleEdit()"
+    @keydown.up.prevent="toggleEdit()"
+    @keydown.down.prevent="toggleEdit()"
+    @keydown.enter.prevent="toggleEdit()">
+    {{ selectedObject.text }}
   </div>
 </div>
 </template>

@@ -77,7 +77,6 @@ import {mapGetters, mapActions, mapState} from 'vuex';
 import Datepicker from '../datepicker.vue';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
-import Select2 from '../select2.vue';
 import EntryModal from './entry-modal.vue';
 import Chart from './chart.vue';
 
@@ -87,7 +86,6 @@ export default {
     Datepicker,
     Entry,
     Pager,
-    Select2,
     EntryModal,
     Chart,
   },
