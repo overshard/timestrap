@@ -179,6 +179,12 @@ export default {
   }
 }
 
+.options {
+  max-height: 200px;
+  overflow-y: scroll;
+  background-color: #fff;
+}
+
 .list-group-item {
   padding: .25rem .5rem;
 }

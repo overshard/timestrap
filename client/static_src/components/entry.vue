@@ -70,8 +70,7 @@
             id="entry-menu-change"
             class="dropdown-item"
             href="#"
-            @click.prevent
-            @click="toggleEditModal(entry)">
+            @click.prevent="$emit('modal')">
             Edit
           </a>
           <a

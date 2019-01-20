@@ -100,10 +100,8 @@ export default {
     return {
       task: null,
       project: null,
-      user: null,
       note: null,
       duration: null,
-      date: null,
       datetimeStart: null,
       datetimeEnd: null,
 
@@ -131,8 +129,8 @@ export default {
         duration: this.duration,
         datetime_start: this.datetimeStart,
         datetime_end: this.datetimeEnd,
-        user: this.user ? this.user : timestrapConfig.USER.URL,
-        date: this.date ? this.date : this.$moment().format('YYYY-MM-DD'),
+        user: timestrapConfig.USER.URL,
+        date: this.$moment().format('YYYY-MM-DD'),
       });
       this.reset();
       this.note = null;

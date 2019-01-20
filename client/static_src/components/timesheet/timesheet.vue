@@ -1,10 +1,9 @@
 <template>
   <div class="container">
     <entry-modal
-      v-if="modal.show && (this.$perms.add_entry || this.$perms.change_entry)"
-      id="entry-modal"
-      :config="modal"
-      @close="toggleModal"/>
+      v-if="modalShow"
+      :entry="modalEntry"
+      @close="modalShow = false"/>
 
     <chart :entries="entries"/>
 
@@ -38,7 +37,7 @@
               :index="entryIndex"
               :key="entry.id"
               :editable="editable"
-              :toggle-edit-modal="toggleModal"
+              @modal="modalToggle(entry)"
               @delete-entry="deleteEntry(blockIndex, entryIndex)"/>
           </template>
           <template v-else>
@@ -95,10 +94,8 @@ export default {
   data() {
     return {
       editable: true,
-      modal: {
-        entry: null,
-        show: false,
-      },
+      modalEntry: null,
+      modalShow: false,
     };
   },
   computed: {
@@ -114,10 +111,10 @@ export default {
     ...mapActions('entries', [
       'getEntries',
     ]),
-    toggleModal(entry) {
-      if (entry) this.modal.entry = entry;
-      else this.modal.entry = null;
-      this.modal.show = !this.modal.show;
+    modalToggle: function(entry) {
+      if (typeof(entry) !== 'undefined') this.modalEntry = entry;
+      else this.modalEntry = null;
+      this.modalShow = !this.modalShow;
     },
   },
 };
