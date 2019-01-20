@@ -5,6 +5,14 @@
       class="container"
       @submit.prevent="submitEntry">
       <div class="row">
+        <div class="col-sm-4">
+          <input
+            id="tracker-note"
+            v-model="note"
+            class="form-control form-control-sm w-100 shadow-sm"
+            placeholder="Note"
+            type="text">
+        </div>
         <div
           class="col-sm-2"
           @keyup.enter.prevent>
@@ -28,14 +36,6 @@
             placeholder="Task"
             :small="true"
             required/>
-        </div>
-        <div class="col-sm-4">
-          <input
-            id="tracker-note"
-            v-model="note"
-            class="form-control form-control-sm w-100 shadow-sm"
-            placeholder="Note"
-            type="text">
         </div>
         <div class="col-sm-2">
           <input

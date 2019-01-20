@@ -180,10 +180,6 @@ export default {
 
 
 <style lang="scss">
-body {
-  background-color: rgb(255, 254, 252);
-}
-
 .bg-dark {
   background-color: rgb(19, 15, 11) !important;
 }
