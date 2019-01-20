@@ -2,7 +2,7 @@
 <card
   :index="index"
   @modal="$emit('modal')"
-  @delete="deleteTask(index)">
+  @delete="deleteTask(task)">
   <template slot="card-body">
     <div class="card-title h5 font-weight-bold mb-4">
       {{ task.name }}

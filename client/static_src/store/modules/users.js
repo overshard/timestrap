@@ -42,7 +42,10 @@ export default {
         commit('updateUser', {index: index, user: response.data});
       }).catch(error => console.log(error));
     },
-    deleteUser({commit, state}, index) {
+    deleteUser({commit, state}, user) {
+      const index = state.all.findIndex(item => {
+        return item.id === user.id;
+      });
       fetch.delete(state.all[index].url).then(() => {
         commit('removeUser', index);
       }).catch(error => console.log(error));

@@ -50,7 +50,10 @@ export default {
         commit('updateTask', {index: index, task: response.data});
       }).catch(error => console.log(error));
     },
-    deleteTask({commit, state}, index) {
+    deleteTask({commit, state}, task) {
+      const index = state.all.findIndex(item => {
+        return item.id === task.id;
+      });
       fetch.delete(state.all[index].url).then(() => {
         commit('removeTask', index);
       }).catch(error => console.log(error));

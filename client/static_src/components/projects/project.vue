@@ -2,7 +2,7 @@
 <card
   :index="index"
   @modal="$emit('modal')"
-  @delete="deleteProject(index)">
+  @delete="deleteProject(project)">
   <template slot="card-body">
     <div class="card-title h5 font-weight-bold">
       {{ project.name }}

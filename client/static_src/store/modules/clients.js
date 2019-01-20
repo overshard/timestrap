@@ -97,7 +97,10 @@ export default {
         commit('updateClient', {index: index, client: response.data});
       }).catch(error => console.log(error));
     },
-    deleteClient({commit, state}, index) {
+    deleteClient({commit, state}, client) {
+      const index = state.allClients.findIndex(item => {
+        return item.id === client.id;
+      });
       fetch.delete(state.allClients[index].url).then(() => {
         commit('removeClient', index);
       }).catch(error => console.log(error));

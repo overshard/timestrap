@@ -79,7 +79,7 @@
             class="dropdown-item"
             href="#"
             @click.prevent
-            @click="deleteEntry(index)">
+            @click="deleteEntry(entry)">
             Delete
           </a>
         </div>

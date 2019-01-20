@@ -38,7 +38,7 @@
               :key="entry.id"
               :editable="editable"
               @modal="modalToggle(entry)"
-              @delete-entry="deleteEntry(blockIndex, entryIndex)"/>
+              @delete-entry="deleteEntry(entry)"/>
           </template>
           <template v-else>
             <div class="entry row py-3 bg-light small">
