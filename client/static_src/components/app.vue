@@ -36,9 +36,7 @@
                 id="nav-timesheet"
                 :to="timesheet"
                 class="nav-link">
-                <icon
-                  :icon="['fas', 'clock']"
-                  class="mr-1"/>
+                <icon :icon="['fas', 'clock']" class="mr-1"/>
                 Timesheet
               </router-link>
             </li>
@@ -56,9 +54,7 @@
                 id="nav-clients"
                 :to="clients"
                 class="nav-link">
-                <icon
-                  :icon="['fas', 'address-book']"
-                  class="mr-1"/>
+                <icon :icon="['fas', 'address-book']" class="mr-1"/>
                 Clients
               </router-link>
             </li>
@@ -67,9 +63,7 @@
                 id="nav-tasks"
                 :to="tasks"
                 class="nav-link">
-                <icon
-                  :icon="['fas', 'tasks']"
-                  class="mr-1"/>
+                <icon :icon="['fas', 'tasks']" class="mr-1"/>
                 Tasks
               </router-link>
             </li>
@@ -92,9 +86,7 @@
                 href="#"
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown">
-                <icon
-                  :icon="['fas', 'user-circle']"
-                  class="mr-1"/>
+                <icon :icon="['fas', 'user-circle']" class="mr-1"/>
                 {{ username }}
               </a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -126,9 +118,7 @@
       </div>
     </div>
     <tracker/>
-    <div class="container my-4">
-      <router-view :id="'view-' + $route.name"/>
-    </div>
+    <router-view :id="'view-' + $route.name" class="my-4"/>
     <div id="github">
       <a
         href="https://github.com/overshard/timestrap"

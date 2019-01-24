@@ -42,6 +42,8 @@ import {
   faHandHoldingUsd,
   faCaretDown,
   faCaretUp,
+  faFilter,
+  faSort,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -70,6 +72,8 @@ library.add(
   faHandHoldingUsd,
   faCaretDown,
   faCaretUp,
+  faFilter,
+  faSort,
 );
 
 Vue.component('icon', FontAwesomeIcon);

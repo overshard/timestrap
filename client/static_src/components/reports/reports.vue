@@ -1,72 +1,113 @@
 <template>
-  <div class="container">
-    <div class="row mb-4">
-      <div class="col-md-7">
-        <h1 class="mb-0 font-weight-bold">
-          <icon :icon="['fas', 'book']" class="text-muted mr-2"/>
-          Reports
-        </h1>
-      </div>
-      <div class="col-md-5 d-flex align-items-center justify-content-end">
-        <template v-if="is_staff">
-          <select
-            v-model="exportFormat"
-            class="export-select custom-select form-control-sm w-25">
-            <option value="csv">csv</option>
-            <option value="xls">xls</option>
-            <option value="tsv">tsv</option>
-            <option value="ods">ods</option>
-            <option value="json">json</option>
-            <option value="yaml">yaml</option>
-            <option value="html">html</option>
-          </select>
-          <button
-            id="export-report"
-            class="btn btn-dark ml-2"
-            @click="exportReport">
-            <icon
-              :icon="['fas', 'download']"
-              class="mr-1"/>
-            Export Report
-          </button>
-        </template>
-      </div>
+<div class="container-fluid px-4">
+  <div class="row mb-4">
+    <div class="col-md-7">
+      <h1 class="mb-0 font-weight-bold">
+        <icon :icon="['fas', 'book']" class="text-muted mr-2"/>
+        Reports
+      </h1>
     </div>
+    <div class="col-md-5 d-flex align-items-center justify-content-end">
+      <template v-if="is_staff">
+        <select
+          v-model="exportFormat"
+          class="export-select custom-select form-control-sm w-25 flex-fill mr-2">
+          <option value="csv">csv</option>
+          <option value="xls">xls</option>
+          <option value="tsv">tsv</option>
+          <option value="ods">ods</option>
+          <option value="json">json</option>
+          <option value="yaml">yaml</option>
+          <option value="html">html</option>
+        </select>
+        <button
+          id="export-report"
+          class="btn btn-light flex-fill text-nowrap mr-2"
+          @click="exportReport">
+          <icon :icon="['fas', 'download']" class="mr-1"/>
+          Export
+        </button>
+      </template>
 
-    <form
-      name="report-filters"
-      class="row mb-4 pt-3 pb-1 bg-secondary text-white rounded report-filters"
-      @submit.prevent
-      @submit.exact="getReport">
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label>User</label>
-          <select2
-            id="report-filter-user"
-            v-model="user"
-            :options="users"
-            placeholder="User"
-            allowclear/>
-        </div>
-        <div class="form-group">
-          <label>Client</label>
-          <select2
-            id="report-filter-client"
-            v-model="client"
-            :options="clients"
-            placeholder="Client"
-            allowclear/>
-        </div>
-        <div class="form-group pb-4">
-          <label>Project</label>
-          <select2
-            id="report-filter-project"
-            v-model="project"
-            :options="projects"
-            placeholder="Project"
-            allowclear/>
-        </div>
-        <div class="form-group">
+      <popover class="flex-fill mr-2">
+        <template slot="popover-button">
+          <icon :icon="['fas', 'filter']" class="mr-1"/>
+          Filter
+        </template>
+        <template slot="popover-content">
+          <small class="text-muted mb-2 d-block">Filter by column, multiple filters are okay</small>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>User</label>
+                <select2
+                  id="report-filter-user"
+                  v-model="user"
+                  :options="users"
+                  placeholder="User"
+                  allowclear/>
+              </div>
+              <div class="form-group">
+                <label>Client</label>
+                <select2
+                  id="report-filter-client"
+                  v-model="client"
+                  :options="clients"
+                  placeholder="Client"
+                  allowclear/>
+              </div>
+              <div class="form-group mb-0">
+                <label>Project</label>
+                <select2
+                  id="report-filter-project"
+                  v-model="project"
+                  :options="projects"
+                  placeholder="Project"
+                  allowclear/>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Task</label>
+                <select2
+                  id="report-filter-task"
+                  v-model="task"
+                  :options="tasks"
+                  placeholder="Task"
+                  allowclear/>
+              </div>
+              <div class="form-group">
+                <label>Min. Date</label>
+                <datepicker
+                  id="report-filter-min-date"
+                  v-model="minDate"
+                  type="text"
+                  class="form-control form-control-sm date-input"
+                  placeholder="Min. date"
+                  allowclear/>
+              </div>
+              <div class="form-group mb-0">
+                <label>Max. Date</label>
+                <datepicker
+                  id="report-filter-max-date"
+                  v-model="maxDate"
+                  type="text"
+                  class="form-control form-control-sm date-input"
+                  placeholder="Max. date"
+                  allowclear/>
+              </div>
+            </div>
+          </div>
+        </template>
+      </popover>
+
+      <popover class="flex-fill">
+        <template slot="popover-button">
+          <icon :icon="['fas', 'sort']" class="mr-1"/>
+          Sort
+        </template>
+        <template slot="popover-content">
+          <small class="text-muted mb-2 d-block">Sort by column and direction</small>
           <div class="row">
             <div class="col-md-6">
               <select2
@@ -85,79 +126,76 @@
                 placeholder="Order direction"/>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label>Task</label>
-          <select2
-            id="report-filter-task"
-            v-model="task"
-            :options="tasks"
-            placeholder="Task"
-            allowclear/>
-        </div>
-        <div class="form-group">
-          <label>Min. Date</label>
-          <datepicker
-            id="report-filter-min-date"
-            v-model="minDate"
-            type="text"
-            class="form-control form-control-sm date-input"
-            placeholder="Min. date"
-            allowclear/>
-        </div>
-        <div class="form-group pb-4">
-          <label>Max. Date</label>
-          <datepicker
-            id="report-filter-max-date"
-            v-model="maxDate"
-            type="text"
-            class="form-control form-control-sm date-input"
-            placeholder="Max. date"
-            allowclear/>
-        </div>
-        <button
-          id="generate-report"
-          type="submit"
-          class="btn btn-dark btn-sm w-100">
-          Generate Report
-        </button>
-      </div>
-    </form>
-
-    <div
-      v-if="this.$perms.view_entry"
-      id="entry-rows">
-      <div class="mb-4">
-        <div class="entry-rows rounded">
-          <entry
-            v-for="(entry, index) in entries"
-            :entry="entry"
-            :index="index"
-            :key="entry.id"
-            :editable="editable"/>
-        </div>
-      </div>
-
-      <div class="row bg-success text-white py-2 mb-4 rounded">
-        <div class="ml-auto col-sm-2 text-right">
-          Subtotal<br>
-          <strong>Total</strong>
-        </div>
-        <div class="col-sm-4">
-          <icon
-            :icon="['fas', 'clock']"
-            class="mr-1"/>
-          {{ $moment.duration(subtotal, 'hours').format('d[d] h[h] m[m]') }}<br>
-          <icon
-            :icon="['fas', 'clock']"
-            class="mr-1"/>
-          <strong>{{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}</strong>
-        </div>
-      </div>
+        </template>
+      </popover>
     </div>
   </div>
+
+  <table v-if="this.$perms.view_entry" class="table table-striped table-bordered table-responsive-md">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">
+          <icon :icon="['fas', 'address-book']" class="mr-1"/>
+          Client
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'briefcase']" class="mr-1"/>
+          Project
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'tasks']" class="mr-1"/>
+          Task
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'user-circle']" class="mr-1"/>
+          User
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'calendar']" class="mr-1"/>
+          Date
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'clock']" class="mr-1"/>
+          Duration
+        </th>
+        <th scope="col">
+          <icon :icon="['fas', 'comment']" class="mr-1"/>
+          Note
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="(entry, index) in entries"
+        :key="entry.id">
+        <td>{{ entry.project_details.client_details.name }}</td>
+        <td>{{ entry.project_details.name }}</td>
+        <td>{{ entry.task_details.name }}</td>
+        <td>{{ entry.user_details.username }}</td>
+        <td>{{ $moment(entry.date).format('LL') }}</td>
+        <td class="text-right">{{ $moment.duration(entry.duration, 'hours').format('h[h] mm[m]') }}</td>
+        <td class="entry__note">{{ entry.note }}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="text-right">
+          <small class="text-muted text-uppercase">Count</small>
+          {{ entries.length }}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="text-right">
+          <small class="text-muted text-uppercase">Sum</small>
+          {{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}
+        </td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 </template>
 
 
@@ -166,6 +204,7 @@ import {mapGetters, mapState, mapActions, mapMutations} from 'vuex';
 import $ from 'jquery';
 
 import Datepicker from '../datepicker.vue';
+import Popover from '../popover.vue';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
 import Select2 from '../select2.vue';
@@ -176,6 +215,7 @@ import fetch from '../../fetch';
 export default {
   components: {
     Datepicker,
+    Popover,
     Entry,
     Pager,
     Select2,
@@ -212,6 +252,40 @@ export default {
       task: null,
     };
   },
+  watch: {
+    orderBy() {
+      this.setOrderBy(this.orderBy);
+      this.$store.dispatch('reports/getReport');
+    },
+    orderDir() {
+      this.setOrderDir(this.orderDir);
+      this.$store.dispatch('reports/getReport');
+    },
+    user() {
+      this.setUser(this.user);
+      this.$store.dispatch('reports/getReport');
+    },
+    client() {
+      this.setClient(this.client);
+      this.$store.dispatch('reports/getReport');
+    },
+    project() {
+      this.setClient(this.project);
+      this.$store.dispatch('reports/getReport');
+    },
+    task() {
+      this.setClient(this.task);
+      this.$store.dispatch('reports/getReport');
+    },
+    minDate() {
+      this.setMinDate(this.minDate);
+      this.$store.dispatch('reports/getReport');
+    },
+    maxDate() {
+      this.setMaxDate(this.maxDate);
+      this.$store.dispatch('reports/getReport');
+    },
+  },
   computed: {
     ...mapState({
       entries: state => state.reports.all,
@@ -226,7 +300,7 @@ export default {
     }),
   },
   mounted() {
-    return this.getReport();
+    this.$store.dispatch('reports/getReport');
   },
   methods: {
     ...mapMutations('reports', [
@@ -240,18 +314,6 @@ export default {
       'setMinDate',
       'setMaxDate',
     ]),
-    getReport() {
-      this.setOrderBy(this.orderBy);
-      this.setOrderDir(this.orderDir);
-
-      this.setUser(this.user);
-      this.setClient(this.client);
-      this.setProject(this.project);
-      this.setTask(this.task);
-      this.setMinDate(this.minDate);
-      this.setMaxDate(this.maxDate);
-      this.$store.dispatch('reports/getReport');
-    },
     exportReport() {
       let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
       if (this.orderBy != 'date') {
@@ -275,12 +337,10 @@ export default {
 
 
 <style lang="scss">
-.report-filters {
-  label {
-    font-weight: bold;
-    font-size: .7em;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+.entry__note {
+  max-width: 20vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
