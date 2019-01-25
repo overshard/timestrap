@@ -40,7 +40,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>User</label>
-                <select2
+                <selector
                   id="report-filter-user"
                   v-model="user"
                   :options="users"
@@ -49,7 +49,7 @@
               </div>
               <div class="form-group">
                 <label>Client</label>
-                <select2
+                <selector
                   id="report-filter-client"
                   v-model="client"
                   :options="clients"
@@ -58,7 +58,7 @@
               </div>
               <div class="form-group mb-0">
                 <label>Project</label>
-                <select2
+                <selector
                   id="report-filter-project"
                   v-model="project"
                   :options="projects"
@@ -69,7 +69,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Task</label>
-                <select2
+                <selector
                   id="report-filter-task"
                   v-model="task"
                   :options="tasks"
@@ -110,7 +110,7 @@
           <small class="text-muted mb-2 d-block">Sort by column and direction</small>
           <div class="row">
             <div class="col-md-6">
-              <select2
+              <selector
                 id="report-sort-by"
                 v-model="orderBy"
                 :options="orderByOptions"
@@ -118,7 +118,7 @@
                 placeholder="Order by"/>
             </div>
             <div class="col-md-6">
-              <select2
+              <selector
                 id="report-order-dir"
                 v-model="orderDir"
                 :options="orderDirOptions"
@@ -131,70 +131,81 @@
     </div>
   </div>
 
-  <table v-if="this.$perms.view_entry" class="table table-striped table-bordered table-responsive-md">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">
-          <icon :icon="['fas', 'address-book']" class="mr-1"/>
-          Client
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'briefcase']" class="mr-1"/>
-          Project
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'tasks']" class="mr-1"/>
-          Task
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'user-circle']" class="mr-1"/>
-          User
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'calendar']" class="mr-1"/>
-          Date
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'clock']" class="mr-1"/>
-          Duration
-        </th>
-        <th scope="col">
-          <icon :icon="['fas', 'comment']" class="mr-1"/>
-          Note
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="(entry, index) in entries"
-        :key="entry.id">
-        <td>{{ entry.project_details.client_details.name }}</td>
-        <td>{{ entry.project_details.name }}</td>
-        <td>{{ entry.task_details.name }}</td>
-        <td>{{ entry.user_details.username }}</td>
-        <td>{{ $moment(entry.date).format('LL') }}</td>
-        <td class="text-right">{{ $moment.duration(entry.duration, 'hours').format('h[h] mm[m]') }}</td>
-        <td class="entry__note">{{ entry.note }}</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="text-right">
-          <small class="text-muted text-uppercase">Count</small>
-          {{ entries.length }}
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="text-right">
-          <small class="text-muted text-uppercase">Sum</small>
-          {{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}
-        </td>
-        <td></td>
-      </tr>
-    </tfoot>
-  </table>
+  <template v-if="entries.length">
+    <table v-if="this.$perms.view_entry" class="table table-striped table-bordered table-responsive-md">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">
+            <icon :icon="['fas', 'address-book']" class="mr-1"/>
+            Client
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'briefcase']" class="mr-1"/>
+            Project
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'tasks']" class="mr-1"/>
+            Task
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'user-circle']" class="mr-1"/>
+            User
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'calendar']" class="mr-1"/>
+            Date
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'clock']" class="mr-1"/>
+            Duration
+          </th>
+          <th scope="col">
+            <icon :icon="['fas', 'comment']" class="mr-1"/>
+            Note
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="entry in entries"
+          :key="entry.id">
+          <td>{{ entry.project_details.client_details.name }}</td>
+          <td>{{ entry.project_details.name }}</td>
+          <td>{{ entry.task ? entry.task_details.name : '' }}</td>
+          <td>{{ entry.user_details.username }}</td>
+          <td>{{ $moment(entry.date).format('LL') }}</td>
+          <td class="text-right">{{ $moment.duration(entry.duration, 'hours').format('h[h] mm[m]') }}</td>
+          <td class="entry__note">{{ entry.note }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-right">
+            <small class="text-muted text-uppercase">Count</small>
+            {{ entries.length }}
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-right">
+            <small class="text-muted text-uppercase">Sum</small>
+            {{ $moment.duration(total, 'hours').format('d[d] h[h] m[m]') }}
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </template>
+  <div v-else class="container">
+    <div class="row">
+      <div class="col text-center py-4">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -207,7 +218,7 @@ import Datepicker from '../datepicker.vue';
 import Popover from '../popover.vue';
 import Entry from '../entry.vue';
 import Pager from '../pager.vue';
-import Select2 from '../select2.vue';
+import Selector from '../selector.vue';
 
 import fetch from '../../fetch';
 
@@ -218,7 +229,7 @@ export default {
     Popover,
     Entry,
     Pager,
-    Select2,
+    Selector,
   },
   data() {
     return {

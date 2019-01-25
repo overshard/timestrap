@@ -48,7 +48,6 @@
     "moment-timezone": "^0.5.23",
     "pickadate": "^3.5.0",
     "popper.js": "^1.14.6",
-    "select2": "^4.0.6-rc.1",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1"

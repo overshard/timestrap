@@ -14,8 +14,14 @@
     @keydown.down.prevent="selectedDown()"
     @keydown.enter.prevent="activeUpdate()">
     <div class="form-control d-flex rounded-0 border-0 rounded-top bg-light">
-      <span class="badge badge-dark d-block-inline mr-2">
+      <span class="badge badge-dark d-block-inline mr-2 px-2">
         {{ selectedObject.text }}
+        <span
+          v-if="active"
+          class="ml-2 clear"
+          @click="clearActive()">
+          <icon :icon="['fas', 'times-circle']"/>
+        </span>
       </span>
       <input
         type="text"
@@ -115,6 +121,10 @@ export default {
     },
   },
   methods: {
+    clearActive: function() {
+      this.active = null;
+      this.$emit('input', null);
+    },
     optionsFiltered: function(search) {
       return this.options.filter(option => {
         return option.text.toLowerCase().includes(search);
@@ -122,6 +132,7 @@ export default {
     },
     clickUpdate: function(id) {
       this.toggleEdit();
+      this.active = id;
       this.$emit('input', id);
     },
     activeUpdate: function() {
@@ -160,6 +171,10 @@ export default {
 
 
 <style lang="scss">
+.clear {
+  cursor: pointer;
+}
+
 .focuser {
   position: fixed;
   z-index: 1;

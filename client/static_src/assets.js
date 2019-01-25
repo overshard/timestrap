@@ -44,6 +44,7 @@ import {
   faCaretUp,
   faFilter,
   faSort,
+  faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -74,6 +75,7 @@ library.add(
   faCaretUp,
   faFilter,
   faSort,
+  faTimesCircle,
 );
 
 Vue.component('icon', FontAwesomeIcon);
