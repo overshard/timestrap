@@ -33,7 +33,7 @@
     <div class="options list-group list-group-flush w-100 shadow">
       <template v-if="optionsFiltered(search).length">
         <a
-          v-for="(option, index) in optionsFiltered(search)"
+          v-for="option in optionsFiltered(search)"
           :key="option.id"
           href="#"
           :class="['option', 'list-group-item', 'list-group-item-action', active === option.id ? 'active' : '']"

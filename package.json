@@ -16,24 +16,24 @@
     "npm": "^6.4.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-env": "^2.4.1",
-    "babel-eslint": "^8.2.6",
-    "babel-loader": "^7.1.5",
-    "css-loader": "^0.28.11",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
     "del": "^3.0.0",
-    "eslint-plugin-vue": "^4.7.1",
-    "file-loader": "^1.1.11",
+    "eslint-plugin-vue": "^5.1.0",
+    "file-loader": "^3.0.1",
     "gulp": "^4.0.0",
-    "gulp-eslint": "^4.0.2",
-    "mini-css-extract-plugin": "^0.4.5",
+    "gulp-eslint": "^5.0.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "vue-eslint-parser": "^2.0.3",
-    "vue-loader": "^15.5.1",
+    "vue-eslint-parser": "^5.0.0",
+    "vue-loader": "^15.6.0",
     "vue-template-compiler": "^2.5.22",
-    "webpack": "^4.28.4",
-    "webpack-stream": "^4.0.3"
+    "webpack": "^4.29.0",
+    "webpack-stream": "^5.2.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
@@ -43,14 +43,14 @@
     "bootstrap": "^4.2.1",
     "chart.js": "^2.7.3",
     "jquery": "^3.3.1",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "moment-duration-format": "^2.2.2",
     "moment-timezone": "^0.5.23",
     "pickadate": "^3.5.0",
     "popper.js": "^1.14.6",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.0"
   },
   "scripts": {
     "heroku-postbuild": "gulp build:production"
