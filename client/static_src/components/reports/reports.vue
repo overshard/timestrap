@@ -82,7 +82,7 @@
                   id="report-filter-min-date"
                   v-model="minDate"
                   type="text"
-                  class="form-control form-control-sm date-input"
+                  class="form-control date-input"
                   placeholder="Min. date"
                   allowclear/>
               </div>
@@ -92,7 +92,7 @@
                   id="report-filter-max-date"
                   v-model="maxDate"
                   type="text"
-                  class="form-control form-control-sm date-input"
+                  class="form-control date-input"
                   placeholder="Max. date"
                   allowclear/>
               </div>
