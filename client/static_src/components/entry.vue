@@ -65,23 +65,20 @@
             :icon="['fas', 'ellipsis-v']"/>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <a
+          <button
             v-if="this.$perms.change_entry"
             id="entry-menu-change"
             class="dropdown-item"
-            href="#"
-            @click.prevent="$emit('modal')">
+            @click.prevent.exact="$emit('modal')">
             Edit
-          </a>
-          <a
+          </button>
+          <button
             v-if="this.$perms.delete_entry"
             id="entry-menu-delete"
             class="dropdown-item"
-            href="#"
-            @click.prevent
-            @click="deleteEntry(entry)">
+            @click.prevent.exact="deleteEntry(entry)">
             Delete
-          </a>
+          </button>
         </div>
       </template>
     </div>

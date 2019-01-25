@@ -1,86 +1,78 @@
 <template>
-  <div class="bg-light py-2">
-    <form
-      id="tracker"
-      class="container"
-      @submit.prevent="submitEntry">
-      <div class="row">
-        <div class="col-sm-4">
-          <input
-            id="tracker-note"
-            v-model="note"
-            class="form-control form-control-sm w-100 shadow-sm"
-            placeholder="Note"
-            type="text">
-        </div>
-        <div
-          class="col-sm-2"
-          @keyup.enter.prevent>
-          <selector
-            id="tracker-project"
-            v-model="project"
-            :options="projects"
-            :selected="project"
-            :small="true"
-            placeholder="Project"
-            required/>
-        </div>
-        <div
-          class="col-sm-2"
-          @keyup.enter.prevent>
-          <selector
-            id="tracker-task"
-            v-model="task"
-            :options="tasks"
-            :selected="task"
-            placeholder="Task"
-            :small="true"
-            required/>
-        </div>
-        <div class="col-sm-2">
-          <input
-            id="tracker-duration"
-            v-model="duration"
-            class="form-control form-control-sm text-right font-weight-bold w-100 shadow-sm"
-            placeholder="0:00"
-            type="text"
-            required>
-        </div>
-        <div class="col-sm-2">
-          <button
-            v-if="!running && !duration"
-            class="btn btn-sm btn-success w-100"
-            @click.prevent
-            @click="toggle">
-            <icon
-              :icon="['fas', 'play']"
-              class="mr-1"/>
-            Start
-          </button>
-          <button
-            v-if="running"
-            class="btn btn-sm btn-danger w-100"
-            @click.prevent
-            @click="toggle">
-            <icon
-              :icon="['fas', 'stop']"
-              class="mr-1"/>
-            Stop ({{ seconds }})
-          </button>
-          <button
-            v-if="!running && duration"
-            id="tracker-submit"
-            class="btn btn-sm btn-info w-100"
-            type="submit">
-            <icon
-              :icon="['fas', 'plus']"
-              class="mr-1"/>
-            Add
-          </button>
-        </div>
+<div class="bg-light py-2">
+  <form
+    id="tracker"
+    class="container"
+    @submit.prevent="submitEntry">
+    <div class="row">
+      <div class="col-sm-4">
+        <input
+          id="tracker-note"
+          v-model="note"
+          class="form-control form-control-sm w-100 shadow-sm"
+          placeholder="Note"
+          type="text">
       </div>
-    </form>
-  </div>
+      <div
+        class="col-sm-2"
+        @keyup.enter.prevent>
+        <selector
+          id="tracker-project"
+          v-model="project"
+          :options="projects"
+          :selected="project"
+          :small="true"
+          placeholder="Project"
+          required/>
+      </div>
+      <div
+        class="col-sm-2"
+        @keyup.enter.prevent>
+        <selector
+          id="tracker-task"
+          v-model="task"
+          :options="tasks"
+          :selected="task"
+          placeholder="Task"
+          :small="true"
+          required/>
+      </div>
+      <div class="col-sm-2">
+        <input
+          id="tracker-duration"
+          v-model="duration"
+          class="form-control form-control-sm text-right font-weight-bold w-100 shadow-sm"
+          placeholder="0:00"
+          type="text"
+          required>
+      </div>
+      <div class="col-sm-2">
+        <button
+          v-if="!running && !duration"
+          class="btn btn-sm btn-success w-100"
+          @click.prevent.exact="toggle">
+          <icon :icon="['fas', 'play']" class="mr-1"/>
+          Start
+        </button>
+        <button
+          v-if="running"
+          class="btn btn-sm btn-danger w-100"
+          @click.prevent.exact="toggle">
+          <icon :icon="['fas', 'stop']" class="mr-1"/>
+          Stop ({{ seconds }})
+        </button>
+        <button
+          v-if="!running && duration"
+          id="tracker-submit"
+          class="btn btn-sm btn-info w-100"
+          type="submit">
+          <icon :icon="['fas', 'plus']" class="mr-1"/>
+          Add
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
 </template>
 
 
