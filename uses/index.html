@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Timestrap project.">
       
       
-        <link rel="canonical" href="https://docs.gettimestrap.com/permissions/">
+        <link rel="canonical" href="https://docs.gettimestrap.com/uses/">
       
       
         <meta name="author" content="Isaac Bythewood">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Permissions - Timestrap Docs</title>
+        <title>Uses - Timestrap Docs</title>
       
     
     
@@ -107,7 +107,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#user-permissions" tabindex="1" class="md-skip">
+      <a href="#uses" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -133,7 +133,7 @@
                 Timestrap Docs
               </span>
               <span class="md-header-nav__topic">
-                Permissions
+                Uses
               </span>
             
           
@@ -284,20 +284,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Permissions" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../permissions/" title="Permissions" class="md-nav__link">
       Permissions
     </a>
-    
   </li>
 
     
@@ -317,11 +308,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../uses/" title="Uses" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Uses" class="md-nav__link md-nav__link--active">
       Uses
     </a>
+    
   </li>
 
     
@@ -388,16 +388,24 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/overshard/timestrap/edit/master/docs/src/permissions.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/overshard/timestrap/edit/master/docs/src/uses.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="user-permissions">User Permissions<a class="headerlink" href="#user-permissions" title="Permanent link">&para;</a></h1>
-<p>You can edit and add new users on the admin panel at <code>/admin/auth/user/</code>. You
-will need to give new users permissions based on the access you wish them to
-have. If you wish someone be able to see all clients and projects to be able to
-add them to an entry, but not edit or delete them, you need to give them view
-permissions under User permissions. These would be
-<code>core | project | Can view project</code> and <code>core | client | Can view client</code>.</p>
+                <h1 id="uses">Uses<a class="headerlink" href="#uses" title="Permanent link">&para;</a></h1>
+<p>The primary use of Timestrap is for a small team to track their hours on a
+range of projects for multiple clients. This works well for small teams of
+freelancers and contract workers who have estimates for projects and want try
+and stay on track for meeting those estimates. Timestrap will allow everyone to
+track their hours along with providing feedback on how much time/money has been
+spent on a project thus far.</p>
+<p>Timestrap is also good at keeping it's users on track with their time spent on
+a daily basis with a personal overview timesheet showing hours spent in the
+past five days. If someone is aiming to hit 40 hours of time spent working a
+week they can, at a glance, see if they need to work more or are on track for
+their goal. This is very useful for individuals who have flexible work hours.</p>
+<p>While the primary use is professional time tracking, Timestrap can also be used
+for personal time tracking if you wish to see what you're spending most of your
+time on throughout the day.</p>
                 
                   
                 
@@ -418,7 +426,7 @@ permissions under User permissions. These would be
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../sites/" title="Sites" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -427,19 +435,19 @@ permissions under User permissions. These would be
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Configuration
+                Sites
               </span>
             </div>
           </a>
         
         
-          <a href="../sites/" title="Sites" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Sites
+                Docs
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
