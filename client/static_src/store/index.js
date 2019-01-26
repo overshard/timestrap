@@ -7,6 +7,7 @@ import clients from './modules/clients';
 import projects from './modules/projects';
 import users from './modules/users';
 import reports from './modules/reports';
+import permissions from './modules/permissions';
 
 
 // Setup Vuex plugin so we can add store to our Vue
@@ -55,5 +56,6 @@ export default new Vuex.Store({
     projects: projects,
     users: users,
     reports: reports,
+    permissions: permissions,
   },
 });

@@ -3,7 +3,6 @@ import './assets';
 import Vue from 'vue';
 
 import VueMoment from './plugins/moment';
-import VuePermissions from './plugins/permissions';
 import VueSocket from './plugins/socket';
 
 import App from './components/app.vue';
@@ -21,7 +20,6 @@ Vue.prototype.$bus = new Vue();
 // Plugins
 
 Vue.use(VueMoment);
-Vue.use(VuePermissions);
 Vue.use(VueSocket);
 
 
@@ -43,6 +41,7 @@ store.dispatch('clients/getClients');
 store.dispatch('clients/getProjects');
 store.dispatch('projects/getProjects');
 store.dispatch('entries/getEntries');
+store.dispatch('permissions/getPermissions');
 
 
 // Start vue app

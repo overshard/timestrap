@@ -132,7 +132,7 @@
   </div>
 
   <template v-if="entries.length">
-    <table v-if="this.$perms.view_entry" class="table table-striped table-responsive-md">
+    <table class="table table-striped table-responsive-md">
       <thead class="thead-dark">
         <tr>
           <th scope="col">
@@ -218,8 +218,6 @@ import Datepicker from '../datepicker.vue';
 import Popover from '../popover.vue';
 import Entry from '../entry.vue';
 import Selector from '../selector.vue';
-
-import fetch from '../../fetch';
 
 
 export default {

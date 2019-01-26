@@ -55,32 +55,28 @@
     <div
       v-if="editable"
       class="col-sm-2 d-flex align-self-center justify-content-end">
-      <template v-if="this.$perms.change_entry || this.$perms.delete_entry">
+      <button
+        id="entry-menu"
+        type="button"
+        data-toggle="dropdown"
+        class="btn btn-faded btn-sm btn-icon dropdown-toggle">
+        <icon
+          :icon="['fas', 'ellipsis-v']"/>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
         <button
-          id="entry-menu"
-          type="button"
-          data-toggle="dropdown"
-          class="btn btn-faded btn-sm btn-icon dropdown-toggle">
-          <icon
-            :icon="['fas', 'ellipsis-v']"/>
+          id="entry-menu-change"
+          class="dropdown-item"
+          @click.prevent.exact="$emit('modal')">
+          Edit
         </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <button
-            v-if="this.$perms.change_entry"
-            id="entry-menu-change"
-            class="dropdown-item"
-            @click.prevent.exact="$emit('modal')">
-            Edit
-          </button>
-          <button
-            v-if="this.$perms.delete_entry"
-            id="entry-menu-delete"
-            class="dropdown-item"
-            @click.prevent.exact="deleteEntry(entry)">
-            Delete
-          </button>
-        </div>
-      </template>
+        <button
+          id="entry-menu-delete"
+          class="dropdown-item"
+          @click.prevent.exact="deleteEntry(entry)">
+          Delete
+        </button>
+      </div>
     </div>
     <div
       v-else
