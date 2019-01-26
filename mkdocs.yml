@@ -18,6 +18,7 @@ nav:
   - Configuration: 'configuration.md'
   - Permissions: 'permissions.md'
   - Sites: 'sites.md'
+  - Uses: 'uses.md'
   - Docs: 'docs.md'
   - Contributing: 'contributing.md'
   - License: 'license.md'
