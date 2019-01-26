@@ -1,6 +1,9 @@
 <template>
 <card
   :index="index"
+  :delete_perm="$perms.delete_task"
+  :change_perm="$perms.change_task"
+  :add_perm="$perms.add_task"
   @modal="$emit('modal')"
   @delete="deleteTask(task)">
   <template slot="card-body">

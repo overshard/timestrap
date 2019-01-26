@@ -1,5 +1,7 @@
 <template>
-<div class="container">
+<div
+  v-if="$perms.view_entry"
+  class="container">
   <entry-modal
     v-if="modalShow"
     :entry="modalEntry"

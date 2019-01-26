@@ -17,7 +17,7 @@
   </div>
 
   <div class="row">
-    <template v-if="numberOfElements !== 0">
+    <template v-if="numberOfElements !== 0 && view_perm">
       <slot name="cards-list"/>
     </template>
     <template v-else>
@@ -47,6 +47,10 @@ export default {
     numberOfElements: {
       type: Number,
       default: 0,
+    },
+    view_perm: {
+      type: Object,
+      default: null,
     }
   },
 }

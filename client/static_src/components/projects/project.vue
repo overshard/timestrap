@@ -1,6 +1,9 @@
 <template>
 <card
   :index="index"
+  :delete_perm="$perms.delete_project"
+  :change_perm="$perms.change_project"
+  :add_perm="$perms.add_project"
   @modal="$emit('modal')"
   @delete="deleteProject(project)">
   <template slot="card-body">

@@ -4,7 +4,7 @@
   class="col-md-4 col-lg-3 mb-4"
   @dblclick="$emit('modal')">
   <div v-if="index !== null" class="card shadow-sm">
-    <div class="card-options">
+    <div v-if="delete_perm || change_perm" class="card-options">
       <button
         id="card-menu"
         class="btn btn-light btn-sm btn-icon shadow-sm dropdown-toggle text-muted"
@@ -16,12 +16,14 @@
         <button
           id="card-menu-change"
           class="dropdown-item"
+          v-if="change_perm"
           @click.exact="$emit('modal')">
           Edit
         </button>
         <button
           id="card-menu-delete"
           class="dropdown-item"
+          v-if="delete_perm"
           @click.exact="$emit('delete')">
           Delete
         </button>
@@ -32,7 +34,7 @@
       <slot name="card-body"/>
     </div>
   </div>
-  <div v-else class="card new" @click="$emit('modal')">
+  <div v-else-if="add_perm" class="card new" @click="$emit('modal')">
     <div class="card-body d-flex justify-content-center align-items-center">
       <div class="text-muted">
         <icon :icon="['fas', 'plus']" class="mr-1"/>
@@ -55,7 +57,19 @@ export default {
     index: {
       type: Number,
       default: null,
-    }
+    },
+    delete_perm: {
+      type: Object,
+      default: null,
+    },
+    change_perm: {
+      type: Object,
+      default: null,
+    },
+    add_perm: {
+      type: Object,
+      default: null,
+    },
   },
 };
 </script>

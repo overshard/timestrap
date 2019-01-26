@@ -1,5 +1,8 @@
 <template>
-<cards :number-of-elements="clients(search).length" @search="search = $event">
+<cards
+  :number-of-elements="clients(search).length"
+  :view_perm="$perms.view_client"
+  @search="search = $event">
   <template slot="cards-title">
     <icon :icon="['fas', 'address-book']" class="text-muted mr-2"/>
     Clients

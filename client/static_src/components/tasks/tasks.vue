@@ -1,11 +1,14 @@
 <template>
-<cards :number-of-elements="tasks(search).length" @search="search = $event">
+<cards
+  :number-of-elements="tasks(search).length"
+  :view_perm="$perms.view_task"
+  @search="search = $event">
   <template slot="cards-title">
     <icon :icon="['fas', 'tasks']" class="text-muted mr-2"/>
     Tasks
   </template>
 
-  <template slot="cards-list">
+  <template slot="cards-list" v-if="$perms.view_entry">
     <task
       v-for="(task, index) in tasks(search)"
       :key="task.id"
@@ -57,6 +60,6 @@ export default {
       else this.modalTask = null;
       this.modalShow = !this.modalShow;
     },
-  }
+  },
 };
 </script>

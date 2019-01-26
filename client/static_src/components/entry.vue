@@ -32,7 +32,9 @@
       {{ formatDateTime(entry.datetime_end) }}
     </div>
   </div>
-  <div class="col-sm-2 d-flex align-self-center justify-content-end">
+  <div
+    v-if="$perms.change_entry || $perms.delete_entry"
+    class="col-sm-2 d-flex align-self-center justify-content-end">
     <button
       id="entry-menu"
       type="button"
@@ -44,12 +46,14 @@
       <button
         id="entry-menu-change"
         class="dropdown-item"
+        v-if="$perms.change_entry"
         @click.prevent.exact="$emit('modal')">
         Edit
       </button>
       <button
         id="entry-menu-delete"
         class="dropdown-item"
+        v-if="$perms.delete_entry"
         @click.prevent.exact="deleteEntry(entry)">
         Delete
       </button>

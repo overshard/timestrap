@@ -31,7 +31,7 @@
           id="navbarCollapse"
           class="collapse navbar-collapse">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li v-if="$perms.view_entry" class="nav-item">
               <router-link
                 id="nav-timesheet"
                 :to="timesheet"
@@ -40,7 +40,7 @@
                 Timesheet
               </router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="$perms.view_project" class="nav-item">
               <router-link
                 id="nav-projects"
                 :to="projects"
@@ -49,7 +49,7 @@
                 Projects
               </router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="$perms.view_client" class="nav-item">
               <router-link
                 id="nav-clients"
                 :to="clients"
@@ -58,7 +58,7 @@
                 Clients
               </router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="$perms.view_task" class="nav-item">
               <router-link
                 id="nav-tasks"
                 :to="tasks"
@@ -67,14 +67,12 @@
                 Tasks
               </router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="$perms.view_entry" class="nav-item">
               <router-link
                 id="nav-reports"
                 :to="reports"
                 class="nav-link">
-                <icon
-                  :icon="['fas', 'book']"
-                  class="mr-1"/>
+                <icon :icon="['fas', 'book']" class="mr-1"/>
                 Reports
               </router-link>
             </li>
