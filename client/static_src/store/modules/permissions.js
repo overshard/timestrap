@@ -12,7 +12,7 @@ export default {
     setPermissions: (state, permissions) => state.all = permissions,
   },
   actions: {
-    getPermissions({commit}) {
+    fetchPermissions({commit}) {
       commit('addLoading', 'permissions', {root: true});
       fetch.get(timestrapConfig.API_URLS.PERMISSIONS).then(response => {
         commit('setPermissions', response.data);

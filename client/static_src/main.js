@@ -35,13 +35,12 @@ router.beforeEach((to, from, next) => {
 
 // Run all store getters to start
 
-store.dispatch('users/getUsers');
-store.dispatch('tasks/getTasks');
-store.dispatch('clients/getClients');
-store.dispatch('clients/getProjects');
-store.dispatch('projects/getProjects');
-store.dispatch('entries/getEntries');
-store.dispatch('permissions/getPermissions');
+store.dispatch('users/fetchUsers');
+store.dispatch('tasks/fetchTasks');
+store.dispatch('clients/fetchClients');
+store.dispatch('projects/fetchProjects');
+store.dispatch('entries/fetchEntries');
+store.dispatch('permissions/fetchPermissions');
 
 
 // Start vue app

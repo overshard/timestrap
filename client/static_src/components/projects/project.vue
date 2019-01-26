@@ -8,8 +8,8 @@
       <div class="card-title h5 font-weight-bold">
         {{ project.name }}
       </div>
-      <div v-if="project.client_details" class="card-subtitle h6 text-muted mb-4">
-        for <strong>{{ project.client_details.name }}</strong>
+      <div v-if="project.client" class="card-subtitle h6 text-muted mb-4">
+        for <strong>{{ getClient(project.client).name }}</strong>
       </div>
       <div v-if="project.total_duration && project.total_entries" class="card-subtitle h6 mb-5 flex-grow-1">
         <icon :icon="['fas', 'list']" class="mr-1 text-muted"/>
@@ -33,7 +33,7 @@
 
 
 <script>
-import {mapActions} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 import Card from '../cards/card.vue';
 
@@ -55,6 +55,11 @@ export default {
       type: Number,
       default: null,
     },
+  },
+  computed: {
+    ...mapGetters({
+      getClient: 'clients/getClient',
+    }),
   },
   methods: {
     ...mapActions({

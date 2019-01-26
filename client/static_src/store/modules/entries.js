@@ -54,7 +54,7 @@ export default {
     removeEntry: (state, index) => Vue.delete(state.all, index),
   },
   actions: {
-    getEntries({commit}) {
+    fetchEntries({commit}) {
       commit('addLoading', 'entries', {root: true});
       let getOptions = {
         params: {
@@ -72,7 +72,7 @@ export default {
     },
     createEntry({commit}, entry) {
       fetch.post(timestrapConfig.API_URLS.ENTRIES, entry).then(response => {
-        if (response.data.user_details.id == timestrapConfig.USER.ID) commit('addEntry', response.data);
+        commit('addEntry', response.data);
         Vue.prototype.$bus.$emit('toast', {
           title: 'New Entry Added',
           message: 'Your new entry has been successfully added.',

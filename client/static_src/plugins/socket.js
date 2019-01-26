@@ -24,15 +24,13 @@ export default {
     updateSocket.onmessage = e => {
       let updateData = JSON.parse(e.data);
       if (updateData.model == 'Task')
-        store.dispatch('tasks/getTasks');
+        store.dispatch('tasks/fetchTasks');
       if (updateData.model == 'Client')
-        store.dispatch('clients/getClients');
-      if (updateData.model == 'Project')
-        store.dispatch('clients/getProjects');
-      if (updateData.model == 'Project')
-        store.dispatch('projects/getProjects');
+        store.dispatch('clients/fetchClients');
       if (updateData.model == 'Client')
-        store.dispatch('projects/getProjects');
+        store.dispatch('projects/fetchProjects');
+      if (updateData.model == 'Project')
+        store.dispatch('projects/fetchProjects');
     };
   },
 };

@@ -169,10 +169,10 @@
         <tr
           v-for="entry in entries"
           :key="entry.id">
-          <td>{{ entry.project_details.client_details.name }}</td>
-          <td>{{ entry.project_details.name }}</td>
-          <td>{{ entry.task ? entry.task_details.name : '' }}</td>
-          <td>{{ entry.user_details.username }}</td>
+          <td>{{ entry.project ? getClient(getProject(entry.project).client).name : '' }}</td>
+          <td>{{ entry.project ? getProject(entry.project).name : '' }}</td>
+          <td>{{ entry.task ? getTask(entry.task).name : '' }}</td>
+          <td>{{ entry.user ? getUser(entry.user).username : '' }}</td>
           <td>{{ $moment(entry.date).format('LL') }}</td>
           <td class="text-right">{{ $moment.duration(entry.duration, 'hours').format('h[h] mm[m]') }}</td>
           <td class="entry__note">{{ entry.note }}</td>
@@ -301,9 +301,13 @@ export default {
     }),
     ...mapGetters({
       tasks: 'tasks/getSelectTasks',
-      projects: 'clients/getSelectProjects',
+      projects: 'projects/getSelectProjects',
       clients: 'clients/getSelectClients',
       users: 'users/getSelectUsers',
+      getTask: 'tasks/getTask',
+      getProject: 'projects/getProject',
+      getClient: 'clients/getClient',
+      getUser: 'users/getUser',
     }),
   },
   mounted() {

@@ -22,6 +22,13 @@ export default {
         return task.name.toLowerCase().includes(search);
       });
     },
+    getTask: state => url => {
+      const task = state.all.find(task => {
+        return task.url == url;
+      });
+      if (typeof(task) === 'undefined') return {};
+      else return task;
+    },
   },
   mutations: {
     setTasks: (state, tasks) => state.all = tasks,
@@ -30,7 +37,7 @@ export default {
     removeTask: (state, index) => Vue.delete(state.all, index),
   },
   actions: {
-    getTasks({commit}) {
+    fetchTasks({commit}) {
       commit('addLoading', 'tasks', {root: true});
       fetch.get(timestrapConfig.API_URLS.TASKS).then(response => {
         commit('setTasks', response.data);

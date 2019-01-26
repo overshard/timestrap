@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     ...mapActions('entries', [
-      'getEntries',
+      'fetchEntries',
     ]),
     modalToggle: function(entry) {
       if (typeof(entry) !== 'undefined') this.modalEntry = entry;

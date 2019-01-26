@@ -1,103 +1,66 @@
 <template>
-  <div
-    :id="'entry-' + entry.id"
-    class="entry row py-2 bg-light small">
-    <div class="col-sm-3 client-project">
-      <div class="small">
-        <icon
-          :icon="['fas', 'address-book']"
-          class="mr-2 text-muted"/>
-        {{ entry.project_details.client_details.name }}
-      </div>
-      <icon
-        :icon="['fas', 'briefcase']"
-        class="mr-1 text-muted"/>
-      {{ entry.project_details.name }}
+<div :id="'entry-' + entry.id" class="entry row py-2 bg-light small">
+  <div v-if="entry.project" class="col-sm-3 client-project">
+    <div class="small">
+      <icon :icon="['fas', 'address-book']" class="mr-2 text-muted"/>
+      {{ getClient(getProject(entry.project).client).name }}
     </div>
-    <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-5']">
-      <div
-        v-if="entry.task"
-        class="small">
-        <icon
-          :icon="['fas', 'tasks']"
-          class="mr-2 text-muted"/>
-        {{ entry.task_details.name }}
-      </div>
-      <div
-        v-if="entry.note"
-        class="entry-note">
-        <icon
-          :icon="['fas', 'comment']"
-          class="mr-1 text-muted"/>
-        {{ entry.note }}
-      </div>
+    <icon :icon="['fas', 'briefcase']" class="mr-1 text-muted"/>
+    {{ getProject(entry.project).name }}
+  </div>
+  <div :class="['d-flex', 'flex-column', 'align-self-end', 'tasks', 'col-sm-5']">
+    <div v-if="entry.task" class="small">
+      <icon :icon="['fas', 'tasks']" class="mr-2 text-muted"/>
+      {{ getTask(entry.task).name }}
     </div>
-    <div class="col-sm-2 align-items-center display-4 duration">
-      <icon
-        :icon="['fas', 'clock']"
-        class="mr-2 text-muted small mb-1"/>
-      {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
-    </div>
-    <div class="col-sm-2 align-self-center datetimes flex-column">
-      <div class="datetime-start small">
-        <icon
-          :icon="['fas', 'hourglass-start']"
-          class="mr-1 text-muted"/>
-        {{ formatDateTime(entry.datetime_start) }}
-      </div>
-      <div class="datetime-end small">
-        <icon
-          :icon="['fas', 'hourglass-end']"
-          class="mr-1 text-muted"/>
-        {{ formatDateTime(entry.datetime_end) }}
-      </div>
-    </div>
-    <div
-      v-if="editable"
-      class="col-sm-2 d-flex align-self-center justify-content-end">
-      <button
-        id="entry-menu"
-        type="button"
-        data-toggle="dropdown"
-        class="btn btn-faded btn-sm btn-icon dropdown-toggle">
-        <icon
-          :icon="['fas', 'ellipsis-v']"/>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">
-        <button
-          id="entry-menu-change"
-          class="dropdown-item"
-          @click.prevent.exact="$emit('modal')">
-          Edit
-        </button>
-        <button
-          id="entry-menu-delete"
-          class="dropdown-item"
-          @click.prevent.exact="deleteEntry(entry)">
-          Delete
-        </button>
-      </div>
-    </div>
-    <div
-      v-else
-      class="col-sm-2">
-      <div class="small">
-        <icon
-          :icon="['fas', 'user-circle']"
-          class="mr-2 text-muted"/>
-        {{ entry.user_details.username }}
-      </div>
-      <icon
-        :icon="['fas', 'calendar']"
-        class="mr-1 text-muted"/>
-      {{ $moment(entry.date).format('LL') }}
+    <div v-if="entry.note" class="entry-note">
+      <icon :icon="['fas', 'comment']" class="mr-1 text-muted"/>
+      {{ entry.note }}
     </div>
   </div>
+  <div class="col-sm-2 align-items-center display-4 duration">
+    <icon :icon="['fas', 'clock']" class="mr-2 text-muted small mb-1"/>
+    {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
+  </div>
+  <div class="col-sm-2 align-self-center datetimes flex-column">
+    <div class="datetime-start small">
+      <icon :icon="['fas', 'hourglass-start']" class="mr-1 text-muted"/>
+      {{ formatDateTime(entry.datetime_start) }}
+    </div>
+    <div class="datetime-end small">
+      <icon :icon="['fas', 'hourglass-end']" class="mr-1 text-muted"/>
+      {{ formatDateTime(entry.datetime_end) }}
+    </div>
+  </div>
+  <div class="col-sm-2 d-flex align-self-center justify-content-end">
+    <button
+      id="entry-menu"
+      type="button"
+      data-toggle="dropdown"
+      class="btn btn-faded btn-sm btn-icon dropdown-toggle">
+      <icon :icon="['fas', 'ellipsis-v']"/>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <button
+        id="entry-menu-change"
+        class="dropdown-item"
+        @click.prevent.exact="$emit('modal')">
+        Edit
+      </button>
+      <button
+        id="entry-menu-delete"
+        class="dropdown-item"
+        @click.prevent.exact="deleteEntry(entry)">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
 </template>
 
 
 <script>
-import {mapActions} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 
 export default {
@@ -106,6 +69,13 @@ export default {
     'index',
     'editable',
   ],
+  computed: {
+    ...mapGetters({
+      getProject: 'projects/getProject',
+      getClient: 'clients/getClient',
+      getTask: 'tasks/getTask',
+    }),
+  },
   methods: {
     ...mapActions({
       deleteEntry: 'entries/deleteEntry',

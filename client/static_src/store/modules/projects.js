@@ -17,10 +17,17 @@ export default {
         return {id: project.url, text: project.name};
       });
     },
-    getSearchProjects: state => search => {
+    getSearchProjects: (state, getters, rootState, rootGetters) => search => {
       return state.all.filter(project => {
-        return project.name.toLowerCase().includes(search) || project.client_details.name.toLowerCase().includes(search);
+        return project.name.toLowerCase().includes(search) || rootGetters['clients/getClient'](project.client).name.toLowerCase().includes(search);
       });
+    },
+    getProject: state => url => {
+      const project = state.all.find(project => {
+        return project.url == url;
+      });
+      if (typeof(project) === 'undefined') return {};
+      else return project;
     },
   },
   mutations: {
@@ -30,7 +37,7 @@ export default {
     removeProject: (state, index) => Vue.delete(state.all, index),
   },
   actions: {
-    getProjects({commit}) {
+    fetchProjects({commit}) {
       commit('addLoading', 'projects', {root: true});
       fetch.get(timestrapConfig.API_URLS.PROJECTS).then(response => {
         commit('setProjects', response.data);
