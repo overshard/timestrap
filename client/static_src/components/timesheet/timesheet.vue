@@ -1,7 +1,7 @@
 <template>
 <div
   v-if="$perms.view_entry"
-  class="container">
+  class="container-fluid">
   <entry-modal
     v-if="modalShow"
     :entry="modalEntry"
@@ -13,23 +13,20 @@
     <div
       v-for="(entryBlock, blockIndex) in entries"
       :index="blockIndex"
-      :key="entryBlock.id"
-      class="mb-4">
+      :key="entryBlock.id">
       <div class="row inset-row">
         <div class="col-6">
-          <h2 class="display-4 text-muted">
+          <h2 class="display-4">
             {{ $moment(entryBlock.date).format('ddd[,] MMMM Do') }}
           </h2>
         </div>
-        <div class="col-6">
-          <h5 class="float-right">
-            <span class="badge badge-success">
-              {{ $moment.duration(entryBlock.duration, 'hours').format('h[h] m[m]') }}
-            </span>
-          </h5>
+        <div class="col-6 d-flex align-items-center justify-content-end h4 mb-0">
+          <span class="badge badge-success mb-0">
+            {{ $moment.duration(entryBlock.duration, 'hours').format('h[h] m[m]') }}
+          </span>
         </div>
       </div>
-      <div class="rounded">
+      <div>
         <template v-if="entryBlock.entries.length > 0">
           <entry
             v-for="(entry, entryIndex) in entryBlock.entries"
@@ -50,7 +47,7 @@
       </div>
     </div>
 
-    <div class="row bg-success text-white py-2 mb-4 rounded">
+    <div class="row bg-success text-white py-2">
       <div class="ml-auto col-sm-2 text-right">
         Subtotal<br>
         <strong>Total</strong>

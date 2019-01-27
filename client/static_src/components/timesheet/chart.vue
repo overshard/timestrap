@@ -1,5 +1,5 @@
 <template>
-  <div class="row chartjs-wrapper bg-secondary rounded my-4 pt-4 pb-2">
+  <div class="row chartjs-wrapper bg-secondary pt-4 pb-2">
     <canvas
       id="chartjs-1"
       class="chartjs"/>

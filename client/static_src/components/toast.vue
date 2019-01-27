@@ -42,7 +42,7 @@ export default {
 <style lang="scss">
 .toast {
   position: absolute;
-  top: 25px;
+  top: 100px;
   right: 25px;
   z-index: 100;
 }

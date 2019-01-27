@@ -98,18 +98,11 @@ export default {
   .row:not(.inset-row) {
     border-top: 1px solid #eceeef;
 
-    &:first-child {
-      border-top-right-radius: .25rem;
-      border-top-left-radius: .25rem;
-    }
-
     &:nth-of-type(2n+1) {
       background-color: #fbf3e5 !important;
     }
 
     &:last-child {
-      border-bottom-right-radius: .25rem;
-      border-bottom-left-radius: .25rem;
       border-bottom: 1px solid #eceeef;
     }
 
@@ -178,10 +171,11 @@ export default {
   }
 
   .inset-row {
-    margin-bottom: -.75rem;
+    padding: .5rem 0;
 
     .display-4 {
       font-size: 2rem;
+      margin-bottom: 0;
     }
   }
 }
