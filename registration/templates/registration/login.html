@@ -30,36 +30,30 @@
     </div>
   {% endif %}
 
-  <form
-    class="login-form"
-    method="post"
-    action="{% url 'login' %}">
+  <form class="login-form" method="post" action="{% url 'login' %}">
     {% csrf_token %}
 
-    <input
-      type="hidden"
-      name="next"
-      value="{{ next }}">
+    <input type="hidden" name="next" value="{{ next }}">
 
     <div class="form-group mb-3 fade-in">
       <label for="input-username">
         {{ form.username.label }}
       </label>
-      {% render_field form.username id="input-username" name="username" class+="form-control" placeholder=form.username.label %}
+      {% render_field form.username id="input-username" name="username" class+="form-control shadow-sm" placeholder=form.username.label %}
     </div>
 
     <div class="form-group mb-3 fade-in">
       <label for="input-password">
         {{ form.password.label }}
       </label>
-      {% render_field form.password id="input-password" name="password" class+="form-control" placeholder=form.password.label %}
+      {% render_field form.password id="input-password" name="password" class+="form-control shadow-sm" placeholder=form.password.label %}
     </div>
 
     <button
       id="button-submit"
       name="login"
       type="submit"
-      class="btn btn-primary w-100 mt-3 fade-in">
+      class="btn btn-dark shadow-sm w-100 mt-3 fade-in">
       Login
     </button>
   </form>

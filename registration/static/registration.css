@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/imgs/background.jpg');
+  background-size: cover;
+  background-position: center center;
 }
 
 .registration-wrapper {
@@ -36,4 +39,8 @@ label {
 
 .fade-in {
   animation: fade-in .3s ease-in-out;
+}
+
+.display-shadow {
+  text-shadow: 1px 1px 0 #000;
 }
