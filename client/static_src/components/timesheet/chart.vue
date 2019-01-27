@@ -107,8 +107,11 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .chartjs-wrapper {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/imgs/background.jpg');
+  background-size: cover;
+  background-position: center center;
   height: 250px;
 }
 </style>

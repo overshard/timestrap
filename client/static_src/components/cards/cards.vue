@@ -1,18 +1,21 @@
 <template>
-<div class="container my-4">
-  <div class="row mb-4">
+<div class="container-fluid">
+  <div class="row row-background">
     <div class="col-md-7">
-      <h1 class="mb-0 font-weight-bold">
+      <h1 class="cards-title">
         <slot name="cards-title"/>
       </h1>
     </div>
-    <div class="col-md-5 d-flex flex-column align-items-end justify-content-center">
-      <input
-        id="task-search"
-        v-on:input="$emit('search', $event.target.value)"
-        placeholder="Type to filter..."
-        class="form-control shadow-sm"
-        type="text">
+    <div class="col-md-5 d-flex align-items-end justify-content-end">
+      <div class="form-control shadow-sm d-flex align-items-center">
+        <icon :icon="['fas', 'search']" class="fa-sm mr-2"/>
+        <input
+          id="task-search"
+          class="form-control-plaintext py-0 flex-grow-1"
+          v-on:input="$emit('search', $event.target.value)"
+          placeholder="Search"
+          type="text"/>
+      </div>
     </div>
   </div>
 
@@ -34,6 +37,7 @@
         </div>
       </div>
     </template>
+    <slot name="cards-new"/>
   </div>
 
   <slot name="cards-modal"/>
@@ -55,3 +59,38 @@ export default {
   },
 }
 </script>
+
+
+<style lang="scss" scoped>
+.row-background {
+  background-image: url('/static/imgs/background.jpg');
+  background-size: cover;
+  background-position: center center;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 15px;
+}
+
+.cards-title {
+  margin-bottom: 0;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  font-weight: bold;
+
+  .fa-sm {
+    filter: drop-shadow(1px 1px 0 #000);
+  }
+}
+
+.form-control {
+  border: none;
+  opacity: .75;
+  width: 200px;
+  transition: opacity 300ms, width 300ms;
+
+  &:focus-within {
+    opacity: 1;
+    width: 100%;
+  }
+}
+</style>

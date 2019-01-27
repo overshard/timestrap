@@ -4,7 +4,7 @@
   :view_perm="$perms.view_client"
   @search="search = $event">
   <template slot="cards-title">
-    <icon :icon="['fas', 'address-book']" class="text-muted mr-2"/>
+    <icon :icon="['fas', 'address-book']" class="fa-sm mr-2"/>
     Clients
   </template>
 
@@ -15,8 +15,10 @@
       :client="client"
       :index="index"
       @modal="modalToggle(client)"/>
-    <client
-      @modal="modalToggle()"/>
+  </template>
+
+  <template slot="cards-new">
+    <client @modal="modalToggle()"/>
   </template>
 
   <client-modal

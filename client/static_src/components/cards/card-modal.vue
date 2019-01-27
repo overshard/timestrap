@@ -44,7 +44,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .modal-body {
   padding: 4rem;
 }

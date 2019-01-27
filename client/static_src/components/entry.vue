@@ -171,10 +171,11 @@ export default {
   }
 
   .inset-row {
-    padding: .5rem 0;
+    padding: 1rem 0;
 
     .display-4 {
-      font-size: 2rem;
+      font-size: 1.5rem;
+      font-weight: bold;
       margin-bottom: 0;
     }
   }

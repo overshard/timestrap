@@ -4,19 +4,21 @@
   :view_perm="$perms.view_task"
   @search="search = $event">
   <template slot="cards-title">
-    <icon :icon="['fas', 'tasks']" class="text-muted mr-2"/>
+    <icon :icon="['fas', 'tasks']" class="fa-sm mr-2"/>
     Tasks
   </template>
 
-  <template slot="cards-list" v-if="$perms.view_entry">
+  <template slot="cards-list">
     <task
       v-for="(task, index) in tasks(search)"
       :key="task.id"
       :task="task"
       :index="index"
       @modal="modalToggle(task)"/>
-    <task
-      @modal="modalToggle()"/>
+  </template>
+
+  <template slot="cards-new">
+    <task @modal="modalToggle()"/>
   </template>
 
   <task-modal

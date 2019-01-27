@@ -4,7 +4,7 @@
   :view_perm="$perms.view_project"
   @search="search = $event">
   <template slot="cards-title">
-    <icon :icon="['fas', 'briefcase']" class="text-muted mr-2"/>
+    <icon :icon="['fas', 'briefcase']" class="fa-sm mr-2"/>
     Projects
   </template>
 
@@ -15,8 +15,10 @@
       :project="project"
       :index="index"
       @modal="modalToggle(project)"/>
-    <project
-      @modal="modalToggle()"/>
+  </template>
+
+  <template slot="cards-new">
+    <project @modal="modalToggle()"/>
   </template>
 
   <project-modal

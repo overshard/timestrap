@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div class="row bg-success text-white py-2">
+    <div class="row bg-success text-white py-2 border-0">
       <div class="ml-auto col-sm-2 text-right">
         Subtotal<br>
         <strong>Total</strong>

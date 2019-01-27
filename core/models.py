@@ -100,7 +100,7 @@ class Entry(models.Model):
     project = models.ForeignKey('Project', related_name='entries',
                                 on_delete=models.CASCADE)
     task = models.ForeignKey('core.Task', related_name='entries',
-                             blank=True, null=True, on_delete=models.CASCADE)
+                             blank=True, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey('auth.User', related_name='entries',
                              on_delete=models.CASCADE)
     date = models.DateField(blank=True)

@@ -1,10 +1,7 @@
 <template>
 <div id="app">
   <transition name="fade">
-    <div
-      v-if="!doneLoading"
-      id="loading"
-      class="progress bg-dark">
+    <div v-if="!doneLoading" id="loading" class="progress">
       <div
         :style="'width:' + loadingPercent + '%;'"
         class="progress-bar bg-primary"/>
@@ -12,15 +9,6 @@
   </transition>
 
   <toast></toast>
-
-  <div class="navbar-mobile">
-    <div class="navbar-mobile-title">
-      {{ $route.meta.title }}
-    </div>
-    <div class="navbar-mobile-toggle" data-toggle="collapse" data-target=".navbar">
-      <icon :icon="['fas', 'bars']" class="mr-1"/>
-    </div>
-  </div>
 
   <div class="navbar navbar-dark bg-dark">
     <router-link :to="timesheet" class="navbar-brand">
@@ -32,7 +20,7 @@
           id="nav-timesheet"
           :to="timesheet"
           class="nav-link">
-          <icon :icon="['fas', 'clock']" class="mr-1"/>
+          <icon :icon="['fas', 'clock']" class="fa-fw mr-1"/>
           Timesheet
         </router-link>
       </li>
@@ -41,7 +29,7 @@
           id="nav-projects"
           :to="projects"
           class="nav-link">
-          <icon :icon="['fas', 'briefcase']" class="mr-1"/>
+          <icon :icon="['fas', 'briefcase']" class="fa-fw mr-1"/>
           Projects
         </router-link>
       </li>
@@ -50,7 +38,7 @@
           id="nav-clients"
           :to="clients"
           class="nav-link">
-          <icon :icon="['fas', 'address-book']" class="mr-1"/>
+          <icon :icon="['fas', 'address-book']" class="fa-fw mr-1"/>
           Clients
         </router-link>
       </li>
@@ -59,7 +47,7 @@
           id="nav-tasks"
           :to="tasks"
           class="nav-link">
-          <icon :icon="['fas', 'tasks']" class="mr-1"/>
+          <icon :icon="['fas', 'tasks']" class="fa-fw mr-1"/>
           Tasks
         </router-link>
       </li>
@@ -68,44 +56,41 @@
           id="nav-reports"
           :to="reports"
           class="nav-link">
-          <icon :icon="['fas', 'book']" class="mr-1"/>
+          <icon :icon="['fas', 'book']" class="fa-fw mr-1"/>
           Reports
         </router-link>
       </li>
     </ul>
     <ul class="navbar-nav">
-      <li class="nav-item dropup">
+      <li class="nav-item">
         <a
-          id="nav-user"
-          href="#"
-          class="nav-link dropdown-toggle"
-          data-toggle="dropdown">
-          <icon :icon="['fas', 'user-circle']" class="mr-1"/>
-          {{ username }}
+          v-if="isStaff"
+          id="nav-user-admin"
+          class="nav-link"
+          :href="admin"
+          target="_blank">
+          <icon :icon="['fas', 'tools']" class="fa-fw mr-1"/>
+          Admin
         </a>
-        <div class="dropdown-menu">
-          <a
-            id="nav-user-api"
-            :href="api"
-            class="dropdown-item"
-            target="_blank">
-            API Browser
-          </a>
-          <a
-            v-if="isStaff"
-            id="nav-user-admin"
-            :href="admin"
-            class="dropdown-item"
-            target="_blank">
-            Admin
-          </a>
-          <a
-            id="nav-user-logout"
-            :href="logout"
-            class="dropdown-item">
-            Logout
-          </a>
-        </div>
+      </li>
+      <li class="nav-item">
+        <a
+          id="nav-user-api"
+          class="nav-link"
+          :href="api"
+          target="_blank">
+          <icon :icon="['fas', 'tape']" class="fa-fw mr-1"/>
+          API Browser
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          id="nav-user-logout"
+          class="nav-link"
+          :href="logout">
+          <icon :icon="['fas', 'sign-out-alt']" class="fa-fw mr-1"/>
+          Logout
+        </a>
       </li>
     </ul>
   </div>
@@ -174,15 +159,11 @@ body {
 }
 
 .bg-dark {
-  background-color: rgb(19, 15, 11) !important;
+  background-color: rgb(27, 22, 16) !important;
 }
 
 .bg-light {
-  background-color: rgb(252, 248, 243) !important;
-}
-
-.text-muted {
-  color: #99a4ae !important
+  background-color: rgb(247, 246, 243) !important;
 }
 
 // Loading styles
@@ -205,12 +186,9 @@ body {
   opacity: 0;
 }
 
-// Make current active nav item more visible
-.navbar-dark .navbar-nav .active > .nav-link,
-.navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .show > .nav-link {
-  font-weight: bold;
+// Fix chrome focus highlight
+input:focus {
+  outline: none !important;
 }
 
 // Github icon
@@ -222,10 +200,8 @@ body {
 }
 
 // Remove arrow on the ellipsis icons on rows
-.btn-icon {
-  &::after {
-    display: none;
-  }
+.btn-icon:after {
+  display: none;
 }
 
 .navbar {
@@ -234,83 +210,38 @@ body {
   width: 200px;
   top: 0;
   bottom: 0;
-  padding: 1rem;
   padding: 0;
+  padding-bottom: .25rem;
   flex-direction: column;
-}
 
-.navbar-brand {
-  padding: 1rem 0;
-  display: block;
-  font-weight: bold;
-  margin-right: 0;
-  width: 200px;
-  text-align: center;
-}
+  .navbar-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 0;
+    width: 200px;
+    height: 54px;
+  }
 
-.navbar-nav {
-  flex-direction: column !important;
-}
+  .navbar-nav {
+    flex-direction: column !important;
+  }
 
-.nav-link {
-  width: 200px;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-}
+  .nav-link,
+  .navbar-text {
+    width: 200px;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 
-.nav-link.active {
-  background: #222;
-}
-
-.navbar .dropdown-menu {
-  width: 200px;
-  border-radius: 0;
-  border: 0;
-  margin: 0;
+  .nav-link.active {
+    background: #222;
+  }
 }
 
 .page {
   width: calc(100% - 200px);
   margin-left: 200px;
-}
-
-.navbar-mobile {
-  display: none;
-}
-
-.navbar-mobile-toggle {
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    display: none;
-    z-index: 3;
-  }
-
-  .navbar.show {
-    display: block;
-  }
-
-  .navbar-mobile {
-    display: flex;
-    background-color: black !important;
-    color: white;
-    padding: .5rem 1rem;
-    font-size: 2rem;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .navbar-mobile-title {
-    font-size: 1.5rem;
-    flex-grow: 1;
-    text-align: center;
-  }
-
-  .page {
-    width: 100%;
-    margin-left: 0;
-  }
 }
 </style>
