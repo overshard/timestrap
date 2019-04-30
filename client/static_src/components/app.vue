@@ -216,8 +216,9 @@ input:focus {
 
   .navbar-brand {
     display: flex;
-    justify-content: center;
     align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
     font-weight: bold;
     margin-right: 0;
     width: 200px;
