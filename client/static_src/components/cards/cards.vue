@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row p-3">
     <template v-if="numberOfElements !== 0 && view_perm">
       <slot name="cards-list"/>
     </template>
