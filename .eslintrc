@@ -2,9 +2,7 @@
   "rules": {
     "linebreak-style": ["error", "unix"],
     "indent": ["error", 2],
-    "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "no-console": "off",
     "comma-dangle": ["error", "always-multiline"],
     "array-bracket-spacing": ["error", "never"],
     "object-curly-spacing": ["error", "never"],
@@ -23,13 +21,8 @@
     "__dirname": true
   },
   "parser": "vue-eslint-parser",
-  "extends": [
-    "plugin:vue/recommended",
-    "eslint:recommended"
-  ],
-  "plugins": [
-    "vue"
-  ],
+  "extends": ["plugin:vue/recommended", "eslint:recommended"],
+  "plugins": ["vue"],
   "parserOptions": {
     "parser": "babel-eslint",
     "ecmaVersion": 6,

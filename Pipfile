@@ -1,9 +1,7 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+name = "pypi"
+url = "https://pypi.org/simple"
 verify_ssl = true
-
-[requires]
-python_version = "3.6"
 
 [dev-packages]
 "flake8" = "*"
@@ -12,6 +10,7 @@ selenium = "*"
 tblib = "*"
 mkdocs = "*"
 mkdocs-material = "*"
+black = "*"
 
 [packages]
 django = "*"
@@ -27,3 +26,9 @@ ipaddress = "*"
 channels = "*"
 asgiref = "*"
 channels-redis = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

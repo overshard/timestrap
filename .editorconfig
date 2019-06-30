@@ -1,14 +1,13 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
 root = true
 
 [*]
 end_of_line = lf
 insert_final_newline = true
+ident_style = space
 charset = utf-8
+indent_size = 2
 
 [*.py]
-indent_style = space
 indent_size = 4
-
-[*.{js,vue,html,scss,json}]
-indent_style = space
-indent_size = 2
