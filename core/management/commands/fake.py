@@ -11,30 +11,30 @@ from core.models import Client, Entry, Project, Task
 
 
 class Command(BaseCommand):
-    help = 'Generates a bunch of fake clients, projects, and entries'
+    help = "Generates a bunch of fake clients, projects, and entries"
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--iterations',
-            dest='iterations',
+            "--iterations",
+            dest="iterations",
             default=5,
-            help='The amount of data we add do the database'
+            help="The amount of data we add do the database",
         )
 
     def handle(self, *args, **kwargs):
         fake = Factory.create()
-        verbosity = kwargs['verbosity']
-        iterations = kwargs['iterations']
+        verbosity = kwargs["verbosity"]
+        iterations = kwargs["iterations"]
 
         for _ in range(iterations):
-            task_name = (fake
-                         .sentence(nb_words=3, variable_nb_words=True)
-                         .replace('.', '')
-                         .title())
+            task_name = (
+                fake.sentence(nb_words=3, variable_nb_words=True)
+                .replace(".", "")
+                .title()
+            )
             Task.objects.create(
                 name=task_name,
-                hourly_rate=Decimal(
-                    '%d.%d' % (randint(1, 200), randint(1, 99)))
+                hourly_rate=Decimal("%d.%d" % (randint(1, 200), randint(1, 99))),
             )
 
         for _ in range(iterations):
@@ -46,26 +46,25 @@ class Command(BaseCommand):
                 estimate = None
                 if estimated:
                     estimate = randint(1000, 20000)
-                project_name = (fake
-                                .sentence(nb_words=3, variable_nb_words=True)
-                                .replace('.', '')
-                                .title())
+                project_name = (
+                    fake.sentence(nb_words=3, variable_nb_words=True)
+                    .replace(".", "")
+                    .title()
+                )
                 Project.objects.create(
-                    client=client,
-                    estimate=estimate,
-                    name=project_name
+                    client=client, estimate=estimate, name=project_name
                 )
 
         for _ in range(iterations):
             fake_user = fake.simple_profile(sex=None)
-            username = fake_user['username']
-            email = fake_user['mail']
+            username = fake_user["username"]
+            email = fake_user["mail"]
             password = fake.password(
                 length=10,
                 special_chars=True,
                 digits=True,
                 upper_case=True,
-                lower_case=True
+                lower_case=True,
             )
             User.objects.create_user(username, email, password)
 
@@ -84,10 +83,8 @@ class Command(BaseCommand):
                         user=user,
                         date=date,
                         duration=duration,
-                        note=fake.sentence(nb_words=6, variable_nb_words=True)
+                        note=fake.sentence(nb_words=6, variable_nb_words=True),
                     )
 
         if verbosity > 0:
-            self.stdout.write(
-                self.style.SUCCESS('Successfully added fake data.')
-            )
+            self.stdout.write(self.style.SUCCESS("Successfully added fake data."))

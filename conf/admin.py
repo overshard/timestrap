@@ -11,20 +11,25 @@ class ConfInline(admin.StackedInline):
     model = Conf
     can_delete = False
     fieldsets = (
-        ('Internationalization', {
-            'fields': ('i18n_language_code', 'i18n_timezone',)
-        }),
-        ('Email Settings', {
-            'fields': ('smtp_from_address', 'smtp_host', 'smtp_user',
-                       'smtp_password', 'smtp_port', 'smtp_tls',)
-        }),
+        ("Internationalization", {"fields": ("i18n_language_code", "i18n_timezone")}),
+        (
+            "Email Settings",
+            {
+                "fields": (
+                    "smtp_from_address",
+                    "smtp_host",
+                    "smtp_user",
+                    "smtp_password",
+                    "smtp_port",
+                    "smtp_tls",
+                )
+            },
+        ),
     )
 
 
 class SiteAdmin(BaseSiteAdmin):
-    inlines = [
-        ConfInline,
-    ]
+    inlines = [ConfInline]
 
 
 admin.site.unregister(Site)
@@ -38,10 +43,8 @@ class SitePermissionInline(admin.StackedInline):
 
 
 class SitePermissionUserAdmin(UserAdmin):
-    UserAdmin.list_filter += ('sitepermission__sites',)
-    inlines = [
-        SitePermissionInline,
-    ]
+    UserAdmin.list_filter += ("sitepermission__sites",)
+    inlines = [SitePermissionInline]
 
 
 admin.site.unregister(User)

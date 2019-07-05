@@ -12,13 +12,14 @@ def current_request():
     """
     Provides access to the current request at deeper project levels.
     """
-    return getattr(_thread_local, 'request', None)
+    return getattr(_thread_local, "request", None)
 
 
 class SiteMiddleware(object):
     """
     Determines the current Site based on the domain in use.
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 

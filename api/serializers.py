@@ -11,7 +11,7 @@ from core.models import Task
 class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Permission
-        fields = ('id', 'url', 'name', 'codename',)
+        fields = ("id", "url", "name", "codename")
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,8 +19,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'is_active', 'is_staff',
-                  'is_superuser', 'perms', 'groups')
+        fields = (
+            "id",
+            "url",
+            "username",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "perms",
+            "groups",
+        )
 
     def get_perms(self, obj):
         perms = {}
@@ -29,7 +37,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             queryset = Permission.objects.filter(user=obj)
         for perm in queryset.values():
-            perms[perm['codename']] = perm
+            perms[perm["codename"]] = perm
         return perms
 
 
@@ -39,8 +47,15 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Client
-        fields = ('id', 'url', 'name', 'payment_id', 'archive',
-                  'total_projects', 'total_duration',)
+        fields = (
+            "id",
+            "url",
+            "name",
+            "payment_id",
+            "archive",
+            "total_projects",
+            "total_duration",
+        )
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -60,8 +75,17 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'url', 'client', 'name', 'archive', 'estimate',
-                  'total_entries', 'total_duration', 'percent_done',)
+        fields = (
+            "id",
+            "url",
+            "client",
+            "name",
+            "archive",
+            "estimate",
+            "total_entries",
+            "total_duration",
+            "percent_done",
+        )
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -80,7 +104,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
-        fields = ('id', 'url', 'name', 'hourly_rate',)
+        fields = ("id", "url", "name", "hourly_rate")
 
 
 class EntrySerializer(serializers.HyperlinkedModelSerializer):
@@ -88,5 +112,15 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Entry
-        fields = ('id', 'url', 'project', 'task', 'user', 'date', 'duration',
-                  'datetime_start', 'datetime_end', 'note',)
+        fields = (
+            "id",
+            "url",
+            "project",
+            "task",
+            "user",
+            "date",
+            "duration",
+            "datetime_start",
+            "datetime_end",
+            "note",
+        )

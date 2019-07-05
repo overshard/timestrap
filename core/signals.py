@@ -17,7 +17,7 @@ def add_current_site(sender, instance, **kwargs):
 
     TODO: Don't run this on *every* post_save.
     """
-    if hasattr(instance, 'sites'):
+    if hasattr(instance, "sites"):
         if not instance.sites.all():
             instance.sites.set(Site.objects.filter(id=current_site_id()))
             instance.save()
@@ -30,11 +30,7 @@ def sync_clients_save(sender, instance, **kwargs):
     """
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        'sync_clients',
-        {
-            'type': 'sync_clients.save',
-            'model': sender.__name__,
-        },
+        "sync_clients", {"type": "sync_clients.save", "model": sender.__name__}
     )
 
 
@@ -45,9 +41,5 @@ def sync_clients_delete(sender, instance, **kwargs):
     """
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        'sync_clients',
-        {
-            'type': 'sync_clients.delete',
-            'model': sender.__name__,
-        },
+        "sync_clients", {"type": "sync_clients.delete", "model": sender.__name__}
     )

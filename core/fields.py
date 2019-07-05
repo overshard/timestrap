@@ -16,7 +16,7 @@ class DurationField(DurationField):
             return parsed
         else:
             return None
-        self.fail('invalid', format='[[HH]:MM] or [[HH][.MM]]')
+        self.fail("invalid", format="[[HH]:MM] or [[HH][.MM]]")
 
     def to_representation(self, value):
         return duration_decimal(value)

@@ -13,8 +13,7 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
     subtotal_duration = None
 
     def paginate_queryset(self, queryset, request, view=None):
-        self.total_duration = (queryset
-                               .aggregate(Sum('duration'))['duration__sum'])
+        self.total_duration = queryset.aggregate(Sum("duration"))["duration__sum"]
 
         self.limit = self.get_limit(request)
         if self.limit is None:
@@ -32,20 +31,21 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
         if self.count == 0 or self.offset > self.count:
             return []
 
-        queryset = queryset[self.offset:self.offset + self.limit]
-        self.subtotal_duration = (queryset
-                                  .aggregate(Sum('duration'))['duration__sum'])
+        queryset = queryset[self.offset : self.offset + self.limit]
+        self.subtotal_duration = queryset.aggregate(Sum("duration"))["duration__sum"]
 
         return list(queryset)
 
     def get_paginated_response(self, data):
-        return Response(OrderedDict([
-            ('count', self.count),
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('total_duration',
-                duration_decimal(self.total_duration)),
-            ('subtotal_duration',
-                duration_decimal(self.subtotal_duration)),
-            ('results', data)
-        ]))
+        return Response(
+            OrderedDict(
+                [
+                    ("count", self.count),
+                    ("next", self.get_next_link()),
+                    ("previous", self.get_previous_link()),
+                    ("total_duration", duration_decimal(self.total_duration)),
+                    ("subtotal_duration", duration_decimal(self.subtotal_duration)),
+                    ("results", data),
+                ]
+            )
+        )

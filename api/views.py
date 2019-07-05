@@ -4,9 +4,14 @@ from rest_framework import viewsets, permissions, filters
 import django_filters
 
 from core.models import Client, Project, Entry, Task
-from .serializers import (UserSerializer, ClientSerializer,
-                          PermissionSerializer, ProjectSerializer,
-                          EntrySerializer, TaskSerializer)
+from .serializers import (
+    UserSerializer,
+    ClientSerializer,
+    PermissionSerializer,
+    ProjectSerializer,
+    EntrySerializer,
+    TaskSerializer,
+)
 from .pagination import LimitOffsetPaginationWithTotals
 
 
@@ -48,7 +53,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.on_site.filter(archive=False)
     serializer_class = ClientSerializer
     pagination_class = None
-    filter_fields = ('id',)
+    filter_fields = ("id",)
 
     def get_queryset(self):
         return Client.on_site.all()
@@ -58,7 +63,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.filter(archive=False)
     serializer_class = ProjectSerializer
     pagination_class = None
-    filter_fields = ('id', 'client',)
+    filter_fields = ("id", "client")
 
 
 class EntryFilter(django_filters.rest_framework.FilterSet):
@@ -67,7 +72,7 @@ class EntryFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Entry
-        fields = ('id', 'date', 'user', 'task', 'project', 'project__client',)
+        fields = ("id", "date", "user", "task", "project", "project__client")
 
 
 class EntryViewSet(viewsets.ModelViewSet):
@@ -78,13 +83,25 @@ class EntryViewSet(viewsets.ModelViewSet):
     filter_backends = (
         filters.SearchFilter,
         django_filters.rest_framework.DjangoFilterBackend,
-        filters.OrderingFilter
+        filters.OrderingFilter,
     )
-    ordering_fields = ('date', 'user__username', 'task__name', 'project__name',
-                       'project__client__name',)
-    ordering = ('-date', '-id')
-    search_fields = ('id', 'date', 'note', 'user__username', 'task__name',
-                     'project__name', 'project__client__name',)
+    ordering_fields = (
+        "date",
+        "user__username",
+        "task__name",
+        "project__name",
+        "project__client__name",
+    )
+    ordering = ("-date", "-id")
+    search_fields = (
+        "id",
+        "date",
+        "note",
+        "user__username",
+        "task__name",
+        "project__name",
+        "project__client__name",
+    )
 
     def get_queryset(self):
         return Entry.on_site.all()

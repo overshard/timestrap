@@ -14,5 +14,8 @@ class CurrentSiteManager(BaseCSM):
         self.__field_name = field_name
 
     def get_queryset(self):
-        return super().get_queryset().filter(
-            **{self._get_field_name() + '__id': current_site_id()})
+        return (
+            super()
+            .get_queryset()
+            .filter(**{self._get_field_name() + "__id": current_site_id()})
+        )

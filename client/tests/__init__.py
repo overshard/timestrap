@@ -10,9 +10,10 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.keys import Keys
 
 
-@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')  # noqa: E501
+@override_settings(
+    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
+)  # noqa: E501
 class SeleniumTestCase(StaticLiveServerTestCase):
-
     def _flakyTestWrapper(self):
         testMethod = getattr(self, self.flakyTestMethodName)
         retries = 0
@@ -20,7 +21,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             try:
                 return testMethod()
             except Exception as e:
-                print('\nRetrying flaky test %s' % self.flakyTestMethodName)
+                print("\nRetrying flaky test %s" % self.flakyTestMethodName)
                 retries += 1
                 lastException = e
                 sleep(1)
@@ -28,15 +29,15 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def run(self, result=None):
         self.flakyTestMethodName = self._testMethodName
-        self._testMethodName = '_flakyTestWrapper'
+        self._testMethodName = "_flakyTestWrapper"
         super().run(result)
         self._testMethodName = self.flakyTestMethodName
 
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        if environ.get('FIREFOX_HEADLESS') is not '0':
-            options.add_argument('-headless')
+        if environ.get("FIREFOX_HEADLESS") is not "0":
+            options.add_argument("-headless")
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
         cls.driver.implicitly_wait(2)
@@ -50,29 +51,29 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         super().tearDownClass()
 
     def setUp(self):
-        call_command('migrate', verbosity=0)
-        call_command('fake', verbosity=0, iterations=1)
+        call_command("migrate", verbosity=0)
+        call_command("fake", verbosity=0, iterations=1)
 
         self.logIn()
 
         super().setUp()
 
     def logIn(self):
-        self.driver.get('%s%s' % (self.live_server_url, '/login/'))
+        self.driver.get("%s%s" % (self.live_server_url, "/login/"))
 
-        input_username = self.find('input-username')
-        input_password = self.find('input-password')
-        button_submit = self.find('button-submit')
+        input_username = self.find("input-username")
+        input_password = self.find("input-password")
+        button_submit = self.find("button-submit")
 
-        input_username.send_keys('admin')
-        input_password.send_keys('admin')
+        input_username.send_keys("admin")
+        input_password.send_keys("admin")
         button_submit.click()
 
-        self.find('app')
+        self.find("app")
 
     def clear(self, element):
         # Selenium's clear command doesn't work
-        value = element.get_attribute('value')
+        value = element.get_attribute("value")
         for character in value:
             element.send_keys(Keys.BACK_SPACE)
 
@@ -93,9 +94,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def select(self, value, element):
         # Our select field uses the select2 jQuery plugin
-        element = element.find_element_by_xpath('..')
-        element_arrow = element.find_element_by_class_name('select2-selection__arrow')  # noqa: E501
+        element = element.find_element_by_xpath("..")
+        element_arrow = element.find_element_by_class_name(
+            "select2-selection__arrow"
+        )  # noqa: E501
         element_arrow.click()
-        element_search = self.driver.find_element_by_class_name('select2-search__field')  # noqa: E501
+        element_search = self.driver.find_element_by_class_name(
+            "select2-search__field"
+        )  # noqa: E501
         element_search.send_keys(value)
         element_search.send_keys(Keys.RETURN)

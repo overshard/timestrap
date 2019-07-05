@@ -5,13 +5,11 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0004_auto_20180204_1439'),
-    ]
+    dependencies = [("core", "0004_auto_20180204_1439")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='task',
-            options={'default_permissions': ('view', 'add', 'change', 'delete')},
-        ),
+            name="task",
+            options={"default_permissions": ("view", "add", "change", "delete")},
+        )
     ]

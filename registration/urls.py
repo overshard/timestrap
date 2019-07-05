@@ -6,10 +6,8 @@ from .forms import TimestrapPasswordResetForm
 
 urlpatterns = [
     path(
-        'password_reset/',
-        auth_views.PasswordResetView.as_view(
-            form_class=TimestrapPasswordResetForm,
-        ),
-        name='password_reset',
-    ),
+        "password_reset/",
+        auth_views.PasswordResetView.as_view(form_class=TimestrapPasswordResetForm),
+        name="password_reset",
+    )
 ]

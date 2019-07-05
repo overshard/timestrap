@@ -10,8 +10,9 @@ class I18NMiddleware(MiddlewareMixin):
     """
     Handles the current Site's internationalization settings.
     """
+
     def process_request(self, request):
-        tzname = get_site_setting('i18n_timezone')
+        tzname = get_site_setting("i18n_timezone")
         if tzname:
             timezone.activate(pytz.timezone(tzname))
         else:

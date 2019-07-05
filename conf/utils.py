@@ -10,9 +10,9 @@ def current_site_id():
     request and falling back on the default ID in Django settings.
     """
     request = current_request()
-    site = getattr(request, 'site', None)
+    site = getattr(request, "site", None)
     if site:
-        site_id = getattr(site, 'id', None)
+        site_id = getattr(site, "id", None)
     else:
         site_id = settings.SITE_ID
     return site_id
