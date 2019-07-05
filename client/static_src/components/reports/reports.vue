@@ -169,7 +169,8 @@
         <tbody>
           <tr
             v-for="entry in entries"
-            :key="entry.id">
+            :key="entry.id"
+            :id="'entry-' + entry.id">
             <td>{{ entry.project ? getClient(getProject(entry.project).client).name : '' }}</td>
             <td>{{ entry.project ? getProject(entry.project).name : '' }}</td>
             <td>{{ entry.task ? getTask(entry.task).name : '' }}</td>
