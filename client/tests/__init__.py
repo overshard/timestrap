@@ -12,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 
 @override_settings(
     STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
-)  # noqa: E501
+)
 class SeleniumTestCase(StaticLiveServerTestCase):
     def _flakyTestWrapper(self):
         testMethod = getattr(self, self.flakyTestMethodName)
@@ -36,7 +36,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        if environ.get("FIREFOX_HEADLESS") is not "0":
+        if environ.get("FIREFOX_HEADLESS") != "0":
             options.add_argument("-headless")
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
