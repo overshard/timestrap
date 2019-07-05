@@ -31,7 +31,7 @@ class LimitOffsetPaginationWithTotals(LimitOffsetPagination):
         if self.count == 0 or self.offset > self.count:
             return []
 
-        queryset = queryset[self.offset : self.offset + self.limit]
+        queryset = queryset[self.offset : self.offset + self.limit]  # noqa: E203
         self.subtotal_duration = queryset.aggregate(Sum("duration"))["duration__sum"]
 
         return list(queryset)
