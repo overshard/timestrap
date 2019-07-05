@@ -36,7 +36,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         options = FirefoxOptions()
-        if environ.get("FIREFOX_HEADLESS") != "0":
+        if environ.get("MOZ_HEADLESS") != "0":
+            # Setting environ var might seem redundant but some versions of firefox
+            # and geckodriver fail to obey -headless properly
+            environ["MOZ_HEADLESS"] = 1
             options.add_argument("-headless")
         cls.driver = FirefoxDriver(firefox_options=options)
         cls.driver.maximize_window()
