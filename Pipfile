@@ -13,7 +13,7 @@ mkdocs-material = "*"
 black = "*"
 
 [packages]
-django = "*"
+django = "==2.1"
 "django-widget-tweaks" = "*"
 whitenoise = "==3.3.1"
 djangorestframework = "*"
@@ -25,7 +25,8 @@ faker = "*"
 ipaddress = "*"
 channels = "*"
 asgiref = "*"
-channels-redis = "*"
+channels_redis = "*"
+typing-extensions = "*"
 
 [requires]
 python_version = "3.7"
