@@ -27,7 +27,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             "is_staff",
             "is_superuser",
             "perms",
-            "groups",
+            # "groups",
         )
 
     def get_perms(self, obj):
