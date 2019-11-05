@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_filters",
     "rest_framework",
+    "rest_framework.authtoken",
     "channels",
     "django.contrib.admin",
     "django.contrib.auth",
