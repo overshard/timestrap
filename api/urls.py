@@ -1,6 +1,7 @@
 from django.urls import path, include
 
 from rest_framework import routers
+from rest_framework.authtoken import views as authtokenviews
 
 from . import views
 
@@ -16,5 +17,6 @@ router.register(r"tasks", views.TaskViewSet)
 
 urlpatterns = [
     path(r"api/auth/", include("rest_framework.urls")),
+    path(r"api/auth_token/", authtokenviews.obtain_auth_token),
     path(r"api/", include(router.urls)),
 ]
