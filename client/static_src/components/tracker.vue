@@ -60,7 +60,7 @@
               id="tracker-date"
               type="text"
               class="form-control date-input text-center"
-              placeholder="Min. date"
+              placeholder="Date"
             />
           </div>
 
@@ -127,11 +127,11 @@ export default {
       project: null,
       note: null,
       duration: null,
-      datetimeStart: null,
+      datetimeStart: "tracker_start" in window.localStorage ? new Date(Number(window.localStorage.tracker_start)) : null,
       datetimeEnd: null,
       date: this.$moment().format('YYYY-MM-DD'),
 
-      running: false,
+      running: "tracker_running" in window.localStorage ? window.localStorage.tracker_running === "true" : false,
       total: 0,
       seconds: '0',
     };
@@ -165,6 +165,12 @@ export default {
       }
     }
   },
+  created(){
+    if(this.running){
+      this.tick();
+      this.start();
+    }
+  },
   methods: {
     ...mapActions({
       createEntry: 'entries/createEntry',
@@ -196,14 +202,21 @@ export default {
       this.duration = this.$moment.duration(this.total, 'seconds').format('h:mm', {trim: false});
       document.title = this.duration + ' — ' + timestrapConfig.SITE.NAME;
     },
+    start(){
+      this.interval = setInterval(this.tick, 1000, this);
+    },
     toggle() {
       this.running = !this.running;
+      window.localStorage.tracker_running = this.running;
+
       if (this.running) {
         this.datetimeStart = new Date(Date.now());
+        window.localStorage.tracker_start = this.datetimeStart.getTime();
         this.reset();
-        this.interval = setInterval(this.tick, 1000, this);
+        this.start();
       } else {
         this.datetimeEnd = new Date(Date.now());
+        window.localStorage.tracker_start = null;
         clearInterval(this.interval);
         if (this.total < 60) this.reset();
         document.title = 'Application — ' + timestrapConfig.SITE.NAME;
