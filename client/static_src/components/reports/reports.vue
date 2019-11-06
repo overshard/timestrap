@@ -44,6 +44,7 @@
                   id="report-filter-user"
                   v-model="user"
                   :options="users"
+                  :selected="user"
                   placeholder="User"
                   allowclear/>
               </div>
@@ -53,6 +54,7 @@
                   id="report-filter-client"
                   v-model="client"
                   :options="clients"
+                  :selected="client"
                   placeholder="Client"
                   allowclear/>
               </div>
@@ -62,6 +64,7 @@
                   id="report-filter-project"
                   v-model="project"
                   :options="projects"
+                  :selected="project"
                   placeholder="Project"
                   allowclear/>
               </div>
@@ -73,6 +76,7 @@
                   id="report-filter-task"
                   v-model="task"
                   :options="tasks"
+                  :selected="task"
                   placeholder="Task"
                   allowclear/>
               </div>
@@ -97,6 +101,15 @@
                   allowclear/>
               </div>
             </div>
+
+            <div class="clear col-sm-12">
+              <button
+                class="btn btn-info w-100 clear"
+                @click.prevent.exact="clear">
+                clear
+              </button>
+            </div>
+
           </div>
         </template>
       </popover>
@@ -280,11 +293,11 @@ export default {
       this.$store.dispatch('reports/getReport');
     },
     project() {
-      this.setClient(this.project);
+      this.setProject(this.project);
       this.$store.dispatch('reports/getReport');
     },
     task() {
-      this.setClient(this.task);
+      this.setTask(this.task);
       this.$store.dispatch('reports/getReport');
     },
     minDate() {
@@ -328,9 +341,17 @@ export default {
       'setMinDate',
       'setMaxDate',
     ]),
+    clear(){
+      this.minDate = null;
+      this.maxDate = null;
+      this.user = null;
+      this.client = null;
+      this.project = null;
+      this.task = null;
+    },
     exportReport() {
-      let ordering = (this.orderDir == 'desc' ? '-' : '') + this.orderBy;
-      if (this.orderBy != 'date') {
+      let ordering = (this.orderDir === 'desc' ? '-' : '') + this.orderBy;
+      if (this.orderBy !== 'date') {
         ordering += ',-date';
       }
       const query = {
@@ -376,4 +397,9 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.clear{
+  margin-top: .5rem;
+}
+
 </style>
