@@ -1,5 +1,5 @@
 <template>
-  <input class="datepicker" >
+  <input class="datepicker" type="date">
 </template>
 
 
