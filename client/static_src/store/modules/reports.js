@@ -26,6 +26,17 @@ export default {
     },
   },
   mutations: {
+    reset: state => {
+      state.orderBy = null;
+      state.orderDir = null;
+      state.minDate = null;
+      state.maxDate = null;
+      state.user = null;
+      state.client = null;
+      state.project = null;
+      state.task = null;
+    },
+
     setEntries: (state, entries) => state.all = entries,
     setSubtotal: (state, subtotal) => state.subtotal = subtotal,
     setTotal: (state, total) => state.total = total,
