@@ -115,6 +115,18 @@ import {mapGetters, mapActions} from 'vuex';
 import Selector from './selector.vue';
 import Datepicker from './datepicker.vue';
 
+function getFromLocalStorage(key, defaultValue){
+  if(!key in window.localStorage){
+    return defaultValue;
+  }
+  if(defaultValue === null && window.localStorage[key] === "null"){
+    return null;
+  }
+  if(defaultValue === false){
+    return window.localStorage[key] === "true";
+  }
+  return window.localStorage[key];
+}
 
 export default {
   components: {
@@ -123,16 +135,16 @@ export default {
   },
   data() {
     return {
-      task: "tracker_task" in window.localStorage ? window.localStorage.tracker_task : null,
+      task: getFromLocalStorage("tracker_task", null),
       client: null,
-      project: "tracker_project" in window.localStorage ? window.localStorage.tracker_project : null,
-      note: "tracker_note" in window.localStorage ? window.localStorage.tracker_note : null,
+      project: getFromLocalStorage("tracker_project", null),
+      note: getFromLocalStorage("tracker_note", null),
       duration: null,
       datetimeStart: "tracker_start" in window.localStorage ? new Date(Number(window.localStorage.tracker_start)) : null,
       datetimeEnd: null,
       date: this.$moment().format('YYYY-MM-DD'),
 
-      running: "tracker_running" in window.localStorage ? window.localStorage.tracker_running === "true" : false,
+      running: getFromLocalStorage("tracker_running", false),
       total: 0,
       seconds: '0',
     };
