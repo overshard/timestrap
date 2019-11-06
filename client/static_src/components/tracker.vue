@@ -83,14 +83,15 @@
               Start
             </button>
             <button
-              v-if="running"
+              v-else-if="running"
               class="btn btn-danger w-100"
               @click.prevent.exact="toggle">
               <icon :icon="['fas', 'stop']" class="mr-1"/>
               Stop ({{ seconds }})
             </button>
             <button
-              v-if="!running && duration"
+              v-else-if="!running && duration"
+              :disabled="!canSubmit"
               id="tracker-submit"
               class="btn btn-info w-100"
               type="submit">
@@ -122,10 +123,10 @@ export default {
   },
   data() {
     return {
-      task: null,
+      task: "tracker_task" in window.localStorage ? window.localStorage.tracker_task : null,
       client: null,
-      project: null,
-      note: null,
+      project: "tracker_project" in window.localStorage ? window.localStorage.tracker_project : null,
+      note: "tracker_note" in window.localStorage ? window.localStorage.tracker_note : null,
       duration: null,
       datetimeStart: "tracker_start" in window.localStorage ? new Date(Number(window.localStorage.tracker_start)) : null,
       datetimeEnd: null,
@@ -151,11 +152,12 @@ export default {
       }else{
         return this.projectsClient(this.client);
       }
+    },
+    canSubmit(){
+      return this.project && this.task;
     }
   },
   watch: {
-    project(){},
-
     client(){
       if(this.project){
         const p = this.getProject();
@@ -163,7 +165,16 @@ export default {
           this.project = null;
         }
       }
-    }
+    },
+    project(){
+      window.localStorage.tracker_project = this.project;
+    },
+    task(){
+      window.localStorage.tracker_task = this.task;
+    },
+    note(){
+      window.localStorage.tracker_note = this.note;
+    },
   },
   created(){
     if(this.running){
