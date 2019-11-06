@@ -4,7 +4,8 @@
   :delete_perm="$perms.delete_task"
   :change_perm="$perms.change_task"
   :add_perm="$perms.add_task"
-  @modal="showEntries"
+  @edit="$emit('modal')"
+  @detail="showEntries"
   @delete="deleteTask(task)">
   <template slot="card-body">
     <div class="card-title h5 font-weight-bold mb-4">
@@ -49,7 +50,10 @@ export default {
     }),
 
     showEntries(){
-      // $emit('modal')
+      if(!this.task.id){
+        this.$emit('modal');
+        return;
+      }
       this.$store.commit("reports/reset");
       this.$store.commit("reports/setTask", this.task.url);
       this.$router.push("/reports");

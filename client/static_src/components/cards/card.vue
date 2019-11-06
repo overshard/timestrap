@@ -2,7 +2,7 @@
 <div
   :id="[index ? 'card-' + index : '']"
   class="col-md-4 col-lg-3 mb-4"
-  @dblclick="$emit('modal')">
+  @dblclick="$emit('detail')">
   <div v-if="index !== null" class="card shadow-sm">
     <div v-if="delete_perm || change_perm" class="card-options">
       <button
@@ -17,7 +17,7 @@
           id="card-menu-change"
           class="dropdown-item"
           v-if="change_perm"
-          @click.exact="$emit('modal')">
+          @click.exact="$emit('edit')">
           Edit
         </button>
         <button

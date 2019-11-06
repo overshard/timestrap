@@ -24,6 +24,10 @@ export default {
         return {id: entry.url, text: entry.name};
       });
     },
+    isFiltered: state => {
+      return state.minDate != null || state.maxDate != null || state.task != null
+      || state.user != null || state.client != null || state.project != null
+    }
   },
   mutations: {
     reset: state => {

@@ -4,7 +4,8 @@
   :delete_perm="$perms.delete_client"
   :change_perm="$perms.change_client"
   :add_perm="$perms.add_client"
-  @modal="showEntries"
+  @edit="$emit('modal')"
+  @detail="showEntries"
   @delete="deleteClient(client)">
   <template slot="card-body">
     <div class="card-title h5 font-weight-bold mb-4">
@@ -51,7 +52,10 @@ export default {
     }),
 
     showEntries(){
-      // $emit('modal')
+      if(!this.client.id){
+        this.$emit('modal');
+        return;
+      }
       this.$store.commit("reports/reset");
       this.$store.commit("reports/setClient", this.client.url);
       this.$router.push("/reports");

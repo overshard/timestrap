@@ -4,7 +4,8 @@
   :delete_perm="$perms.delete_project"
   :change_perm="$perms.change_project"
   :add_perm="$perms.add_project"
-  @modal="showEntries"
+  @edit="$emit('modal')"
+  @detail="showEntries"
   @delete="deleteProject(project)">
   <template slot="card-body">
     <div class="d-flex flex-column h-100">
@@ -70,6 +71,10 @@ export default {
     }),
 
     showEntries(){
+       if(!this.project.id){
+        this.$emit('modal');
+        return;
+      }
       this.$store.commit("reports/reset");
       this.$store.commit("reports/setProject", this.project.url);
       this.$router.push("/reports");
