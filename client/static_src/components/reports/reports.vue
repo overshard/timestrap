@@ -31,8 +31,10 @@
 
       <popover class="flex-fill mr-2">
         <template slot="popover-button">
-          <icon :icon="['fas', 'filter']" class="mr-1"/>
-          Filter
+          <span  v-bind:class="{active: isFiltered}">
+            <icon :icon="['fas', 'filter']" class="mr-1"/>
+            Filter
+          </span>
         </template>
         <template slot="popover-content">
           <small class="text-muted mb-2 d-block">Filter by column, multiple filters are okay</small>
@@ -324,6 +326,7 @@ export default {
       getProject: 'projects/getProject',
       getClient: 'clients/getClient',
       getUser: 'users/getUser',
+      isFiltered: 'reports/isFiltered'
     }),
   },
   mounted() {
@@ -410,6 +413,13 @@ export default {
 
 .clear{
   margin-top: .5rem;
+}
+
+.active{
+  /*svg{*/
+  /*  color: green;*/
+  /*}*/
+  font-weight: bold;
 }
 
 </style>
