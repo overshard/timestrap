@@ -52,7 +52,7 @@ export default {
           let splitUrl = url.split('/');
           return splitUrl[splitUrl.length - 2];
         } else {
-          return null;
+          return "";
         }
       }
 
@@ -73,7 +73,13 @@ export default {
         commit('setTotal', response.data.total_duration);
         commit('setSubtotal', response.data.subtotal_duration);
         commit('removeLoading', 'reports', {root: true});
-      }).catch(error => console.log(error));
+      }).catch(error => {
+        console.log(error);
+        commit('setEntries', []);
+        commit('setTotal', 0);
+        commit('setSubtotal', 0);
+        commit('removeLoading', 'reports', {root: true});
+      });
     },
   },
 };
