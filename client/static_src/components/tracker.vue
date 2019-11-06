@@ -51,53 +51,55 @@
           type="text">
       </div>
 
-      <div class="col-sm-4 row">
+      <div class="col-sm-4">
 
-        <div class="col-sm-4">
-          <datepicker
-            v-model="date"
-            id="tracker-date"
-            type="text"
-            class="form-control date-input text-center"
-            placeholder="Min. date"
-          />
+        <div class="row">
+          <div class="col-sm-4">
+            <datepicker
+              v-model="date"
+              id="tracker-date"
+              type="text"
+              class="form-control date-input text-center"
+              placeholder="Min. date"
+            />
+          </div>
+
+          <div class="col-sm-3">
+            <input
+              id="tracker-duration"
+              v-model="duration"
+              class="form-control text-right font-weight-bold w-100 shadow-sm"
+              placeholder="0:00"
+              type="text"
+              required>
+          </div>
+
+          <div class="col-sm-5">
+            <button
+              v-if="!running && !duration"
+              class="btn btn-success w-100"
+              @click.prevent.exact="toggle">
+              <icon :icon="['fas', 'play']" class="mr-1"/>
+              Start
+            </button>
+            <button
+              v-if="running"
+              class="btn btn-danger w-100"
+              @click.prevent.exact="toggle">
+              <icon :icon="['fas', 'stop']" class="mr-1"/>
+              Stop ({{ seconds }})
+            </button>
+            <button
+              v-if="!running && duration"
+              id="tracker-submit"
+              class="btn btn-info w-100"
+              type="submit">
+              <icon :icon="['fas', 'plus']" class="mr-1"/>
+              Add
+            </button>
+          </div>
+
         </div>
-
-        <div class="col-sm-3">
-          <input
-            id="tracker-duration"
-            v-model="duration"
-            class="form-control text-right font-weight-bold w-100 shadow-sm"
-            placeholder="0:00"
-            type="text"
-            required>
-        </div>
-
-        <div class="col-sm-5">
-          <button
-            v-if="!running && !duration"
-            class="btn btn-success w-100"
-            @click.prevent.exact="toggle">
-            <icon :icon="['fas', 'play']" class="mr-1"/>
-            Start
-          </button>
-          <button
-            v-if="running"
-            class="btn btn-danger w-100"
-            @click.prevent.exact="toggle">
-            <icon :icon="['fas', 'stop']" class="mr-1"/>
-            Stop ({{ seconds }})
-          </button>
-          <button
-            v-if="!running && duration"
-            id="tracker-submit"
-            class="btn btn-info w-100"
-            type="submit">
-            <icon :icon="['fas', 'plus']" class="mr-1"/>
-            Add
-          </button>
-        </div>
-
       </div>
 
     </div>
