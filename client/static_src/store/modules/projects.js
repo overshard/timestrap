@@ -17,14 +17,21 @@ export default {
         return {id: project.url, text: project.name};
       });
     },
+    getSelectProjectsForClient: state => client => {
+      return state.all.filter(project => {
+        return project.client === client;
+      }).map(project => {
+        return {id: project.url, text: project.name};
+      });
+    },
     getSearchProjects: (state, getters, rootState, rootGetters) => search => {
       return state.all.filter(project => {
         return project.name.toLowerCase().includes(search) || rootGetters['clients/getClient'](project.client).name.toLowerCase().includes(search);
-      });
+      })
     },
     getProject: state => url => {
       const project = state.all.find(project => {
-        return project.url == url;
+        return project.url === url;
       });
       if (typeof(project) === 'undefined') return {};
       else return project;

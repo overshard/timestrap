@@ -5,14 +5,19 @@
     class="container-fluid"
     @submit.prevent="submitEntry">
     <div class="row">
-      <div class="col-sm-4">
-        <input
-          id="tracker-note"
-          v-model="note"
-          class="form-control w-100 shadow-sm"
-          placeholder="Note"
-          type="text">
+
+      <div
+        class="col-sm-2"
+        @keyup.enter.prevent>
+        <selector
+          id="tracker-client"
+          v-model="client"
+          :options="clients"
+          :selected="client"
+          placeholder="Client"
+          />
       </div>
+
       <div
         class="col-sm-2"
         @keyup.enter.prevent>
@@ -24,6 +29,7 @@
           placeholder="Project"
           required/>
       </div>
+
       <div
         class="col-sm-2"
         @keyup.enter.prevent>
@@ -35,39 +41,65 @@
           placeholder="Task"
           required/>
       </div>
+
       <div class="col-sm-2">
         <input
-          id="tracker-duration"
-          v-model="duration"
-          class="form-control text-right font-weight-bold w-100 shadow-sm"
-          placeholder="0:00"
-          type="text"
-          required>
+          id="tracker-note"
+          v-model="note"
+          class="form-control w-100 shadow-sm"
+          placeholder="Note"
+          type="text">
       </div>
-      <div class="col-sm-2">
-        <button
-          v-if="!running && !duration"
-          class="btn btn-success w-100"
-          @click.prevent.exact="toggle">
-          <icon :icon="['fas', 'play']" class="mr-1"/>
-          Start
-        </button>
-        <button
-          v-if="running"
-          class="btn btn-danger w-100"
-          @click.prevent.exact="toggle">
-          <icon :icon="['fas', 'stop']" class="mr-1"/>
-          Stop ({{ seconds }})
-        </button>
-        <button
-          v-if="!running && duration"
-          id="tracker-submit"
-          class="btn btn-info w-100"
-          type="submit">
-          <icon :icon="['fas', 'plus']" class="mr-1"/>
-          Add
-        </button>
+
+      <div class="col-sm-4 row">
+
+        <div class="col-sm-4">
+          <datepicker
+            v-model="date"
+            id="tracker-date"
+            type="text"
+            class="form-control date-input text-center"
+            placeholder="Min. date"
+          />
+        </div>
+
+        <div class="col-sm-3">
+          <input
+            id="tracker-duration"
+            v-model="duration"
+            class="form-control text-right font-weight-bold w-100 shadow-sm"
+            placeholder="0:00"
+            type="text"
+            required>
+        </div>
+
+        <div class="col-sm-5">
+          <button
+            v-if="!running && !duration"
+            class="btn btn-success w-100"
+            @click.prevent.exact="toggle">
+            <icon :icon="['fas', 'play']" class="mr-1"/>
+            Start
+          </button>
+          <button
+            v-if="running"
+            class="btn btn-danger w-100"
+            @click.prevent.exact="toggle">
+            <icon :icon="['fas', 'stop']" class="mr-1"/>
+            Stop ({{ seconds }})
+          </button>
+          <button
+            v-if="!running && duration"
+            id="tracker-submit"
+            class="btn btn-info w-100"
+            type="submit">
+            <icon :icon="['fas', 'plus']" class="mr-1"/>
+            Add
+          </button>
+        </div>
+
       </div>
+
     </div>
   </form>
 </div>
@@ -89,11 +121,13 @@ export default {
   data() {
     return {
       task: null,
+      client: null,
       project: null,
       note: null,
       duration: null,
       datetimeStart: null,
       datetimeEnd: null,
+      date: this.$moment().format('YYYY-MM-DD'),
 
       running: false,
       total: 0,
@@ -102,10 +136,32 @@ export default {
   },
   computed: {
     ...mapGetters({
+      clients: 'clients/getSelectClients',
       tasks: 'tasks/getSelectTasks',
-      projects: 'projects/getSelectProjects',
+      projectsAll: 'projects/getSelectProjects',
+      projectsClient: 'projects/getSelectProjectsForClient',
       users: 'users/getSelectUsers',
+      getProject: 'projects/getProject',
     }),
+    projects(){
+      if(!this.client) {
+        return this.projectsAll;
+      }else{
+        return this.projectsClient(this.client);
+      }
+    }
+  },
+  watch: {
+    project(){},
+
+    client(){
+      if(this.project){
+        const p = this.getProject();
+        if(p.client !== this.client){
+          this.project = null;
+        }
+      }
+    }
   },
   methods: {
     ...mapActions({
@@ -120,7 +176,7 @@ export default {
         datetime_start: this.datetimeStart,
         datetime_end: this.datetimeEnd,
         user: timestrapConfig.USER.URL,
-        date: this.$moment().format('YYYY-MM-DD'),
+        date: this.date//this.$moment().format('YYYY-MM-DD'),
       });
       this.reset();
       this.note = null;
