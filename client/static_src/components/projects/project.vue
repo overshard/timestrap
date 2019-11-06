@@ -4,7 +4,7 @@
   :delete_perm="$perms.delete_project"
   :change_perm="$perms.change_project"
   :add_perm="$perms.add_project"
-  @modal="$emit('modal')"
+  @modal="showEntries"
   @delete="deleteProject(project)">
   <template slot="card-body">
     <div class="d-flex flex-column h-100">
@@ -36,7 +36,7 @@
 
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+  import {mapActions, mapGetters} from 'vuex';
 
 import Card from '../cards/card.vue';
 
@@ -68,6 +68,12 @@ export default {
     ...mapActions({
       deleteProject: 'projects/deleteProject',
     }),
+
+    showEntries(){
+      this.$store.commit("reports/reset");
+      this.$store.commit("reports/setProject", this.project.url);
+      this.$router.push("/reports");
+    }
   },
 };
 </script>

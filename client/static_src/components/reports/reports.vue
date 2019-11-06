@@ -270,9 +270,9 @@ export default {
       minDate: null,
       maxDate: null,
       user: null,
-      client: null,
-      project: null,
-      task: null,
+      client: this.$store.state.reports.client,
+      project: this.$store.state.reports.project,
+      task: this.$store.state.reports.task,
     };
   },
   watch: {
