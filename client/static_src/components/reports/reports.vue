@@ -354,15 +354,25 @@ export default {
       if (this.orderBy !== 'date') {
         ordering += ',-date';
       }
+
+      function urlToId(url) {
+        if (url !== null) {
+          let splitUrl = url.split('/');
+          return splitUrl[splitUrl.length - 2];
+        } else {
+          return "";
+        }
+      }
+
       const query = {
         ordering: ordering,
-        user: this.user,
-        project: this.project,
-        project__client: this.client,
+        user: urlToId(this.user),
+        project: urlToId(this.project),
+        project__client: urlToId(this.client),
+        task: urlToId(this.task),
         min_date: this.minDate,
         max_date: this.maxDate,
-        task: this.task,
-        exportFormat: this.exportFormat,
+        export_format: this.exportFormat,
       };
       document.location.href = timestrapConfig.CORE_URLS.REPORTS_EXPORT + '?' + $.param(query);
     },
