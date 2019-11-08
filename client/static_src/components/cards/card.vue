@@ -34,7 +34,7 @@
       <slot name="card-body"/>
     </div>
   </div>
-  <div v-else-if="add_perm" class="card new" @click="$emit('modal')">
+  <div v-else-if="add_perm" class="card new" @click="$emit('edit')">
     <div class="card-body d-flex justify-content-center align-items-center">
       <div class="text-muted">
         <icon :icon="['fas', 'plus']" class="mr-1"/>
