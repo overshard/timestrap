@@ -14,7 +14,7 @@
       @keydown.down.prevent="selectedDown()"
       @keydown.enter.prevent="activeUpdate()">
       <div class="form-control d-flex rounded-0 border-0 rounded-top bg-light">
-      <span class="badge badge-dark d-block-inline mr-2 px-2" v-if="selectedObject">
+      <span class="badge badge-dark d-block-inline mr-2 px-2" >
         {{ selectedObject.text }}
         <span
           v-if="active"
@@ -54,8 +54,7 @@
       @click.prevent="toggleEdit()"
       @keydown.up.prevent="toggleEdit()"
       @keydown.down.prevent="toggleEdit()"
-      @keydown.enter.prevent="toggleEdit()"
-      v-if="selectedObject">
+      @keydown.enter.prevent="toggleEdit()">
       {{ selectedObject.text }}
     </div>
   </div>
@@ -99,14 +98,15 @@
     },
     computed: {
       selectedObject(){
+        let option = undefined;
         if (this.selected) {
-          return this.options.find(option => {
+          option = this.options.find(option => {
             return option.id === this.selected;
           });
-        } else {
-          return {
-            text: this.placeholder,
-          }
+        }
+        if(option) return option;
+        return {
+          text: this.placeholder,
         }
       },
       activeObject() {
