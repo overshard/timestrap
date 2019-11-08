@@ -1,3 +1,27 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@underdoeg
+
+49
+1.5k
+
+    85
+
+overshard/timestrap
+Code
+Issues 14
+Pull requests 0
+Security
+Insights
+timestrap/client/static_src/components/selector.vue
+@underdoeg underdoeg remember selected tracker project, note and task on reload af34f18 10 hours ago
+@overshard
+@underdoeg
+209 lines (195 sloc) 4.96 KB
 <template>
   <div class="selector">
     <div
@@ -14,7 +38,7 @@
       @keydown.down.prevent="selectedDown()"
       @keydown.enter.prevent="activeUpdate()">
       <div class="form-control d-flex rounded-0 border-0 rounded-top bg-light">
-      <span class="badge badge-dark d-block-inline mr-2 px-2" >
+      <span class="badge badge-dark d-block-inline mr-2 px-2" v-if="selectedObject">
         {{ selectedObject.text }}
         <span
           v-if="active"
@@ -54,7 +78,8 @@
       @click.prevent="toggleEdit()"
       @keydown.up.prevent="toggleEdit()"
       @keydown.down.prevent="toggleEdit()"
-      @keydown.enter.prevent="toggleEdit()">
+      @keydown.enter.prevent="toggleEdit()"
+      v-if="selectedObject">
       {{ selectedObject.text }}
     </div>
   </div>
@@ -63,8 +88,6 @@
 
 <script>
   import Vue from 'vue';
-
-
   export default {
     data() {
       return {
@@ -175,7 +198,6 @@
   .clear {
     cursor: pointer;
   }
-
   .focuser {
     position: fixed;
     z-index: 1;
@@ -184,25 +206,36 @@
     bottom: 0;
     right: 0;
   }
-
   .select {
     position: absolute;
     z-index: 2;
     min-width: 400px;
-
     .badge {
       align-items: center;
       display: flex;
     }
   }
-
   .options {
     max-height: 200px;
     overflow-y: scroll;
     background-color: #fff;
   }
-
   .list-group-item {
     padding: .25rem .5rem;
   }
 </style>
+
+    © 2019 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
