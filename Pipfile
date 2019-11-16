@@ -10,7 +10,7 @@ selenium = "*"
 tblib = "*"
 mkdocs = "*"
 mkdocs-material = "*"
-black = "*"
+black = "==19.10b0"
 
 [packages]
 django = "==2.1.11"
@@ -29,6 +29,3 @@ channels-redis = "*"
 
 [requires]
 python_version = "3.7"
-
-[pipenv]
-allow_prereleases = true
