@@ -25,8 +25,7 @@ faker = "*"
 ipaddress = "*"
 channels = "*"
 asgiref = "*"
-channels_redis = "*"
-typing-extensions = "*"
+channels-redis = "*"
 
 [requires]
 python_version = "3.7"
