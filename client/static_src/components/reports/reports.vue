@@ -108,7 +108,7 @@
               <button
                 class="btn btn-info w-100 clear"
                 @click.prevent.exact="clear">
-                clear
+                Clear
               </button>
             </div>
 
