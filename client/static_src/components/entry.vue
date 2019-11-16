@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="col-sm-2 align-items-center display-4 duration">
-    <icon :icon="['fas', 'clock']" class="mr-2 text-muted small mb-1"/>
+    <icon :icon="['fas', 'clock']" class="mr-2 text-muted small"/>
     {{ $moment.duration(entry.duration, 'hours').format('h:mm', {trim: false}) }}
   </div>
   <div class="col-sm-2 align-self-center datetimes flex-column">
