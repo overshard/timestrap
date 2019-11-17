@@ -1,24 +1,20 @@
-FROM node:8 AS build
-WORKDIR /build
+FROM alpine
 
-COPY . /build
+WORKDIR /srv/timestrap
 
-RUN npm i -g npm gulp-cli
-RUN npm i
-RUN npm rebuild node-sass --force
-
-RUN gulp build:production
-
-
-FROM python:3.6
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-WORKDIR /app
 
-COPY . /app
+RUN apk add --no-cache python3 python3-dev nodejs nodejs-dev yarn \
+    postgresql-dev gcc musl-dev libffi-dev
 
-RUN pip install pipenv
-RUN pipenv install --three --system
+COPY Pipfile Pipfile.lock package.json yarn.lock /srv/timestrap/
+RUN pip3 install --upgrade pip \
+    && pip3 install pipenv \
+    && pipenv install --dev --system \
+    && yarn install
 
-COPY --from=build /build/client/static /app/client/static
+COPY . .
 
+RUN yarn run build:prod
 RUN python3 manage.py collectstatic --noinput

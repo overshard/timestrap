@@ -102,7 +102,7 @@ You'll probably need to install pipenv with pip, run `pip install pipenv` to
 get this. Same with yarn for node, `npm install --global yarn`. On some systems
 you may have to install some additional development files. For example on
 Ubuntu you will need to install `apt install build-essential`. On Alpine you
-will need `apk add python3-dev nodejs-dev postgresql-dev gcc musl-dev`;
+will need `apk add python3-dev nodejs-dev postgresql-dev gcc musl-dev libffi-dev`.
 
 ### Development Setup
 
