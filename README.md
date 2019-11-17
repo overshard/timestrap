@@ -63,12 +63,12 @@ Make sure to update the environmental variables in `docker-compose.yml` and
 check the `timestrap/settings/docker.py` file to see if you'd like to change
 anything then run:
 
-    sudo docker-compose up --detach --build
+    docker-compose up --detach --build
 
 To migrate the database, create your first superuser, and create the initial
 site configuration you then need to run:
 
-    sudo docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
+    docker-compose exec web python3 manage.py migrate
 
 The Timestrap application should now be running on port 80 of whatever system
 you ran these commands on, if you ran this locally then that would be
@@ -81,8 +81,8 @@ Timestrap at the latest you can do the following from the timestrap repo you
 cloned:
 
     git pull
-    sudo docker-compose up --detach --build
-    sudo docker-compose exec web python3 manage.py migrate --settings=timestrap.settings.docker
+    docker-compose up --detach --build
+    docker-compose exec web python3 manage.py migrate
 
 All data will be kept during this process and you'll have the latest version
 of Timestrap.
@@ -99,13 +99,14 @@ If you'd like to contribute code to Timestrap you'll need to do this!
 - yarn
 
 You'll probably need to install pipenv with pip, run `pip install pipenv` to
-get this. Same with yarn for node, `npm install --global yarn`
+get this. Same with yarn for node, `npm install --global yarn`. On some systems
+you may have to install some additional development files. For example on
+Ubuntu you will need to install `apt install build-essential`. On Alpine you
+will need `apk add python3-dev nodejs-dev postgresql-dev gcc musl-dev`;
 
 ### Development Setup
 
-Once you have all of the above you can get started! For the global npm install
-on gulp-cli you may need to run this with sudo depending on how you installed
-everything above.
+Once you have all of the above you can get started!
 
     yarn install
     pipenv install --dev

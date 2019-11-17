@@ -10,6 +10,7 @@ services:
       - db
       - redis
     environment:
+      - DJANGO_SETTINGS_MODULE=timestrap.settings.docker
       - SECRET_KEY=CHANGE-ME
     depends_on:
       - db
