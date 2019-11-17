@@ -12,6 +12,7 @@
     "concurrently": "^5.0.0",
     "css-loader": "^2.1.1",
     "del": "^4.1.1",
+    "eslint": "^6.6.0",
     "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^3.0.1",
     "gulp": "^4.0.1",
