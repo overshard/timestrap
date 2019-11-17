@@ -1,6 +1,6 @@
 # Timestrap
 
-[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=for-the-badge)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=for-the-badge)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=for-the-badge)](https://github.com/overshard/timestrap/blob/master/LICENSE.md) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=for-the-badge)](https://gitter.im/overshard/timestrap)
+[![Travis](https://img.shields.io/travis/overshard/timestrap.svg?style=for-the-badge)](https://travis-ci.org/overshard/timestrap) [![Coveralls](https://img.shields.io/coveralls/overshard/timestrap.svg?style=for-the-badge)](https://coveralls.io/github/overshard/timestrap) [![license](https://img.shields.io/github/license/overshard/timestrap.svg?style=for-the-badge)](https://github.com/overshard/timestrap/blob/master/LICENSE.md)
 
 Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
@@ -26,8 +26,8 @@ Heroku that resets every 10 minutes.
 All installations and the demo create a superuser to get you started, if this
 is a production deployment you will want to change these.
 
-- Username: `admin`
-- Password: `admin`
+-   Username: `admin`
+-   Password: `admin`
 
 ## Heroku Installation
 
@@ -50,8 +50,8 @@ improve the docker configuration files would be appreciated.
 
 ### Docker Requirements
 
-- Docker
-- Docker Compose
+-   Docker
+-   Docker Compose
 
 Docker Compose is used for running multiple containers since we require a
 PostgreSQL database and, not yet but soon, a Redis server for messages and
@@ -93,10 +93,10 @@ If you'd like to contribute code to Timestrap you'll need to do this!
 
 ### Development Requirements
 
-- Python 3.7+
-- Node 10+
-- pipenv
-- yarn
+-   Python 3.7+
+-   Node 10+
+-   pipenv
+-   yarn
 
 You'll probably need to install pipenv with pip, run `pip install pipenv` to
 get this. Same with yarn for node, `npm install --global yarn`. On some systems
