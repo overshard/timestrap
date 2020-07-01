@@ -1,4 +1,5 @@
 from .base import *  # noqa: F401,F403
+import os
 
 
 DEBUG = False
@@ -20,10 +21,11 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "HOST": "db",
-        "PORT": 5432,
+        "NAME": os.environ.get("POSTGRES_DB", "postgres"),
+        "USER": os.environ.get("POSTGRES_USER", "postgres"),
+        "HOST": os.environ.get("POSTGRES_HOST", "db"),
+        "PORT": int(os.environ.get("POSTGRES_PORT", "5432")),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
     }
 }
 
@@ -34,7 +36,11 @@ DATABASES = {
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {"hosts": [("redis", 6379)]},
+        "CONFIG": {
+            "hosts": [
+                (os.environ.get("REDIS_HOST", "redis"), int(os.environ.get("REDIS_PORT", "6379")))
+            ]
+        },
     }
 }
 
