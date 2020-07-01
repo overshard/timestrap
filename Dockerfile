@@ -5,7 +5,7 @@ WORKDIR /srv/timestrap
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apk add --no-cache python3 python3-dev nodejs nodejs-dev yarn \
+RUN apk add --no-cache python3 python3-dev py3-pip nodejs nodejs-dev yarn \
     postgresql-dev gcc musl-dev libffi-dev
 
 COPY Pipfile Pipfile.lock package.json yarn.lock /srv/timestrap/
