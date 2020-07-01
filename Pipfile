@@ -13,9 +13,9 @@ mkdocs-material = "*"
 black = "==19.10b0"
 
 [packages]
-django = "==2.1.11"
+django = "==3.0.8"
 "django-widget-tweaks" = "*"
-whitenoise = "==3.3.1"
+whitenoise = "==5.1.0"
 djangorestframework = "*"
 "django-filter" = "*"
 "django-import-export" = "*"
