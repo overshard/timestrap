@@ -3,7 +3,7 @@ version: "3"
 services:
   timestrap:
     container_name: timestrap
-    image: iwilltry42/timestrap:20200701.1
+    image: iwilltry42/timestrap:20200701.2
     command: daphne timestrap.asgi:application --port 8899 --bind 0.0.0.0 -v2
     ports:
       - "8899:8899"
