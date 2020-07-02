@@ -1,25 +1,31 @@
-# Example docker-compose.yml (for local development), exposing timestrap on localhost:8899
+# Example docker-compose.yml exposing timestrap via Traefik v2.1
 
 version: "3"
 
 services:
   timestrap:
     container_name: timestrap
-    build: .
+    image: my-timestrap-image:latest
     command: daphne timestrap.asgi:application --port 8899 --bind 0.0.0.0 -v2
-    ports:
-      - "8899:8899"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.timestrap.rule: "Host(`timestrap.my.domain`)"
+      traefik.http.routers.timestrap.entrypoints: "https"
+      traefik.http.routers.timestrap.tls.certresolver: "letsencrypt"
+      traefik.http.services.timestrap.loadbalancer.server.port: "8899"
+      traefik.docker.network: "web"
+    depends_on:
+      - db
+      - redis
     environment:
       - DJANGO_SETTINGS_MODULE=timestrap.settings.docker
       - SECRET_KEY=super-secret-key
       - POSTGRES_DB=timestrap
       - POSTGRES_USER=timestrap
       - POSTGRES_PASSWORD=timestrap
-    depends_on:
-      - db
-      - redis
     networks:
       - timestrap_network
+      - web
 
   db:
     image: postgres
@@ -30,7 +36,7 @@ services:
       - POSTGRES_PASSWORD=timestrap
       - PGDATA=/db-data
     volumes:
-      - timestrapdb:/db-data
+      - ./data:/db-data # mount a local directory as the Postgres Data directory (relative path)
     networks:
       - timestrap_network
 
@@ -43,6 +49,5 @@ services:
 networks:
   timestrap_network:
     external: false
-
-volumes:
-  timestrapdb: {}
+  web:
+    external: true
