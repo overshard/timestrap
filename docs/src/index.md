@@ -161,7 +161,7 @@ if that is successful and you want to share your changes create a
 ### Development Commands
 
 I've prebuilt a variety of build commands for development, you can see a list
-of them by running `gulp --tasks` and I will breifly cover some of them here.
+of them by running `gulp --tasks` and I will briefly cover some of them here.
 
 - `gulp` Will run a webserver with django and build the client with webpack
 - `gulp lint` Will check all code for style consistency
