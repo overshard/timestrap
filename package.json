@@ -37,7 +37,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "jquery": "^3.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.2.2",
     "moment-timezone": "^0.5.25",
     "pickadate": "^3.6.3",
