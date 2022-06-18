@@ -3,21 +3,19 @@
 Time tracking you can host anywhere. Full export support in
 multiple formats and easily extensible.
 
+
 ## Warning
 
 This app is currently very unstable. Everything may, and probably will, change.
 All migrations are going to be wiped and setup properly before release 1.0 so
 you will not be able to upgrade to 1.0 from early development.
 
+
 ## Documentation
 
 For more details and screenshots check out our main docs website:
 [https://docs.gettimestrap.com/](https://docs.gettimestrap.com/)
 
-## Demo
-
-There is a [demo instance of Timestrap](https://timestrap.herokuapp.com/) on
-Heroku that resets every 10 minutes.
 
 ## Superuser Credentials
 
@@ -27,24 +25,13 @@ is a production deployment you will want to change these.
 -   Username: `admin`
 -   Password: `admin`
 
-## Heroku Installation
-
-The easiest way to run Timestrap and the only installation that I can actively
-support since I use it myself in production.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/overshard/timestrap)
-
-For manual deployments to Heroku, make sure to create two environmental
-variables before pushing using `heroku config:set`:
-
-    heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
-    heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
 
 ## Docker Installation
 
 This creates a minimal docker server setup for Timestrap. This currently is
 in development and may not have persistent data without fiddling. Any help to
 improve the docker configuration files would be appreciated.
+
 
 ### Docker Requirements
 
@@ -54,6 +41,7 @@ improve the docker configuration files would be appreciated.
 Docker Compose is used for running multiple containers since we require a
 PostgreSQL database and, not yet but soon, a Redis server for messages and
 events.
+
 
 ### Docker Running
 
@@ -72,6 +60,7 @@ The Timestrap application should now be running on port 80 of whatever system
 you ran these commands on, if you ran this locally then that would be
 [http://localhost/](http://localhost/).
 
+
 ### Docker Data
 
 All data should be stored in the timestrap_db volume. If you wish to rebuild
@@ -85,14 +74,16 @@ cloned:
 All data will be kept during this process and you'll have the latest version
 of Timestrap.
 
+
 ## Development Installation
 
 If you'd like to contribute code to Timestrap you'll need to do this!
 
+
 ### Development Requirements
 
 -   Python 3.7+
--   Node 10+
+-   Node 14+
 -   pipenv
 -   yarn
 
@@ -101,6 +92,7 @@ get this. Same with yarn for node, `npm install --global yarn`. On some systems
 you may have to install some additional development files. For example on
 Ubuntu you will need to install `apt install build-essential`. On Alpine you
 will need `apk add python3-dev nodejs-dev postgresql-dev gcc musl-dev libffi-dev`.
+
 
 ### Development Setup
 
