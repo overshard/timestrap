@@ -1,31 +1,30 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
-"flake8" = "*"
-coveralls = "*"
-selenium = "*"
-tblib = "*"
-mkdocs = "*"
-mkdocs-material = "*"
-black = "==19.10b0"
+name = "pypi"
 
 [packages]
 django = "==3.0.8"
-"django-widget-tweaks" = "*"
+django-widget-tweaks = "==1.4.8"
 whitenoise = "==5.1.0"
-djangorestframework = "*"
-"django-filter" = "*"
-"django-import-export" = "*"
-faker = "*"
-"dj-database-url" = "*"
-"psycopg2-binary" = "*"
-ipaddress = "*"
-channels = "*"
-asgiref = "*"
-channels-redis = "*"
+djangorestframework = "==3.11.0"
+django-filter = "==2.3.0"
+django-import-export = "==2.2.0"
+faker = "==4.1.1"
+dj-database-url = "==0.5.0"
+psycopg2-binary = "==2.8.5"
+ipaddress = "==1.0.23"
+channels = "==2.4.0"
+asgiref = "==3.2.10"
+channels-redis = "==2.4.2"
+
+[dev-packages]
+black = "*"
+flake8 = "*"
+isort = "*"
+mkdocs = "*"
+mkdocs-material = "*"
+tblib = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"
