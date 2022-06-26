@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "start": "concurrently --raw \"yarn:manage:runserver\" \"yarn:build:dev\"",
+    "start": "concurrently --raw yarn:manage:runserver yarn:build:dev",
     "manage:runserver": "pipenv run python manage.py runserver",
     "build:prod": "webpack",
-    "build:dev": "webpack --watch --mode=\"development\"",
+    "build:dev": "webpack --watch --mode='development'",
     "docs:serve": "pipenv run mkdocs serve",
     "docs:build": "pipenv run mkdocs build",
     "docs:publish": "pipenv run mkdocs publish"
