@@ -7,7 +7,7 @@
     "build:dev": "webpack --watch --mode='development'",
     "docs:serve": "pipenv run mkdocs serve",
     "docs:build": "pipenv run mkdocs build",
-    "docs:publish": "pipenv run mkdocs publish"
+    "docs:publish": "pipenv run mkdocs gh-deploy"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
