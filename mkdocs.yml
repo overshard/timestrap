@@ -37,13 +37,6 @@ theme:
     text: 'Roboto'
     code: 'Roboto Mono'
 
-# Customization
-extra:
-  manifest: 'manifest.webmanifest'
-  social:
-    - type: 'github'
-      link: 'https://github.com/overshard'
-
 markdown_extensions:
   - codehilite
   - toc:
