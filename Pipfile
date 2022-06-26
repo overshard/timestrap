@@ -4,19 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "<3.2"
-django-widget-tweaks = "<1.5"
-whitenoise = "<5.2"
-djangorestframework = "<3.12"
+asgiref = "<3.3"
+channels = "<2.5"
+channels-redis = "<2.5"
+dj-database-url = "*"
+django = "<4"
 django-filter = "<2.5"
 django-import-export = "<2.3"
+django-widget-tweaks = "<1.5"
+djangorestframework = "<3.12"
 faker = "<4.1.1"
-dj-database-url = "<0.6"
-psycopg2-binary = "<2.9"
-ipaddress = "<1.1"
-channels = "<2.5"
-asgiref = "<3.3"
-channels-redis = "<2.5"
+ipaddress = "*"
+psycopg2 = "*"
+whitenoise = "*"
 
 [dev-packages]
 black = "*"
@@ -24,7 +24,6 @@ flake8 = "*"
 isort = "*"
 mkdocs = "*"
 mkdocs-material = "*"
-tblib = "*"
 
 [requires]
 python_version = "3.10"
