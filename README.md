@@ -14,7 +14,7 @@ you will not be able to upgrade to 1.0 from early development.
 ## Documentation
 
 For more details and screenshots check out our main docs website:
-[https://docs.gettimestrap.com/](https://docs.gettimestrap.com/)
+[https://timestrap.bythewood.me/](https://timestrap.bythewood.me/)
 
 
 ## Superuser Credentials

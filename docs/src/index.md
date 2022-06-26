@@ -16,13 +16,7 @@ you will not be able to upgrade to 1.0 from early development.
 ## Documentation
 
 For more details and screenshots check out our main docs website:
-[https://docs.gettimestrap.com/](https://docs.gettimestrap.com/)
-
-
-## Demo
-
-There is a [demo instance of Timestrap](https://timestrap.herokuapp.com/) on
-Heroku that resets every 10 minutes.
+[https://timestrap.bythewood.me/](https://timestrap.bythewood.me/)
 
 
 ## Superuser Credentials
@@ -32,20 +26,6 @@ is a production deployment you will want to change these.
 
 - Username: `admin`
 - Password: `admin`
-
-
-## Heroku Installation
-
-The easiest way to run Timestrap and the only installation that I can actively
-support since I use it myself in production.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/overshard/timestrap)
-
-For manual deployments to Heroku, make sure to create two environmental
-variables before pushing using `heroku config:set`:
-
-    heroku config:set DJANGO_SETTINGS_MODULE=timestrap.settings.heroku
-    heroku config:set SECRET_KEY=ChangeMeToSomethingRandom
 
 
 ## Docker Installation

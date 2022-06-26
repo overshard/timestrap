@@ -2,7 +2,7 @@
 site_name: 'Timestrap Docs'
 site_description: 'Docs for the Timestrap project.'
 site_author: 'Isaac Bythewood'
-site_url: 'https://docs.gettimestrap.com/'
+site_url: 'https://timestrap.bythewood.me/'
 
 # Repository
 repo_name: 'overshard/timestrap'

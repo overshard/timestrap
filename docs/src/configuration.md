@@ -5,8 +5,8 @@
 By default we don't enable TLS/SSL features since this project is often run on
 an intranet, locally, or in testing environments. If security is a concern of
 yours, and it should be, you will need to enable TLS/SSL on your reverse proxy
-and setup a certificate there. On Heroku you can run `heoku certs:auto:enable`
-to get a free LetsEncrypt certificate.
+and setup a certificate there. For an easy TLS enabled reverse proxy check out
+Caddy.
 
 You will need to configure two settings when you use TLS/SSL on this project.
 The first is to force TLS/SSL when people visit your site and the second is to
@@ -35,13 +35,6 @@ You can configure email by setting environmental variables in the
 - **EMAIL_USE_TLS** defaults to `False`, you can set this to `True`
 
 These would go where the `SECRET_KEY` environmental variable is set
-
-### Email Heroku
-
-You can add `sendgrid` to your apps addons on the Heroku admin panel or by
-running:
-
-    heroku addons:create sendgrid
 
 ## Time and Date Localization
 
