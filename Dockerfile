@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.16
 
 WORKDIR /srv/timestrap
 
