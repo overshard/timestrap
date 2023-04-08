@@ -38,7 +38,7 @@
     "jquery": "^3.4.0",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.2.2",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "pickadate": "^3.6.3",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
